@@ -1,0 +1,22 @@
+En esta capa se implementarán todas las clases asociadas al menú genérico de consola.
+
+Esta capa permitirá implementar la interacción del usuario con el sistema acorde a lo visto
+en clase. En razón a lo anterior se creará un paquete llamado uiMain donde se ubicarán
+todas las clases que se requieran para esta actividad. Dado lo anterior, ninguna clase de
+la capa lógica imprimirá información y serán las clases de esta capa las encargadas tanto
+de recibir la información del usuario como de imprimir la información correspondiente
+proveniente del sistema. 
+
+Esta interfaz será en un ambiente no gráfico y todo deberá ser
+impreso en pantalla.
+
+La interfaz de usuario de la aplicación deberá tener una estructura clara, su contenido
+ordenado y las funciones de la aplicación implementadas mediante un menú genérico de
+consola que abarcará todas las funcionalidades disponibles.
+
+• Para el manejo de cada una de las funciones del usuario se empleará un menú genérico
+de consola, el cual le permitirá el despliegue en pantalla de las opciones y poder
+seleccionar una alternativa. Esta interfaz hará uso de switchs (o equivalentes).
+
+• El sistema deberá tener una serie de formularios para la entrada y salida de la información, 
+los cuales serán hechos en pantalla plana (DOS) sin utilizar los conceptos de la interfaz gráfica de usuario.

@@ -1,0 +1,11 @@
+* Guardar en archivo(s) mediante la serialización de objetos, el estado de todos los
+objetos del modelo cuando el sistema se va a cerrar.
+
+* Cargar en memoria RAM desde los archivos anteriores, el estado de todos los objetos
+del sistema para con ellos realizar las funciones programadas.
+
+Para tal fin, se implementarán todas las clases necesarias que permitan las dos funciones
+anteriores. Estas clases se ubicarán en un paquete que llamaremos baseDatos.
+
+Los archivos donde se guardan los objetos serializados deberán estar en un directorio
+relativo del proyecto llamado /temp que estará al interior de este paquete.
