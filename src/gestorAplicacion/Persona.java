@@ -20,7 +20,7 @@ public class Persona {
 		this.rol=rol;
 		this.experiencia=experiencia;
 		this.trabaja=t;
-		this.membresia=mem
+		this.membresia=mem;
 		listaPersonas.add(this);
 	}
 }

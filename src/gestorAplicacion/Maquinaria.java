@@ -13,5 +13,5 @@ public class Maquinaria{
 	int horasVisitaTecnico;
 	int horaRevision;
 	ArrayList<Repuesto> repuestos;
-	ArrayList<int> horasUltimoCambio;
+	ArrayList<Integer> horasUltimoCambio;
 }

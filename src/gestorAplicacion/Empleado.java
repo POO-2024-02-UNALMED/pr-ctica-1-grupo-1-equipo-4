@@ -9,14 +9,25 @@ public class Empleado extends Persona{
     int rendimiento;
     Sede sede;
     Maquinaria maquinaria;
-    ArrayList(Area) areas;
+    ArrayList<Area> areas;
     int traslados;
     
     Empleado(){
     	listaEmpleados.add(this);
     }
     
-    public ArrayList despedirEmpleado(){
+    public ArrayList <Empleado> listaADespedirdespedirEmpleado(){
+        ArrayList <Empleado> listaADespedir = null;
+        for (Sede sede : Sede.listaSedes){
+            Area.rendimientoDeseadoActual(sede);
+            for (Empleado emp : sede.listaEmpleado){
+                
+            }
+        }
+        return listaADespedir;
+    }
 
+    public Area getAreaActual(){
+        return areaActual;
     }
 }

@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
-public static class Evaluacionfinanciera {
-	ArrayList <Evaluacionfinanciera> historialEvaluaciones;
-	ArrayList <Deuda> deudas;
+public class Evaluacionfinanciera {
+	static ArrayList <Evaluacionfinanciera> historialEvaluaciones;
+	static ArrayList <Deuda> deudas;
 	//deudaBanco+deudaProveedores
-	long pagoPersonas;
-	long balance;
-	boolean proyección;
-	Empleado presidente;
+	static long pagoPersonas;
+	static long balance;
+	static boolean proyección;
+	static Empleado presidente;
 }

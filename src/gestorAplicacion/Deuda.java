@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Deuda {
-	static ArrayList(Deuda) listaDeudas;
+	static ArrayList<Deuda> listaDeudas;
 	String fechaEndeudamiento;
 	//LocalDate fechaEndeudamiento;
 	int valorinicialDeuda;

@@ -2,39 +2,57 @@ import java.util.ArrayList;
 
 public enum Area {
 
-	DIRECCION=new Area("Direccion");
-	OFICINA= new Area("Oficina");
-	VENTAS= new Area("Ventas");
-	CORTE= new Area("Corte");
+	DIRECCION ("Direccion"),OFICINA ("Oficina"),VENTAS ("Ventas"),CORTE ("Corte");
 	
-	private int rendimientoDeseado;
+	private float rendimientoDeseado;
 	private final String nombre;
-    private static ArrayList <Area> listaAreas;
-    
-    Area() {
-    	listaAreas.add(this);
-    }
+
     Area (String nom){
     	this.nombre=nom;
-    	listaAreas.add(this);
     }
     
-    public static int rendimientoDeseadoActual(Sede sede){
-    	for(Area a : listaAreas){
+    public static ArrayList <Float> rendimientoDeseadoActual(Sede sede){
+		ArrayList <Float> rendimientoSede = null;
+    	for(Area a : Area.values()){
     		if (a.nombre == "Direccion") {
-    			rendimientoDeseado=3/5;
+				a.rendimientoDeseado=3/5f;
+				rendimientoSede.add(a.rendimientoDeseado);
+			}
     		else if(a.nombre == "Oficina") {
     			//rendimientoDeseado=promedio de ventas de la sede
-    		}
+				for (Empleado emp:sede.listaEmpleado){
+				int cantidadEmpleadosOfi=0;
+					if(emp.getAreaActual().nombre=="Oficina"){
+						cantidadEmpleadosOfi++;
+					}
+				a.rendimientoDeseado=(sede.historialVentas.size())/cantidadEmpleadosOfi;
+				rendimientoSede.add(a.rendimientoDeseado);
+    		}}
     		else if (a.nombre == "Ventas") {
     			//rendimientoDeseado=promedio de ventas de la sede
+				int montoTotal=0;
+				for (Venta venta:sede.historialVentas){
+				montoTotal+=venta.montoPagado;
     		}
+				a.rendimientoDeseado=(montoTotal)/sede.historialVentas.size();
+				rendimientoSede.add(a.rendimientoDeseado);
+			}
     		else if (a.nombre == "Corte") {
     			//promedio de las prendas por empleado con atributo descartada==True
-    		}
-    		else {rendimientoDeseado=0;}
-    	}
-    	
-    	
+				int prendasDercartadas=0;
+				for (Prenda prenda:sede.prendasInventadas){
+					if(prenda.descartada==true){
+						prendasDercartadas++;
+					}}
+					int cantidadEmpleadosCort=0;
+				for (Empleado emp:sede.listaEmpleado){
+					if(emp.getAreaActual().nombre=="Corte"){
+						cantidadEmpleadosCort++;
+					}}
+				a.rendimientoDeseado=(prendasDercartadas)/cantidadEmpleadosCort;
+				rendimientoSede.add(a.rendimientoDeseado);
+    		}		
     }
+	return rendimientoSede;
+}
 }
