@@ -1,3 +1,4 @@
+package gestorAplicacion;
 import java.util.ArrayList;
 
 public class Empleado extends Persona{
@@ -16,10 +17,9 @@ public class Empleado extends Persona{
     	listaEmpleados.add(this);
     }
     
-    public ArrayList <Empleado> listaADespedirdespedirEmpleado(){
+    public ArrayList <Empleado> despedirEmpleado(){
         ArrayList <Empleado> listaADespedir = null;
         for (Sede sede : Sede.listaSedes){
-            Area.rendimientoDeseadoActual(sede);
             for (Empleado emp : sede.listaEmpleado){
                 
             }
