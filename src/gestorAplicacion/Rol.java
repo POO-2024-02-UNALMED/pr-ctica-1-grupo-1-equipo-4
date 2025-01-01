@@ -18,4 +18,12 @@ public enum Rol {
     	this.nombre=nom;
     	this.salarioInicial=sl;
     }
+    
+    public final String getNombre() {
+    	return nombre;
+    }
+    
+    public final long getSalarioInicial() {
+    	return salarioInicial;
+    }
 }
