@@ -1,5 +1,6 @@
 package gestorAplicacion;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Empleado extends Persona{
 	
@@ -23,10 +24,17 @@ public class Empleado extends Persona{
     }
     
     public ArrayList <Empleado> listaInicialDespedirEmpleado(){
-        ArrayList <Empleado> listaADespedir = null;
+        // Preparamos las listas de empleados
+        ArrayList <Empleado> listaADespedir = new ArrayList<Empleado>(); // A en el doc. 
+        ArrayList <ArrayList<Empleado>> listaATransferir = new ArrayList<>(Arrays.asList()); // B en el doc.
+        for (int i = 0; i < Sede.listaSedes.size(); i++){
+            listaATransferir.add(new ArrayList<Empleado>());
+        }
+
+        // Juzgamos el rendimiento de todos los empleados
         for (Sede sede : Sede.listaSedes){
             for (Empleado emp : sede.listaEmpleado){
-                int rendimiento;
+                int rendimiento=0;
                 switch (emp.areaActual){
                     case CORTE:
                         rendimiento = (emp.prendasProducidas/emp.prendasArruinadas)*100;
@@ -65,8 +73,44 @@ public class Empleado extends Persona{
                         rendimiento = (balancesPositivos/(balancesNegativos+balancesPositivos))*100;
                         break;
                     }
+                boolean seVaADespedir = false;
+                if (rendimiento + 20 < sede.getRendimientoDeseado(emp.areaActual)){
+                    listaADespedir.add(emp);
+                    seVaADespedir = true;
+                }
+
+                // Verificamos posibilidades de transferencia.
+                for (int idxSede = 0; idxSede < Sede.listaSedes.size(); idxSede++){
+                    if (Sede.listaSedes.get(idxSede).getRendimientoDeseado(emp.areaActual) <= rendimiento + 20){
+                        listaADespedir.remove(emp);
+                        listaATransferir.get(idxSede).add(emp);
+                        seVaADespedir = false;
+                    }
+                }
+
+                if (seVaADespedir){
+                    if (emp.areaActual != Area.CORTE && emp.traslados<2){
+                        boolean puedeCambiarArea = true;
+                        for (Area areaPasada : emp.areas){
+                            if (areaPasada.ordinal()<emp.areaActual.ordinal()){
+                                puedeCambiarArea = false; // Por haber trabajado en un área más baja.
+                                break;
+                            }
+                        }
+                        if (puedeCambiarArea){
+                            seVaADespedir=false;
+                            listaADespedir.remove(emp);
+                            
+                    }
+                }
+
+
             }
         }
+        // A este punto tenemos A y B listas. 
+
+
+
         return listaADespedir;
     }
 
