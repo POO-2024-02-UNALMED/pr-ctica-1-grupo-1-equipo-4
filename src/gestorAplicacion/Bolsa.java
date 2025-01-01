@@ -5,7 +5,7 @@ public class Bolsa extends Insumo {
 	private int capacidadMaxima;
 	
 	public int getCapacidadMaxima() {
-		return apacidadMaxima;
+		return capacidadMaxima;
 	}
 	
 	public void setCapacidadMaxima(int capacidadMaxima) {

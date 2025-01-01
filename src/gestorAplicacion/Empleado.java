@@ -18,6 +18,7 @@ public class Empleado extends Persona{
     int traslados;
     int prendasArruinadas=0;
     int prendasProducidas=0;
+    int bonificacion=0;
     
     Empleado(){
     	listaEmpleados.add(this);
@@ -100,21 +101,38 @@ public class Empleado extends Persona{
                         if (puedeCambiarArea){
                             seVaADespedir=false;
                             listaADespedir.remove(emp);
-                            
+                        }
                     }
                 }
-
-
             }
         }
-        // A este punto tenemos A y B listas. 
 
+        // Hacemos las transferencias de sede. Las transferencias de Area se hacen en el bucle,
+        // que para todo tiene mas sentido, para no hacer una cantidad absurda de bucles.
+        // En cualquier caso, esto se ajusta mas al doc.
 
-
+        for (int idxSede = 0; idxSede < Sede.listaSedes.size(); idxSede++){
+            for (Empleado emp : listaATransferir.get(idxSede)){
+                int aPagar = Maquinaria.remuneracionDanos(emp);
+                emp.modificarBonificacion(aPagar*-1);
+                emp.trasladarEmpleado(Sede.listaSedes.get(idxSede));
+            }
+        }
+        
         return listaADespedir;
+    }
+
+    private void trasladarEmpleado(Sede sedeNueva){
+        sede.listaEmpleado.remove(this);
+        sedeNueva.listaEmpleado.add(this);
+        traslados++;
     }
 
     public Area getAreaActual(){
         return areaActual;
+    }
+
+    private void modificarBonificacion(int bonificacion){
+        this.bonificacion += bonificacion;
     }
 }
