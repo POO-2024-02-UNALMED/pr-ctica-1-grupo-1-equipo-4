@@ -32,12 +32,12 @@ public class Banco {
 		this.nombreCuenta = nombreCuenta;
 	}
 	
-	public void setDeuda(ArrayList<Deuda> deuda) {
-	  if (deuda == null) {
-            throw new IllegalArgumentException("La lista no puede ser nula");
-        }
-        this.deuda = deuda;
-	}
+	//public void setDeuda(ArrayList<Deuda> deuda) {
+	 //if (deuda == null) {
+       //     throw new IllegalArgumentException("La lista no puede ser nula");
+       // }
+       // this.deuda = deuda;
+	//}
 	
 	public void setAhorroBanco(long ahorroBanco) {
 		this.ahorroBanco = ahorroBanco;
