@@ -27,4 +27,6 @@ public class Persona {
 
 	public Rol getRol(){return rol;}
 	public Membresia getMembresia(){return membresia;}
+	public int getDocumento(){return documento;}
+	public String getNombre(){return nombre;}
 }

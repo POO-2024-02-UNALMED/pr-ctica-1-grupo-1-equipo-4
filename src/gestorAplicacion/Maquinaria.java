@@ -27,4 +27,12 @@ public class Maquinaria{
 		}
 		return remuneracion;
 	}
+
+	static public void liberarMaquinariaDe(Empleado empleado){
+		for (Maquinaria maq : Maquinaria.listaMaquinaria){
+			if (maq.user == empleado){
+				maq.user = null;
+			}
+		}
+	}
 }

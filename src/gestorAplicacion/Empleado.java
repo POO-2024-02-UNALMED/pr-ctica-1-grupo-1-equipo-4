@@ -24,7 +24,7 @@ public class Empleado extends Persona{
     	listaEmpleados.add(this);
     }
     
-    public ArrayList <Empleado> listaInicialDespedirEmpleado(){
+    static public ArrayList <Empleado> listaInicialDespedirEmpleado(){
         // Preparamos las listas de empleados
         ArrayList <Empleado> listaADespedir = new ArrayList<Empleado>(); // A en el doc. 
         ArrayList <ArrayList<Empleado>> listaATransferir = new ArrayList<>(Arrays.asList()); // B en el doc.
@@ -113,8 +113,6 @@ public class Empleado extends Persona{
 
         for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
             for (Empleado emp : listaATransferir.get(idxSede)){
-                int aPagar = Maquinaria.remuneracionDanos(emp);
-                emp.modificarBonificacion(aPagar*-1);
                 emp.trasladarEmpleado(Sede.getlistaSedes().get(idxSede));
             }
         }
@@ -126,6 +124,9 @@ public class Empleado extends Persona{
         sede.getlistaEmpleados().remove(this);
         sedeNueva.getlistaEmpleados().add(this);
         traslados++;
+        int aPagar = Maquinaria.remuneracionDanos(this);
+        modificarBonificacion(aPagar*-1);
+        Maquinaria.liberarMaquinariaDe(this);
     }
 
     public Area getAreaActual(){return areaActual;}
@@ -145,5 +146,15 @@ public class Empleado extends Persona{
 
     private void modificarBonificacion(int bonificacion){
         this.bonificacion += bonificacion;
+    }
+
+    static public void despedirEmpleados(ArrayList<Empleado> empleados){
+        for (Empleado emp : empleados){
+            emp.sede.getlistaEmpleados().remove(emp);
+            listaEmpleados.remove(emp);
+
+            int aPagar = Maquinaria.remuneracionDanos(emp);
+            Maquinaria.liberarMaquinariaDe(emp);
+        }
     }
 }
