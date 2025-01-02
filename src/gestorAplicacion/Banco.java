@@ -7,6 +7,12 @@ public class Banco {
 	private long ahorroBanco;
 	private int interes;
 	private static ArrayList<Banco> listaBancos;
+	private static Banco cuentaPrincipal = new Banco("principal",125_000_000);
+
+	public Banco(String nombre, int ahorro){
+		this.nombreCuenta = nombre;
+		this.ahorroBanco = ahorro;
+	}
 
 	public String getNombreCuenta() {
 		return nombreCuenta;
@@ -46,11 +52,20 @@ public class Banco {
 	public void setInteres(int interes) {
 		this.interes = interes;
 	}
+
+	// Monto positivo para ingresos, negativo para gastos.
+	public void transaccion(long monto) {
+		this.ahorroBanco += monto;
+	}
 	
 	public static void setListaBancos(ArrayList<Banco> listaBancos) {
 		  if (listaBancos == null) {
 	            throw new IllegalArgumentException("La lista no puede ser nula");
 	        }
 	        Banco.listaBancos = listaBancos;
-		}
+	}
+
+	public static Banco getCuentaPrincipal() {
+		return cuentaPrincipal;
+	}
 }

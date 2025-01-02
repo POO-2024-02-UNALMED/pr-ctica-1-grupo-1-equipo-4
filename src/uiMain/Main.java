@@ -17,7 +17,7 @@ public class Main {
         int opcion = in.nextInt();
         switch(opcion) {
         case 1:
-            GestionHumana.reemplazarEmpleados();
+            GestionHumana.despedirEmpleados(in);
             break;
         case 2:
             break;

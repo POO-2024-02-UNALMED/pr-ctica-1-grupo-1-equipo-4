@@ -125,6 +125,7 @@ public class Empleado extends Persona{
         sedeNueva.getlistaEmpleados().add(this);
         traslados++;
         int aPagar = Maquinaria.remuneracionDanos(this);
+        Banco.getCuentaPrincipal().transaccion(aPagar);
         modificarBonificacion(aPagar*-1);
         Maquinaria.liberarMaquinariaDe(this);
     }
@@ -154,6 +155,7 @@ public class Empleado extends Persona{
             listaEmpleados.remove(emp);
 
             int aPagar = Maquinaria.remuneracionDanos(emp);
+            Banco.getCuentaPrincipal().transaccion(aPagar);
             Maquinaria.liberarMaquinariaDe(emp);
         }
     }

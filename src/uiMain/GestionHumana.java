@@ -6,7 +6,7 @@ import java.util.Scanner;
 import gestorAplicacion.Sede;
 
 public class GestionHumana {
-    static public void reemplazarEmpleados(Scanner scanner) {
+    static public void despedirEmpleados(Scanner scanner) {
         System.out.println("Obteniendo lista sugerida de empleados");
         ArrayList<Empleado> aDespedir = Empleado.listaInicialDespedirEmpleado();
         for (Empleado emp : aDespedir) {

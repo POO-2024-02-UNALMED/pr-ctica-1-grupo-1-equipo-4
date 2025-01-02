@@ -39,5 +39,10 @@ public class Sede{
 	public String getNombre(){return nombre;}
 	public void setNombre(String nombre){this.nombre=nombre;}	
 	public int getDistancia(){return distancia;}
-	public void setDistancia(int distancia){this.distancia=distancia;}		
+	public void setDistancia(int distancia){this.distancia=distancia;}	
+
+	public void reorganizarEmpleados(ArrayList<Empleado> despedidos){
+		// Reemplaza a los empleados despedidos
+		ArrayList<Empleado> porReemplazar = (ArrayList<Empleado>) despedidos.clone();
+	}
 }
