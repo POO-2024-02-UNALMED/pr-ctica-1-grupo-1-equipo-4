@@ -24,4 +24,7 @@ public class Persona {
 		this.membresia=mem;
 		listaPersonas.add(this);
 	}
+
+	public Rol getRol(){return rol;}
+	public Membresia getMembresia(){return membresia;}
 }

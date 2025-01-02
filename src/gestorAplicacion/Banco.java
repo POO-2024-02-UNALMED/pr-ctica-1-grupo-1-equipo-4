@@ -24,7 +24,7 @@ public class Banco {
 		return interes;
 	}
 	
-	public ArrayList<Banco> getListaBancos() {
+	public static ArrayList<Banco> getListaBancos() {
 		return listaBancos;
 	}
 	
@@ -47,10 +47,10 @@ public class Banco {
 		this.interes = interes;
 	}
 	
-	public void setListaBancos(ArrayList<Banco> listaBancos) {
+	public static void setListaBancos(ArrayList<Banco> listaBancos) {
 		  if (listaBancos == null) {
 	            throw new IllegalArgumentException("La lista no puede ser nula");
 	        }
-	        this.listaBancos = listaBancos;
+	        Banco.listaBancos = listaBancos;
 		}
 }

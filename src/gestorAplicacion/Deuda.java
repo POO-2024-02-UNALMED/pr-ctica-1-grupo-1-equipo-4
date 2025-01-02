@@ -3,19 +3,34 @@ import java.util.ArrayList;
 
 public class Deuda {
 	private static ArrayList<Deuda> listaDeudas;
-	private String fechaEndeudamiento;
+	private int fechaEndeudamiento;
+	//private String fechaEndeudamiento;
 	//LocalDate fechaEndeudamiento;
 	private int valorinicialDeuda;
 	private int interes;
 	private boolean estadodePago;
 	private String entidad;
+	//nombre de la clase
+	private String tipoEntidad;
 	private int capitalPagado;
 	
-	public ArrayList<Deuda> getListaDeudas(){
+	public Double deudaActual(int año){
+		Double deudaAcumulada=0.0;
+		if (!this.getEstadodePago()){
+			int años=año-fechaEndeudamiento;
+			//Acá va lo de las fechas
+			//int años = fecha - fechaEndeudamiento;
+			deudaAcumulada+=(valorinicialDeuda-capitalPagado)+(valorinicialDeuda-capitalPagado)*interes*años;
+		} 
+		return deudaAcumulada;
+	}
+
+	public static ArrayList<Deuda> getListaDeudas(){
 		return listaDeudas;
 	}
 	
-	public String getFechaEndeudamiento(){
+	//public String getFechaEndeudamiento(){
+	public int getFechaEndeudamiento(){
 		return fechaEndeudamiento;
 	}
 	
@@ -35,6 +50,9 @@ public class Deuda {
 		return entidad;
 	}
 
+	public String getTipoEntidad(){
+		return tipoEntidad;
+	}
 	public int getCapitalPagado(){
 		return capitalPagado;
 	}
@@ -46,7 +64,8 @@ public class Deuda {
 		this.listaDeudas = listaDeudas;
 	}
 	
-	public void setFechaEndeudamiento(String fechaEndeudamiento) {
+	//public void setFechaEndeudamiento(String fechaEndeudamiento) {
+	public void setFechaEndeudamiento(int fechaEndeudamiento) {
 		this.fechaEndeudamiento = fechaEndeudamiento;
 	}
 	

@@ -1,5 +1,4 @@
 package gestorAplicacion;
-import java.util.ArrayList;
 
 public enum Membresia {
 	ORO ("Oro",0.30),PLATA("Plata",0.15), BRONCE("bronce",0.5), NULA("Ninguna",0);
@@ -10,4 +9,6 @@ public enum Membresia {
     	this.nombre=nom;
     	this.porcentajeDescuento=dsc;
     }
-}
+
+	public double getPorcentajeDescuento(){return porcentajeDescuento;}
+	}

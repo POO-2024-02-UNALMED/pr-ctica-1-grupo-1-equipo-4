@@ -9,17 +9,17 @@ public class Empleado extends Persona{
     // Usado para empleados de Dirección.
 
     private Area areaActual;
-    String fechaContratacion;
+    private String fechaContratacion;
     //LocalDate?
-    int rendimiento;
-    Sede sede;
-    Maquinaria maquinaria;
-    ArrayList<Area> areas;
+    private int rendimiento;
+    private Sede sede;
+    private Maquinaria maquinaria;
+    private ArrayList<Area> areas;
     int traslados;
     int prendasArruinadas=0;
     int prendasProducidas=0;
-    int bonificacion=0;
-    
+    private int bonificacion=0;
+
     Empleado(){
     	listaEmpleados.add(this);
     }
@@ -28,13 +28,13 @@ public class Empleado extends Persona{
         // Preparamos las listas de empleados
         ArrayList <Empleado> listaADespedir = new ArrayList<Empleado>(); // A en el doc. 
         ArrayList <ArrayList<Empleado>> listaATransferir = new ArrayList<>(Arrays.asList()); // B en el doc.
-        for (int i = 0; i < Sede.listaSedes.size(); i++){
+        for (int i = 0; i < Sede.getlistaSedes().size(); i++){
             listaATransferir.add(new ArrayList<Empleado>());
         }
 
         // Juzgamos el rendimiento de todos los empleados
-        for (Sede sede : Sede.listaSedes){
-            for (Empleado emp : sede.listaEmpleado){
+        for (Sede sede : Sede.getlistaSedes()){
+            for (Empleado emp : sede.getlistaEmpleados()){
                 int rendimiento=0;
                 switch (emp.areaActual){
                     case CORTE:
@@ -42,22 +42,22 @@ public class Empleado extends Persona{
                         break;
                     case VENTAS:
                         float acumuladoVentasSede = 0;
-                        for (Empleado empAcumulado : sede.listaEmpleado){
+                        for (Empleado empAcumulado : sede.getlistaEmpleados()){
                             if (empAcumulado.areaActual == Area.VENTAS){
                                 acumuladoVentasSede+=Venta.acumuladoVentasAsesoradas(empAcumulado);
                             }
                         }
-                        float promedioVentasSede = acumuladoVentasSede/sede.listaEmpleado.size();
+                        float promedioVentasSede = acumuladoVentasSede/sede.getlistaEmpleados().size();
                         rendimiento = (int) ((Venta.acumuladoVentasAsesoradas(emp)/promedioVentasSede)*100);
                         break;
                     case OFICINA:
                         acumuladoVentasSede = 0;
-                        for (Empleado empAcumulado : sede.listaEmpleado){
+                        for (Empleado empAcumulado : sede.getlistaEmpleados()){
                             if (empAcumulado.areaActual == Area.VENTAS){
                                 Venta.acumuladoVentasEmpleadoEncargado(emp);
                             }
                         }
-                        promedioVentasSede = acumuladoVentasSede/sede.listaEmpleado.size();
+                        promedioVentasSede = acumuladoVentasSede/sede.getlistaEmpleados().size();
                         rendimiento = (int) ((Venta.acumuladoVentasAsesoradas(emp)/promedioVentasSede)*100);
                         break;
 
@@ -81,8 +81,8 @@ public class Empleado extends Persona{
                 }
 
                 // Verificamos posibilidades de transferencia.
-                for (int idxSede = 0; idxSede < Sede.listaSedes.size(); idxSede++){
-                    if (Sede.listaSedes.get(idxSede).getRendimientoDeseado(emp.areaActual) <= rendimiento + 20){
+                for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
+                    if (Sede.getlistaSedes().get(idxSede).getRendimientoDeseado(emp.areaActual) <= rendimiento + 20){
                         listaADespedir.remove(emp);
                         listaATransferir.get(idxSede).add(emp);
                         seVaADespedir = false;
@@ -111,11 +111,11 @@ public class Empleado extends Persona{
         // que para todo tiene mas sentido, para no hacer una cantidad absurda de bucles.
         // En cualquier caso, esto se ajusta mas al doc.
 
-        for (int idxSede = 0; idxSede < Sede.listaSedes.size(); idxSede++){
+        for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
             for (Empleado emp : listaATransferir.get(idxSede)){
                 int aPagar = Maquinaria.remuneracionDanos(emp);
                 emp.modificarBonificacion(aPagar*-1);
-                emp.trasladarEmpleado(Sede.listaSedes.get(idxSede));
+                emp.trasladarEmpleado(Sede.getlistaSedes().get(idxSede));
             }
         }
         
@@ -123,14 +123,25 @@ public class Empleado extends Persona{
     }
 
     private void trasladarEmpleado(Sede sedeNueva){
-        sede.listaEmpleado.remove(this);
-        sedeNueva.listaEmpleado.add(this);
+        sede.getlistaEmpleados().remove(this);
+        sedeNueva.getlistaEmpleados().add(this);
         traslados++;
     }
 
-    public Area getAreaActual(){
-        return areaActual;
-    }
+    public Area getAreaActual(){return areaActual;}
+    public void setAreaActual(Area a){areaActual=a;}
+    public String getFechaContratacion(){return fechaContratacion;}
+    public void setFechaContratacion(String fecha){fechaContratacion=fecha;}
+    public int getRendimiento(){return rendimiento;}
+    public void getRendimiento(int rend){rendimiento=rend;}
+    public Sede getSede(){return sede;}
+    public void setSede(Sede sede){this.sede=sede;}
+    public Maquinaria getMaquinaria(){return maquinaria;}
+    public void getMaquinaria(Maquinaria maquina){maquinaria=maquina;}
+    public ArrayList<Area> getAreas(){return areas;}
+    public void setAreas(ArrayList<Area> areas){this.areas=areas;}
+    public int getBonificacion(){return bonificacion;}
+    public void getRendimientoBonificacion(int boni){bonificacion=boni;}
 
     private void modificarBonificacion(int bonificacion){
         this.bonificacion += bonificacion;
