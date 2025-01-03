@@ -29,4 +29,8 @@ public class Persona {
 	public Membresia getMembresia(){return membresia;}
 	public int getDocumento(){return documento;}
 	public String getNombre(){return nombre;}
+
+	public void contratar(ArrayList<Empleado> aReemplazar){
+		
+	}
 }

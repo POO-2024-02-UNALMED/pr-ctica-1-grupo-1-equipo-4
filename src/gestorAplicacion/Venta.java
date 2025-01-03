@@ -19,7 +19,7 @@ public class Venta {
 	// que calcula el acumulado de ventas asesoradas o registradas por empleado en pesos.
 	static public int acumuladoVentasAsesoradas(Empleado empleado){
 		int acumulado=0;
-		for (Venta venta : empleado.sede.getHistorialVentas()){
+		for (Venta venta : empleado.getSede().getHistorialVentas()){
 			if (venta.asesor == empleado){
 				acumulado += venta.subtotal;
 			}
@@ -28,7 +28,7 @@ public class Venta {
 	}	
 	static public int acumuladoVentasEmpleadoEncargado(Empleado empleado){
 		int acumulado=0;
-		for (Venta venta : empleado.sede.getHistorialVentas()){
+		for (Venta venta : empleado.getSede().getHistorialVentas()){
 			if (venta.encargado == empleado){
 				acumulado += venta.subtotal;
 			}

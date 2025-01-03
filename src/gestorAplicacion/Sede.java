@@ -1,8 +1,7 @@
 package gestorAplicacion;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 public class Sede{
-	private static ArrayList<Sede> listaSedes;
+	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 	private ArrayList<Empleado> listaEmpleado;
 	private ArrayList <Maquinaria> listaMaquina;
 	private ArrayList<Venta> historialVentas;

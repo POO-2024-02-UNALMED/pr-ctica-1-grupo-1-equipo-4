@@ -1,12 +1,14 @@
 package uiMain;
 
 import java.util.ArrayList;
-import gestorAplicacion.Empleado;
 import java.util.Scanner;
+
 import gestorAplicacion.Sede;
+import gestorAplicacion.Empleado;
+import gestorAplicacion.Rol;
 
 public class GestionHumana {
-    static public void despedirEmpleados(Scanner scanner) {
+    static public ArrayList<Empleado> despedirEmpleados(Scanner scanner) {
         System.out.println("Obteniendo lista sugerida de empleados");
         ArrayList<Empleado> aDespedir = Empleado.listaInicialDespedirEmpleado();
         for (Empleado emp : aDespedir) {
@@ -54,6 +56,16 @@ public class GestionHumana {
         // Ya tenemos la lista de empleados a despedir.
 
         Empleado.despedirEmpleados(seleccion);
+        return seleccion;
+    }
+
+    public static void reorganizarEmpleados(Scanner in, ArrayList<Empleado> despedidos){
+        System.out.println("Todavía nos quedan "+despedidos.size()+" empleados por reemplazar, hay que contratar.");
+        ArrayList<Object> necesidades = Sede.obtenerNececidadTransferenciaEmpleados(despedidos);
+        ArrayList<Rol> rolesATransferir = (ArrayList<Rol>) necesidades.get(0);
+        ArrayList<Sede> transferirDe = (ArrayList<Sede>) necesidades.get(1);
+
+        
 
     }
 }

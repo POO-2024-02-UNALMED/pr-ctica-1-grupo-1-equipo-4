@@ -1,6 +1,8 @@
 package uiMain;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import gestorAplicacion.Empleado;
 
 public class Main {
     public static void main (String[] args){
@@ -17,7 +19,8 @@ public class Main {
         int opcion = in.nextInt();
         switch(opcion) {
         case 1:
-            GestionHumana.despedirEmpleados(in);
+            ArrayList<Empleado> despedidos = GestionHumana.despedirEmpleados(in);
+            GestionHumana.reorganizarEmpleados(in, despedidos);
             break;
         case 2:
             break;
