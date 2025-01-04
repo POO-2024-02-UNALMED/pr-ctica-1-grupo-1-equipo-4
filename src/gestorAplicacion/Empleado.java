@@ -18,6 +18,7 @@ public class Empleado extends Persona{
     int traslados;
     int prendasArruinadas=0;
     int prendasProducidas=0;
+    float pericia; // De 0 a 1, la posibilidad de que una prenda no se arruine al ser manejada por el modista.
     private int bonificacion=0;
 
     Empleado(){
@@ -144,6 +145,7 @@ public class Empleado extends Persona{
     public void setAreas(ArrayList<Area> areas){this.areas=areas;}
     public int getBonificacion(){return bonificacion;}
     public void getRendimientoBonificacion(int boni){bonificacion=boni;}
+    public float getPericia(){return pericia;}
 
     private void modificarBonificacion(int bonificacion){
         this.bonificacion += bonificacion;

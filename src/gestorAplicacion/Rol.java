@@ -1,5 +1,4 @@
 package gestorAplicacion;
-import java.util.ArrayList;
 
 public enum Rol {
 	
@@ -9,7 +8,8 @@ public enum Rol {
 	DISEÑADOR("Diseñador",100000),
 	MODISTA("Modista",100000),
 	SECRETARIA("Secretaria",100000),
-	PLANTA("Planta",100000);
+	PLANTA("Planta",100000),
+	VENDEDOR("Vendedor",100000);
 	
 	private final String nombre;
     private final long salarioInicial;

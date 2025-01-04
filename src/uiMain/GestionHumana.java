@@ -6,6 +6,7 @@ import java.util.Scanner;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Empleado;
 import gestorAplicacion.Rol;
+import gestorAplicacion.Venta;
 
 public class GestionHumana {
     static public ArrayList<Empleado> despedirEmpleados(Scanner scanner) {
@@ -62,10 +63,52 @@ public class GestionHumana {
     public static void reorganizarEmpleados(Scanner in, ArrayList<Empleado> despedidos){
         System.out.println("Todavía nos quedan "+despedidos.size()+" empleados por reemplazar, hay que contratar.");
         ArrayList<Object> necesidades = Sede.obtenerNececidadTransferenciaEmpleados(despedidos);
+        // Desempacamos los datos dados por GestorAplicacion
         ArrayList<Rol> rolesATransferir = (ArrayList<Rol>) necesidades.get(0);
         ArrayList<Sede> transferirDe = (ArrayList<Sede>) necesidades.get(1);
+        ArrayList<Empleado> aContratar = (ArrayList<Empleado>) necesidades.get(2);
 
+        // Lista de empleados a tranferir de sede, seleccionados por el usuario.
+        ArrayList<Empleado> aTransferir = new ArrayList<Empleado>();
+
+        for (int rolidx=0; rolidx<rolesATransferir.size();rolidx++){
+            Rol rol = rolesATransferir.get(rolidx);
+            Sede sede = transferirDe.get(rolidx);
+            System.out.println("Se necesita transferir "+rol+" de "+sede.getNombre()+", estos son los candidatos: Ingresa su numero de documento para hacerlo.");
+            for (Empleado emp : sede.getlistaEmpleados()){
+                if (emp.getRol() == rol){
+                    String descripcion= emp.getNombre()+" Documento:"+emp.getDocumento();
+                    switch (emp.getRol()){
+                        case VENDEDOR:
+                            descripcion += " Ventas asesoradas: "+Venta.acumuladoVentasAsesoradas(emp);
+                            break;
+                        case MODISTA:
+                            descripcion +=" Pericia: "+emp.getPericia();
+                            break;
+                        default:
+                            descripcion+=" contratado en "+emp.getFechaContratacion();
+                    }
+                    System.out.println(descripcion);
+                }
+            }
+
+            // Obtenemos la cantidad de empleados a seleccionar
+            int cantidad=0;
+            for (Empleado emp : despedidos)){
+                if (emp.getRol() == rol){
+                    cantidad++;
+                }
+            }
+            for (int i=0; i<cantidad; i++){
+                int doc = in.nextInt();
+                for (Empleado emp : sede.getlistaEmpleados()){
+                    if (emp.getDocumento() == doc){
+                        aTransferir.add(emp);
+                    }
+                }
+            }
+            
+        }
         
-
     }
 }

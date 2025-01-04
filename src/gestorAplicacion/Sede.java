@@ -104,4 +104,16 @@ public class Sede{
 		}
 		return cantidad;
 	}
+
+	static public void reemplazarPorCambioSede(ArrayList<Empleado> despedidos,ArrayList<Empleado> aTransferir){
+		for (Empleado despedido : despedidos){
+			for (Empleado reemplazo: aTransferir){
+				if (despedido.getRol() == reemplazo.getRol()){
+					reemplazo.setSede(despedido.getSede());
+					aTransferir.remove(reemplazo);
+					break;
+				}
+			}
+		}
+	}
 }
