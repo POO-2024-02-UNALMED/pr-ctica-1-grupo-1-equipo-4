@@ -1,12 +1,13 @@
 package gestorAplicacion;
-import java.util.ArrayList;
 
 public class Insumo {
-	long precioStockTotal;
-	String nombre;
-	float cantidad;
-	Proveedor proveedor;
-	Sede sede;
-	int precio;
+	protected long precioStockTotal;
+	protected String nombre;
+	protected float cantidad;
+	protected Proveedor proveedor;
+	protected Sede sede;
+	protected int precio;
 	// Actualizado al surtir
+
+	
 }

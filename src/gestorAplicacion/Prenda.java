@@ -19,4 +19,7 @@ public abstract class Prenda {
     ArrayList <Prenda> historialPrendasVendidas;
     float pesimismo;
     // Porcentaje que afecta la cantidad a producir
+
+    public String getNombre(){return nombre;}
+    public ArrayList<Insumo> getInsumo(){return insumo;}
 }
