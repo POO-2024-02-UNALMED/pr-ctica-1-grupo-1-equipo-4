@@ -43,9 +43,9 @@ public class Main {
 
         case 2:
             fecha = ingresarFecha(in);
-            ArrayList<Object> retorno = GestionInsumos.planificarProduccion(fecha);
-            ArrayList<Object> listaA = GestionInsumos.coordinarBodegas(retorno);
-            ArrayList<Deuda> deuda = GestionInsumos.comprarInsumos(fecha, listaA);
+            ArrayList<Object> retorno = planificarProduccion(fecha);
+            ArrayList<Object> listaA = coordinarBodegas(retorno);
+            ArrayList<Deuda> deuda = comprarInsumos(fecha, listaA);
             break;
 
         case 3:
@@ -314,4 +314,248 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
     String analisisFuturo=BFString+ ", sin embargo su desición fue aplicar un descuento de: " +nuevoDescuento*100+"%.";
     return analisisFuturo;
     }
+
+
+
+//Funcionalidad Insumos
+
+ // Interacción 1 de Insumos
+ static public ArrayList<Object> planificarProduccion(Fecha fecha){
+    //ArrayList<Insumo> listaGuia = new ArrayList<>();
+    ArrayList<Object> listaXSede = new ArrayList<>();
+    ArrayList<Insumo> insumoXSede = new ArrayList<>();
+    ArrayList<Float> cantidadAPedir = new ArrayList<>();
+    ArrayList<Object> retorno= new ArrayList<>();
+
+    for(Sede x: Sede.getlistaSedes()){
+        
+        for(Prenda prenda: Sede.getPrendasInventadas()){
+            int proyeccion = GestionInsumos.predecirVentas(fecha, x, prenda); 
+
+            System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion+ 
+                                " Porcentaje de pesimismo: "+Venta.getPesimismo());
+            System.out.println("Seleccione una de las siguientes opciones:");
+            System.out.println("1. Estoy de acuerdo con el porcentaje de pesimismo");
+            System.out.println("2. Deseo cambiar el porcentaje de pesimismo");  
+    
+            Scanner in = new Scanner(System.in);
+            int opcion = in.nextInt();
+            switch(opcion) {
+            case 1:
+                break;
+            case 2:
+                Scanner porcentaje = new Scanner(System.in);
+                int newPesimism = porcentaje.nextInt();
+                Venta.setPesimismo(newPesimism);
+                break;
+            default:
+                System.out.println("Esa opción no es valida.");
+            }
+
+            float prediccion = proyeccion * (1 - Venta.getPesimismo());
+
+            for(Prenda p:Prenda.getPrendasInventadas()){
+                for(Insumo insumo: p.getInsumo()){
+                    insumoXSede.add(insumo);
+                }
+                for(Float i: Prenda.getCantidadInsumo()){
+                    cantidadAPedir.add(i * prediccion);
+                }
+            }
+        }
+
+        listaXSede.add(insumoXSede);
+        listaXSede.add(cantidadAPedir);
+        retorno.add(listaXSede);}
+        //retorno.add(listaGuia);}
+    return retorno; }
+
+// Regresión lineal    
+// Utiliza minimos cuadrados para predecir las ventas de una prenda en una sede
+static public int predecirVentas(Fecha fechaActual,Sede sede, Prenda prenda){
+    int n=5; // Cantidad de meses previos a usar
+    int sumatoriax=0+1+2+3+4+5;
+    int sumatoriaxCuadrado=1+2^3+3^2+4^2+5^2;
+    int sumatoriaY=0;
+    int sumatoriaYCuadrado=0;
+    int sumatoriaXY=0;  
+    // Iteramos por los 5 meses anteriores
+    for(int meses=0;meses<5;meses++){
+        //Iteramos por las ventas de la sede de ese mes
+        int sumatoriaYMes=0;
+        for(Venta venta: Venta.filtrarPorMes(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
+            if (venta.getArticulos().contains(prenda)){
+                sumatoriaYMes+=venta.getCantidades().get(venta.getArticulos().indexOf(prenda));
+            }
+        }
+        sumatoriaY+=sumatoriaYMes;
+        sumatoriaYCuadrado+=sumatoriaYMes^2;
+        sumatoriaXY+=sumatoriaYMes*meses;
+    }
+    //Calculamos los datos de la funcion lineal
+    double pendiente=(n*sumatoriaXY-sumatoriax*sumatoriaY)/(n*sumatoriaxCuadrado-sumatoriax^2);
+    double intercepcion = (sumatoriaY-pendiente*sumatoriax)/n;
+    // y=pendiente*x+intercepcion
+    return (int) Math.ceil(pendiente*6+intercepcion); }
+
+    
+    
+// Interacción 2 de Insumos
+static public ArrayList<Object> coordinarBodegas(ArrayList<Object> retorno){
+    ArrayList<Object> listaXSede = new ArrayList<>();
+    ArrayList<Insumo> listaInsumos = new ArrayList<>();
+    ArrayList<Integer> listaCantidades = new ArrayList<>();
+    ArrayList<Insumo> insumosAPedir = new ArrayList<>();
+    ArrayList<Integer> cantidadAPedir = new ArrayList<>();
+    ArrayList<Object> listaA = new ArrayList<Object>();
+    ArrayList<Object> listaSede = new ArrayList<>();
+
+
+    for (Object sede : retorno) {
+        // Convertir cada elemento en un ArrayList<Object> correspondiente a una sede
+        listaXSede = (ArrayList<Object>) sede;
+        
+        // Extraer las listas internas: insumos y cantidades
+        listaInsumos = (ArrayList<Insumo>) listaXSede.get(0);
+        listaCantidades = (ArrayList<Integer>) listaXSede.get(1);
+        
+        for(Sede s: Sede.getlistaSedes()){
+            for(Insumo i: listaInsumos){
+                Resultado productoEnBodega = Sede.verificarProductoBodega(i, s);
+                if(productoEnBodega.getEncontrado() == true){
+                    int restante = Sede.restarInsumo(i, s, listaCantidades.get((int)productoEnBodega.getIndex()));
+                    if(restante != 0){
+                        Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
+                        if(productoEnOtraSede.getEncontrado() == true){
+                            System.out.println("Tenemos el insumo "+i.getNombre()+" en nuestra sede "+productoEnOtraSede.getSede()+".");
+                            System.out.println("El insumo tiene un costo de "+productoEnOtraSede.getPrecio());
+                            System.out.println("Seleccione una de las siguientes opciones:");
+                            System.out.println("1. Deseo transferir el insumo desde la sede "+productoEnOtraSede.getSede());
+                            System.out.println("2. Deseo comprar el insumo");  
+                            
+                            Scanner in = new Scanner(System.in);
+                            int opcion = in.nextInt();
+                            switch(opcion) {
+                            case 1:
+                                int restante2 = Sede.restarInsumo(i, s, restante);
+                                if(restante2 != 0){
+                                    insumosAPedir.add(i);
+                                    cantidadAPedir.add(restante2);
+                                }
+                                break;
+                            case 2:
+                                insumosAPedir.add(i);
+                                cantidadAPedir.add(restante);
+                                break;
+                            default:
+                                System.out.println("Esa opción no es valida.");
+                            }
+
+                        }
+                    }
+                    
+                }
+            }
+    
+    listaSede.addAll(insumosAPedir);
+    listaSede.addAll(cantidadAPedir);
+    listaA.add(listaSede);
+    
+        }
+    }
+
+    return listaA;
 }
+
+
+//Interacción 3 de Insumos
+static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> listaA){
+    ArrayList<Object> sede = new ArrayList<>();
+    ArrayList<Insumo> insumos = new  ArrayList<>();
+    ArrayList<Integer> cantidad = new  ArrayList<>();
+    ArrayList<Proveedor> proveedores = new  ArrayList<>();
+    ArrayList<Integer> precios = new ArrayList<>();
+    ArrayList<Deuda> deudas = new ArrayList<>();
+
+    for (Object s : listaA) {
+        sede = (ArrayList<Object>) s;
+        insumos = (ArrayList<Insumo>) sede.get(0);
+        cantidad = (ArrayList<Integer>) sede.get(1);
+
+        for(Sede sedee: Sede.getlistaSedes()){
+    
+            for(int i =0; i < insumos.size(); i++){
+                Proveedor mejorProveedor = null;
+                int mejorPrecio = 0;
+                int cantidadAñadir = 0;
+
+                for (Proveedor proveedor: Proveedor.getListaProveedores()){
+                    
+                    if(proveedor.getInsumo().equals(insumos.get(i))){
+                        proveedores.add(proveedor);
+                        precios.add(Proveedor.costoDeLaCantidad(insumos.get(i), cantidad.get(i)));
+                    }
+                }
+
+                for (Proveedor x : proveedores) {
+                    int precio = x.costoDeLaCantidad(insumos.get(i), cantidad.get(i));
+                    if ((precio != 0) && (precio < mejorPrecio)) {
+                        mejorPrecio = precio;
+                        mejorProveedor = x;
+                            }}
+                
+                System.out.println("Tenemos el insumo "+insumos.get(i).getNombre()+" con nuestro proveedor "+proveedores.get(i).getNombre()+".");
+
+                if(insumos.get(i).getPrecioIndividual()<insumos.get(i).getUltimoPrecio()){
+                    System.out.println("Dado que el costo de la venta por unidad es menor al ultimo precio por el que compramos el insumo");
+                    System.out.println("Desea pedir mas de la cantidad necesaria para la producción? ");
+                    System.out.println("Cantidad: "+cantidad.get(i));                    
+                    System.out.println("1. Si");
+                    System.out.println("2. No");  
+                                
+                    Scanner in = new Scanner(System.in);
+                    int opcion = in.nextInt();
+                    switch(opcion) {
+                    case 1:
+                        if(opcion >=0){
+                            System.out.println("Cuanta cantidad más desea pedir del insumo "+insumos.get(i).getNombre());
+                            Scanner cant = new Scanner(System.in);
+                            cantidadAñadir = cant.nextInt();
+                        }
+                        else{
+                            System.out.println("Esa opción no es valida.");
+                        }
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        System.out.println("Esa opción no es valida.");
+                    }
+                }       
+                cantidad.set(i,((cantidad.get(i))+cantidadAñadir));
+
+                Sede.añadirInsumo(insumos.get(i), sedee, cantidad.get(i));
+
+                for (Proveedor proveedor: Proveedor.getListaProveedores()){
+                    int montoDeuda = 0;
+                    if(insumos.get(i).getProveedor().getNombre().equals(proveedor.getNombre())){
+                        montoDeuda += insumos.get(i).getPrecioIndividual()*cantidad.get(i);
+                    }
+                    if(montoDeuda > 0){
+                        Deuda deuda = new Deuda(fecha, montoDeuda, "entidad", "tipo", 5);
+                        deudas.add(deuda);
+                    }
+                    
+                }
+            }
+            
+                
+                
+            
+        }
+    }
+    return deudas;
+}
+}
+
+
