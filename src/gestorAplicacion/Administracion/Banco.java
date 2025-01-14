@@ -12,11 +12,12 @@ public class Banco implements Serializable {
 	private long ahorroBanco;
 	private float interes;
 	private static ArrayList<Banco> listaBancos;
-	private static Banco cuentaPrincipal = new Banco("principal",125_000_000);
+	private static Banco cuentaPrincipal = new Banco("Banco Montreal","principal",125_000_000);
 
 
-	public Banco(String nombre, int ahorro){
-		this.nombreCuenta = nombre;
+	public Banco(String cuenta, String nombre, int ahorro){
+		this.nombreEntidad=nombre;
+		this.nombreCuenta = cuenta;
 		this.ahorroBanco = ahorro;
 		listaBancos.add(this);
 	}

@@ -12,6 +12,11 @@ public class Proveedor {
 	String nombre;
 	private ArrayList<Deuda> deuda;
 
+	public Proveedor(int precio,String nombre,Insumo insumo){
+		this(precio,nombre);
+		tipoInsumo=insumo;
+	}
+	
 	static public int costoDeLaCantidad(Insumo i, int c){
 		int precio = 0;
 		for(Proveedor p: listaProveedores){
