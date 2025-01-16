@@ -76,7 +76,7 @@ public class Serializador {
                     oos.writeObject(Banco.getListaBancos());
                     // Cerramos el flujo de bytes.
                     oos.close();
-                    System.out.println("Bancos/cuentas actualizadas");
+                    System.out.println("Bancos/cuentas serializadas");
                 } catch (FileNotFoundException e) {
                     // Si algo falla, lo imprimimos.
                     e.printStackTrace();
