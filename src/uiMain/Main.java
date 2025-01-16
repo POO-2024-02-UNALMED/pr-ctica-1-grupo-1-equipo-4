@@ -10,7 +10,10 @@ import gestorAplicacion.Administracion.Deuda;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Evaluacionfinanciera;
 import gestorAplicacion.Administracion.Rol;
+import gestorAplicacion.Administracion.Resultado;
 import gestorAplicacion.Bodega.Prenda;
+import gestorAplicacion.Bodega.Insumo;
+import gestorAplicacion.Bodega.Proveedor;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,6 +24,7 @@ import baseDatos.Serializador;
 public class Main {
     public static void main (String[] args){
         Deserializador.deserializar();
+        new Persona("Julia", 0, null, 0, false, null);
         Scanner in = new Scanner(System.in);
         buclePrincipal:
         while (true){
@@ -330,7 +334,7 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
     for(Sede x: Sede.getlistaSedes()){
         
         for(Prenda prenda: Sede.getPrendasInventadas()){
-            int proyeccion = GestionInsumos.predecirVentas(fecha, x, prenda); 
+            int proyeccion = predecirVentas(fecha, x, prenda); 
 
             System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion+ 
                                 " Porcentaje de pesimismo: "+Venta.getPesimismo());

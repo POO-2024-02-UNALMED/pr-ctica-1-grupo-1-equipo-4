@@ -25,6 +25,8 @@ public class Serializador {
 
         // Estos File son cada uno un archivo
         File[] docs = rutaTemp.listFiles();
+        System.out.println("Encontramos estos archivos para guardar: " +docs.length);
+        System.out.println("En la ruta"+rutaTemp.getAbsolutePath());
 
         PrintWriter pw;
 
@@ -44,6 +46,7 @@ public class Serializador {
         // Ahora vamos a escribir a ellos, java los crea si no existen.
 
         for(File file: docs){
+            System.out.println("Miramos archivo: "+ file.getName());
             if (file.getAbsolutePath().contains("Sedes")) {
             try {
                 // FileOutputStream recibe un archivo y lo abre para escritura.
@@ -54,6 +57,7 @@ public class Serializador {
                 oos.writeObject(Sede.getlistaSedes());
                 // Cerramos el flujo de bytes.
                 oos.close();
+                System.out.println("Sedes serializadas");
             } catch (FileNotFoundException e) {
                 // Si algo falla, lo imprimimos.
                 e.printStackTrace();
@@ -61,6 +65,7 @@ public class Serializador {
                 // Si algo falla, lo imprimimos.
                 e.printStackTrace();
             }
+        }
             if (file.getAbsolutePath().contains("Bancos")) {
                 try {
                     // FileOutputStream recibe un archivo y lo abre para escritura.
@@ -71,6 +76,7 @@ public class Serializador {
                     oos.writeObject(Banco.getListaBancos());
                     // Cerramos el flujo de bytes.
                     oos.close();
+                    System.out.println("Bancos/cuentas actualizadas");
                 } catch (FileNotFoundException e) {
                     // Si algo falla, lo imprimimos.
                     e.printStackTrace();
@@ -89,6 +95,7 @@ public class Serializador {
                     oos.writeObject(Persona.getListaPersonas());
                     // Cerramos el flujo de bytes.
                     oos.close();
+                    System.out.println("Peronas serializadas");
                 } catch (FileNotFoundException e) {
                     // Si algo falla, lo imprimimos.
                     e.printStackTrace();
@@ -100,4 +107,4 @@ public class Serializador {
         }
     }
 
-}}
+}

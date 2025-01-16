@@ -11,7 +11,7 @@ public class Banco implements Serializable {
 	private ArrayList<Deuda> deuda;
 	private long ahorroBanco;
 	private float interes;
-	private static ArrayList<Banco> listaBancos;
+	private static ArrayList<Banco> listaBancos = new ArrayList<Banco>();
 	private static Banco cuentaPrincipal = new Banco("Banco Montreal","principal",125_000_000);
 
 
