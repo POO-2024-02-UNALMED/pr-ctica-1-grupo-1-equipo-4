@@ -1,4 +1,5 @@
 package gestorAplicacion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -6,7 +7,8 @@ import java.util.Scanner;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Bodega.Prenda;
 
-public class Venta {
+public class Venta implements Serializable {
+	private static final long serializarVersionUID = 1L; // Para serializacion
 	private ArrayList<Prenda> articulos;
 	private ArrayList<Integer> cantidades;
 	private Empleado encargado;

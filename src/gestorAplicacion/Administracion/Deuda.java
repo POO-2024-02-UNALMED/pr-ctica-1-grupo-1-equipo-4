@@ -1,4 +1,5 @@
 package gestorAplicacion.Administracion;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import gestorAplicacion.Fecha;
@@ -6,7 +7,8 @@ import gestorAplicacion.Bodega.Camisa;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
 
-public class Deuda {
+public class Deuda implements Serializable {
+	private static final long serializarVersionUID = 1L; // Para serializacion
 	private static ArrayList<Deuda> listaDeudas=new ArrayList<Deuda>();
 	private final Fecha FECHACREACION;
 	private long valorinicialDeuda;

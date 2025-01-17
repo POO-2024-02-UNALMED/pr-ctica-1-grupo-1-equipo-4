@@ -1,4 +1,5 @@
 package gestorAplicacion.Administracion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,8 +10,10 @@ import gestorAplicacion.Membresia;
 import gestorAplicacion.Venta;
 import gestorAplicacion.Bodega.Maquinaria;
 
-public class Empleado extends Persona implements GastoMensual{
+public class Empleado extends Persona implements GastoMensual, Serializable{
 	
+	private static final long serializarVersionUID = 1L; // Para serializacion
+
 	public static ArrayList <Empleado> listaEmpleados=new ArrayList<Empleado>();
     ArrayList<Integer> balances = new ArrayList<Integer>();
     // Usado para empleados de Dirección.
