@@ -1,6 +1,8 @@
 package gestorAplicacion.Bodega;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Sede;
+
+import java.net.ResponseCache;
 import java.util.ArrayList;
 
 public class Maquinaria {
@@ -51,11 +53,45 @@ public class Maquinaria {
 			}
 		}
 	}
-					
-	public static void hacerMantenimiento(){
-		for(Sede cadaSede : Sede.getlistaSedes()){
-			for(Maquinaria cadaMaquinaria : cadaSede.getlistaMaquinas()){
+	
+	public String getNombre(){
+		return nombre;
+	}
 
+	public ArrayList<Repuesto> getRepuestos(){
+		return repuestos;
+	}
+
+	public int getHoraRevision(){
+		return horaRevision;
+	}
+
+	public int getHorasUso(){
+		return horasUso;
+	}
+
+	public void hacerMantenimiento(){
+		ArrayList<Maquinaria> maqDisponibles = new ArrayList<>();	//listado temporal de maquinarias disponibles, el cual será pasado como argumento para la segunda interracion
+
+		for(Sede cadaSede : Sede.getlistaSedes()){
+			for(Maquinaria cadaMaquina : cadaSede.getlistaMaquinas()){
+				//ver si las horas predeterminadas de revision no han sobrepasado las horas de uso de cada maquina
+				if ((cadaMaquina.getHoraRevision() - cadaMaquina.getHorasUso()) > 0){
+					cadaMaquina.mantenimiento = false; //eso quiere decir que no requiere manteminiento o revision
+					for(Repuesto cadaRepuesto : cadaMaquina.getRepuestos()){
+						if ((cadaRepuesto.getHorasDeVidaUtil() - cadaRepuesto.getHorasDeUso()) <= 0){
+							//se debe reemplazar
+						}
+					}
+				} else{
+					cadaMaquina.mantenimiento = true;
+					// ver como hacer para realizar la revision y que la maquina pueda volver a ser utilizada
+				}
+				
+				//añadir esta maquina a la lista temporal de las maquinas que estan disponibles
+				if(cadaMaquina.mantenimiento == false){
+					maqDisponibles.add(cadaMaquina);
+				}
 			}
 		}
 	}
