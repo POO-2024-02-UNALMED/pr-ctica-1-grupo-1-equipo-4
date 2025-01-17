@@ -1,31 +1,28 @@
 package gestorAplicacion.Bodega;
 
-public enum Repuesto {
-	AGUJASMC(12),   //MC significa que es de la máquina de coser
-    ACEITEMC(60),
-    PIEPRENSATELAMC(1000),
-    CORREADETRANSMISIONMC(3000),
-    CUCHILLASMCORTE(60),    //MCORTE significa que es de la máquina de corte
-    AFILADORESMCORTE(750),
-    RODAMIENTOSMCORTE(1500),
-    RESISTENCIAELECTRICAPI(1500),   //PI significa que es de la plancha industrial
-    MANGUERADEVAPORPI(750),
-    AGUJASBI(25),       // BI significa que es de la Bordadora Industrial
-    ACEITEBI(75),
-    BANDASDETRANSMISIONMT(2500),        //MT signigica que es de la Maquina de Termofijado
-    RESISTENCIASELECTRICASMT(1750),
-    CUCHILLASMTIJEREADO(70),      //MTIJEREADO signigica que es de la Máquina de Tijereado
-    ACEITEMTIJEREADO(50);
-
-
+public class Repuesto {
+	private final String nombre;
     private final int horasDeVidaUtil;
+    private int horasDeUso;
+    
 
-    Repuesto(int horasDeVidaUtil){
+    public Repuesto(String nombre, int horasDeVidaUtil){
+        this.nombre = nombre;
         this.horasDeVidaUtil = horasDeVidaUtil;
     }
 
+    public String getNombre(){
+        return nombre;
+    }
     public int getHorasDeVidaUtil(){
         return horasDeVidaUtil;
+    }
+
+    public void setHorasDeUso(){
+        //aquí se modificaran las horas de uso de cada repuesto (segun lo que definamos en la clase MAQUINARIA sobre cuantas horas toma la fabricacion de cada tipo de prenda)
+    }
+    public int getHorasDeUso(){
+        return horasDeUso;
     }
 
     public float calcularGastoMensual(){
