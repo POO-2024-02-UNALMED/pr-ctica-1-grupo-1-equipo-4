@@ -7,7 +7,7 @@ import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
 
 public class Deuda {
-	private static ArrayList<Deuda> listaDeudas;
+	private static ArrayList<Deuda> listaDeudas=new ArrayList<Deuda>();
 	private final Fecha FECHACREACION;
 	private long valorinicialDeuda;
 	private float interes;

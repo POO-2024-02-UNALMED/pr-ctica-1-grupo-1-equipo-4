@@ -1,8 +1,7 @@
 package gestorAplicacion.Bodega;
-import java.util.ArrayList;
-
-import gestorAplicacion.Sede;
 import gestorAplicacion.Administracion.Empleado;
+import gestorAplicacion.Sede;
+import java.util.ArrayList;
 
 public class Maquinaria {
 	String nombre;

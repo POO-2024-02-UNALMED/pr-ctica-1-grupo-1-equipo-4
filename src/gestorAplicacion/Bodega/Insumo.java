@@ -1,8 +1,8 @@
 package gestorAplicacion.Bodega;
 
+import gestorAplicacion.Administracion.GastoMensual;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
-import gestorAplicacion.Administracion.GastoMensual;
 
 public class Insumo implements GastoMensual{
 	protected Fecha fechaCompra;
@@ -27,6 +27,13 @@ public class Insumo implements GastoMensual{
 		this.ultimoPrecio = this.precioXUnidad;
 		precioCompra=proveedor.getPrecio()*Math.round(cantidad);
 		precioStockTotal+=precioCompra;
+	}
+
+	public Insumo(String nombre,Proveedor proveedor){
+		//Para insumos de proveedores
+		this.nombre=nombre;
+		this.proveedor=proveedor;
+		this.precioXUnidad = proveedor.getPrecio();
 	}
 
 	@Override

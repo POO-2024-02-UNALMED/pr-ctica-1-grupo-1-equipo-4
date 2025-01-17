@@ -6,7 +6,7 @@ import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
 
 public class Evaluacionfinanciera {
-	private static ArrayList <Evaluacionfinanciera> historialEvaluaciones;
+	private static ArrayList <Evaluacionfinanciera> historialEvaluaciones = new ArrayList<Evaluacionfinanciera>();
 	private static ArrayList <Deuda> deudas;
 	//deudaBanco+deudaProveedores
 	private long pagoPersonas;

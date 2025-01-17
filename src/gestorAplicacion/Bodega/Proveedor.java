@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import gestorAplicacion.Administracion.Deuda;
 
 public class Proveedor {
-	private static ArrayList<Proveedor> listaProveedores;
+	private static ArrayList<Proveedor> listaProveedores=new ArrayList<Proveedor>();
 	Insumo tipoInsumo;
 	//tipoBien:Bien
 	// insumo provisto por este proveedor
