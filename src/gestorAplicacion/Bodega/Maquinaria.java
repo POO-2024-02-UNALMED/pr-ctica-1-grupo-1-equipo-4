@@ -9,7 +9,7 @@ public class Maquinaria {
 	String nombre;
 	Empleado user;
 	int horasUso;
-	boolean estado;
+	boolean estado = false;
 	// True if buena, False if dañada
 	boolean asignable;
 	boolean mantenimiento;
@@ -20,6 +20,13 @@ public class Maquinaria {
 	ArrayList<Repuesto> repuestos;
 	ArrayList<Integer> horasUltimoCambio;
 
+	public Maquinaria(String nombre, long valor, int horaRevision, ArrayList<Repuesto> repuestos){
+		this.nombre = nombre;
+		this.valor = valor;
+		this.horaRevision = horaRevision;
+		this.repuestos = repuestos;
+
+	}
 
 	public static long gastoMensualClase(){
 		long gastoMaquinaria=0;

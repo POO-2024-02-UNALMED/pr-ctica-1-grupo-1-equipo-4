@@ -13,7 +13,9 @@ import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Administracion.Resultado;
 import gestorAplicacion.Bodega.Prenda;
 import gestorAplicacion.Bodega.Insumo;
+import gestorAplicacion.Bodega.Maquinaria;
 import gestorAplicacion.Bodega.Proveedor;
+import gestorAplicacion.Bodega.Repuesto;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -68,6 +70,7 @@ public class Main {
             break;
 
         case 5:
+            
             break;
 
         case 6:
@@ -560,6 +563,70 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
     }
     return deudas;
 }
+
+
+public void crearSedesMaquinasRepuestos(){
+    Repuesto AgujasMC = new Repuesto("Agujas de la Maquina de Coser", 12);
+    Repuesto Aceite = new Repuesto("Aceite", 60);
+    Repuesto PiePrensaTela = new Repuesto("Pie Prensa Tela", 1000);
+    Repuesto CorreDeTransmision = new Repuesto("Correa de Transmision", 3000);
+
+    Repuesto Cuchillas = new Repuesto("Cuchillas", 60);
+    Repuesto Afiladores = new Repuesto("Afiladores", 750);
+    Repuesto Rodamientos = new Repuesto("Rodamientos", 1500);
+
+    Repuesto ResistenciaElectrica = new Repuesto("Resistencia Electrica", 1500);
+    Repuesto MangueraDeVapor = new Repuesto("Manguera de Vapor", 750);
+
+    Repuesto AgujasBI = new Repuesto("Agujas de la Bordadora Industrial", 25);
+
+    Repuesto BandasDeTransmision = new Repuesto("Bandas de Transmision", 2500);
+
+
+    ArrayList<Repuesto> repuestosMC = new ArrayList<>();
+    ArrayList<Repuesto> repuestosMCorte = new ArrayList<>();
+    ArrayList<Repuesto> repuestosPI = new ArrayList<>();
+    ArrayList<Repuesto> repuestosBI = new ArrayList<>();
+    ArrayList<Repuesto> repuestosMTermofijado = new ArrayList<>();
+    ArrayList<Repuesto> repuestosMTijereado = new ArrayList<>();
+
+    repuestosMC.add(AgujasMC);
+    repuestosMC.add(Aceite);
+    repuestosMC.add(PiePrensaTela);
+    repuestosMC.add(CorreDeTransmision);
+
+    repuestosMCorte.add(Cuchillas);
+    repuestosMCorte.add(Afiladores);
+    repuestosMCorte.add(Rodamientos);
+
+    repuestosPI.add(ResistenciaElectrica);
+    repuestosPI.add(MangueraDeVapor);
+
+    repuestosBI.add(AgujasBI);
+    repuestosBI.add(Aceite);
+
+    repuestosMTermofijado.add(BandasDeTransmision);
+    repuestosMTermofijado.add(ResistenciaElectrica);
+
+    repuestosMTijereado.add(Cuchillas);
+    repuestosMTijereado.add(Aceite);
+
+    //creacion de maquinas
+    Maquinaria MaquinaDeCoser = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC);
+    Maquinaria MaquinaDeCorte = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte);
+    Maquinaria PlanchaIndustrial = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI);
+    Maquinaria BordadoraIndustrial = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI);
+    Maquinaria MaquinaDeTermofijado = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado);
+    Maquinaria MaquinaDeTijereado = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado);
+
+    //debo investigar qué maquinas de las creadas pueden ir en cada sede y añadirlas en arrayslists así como los repuestos, para luego sí crear las sedes con dichos arraylists de maquinas ya listos
+
+    
+    //creacion de sedes
+
+    
+}
+
 }
 
 

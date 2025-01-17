@@ -42,6 +42,11 @@ public class Sede implements Serializable{
 		listaSedes.add(this);
 	}
 
+	public Sede(String nombre, ArrayList<Maquinaria> listaMaquina){
+		this();
+		this.nombre = nombre;
+		this.listaMaquina = listaMaquina;
+	}
 	// necesario para añadir sedes a la lista de sedes, pero dicha lista no está cargada aún y además
 	// se estan creando ahí mismo.
 	public Sede(boolean porDefecto){
