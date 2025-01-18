@@ -569,7 +569,7 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
     return deudas;
 }
 
-    //METODO PARA CREAR LAS SEDES, LAS MAQUINAS Y LOS REPUESTOS,
+    //METODO PARA CREAR LAS SEDES, LAS MAQUINAS Y LOS REPUESTOS **CON LOS QUE VA A INICIAR LA EMPRESA**,
     //REQUERIDO PARA LA INTERACCION 1 DE LA FUNCIONALIDAD DE PRODUCCION....
     
 public void crearSedesMaquinasRepuestos(){
@@ -681,6 +681,25 @@ public void crearSedesMaquinasRepuestos(){
     Sede sede5 = new Sede("Sede 5", maqSede5);
     Sede sede6 = new Sede("Sede 6", maqSede6);
     
+        //BUCLES PARA ASIGNAR LOS ATRIBUTOS SEDE A CADA MAQUINA CREADA ANTERIORMENTE, SEGUN LA SEDE A LA QUE PERTENECEN
+    for(Maquinaria maquinasSedeP : maqSedeP){
+        maquinasSedeP.sede = sedeP;
+    }
+    for(Maquinaria maquinasSede2 : maqSede2){
+        maquinasSede2.sede = sede2;
+    }
+    for(Maquinaria maquinasSede3 : maqSede3){
+        maquinasSede3.sede = sede3;
+    }
+    for(Maquinaria maquinasSede4 : maqSede4){
+        maquinasSede4.sede = sede4;
+    }
+    for(Maquinaria maquinasSede5 : maqSede5){
+        maquinasSede5.sede = sede5;
+    }
+    for(Maquinaria maquinasSede6 : maqSede6){
+        maquinasSede6.sede = sede6;
+    }
 }
 
 }

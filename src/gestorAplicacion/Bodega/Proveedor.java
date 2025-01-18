@@ -11,6 +11,8 @@ public class Proveedor {
 	int precio;
 	String nombre;
 	private ArrayList<Deuda> deuda;
+	private ArrayList<Repuesto> repuestosQueVende = new ArrayList<>();
+	private ArrayList<Integer> preciosRepuestos = new ArrayList<>();
 
 	
 	public Proveedor(){
@@ -27,6 +29,8 @@ public class Proveedor {
 		this(precio,nombre);
 		tipoInsumo=insumo;
 	}
+
+	//falta crear constructor que reciba tambien los repuestos y los precios de estos, pero hay que hablarlo primero
 
 	
 	static public int costoDeLaCantidad(Insumo i, int c){
@@ -49,4 +53,11 @@ public class Proveedor {
 	public void setPrecio (int monto){precio=monto;}
 	public String getNombre (){return nombre;}
 	public void setNombre (String nom){nombre=nom;}
+
+	public ArrayList<Repuesto> getRepuestosQueVende(){
+		return repuestosQueVende;
+	}
+	public ArrayList<Integer> getPreciosRepuestos(){
+		return preciosRepuestos;
+	}
 }

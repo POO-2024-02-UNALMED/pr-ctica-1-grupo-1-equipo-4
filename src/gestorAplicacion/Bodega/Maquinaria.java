@@ -13,7 +13,7 @@ public class Maquinaria {
 	// True if buena, False if dañada
 	boolean asignable;
 	boolean mantenimiento;
-	Sede sede;
+	public Sede sede;
 	long valor;
 	int horasVisitaTecnico;
 	int horaRevision;
@@ -83,7 +83,7 @@ public class Maquinaria {
 	}
 
 
-	public void hacerMantenimiento(){
+	public ArrayList<Maquinaria> agruparMaquinasDisponibles(){
 		ArrayList<Maquinaria> maqDisponibles = new ArrayList<>();	//listado temporal de maquinarias disponibles, el cual será pasado como argumento para la segunda interracion
 
 		for(Sede cadaSede : Sede.getlistaSedes()){
@@ -107,9 +107,12 @@ public class Maquinaria {
 				}
 			}
 		}
+
+		return maqDisponibles;
 	}
 
-	public void cambioSioNo(){
+	public void reemplazarRepuesto(){
+		
 	}
 
 	static public void asignarMaquinaria(Empleado emp){
