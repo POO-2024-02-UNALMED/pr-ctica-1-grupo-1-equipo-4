@@ -155,7 +155,7 @@ public class Main {
 
         // Ya tenemos la lista de empleados a despedir.
 
-        Empleado.despedirEmpleados(seleccion);
+        Empleado.despedirEmpleados(seleccion, true);
         return seleccion;
     }
 

@@ -23,7 +23,7 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
     private int rendimiento;
     private Sede sede;
     private Maquinaria maquinaria;
-    private ArrayList<Area> areas;
+    private ArrayList<Area> areas = new ArrayList<Area>();
     private int traslados;
     private int prendasDescartadas=0;
     private int prendasProducidas=0;
@@ -42,8 +42,8 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
         this.sede=sede;
     }
     
-    public Empleado(Area area,Fecha fecha, Sede sede,String nom, int doc, Rol rol, int exp, boolean t, Membresia mem){
-        super(nom,doc,rol,exp,t,mem);
+    public Empleado(Area area,Fecha fecha, Sede sede,String nom, int doc, Rol rol, int exp, Membresia mem){
+        super(nom,doc,rol,exp,true,mem);
         this.areaActual=area;
         this.areas.add(area);
         fechaContratacion=fecha;
@@ -159,17 +159,21 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
         return listaADespedir;
     }
 
-    // Interaccion 2 gestion humana
-    static public void despedirEmpleados(ArrayList<Empleado> empleados){
+    // Interaccion 2 gestion humana. Puedes poner conTransacciones en falso en caso de que quieras quitar al empleado "Limpiamente", por ejemplo
+    // en el modulo de Desarrollo.
+    static public void despedirEmpleados(ArrayList<Empleado> empleados, boolean conTransacciones){
         for (Empleado emp : empleados){
             emp.sede.getlistaEmpleados().remove(emp);
             listaEmpleados.remove(emp);
 
-            int aPagar = Maquinaria.remuneracionDanos(emp);
-            Banco.getCuentaPrincipal().transaccion(aPagar);
+            if(conTransacciones){
+                int aPagar = Maquinaria.remuneracionDanos(emp);
+                Banco.getCuentaPrincipal().transaccion(aPagar);
+            }
             Maquinaria.liberarMaquinariaDe(emp);
         }
     }
+
 
     // Interaccion 1 gestion humana
 

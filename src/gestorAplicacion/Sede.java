@@ -16,7 +16,7 @@ public class Sede implements Serializable{
 	private static final long serializarVersionUID = 1L; // Para serializacion
 
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
-	private ArrayList<Empleado> listaEmpleado;
+	private ArrayList<Empleado> listaEmpleado = new ArrayList<Empleado>();
 	private ArrayList <Maquinaria> listaMaquina;
 	private ArrayList<Venta> historialVentas;
 	private static ArrayList<Prenda> prendasInventadas;
@@ -237,4 +237,7 @@ public class Sede implements Serializable{
 		return cantidad;
 	}
 
+	public String toString(){
+		return nombre+" con "	+listaEmpleado.size()+" empleados";
+	}
 }
