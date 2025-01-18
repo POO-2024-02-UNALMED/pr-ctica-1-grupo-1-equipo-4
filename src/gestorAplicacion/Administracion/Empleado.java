@@ -42,12 +42,15 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
         this.sede=sede;
     }
     
-    public Empleado(Area area,Fecha fecha, Sede sede,String nom, int doc, Rol rol, int exp, Membresia mem){
+    public Empleado(Area area,Fecha fecha, Sede sede,String nom, int doc, Rol rol, int exp, Membresia mem, Maquinaria maquina){
         super(nom,doc,rol,exp,true,mem);
         this.areaActual=area;
         this.areas.add(area);
         fechaContratacion=fecha;
         this.sede=sede;
+        listaEmpleados.add(this);
+        maquinaria=maquina;
+        sede.getlistaMaquinas().add(maquina);
     }
 
     @Override
@@ -190,6 +193,9 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
     }
 
     // ------------------ Getters y Setters ------------------
+    public String toString(){
+        return super.toString()+"\n"+"Area: "+areaActual+"\n"+"Sede: "+sede+"\n"+"Traslados: "+traslados;
+    }
 
     public void modificarBonificacion(int bonificacion){
         this.bonificacion += bonificacion;

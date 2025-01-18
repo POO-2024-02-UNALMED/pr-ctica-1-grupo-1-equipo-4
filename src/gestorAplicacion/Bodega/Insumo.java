@@ -1,11 +1,8 @@
 package gestorAplicacion.Bodega;
 
-import gestorAplicacion.Administracion.GastoMensual;
-import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 
-public class Insumo implements GastoMensual{
-	protected Fecha fechaCompra;
+public class Insumo{
 	protected static long precioStockTotal;
 	protected String nombre;
 	protected float cantidad;
@@ -17,8 +14,7 @@ public class Insumo implements GastoMensual{
 	// Actualizado al surtir
 	//Precio por toda la compra
 
-	Insumo(Fecha fecha,String nombre,float cantidad,Proveedor proveedor,Sede sede){
-		fechaCompra=fecha;
+	Insumo(String nombre,float cantidad,Proveedor proveedor,Sede sede){
 		this.nombre=nombre;
 		this.cantidad=cantidad;
 		this.proveedor=proveedor;
@@ -36,29 +32,8 @@ public class Insumo implements GastoMensual{
 		this.precioXUnidad = proveedor.getPrecio();
 	}
 
-	@Override
-    public int calcularGastoMensual() {
-        int gasto=this.getPrecioIndividual();
-        return gasto;
-    }
 
-	public static long gastoMensualClase(Fecha fecha){
-		long gastoActual=0;
-        long gastoPasado=0;
-		long gastoInsumo;
-		for (Sede sede:Sede.getlistaSedes()){
-		for (Insumo insumo:sede.getListaInsumosBodega()){
-			if (insumo instanceof Bolsa){
-				long [] lista=insumo.gastoMensualTipo(fecha, insumo.fechaCompra, insumo);
-				gastoActual+=lista[0];
-				gastoPasado+=lista[1];
-				}}}
-		if (gastoActual!=0){gastoInsumo=gastoActual;}else{gastoInsumo=gastoPasado;}
-        return gastoInsumo;
-    }
-
-	public Fecha getFechaCompra(){return fechaCompra;}
-	public void getFechaCompra(Fecha fecha){fechaCompra=fecha;}
+	
 	public static long getPrecioStockTotal(){return precioStockTotal;}
 	public static void setPrecioStockTotal(long pSt){Insumo.precioStockTotal = pSt;}
 	public String getNombre(){return nombre;}

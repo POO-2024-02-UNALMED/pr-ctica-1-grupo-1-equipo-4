@@ -17,14 +17,14 @@ public class Sede implements Serializable{
 
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 	private ArrayList<Empleado> listaEmpleado = new ArrayList<Empleado>();
-	private ArrayList <Maquinaria> listaMaquina;
-	private ArrayList<Venta> historialVentas;
-	private static ArrayList<Prenda> prendasInventadas;
-	private ArrayList<Insumo> listaInsumosBodega;
-	private ArrayList<Integer> cantidadInsumosBodega;
-	private ArrayList<Integer> produccionAproximada;
+	private ArrayList <Maquinaria> listaMaquina= new ArrayList<Maquinaria>();
+	private ArrayList<Venta> historialVentas= new ArrayList<Venta>();
+	private static ArrayList<Prenda> prendasInventadas= new ArrayList<Prenda>();
+	private ArrayList<Insumo> listaInsumosBodega= new ArrayList<Insumo>();
+	private ArrayList<Integer> cantidadInsumosBodega= new ArrayList<Integer>();
+	private ArrayList<Integer> produccionAproximada=new ArrayList<Integer>();
 	// Una lista  de cantidad de prendas a producior por sede
-	private ArrayList<Prenda> prendasProduccion;
+	private ArrayList<Prenda> prendasProduccion= new ArrayList<Prenda>();
 	private String nombre;
 	private int distancia;
 	//Con respecto a la principal
@@ -42,10 +42,9 @@ public class Sede implements Serializable{
 		listaSedes.add(this);
 	}
 
-	public Sede(String nombre, ArrayList<Maquinaria> listaMaquina){
+	public Sede(String nombre){
 		this();
 		this.nombre = nombre;
-		this.listaMaquina = listaMaquina;
 	}
 	// necesario para añadir sedes a la lista de sedes, pero dicha lista no está cargada aún y además
 	// se estan creando ahí mismo.
@@ -127,7 +126,7 @@ public class Sede implements Serializable{
 	}
 
 
-	
+	public void actualizarHistorialVentas(Venta venta){historialVentas.add(venta);}
 	public float getRendimientoDeseado(Area area){return Area.rendimientoDeseadoActual(this).get(area.ordinal());}
 	public static ArrayList<Sede> getlistaSedes(){return listaSedes;}
 	public static void setlistaSedes(ArrayList<Sede> Sede){listaSedes=Sede;}

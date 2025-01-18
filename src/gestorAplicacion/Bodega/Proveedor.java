@@ -8,8 +8,9 @@ public class Proveedor {
 	Insumo tipoInsumo;
 	//tipoBien:Bien
 	// insumo provisto por este proveedor
-	int precio;
-	String nombre;
+	private int precio;
+	private String nombre;
+	private float descuento;
 	private ArrayList<Deuda> deuda;
 
 	
@@ -49,4 +50,6 @@ public class Proveedor {
 	public void setPrecio (int monto){precio=monto;}
 	public String getNombre (){return nombre;}
 	public void setNombre (String nom){nombre=nom;}
+	public float getDescuento (){return descuento;}
+	public void setDescuento (float monto){descuento=monto;}
 }

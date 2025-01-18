@@ -7,7 +7,7 @@ import gestorAplicacion.Venta;
 
 public class Evaluacionfinanciera {
 	private static ArrayList <Evaluacionfinanciera> historialEvaluaciones = new ArrayList<Evaluacionfinanciera>();
-	private static ArrayList <Deuda> deudas;
+	private static ArrayList <Deuda> deudas=new ArrayList<Deuda>();
 	//deudaBanco+deudaProveedores
 	private long pagoPersonas;
 	private double balance;

@@ -22,7 +22,13 @@ public class Venta implements Serializable {
 	private int subtotal;
 	private static float pesimismo;
 
-
+	public Venta(Sede sede,Fecha fecha, Persona c){
+		this.sede=sede;
+		this.fechaVenta=fecha;
+		Venta venta=this;
+		cliente=c;
+		sede.actualizarHistorialVentas(venta);
+	}
 	// Metodo ayudante para Empleado.listaInicialDespedirEmpleado,
 	// que calcula el acumulado de ventas asesoradas o registradas por empleado en pesos.
 	static public int acumuladoVentasAsesoradas(Empleado empleado){

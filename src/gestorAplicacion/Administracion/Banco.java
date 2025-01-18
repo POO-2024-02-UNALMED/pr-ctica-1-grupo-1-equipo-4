@@ -8,19 +8,21 @@ public class Banco implements Serializable {
 	private static final long serializarVersionUID = 3L; // Para serializacion
 	private String nombreEntidad;
 	private String nombreCuenta;
-	private ArrayList<Deuda> deuda;
+	private ArrayList<Deuda> deuda= new ArrayList<Deuda>();
 	private long ahorroBanco;
 	private float interes;
 	private static ArrayList<Banco> listaBancos = new ArrayList<Banco>();
-	private static Banco cuentaPrincipal = new Banco("Banco Montreal","principal",125_000_000);
+	private static Banco cuentaPrincipal;
 
 
-	public Banco(String cuenta, String nombre, int ahorro){
+	public Banco(String cuenta, String nombre, int ahorro, float Interes){
 		this.nombreEntidad=nombre;
 		this.nombreCuenta = cuenta;
 		this.ahorroBanco = ahorro;
 		listaBancos.add(this);
 	}
+
+	public void actualizarDeuda(Deuda ndeuda){deuda.add(ndeuda);}
 
 	public String getNombreEntidad() {
 		return nombreEntidad;

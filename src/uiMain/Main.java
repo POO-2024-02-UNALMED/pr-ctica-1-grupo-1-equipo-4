@@ -3,6 +3,7 @@ package uiMain;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Fecha;
+import gestorAplicacion.Membresia;
 import gestorAplicacion.Venta;
 import gestorAplicacion.Administracion.Area;
 import gestorAplicacion.Administracion.Banco;
@@ -12,6 +13,7 @@ import gestorAplicacion.Administracion.Evaluacionfinanciera;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Administracion.Resultado;
 import gestorAplicacion.Bodega.Prenda;
+import gestorAplicacion.Bodega.Bolsa;
 import gestorAplicacion.Bodega.Insumo;
 import gestorAplicacion.Bodega.Maquinaria;
 import gestorAplicacion.Bodega.Proveedor;
@@ -22,12 +24,12 @@ import java.util.Scanner;
 
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
+import java.lang.reflect.Array;
 
 
 public class Main {
     public static void main (String[] args){
         Deserializador.deserializar();
-        new Persona("Julia", 0, null, 0, false, null);
         Scanner in = new Scanner(System.in);
         buclePrincipal:
         while (true){
@@ -569,6 +571,8 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
     return deudas;
 }
 
+
+
     //METODO PARA CREAR LAS SEDES, LAS MAQUINAS Y LOS REPUESTOS,
     //REQUERIDO PARA LA INTERACCION 1 DE LA FUNCIONALIDAD DE PRODUCCION....
     
@@ -576,12 +580,9 @@ public void crearSedesMaquinasRepuestos(){
         //CREACION DE TODOS LOS REPUESTOS QUE MANEJAREMOS PARA LA FUNCIONALIDAD PRODUCCION
     Repuesto AgujasMC = new Repuesto("Agujas de la Maquina de Coser", 12);
     Repuesto Aceite = new Repuesto("Aceite", 60);
-    Repuesto PiePrensaTela = new Repuesto("Pie Prensa Tela", 1000);
-    Repuesto CorreDeTransmision = new Repuesto("Correa de Transmision", 3000);
 
     Repuesto Cuchillas = new Repuesto("Cuchillas", 60);
     Repuesto Afiladores = new Repuesto("Afiladores", 750);
-    Repuesto Rodamientos = new Repuesto("Rodamientos", 1500);
 
     Repuesto ResistenciaElectrica = new Repuesto("Resistencia Electrica", 1500);
     Repuesto MangueraDeVapor = new Repuesto("Manguera de Vapor", 750);
@@ -589,23 +590,40 @@ public void crearSedesMaquinasRepuestos(){
     Repuesto AgujasBI = new Repuesto("Agujas de la Bordadora Industrial", 25);
 
     Repuesto BandasDeTransmision = new Repuesto("Bandas de Transmision", 2500);
+   
+    Repuesto TintaN = new Repuesto("Tinta Negra Impresora", 3000);
 
-        //AGRUPACION DE LOS REPUESTOS EN LISTAS PARA ENVIARLOS A LAS MAQUINAS CORRESPONDIENTES
+    
+    Repuesto Lector = new Repuesto("Lector de barras", 3000);
+    Repuesto PapelQuimico = new Repuesto("Papel químico", 72);
+
+    Repuesto Cargador = new Repuesto("Cargador Computador", 6000);
+    Repuesto Mouse = new Repuesto("Mouse Computador", 9000);
+    
+    //AGRUPACION DE LOS REPUESTOS EN LISTAS PARA ENVIARLOS A LAS MAQUINAS CORRESPONDIENTES
     ArrayList<Repuesto> repuestosMC = new ArrayList<>();
     ArrayList<Repuesto> repuestosMCorte = new ArrayList<>();
     ArrayList<Repuesto> repuestosPI = new ArrayList<>();
     ArrayList<Repuesto> repuestosBI = new ArrayList<>();
     ArrayList<Repuesto> repuestosMTermofijado = new ArrayList<>();
     ArrayList<Repuesto> repuestosMTijereado = new ArrayList<>();
+    ArrayList<Repuesto> repuestosImp = new ArrayList<>();
+    ArrayList<Repuesto> repuestosRe = new ArrayList<>();
+    ArrayList<Repuesto> repuestosComp= new ArrayList<>();
+
+    repuestosImp.add(TintaN);
+
+    repuestosRe.add(PapelQuimico);
+    repuestosRe.add(Lector);
+
+    repuestosComp.add(Mouse);
+    repuestosComp.add(Cargador);
 
     repuestosMC.add(AgujasMC);
     repuestosMC.add(Aceite);
-    repuestosMC.add(PiePrensaTela);
-    repuestosMC.add(CorreDeTransmision);
 
     repuestosMCorte.add(Cuchillas);
     repuestosMCorte.add(Afiladores);
-    repuestosMCorte.add(Rodamientos);
 
     repuestosPI.add(ResistenciaElectrica);
     repuestosPI.add(MangueraDeVapor);
@@ -626,62 +644,113 @@ public void crearSedesMaquinasRepuestos(){
     Maquinaria BordadoraIndustrial = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI);
     Maquinaria MaquinaDeTermofijado = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado);
     Maquinaria MaquinaDeTijereado = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado);
+    Maquinaria Impresora = new Maquinaria("Impresora", 800000, 2000, repuestosImp);
+    Maquinaria Registradora = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe);
+    Maquinaria Computador = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp);
 
-        //AGRUPACION DE LAS MAQUINAS EN LISTAS PARA ENVIARLAS A LAS SEDES CORRESPONDIENTES
-    ArrayList<Maquinaria> maqSedeP = new ArrayList<>();
-    ArrayList<Maquinaria> maqSede2 = new ArrayList<>();
-    ArrayList<Maquinaria> maqSede3 = new ArrayList<>();
-    ArrayList<Maquinaria> maqSede4 = new ArrayList<>();
-    ArrayList<Maquinaria> maqSede5 = new ArrayList<>();
-    ArrayList<Maquinaria> maqSede6 = new ArrayList<>();
-
-    maqSedeP.add(MaquinaDeCoser);
-    maqSedeP.add(MaquinaDeCorte);
-    maqSedeP.add(PlanchaIndustrial);
-    maqSedeP.add(BordadoraIndustrial);
-    maqSedeP.add(MaquinaDeTermofijado);
-    maqSedeP.add(MaquinaDeTijereado);
-
-    maqSede2.add(MaquinaDeCoser.copiar());
-    maqSede2.add(MaquinaDeCorte.copiar());
-    maqSede2.add(PlanchaIndustrial.copiar());
-    maqSede2.add(BordadoraIndustrial.copiar());
-    maqSede2.add(MaquinaDeTermofijado.copiar());
-    maqSede2.add(MaquinaDeTijereado.copiar());
-
-    maqSede3.add(MaquinaDeCoser.copiar());
-    maqSede3.add(MaquinaDeCorte.copiar());
-    maqSede3.add(PlanchaIndustrial.copiar());
-    maqSede3.add(BordadoraIndustrial.copiar());
-    maqSede3.add(MaquinaDeTermofijado.copiar());
-    maqSede3.add(MaquinaDeTijereado.copiar());
-
-    maqSede4.add(MaquinaDeCoser.copiar());
-    maqSede4.add(MaquinaDeCorte.copiar());
-    maqSede4.add(PlanchaIndustrial.copiar());
-    maqSede4.add(BordadoraIndustrial.copiar());
-    maqSede4.add(MaquinaDeTermofijado.copiar());
-    maqSede4.add(MaquinaDeTijereado.copiar());
-
-    maqSede5.add(MaquinaDeCoser.copiar());
-    maqSede5.add(MaquinaDeCorte.copiar());
-    maqSede5.add(PlanchaIndustrial.copiar());
-    maqSede5.add(MaquinaDeTijereado.copiar());
-
-    maqSede6.add(MaquinaDeCoser.copiar());
-    maqSede6.add(MaquinaDeCorte.copiar());
-    maqSede6.add(PlanchaIndustrial.copiar());
-    maqSede6.add(MaquinaDeTijereado.copiar());
-    
         //CREACION DE LAS SEDES QUE MANEJAREMOS, CON SUS RESPECTIVAS MAQUINAS EN CADA UNA DE ELLAS
-    Sede sedeP = new Sede("Sede Principal", maqSedeP);
-    Sede sede2 = new Sede("Sede 2", maqSede2);
-    Sede sede3 = new Sede("Sede 3", maqSede3);
-    Sede sede4 = new Sede("Sede 4", maqSede4);
-    Sede sede5 = new Sede("Sede 5", maqSede5);
-    Sede sede6 = new Sede("Sede 6", maqSede6);
+    Sede sedeP = new Sede("Sede Principal");
+    Sede sede2 = new Sede("Sede 2");
     
+    new Banco("Banco Montreal","principal",400_000_000,0.05F);
+    Banco b1=new Banco("Banco Montreal","secundaria",5_000_000,0.05F);
+    Banco b3=new Banco ("Bancolombia","principal",125_000_000,0.09F);
+    new Banco ("Banco Davivienda","principal",80_000_000,0.1F); 
+    Banco b2=new Banco ("Banco de Bogotá","principal",140_000_000,0.07F);
+    Banco tm=new Banco("Inversiones Terramoda","principal",160_000_000,0.0F);
+
+    Deuda d1=new Deuda(new Fecha(15,1,20),20_000_000,"Bancolombia","Banco",1);
+    b3.actualizarDeuda(d1);
+    d1.setEstadodePago(true);
+    d1.setCapitalPagado(20_000_000);
+    Deuda d2=new Deuda(new Fecha(15,1,20),100_000_000,"Banco Montreal","Banco",18);
+    d2.setCapitalPagado(100_000_000/2);
+    b1.actualizarDeuda(d2);
+    b2.actualizarDeuda(new Deuda(new Fecha(10,1,24),5_000_000,"Banco de Bogotá","Banco",10));
+    tm.actualizarDeuda(new Deuda(new Fecha(30,9,22),150_000_000,"Inversiones Terramoda","Banco",18));
+    tm.actualizarDeuda(new Deuda(new Fecha(20,2,23),800_000,"Inversiones Terramoda","Banco",18));
+
+    //Episodio 43
+    Proveedor p1=new Proveedor(15000,"Rag Tela");
+    p1.setInsumo(new Insumo("Tela", p1));
+    Proveedor p2=new Proveedor(20000,"Macro Telas");
+    p2.setInsumo(new Insumo("Hilo", p2));
+    Proveedor p4=new Proveedor(7000,"Insumos textileros");
+    p4.setInsumo(new Insumo("Cremallera", p4));
+    Proveedor p3=new Proveedor(5000,"San Remo");
+    p3.setInsumo(new Insumo("Boton", p3));
+    Proveedor p5=new Proveedor(18000,"Fatelares");
+    p5.setInsumo(new Insumo("Tela", p5));
+    Proveedor p6=new Proveedor(20000,"Macro Textil");
+    p6.setInsumo(new Insumo("Tela", p6));
+    Proveedor p9=new Proveedor(25000,"Hilos Venus");
+    p9.setInsumo(new Insumo("Hilo", p9));
+    Proveedor p7=new Proveedor(10000,"Insumos para Confección");
+    p7.setInsumo(new Insumo("Cremallera", p7));
+    Proveedor p8=new Proveedor(8000,"InduBoton");
+    p8.setInsumo(new Insumo("Boton", p8));
+    Proveedor p10=new Proveedor(5000,"Primavera");
+    p10.setDescuento(0.06F);
+    p10.setInsumo(new Bolsa("Bolsa", p10));
+    Proveedor p11=new Proveedor(8000,"Empaques y Cartones");
+    p11.setInsumo(new Bolsa("Bolsa", p11));
+    p11.setDescuento(0.1F);
+    Proveedor p12=new Proveedor(6000,"Plastienda");
+    p10.setDescuento(0.05F);
+    p12.setInsumo(new Bolsa("Bolsa", p12));
+
+
+    Empleado betty=new Empleado(Area.DIRECCION,new Fecha(1,1,23),sedeP,"Beatriz Pinzón",4269292,Rol.PRESIDENTE,10,Membresia.NULA,Computador);
+    sedeP.getlistaEmpleados().add(betty);
+    Empleado Armando=new Empleado(Area.DIRECCION,new Fecha(30,11,20),sedeP,"Armando Mendoza",19121311,Rol.PRESIDENTE,15,Membresia.PLATA,Computador.copiar());
+    sedeP.getlistaEmpleados().add(Armando);
+    sedeP.getlistaEmpleados().add(new Empleado(Area.OFICINA,new Fecha(1,6,16),sedeP,"Catalina Ángel",7296957,Rol.ASISTENTE,20,Membresia.ORO,Impresora));
+    sedeP.getlistaEmpleados().add(new Empleado(Area.OFICINA,new Fecha(30,11,20),sedeP,"Mario Calderón",19256002,Rol.EJECUTIVO,4,Membresia.PLATA,Impresora.copiar()));
+    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,5,14),sedeP,"Hugo Lombardi",7980705,Rol.DISEÑADOR,20,Membresia.ORO,MaquinaDeCorte));
+    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,5,14),sedeP,"Inez Ramirez",23103023,Rol.MODISTA,2,Membresia.NULA,MaquinaDeCoser));
+    sedeP.getlistaEmpleados().add(new Empleado(Area.VENTAS,new Fecha(1,2,23),sedeP,"Aura Maria",4146118,Rol.SECRETARIA,2,Membresia.NULA,Registradora));
+    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(15,9,23),sedeP,"Sandra Patiño",5941859,Rol.SECRETARIA,5,Membresia.NULA,PlanchaIndustrial));
+    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(30,9,22),sedeP,"Sofía Lopez",5079239,Rol.SECRETARIA,6,Membresia.NULA,MaquinaDeTermofijado));
+    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,5,23),sedeP,"Mariana Valdéz",4051807,Rol.SECRETARIA,10,Membresia.BRONCE,MaquinaDeTijereado));
+    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(25,2,20),sedeP,"Bertha Muñoz",7137741,Rol.SECRETARIA,15,Membresia.BRONCE,BordadoraIndustrial));
+    sedeP.getlistaEmpleados().add(new Empleado(Area.VENTAS,new Fecha(4,4,22),sedeP,"Wilson Sastoque",9634927,Rol.PLANTA,5,Membresia.NULA,Registradora.copiar()));
+
+    sede2.getlistaEmpleados().add(new Empleado(Area.DIRECCION,new Fecha(5,8,19),sede2,"Saul Gutierrez",9557933,Rol.EJECUTIVO,11,Membresia.NULA,Computador.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.DIRECCION,new Fecha(30,11,20),sede2,"Marcela Valencia",8519803,Rol.EJECUTIVO,10,Membresia.ORO,Computador.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.VENTAS,new Fecha(1,1,24),sede2,"Gabriela Garza",5287925,Rol.VENDEDOR,9,Membresia.PLATA,Registradora.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.OFICINA,new Fecha(5,2,23),sede2,"Patricia Fernandez",4595311,Rol.SECRETARIA,6,Membresia.BRONCE,Impresora.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,1,24),sede2,"Kenneth Johnson",7494184,Rol.VENDEDOR,8,Membresia.ORO,PlanchaIndustrial.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.OFICINA,new Fecha(12,10,24),sede2,"Miguel Robles",7518004,Rol.VENDEDOR,7,Membresia.BRONCE,Impresora.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,2,24),sede2,"Alejandra Zingg",6840296,Rol.VENDEDOR,2,Membresia.BRONCE,BordadoraIndustrial.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,2,23),sede2,"Cecilia Bolocco",7443886,Rol.ASISTENTE,10,Membresia.PLATA,MaquinaDeCoser.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.VENTAS,new Fecha(31,1,22),sede2,"Freddy Contreras",6740561,Rol.PLANTA,5,Membresia.NULA,Registradora.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(18,6,25),sede2,"Adriana arboleda",5927947,Rol.MODISTA,20,Membresia.ORO,MaquinaDeCorte.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(9,3,25),sede2,"Karina Larson",5229381,Rol.MODISTA,2,Membresia.PLATA,MaquinaDeTermofijado.copiar()));
+    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,8,24),sede2,"Jenny Garcia",4264643,Rol.MODISTA,1,Membresia.ORO,MaquinaDeTijereado.copiar()));
+    Empleado ol=new Empleado(Area.DIRECCION,new Fecha(1,2,20),sede2,"Gustavo Olarte",7470922,Rol.EJECUTIVO,3,Membresia.NULA,Computador.copiar());
+    ol.setTraslados(3);
+    ArrayList<Area> a=new ArrayList<Area>();
+    a.add(Area.VENTAS);a.add(Area.OFICINA);ol.setAreas(a);
+    sede2.getlistaEmpleados().add(ol);
+    new Evaluacionfinanciera(-200_000,ol);new Evaluacionfinanciera(-120_000,ol);new Evaluacionfinanciera(-50_000,ol);new Evaluacionfinanciera(1_000,ol);new Evaluacionfinanciera(-70_000,ol);
+    new Evaluacionfinanciera(50_000_000,betty);new Evaluacionfinanciera(1_000_000,betty);
+    new Evaluacionfinanciera(500_000,Armando);new Evaluacionfinanciera(-10_000,Armando);
+
+    new Persona("Claudia Elena Vásquez",5162307,Rol.MODISTA,2,false,Membresia.BRONCE);
+    new Persona("Michel Doniel",9458074,Rol.ASISTENTE,4,false,Membresia.BRONCE);
+    new Persona("Claudia Bosch",5975399,Rol.MODISTA,4,false,Membresia.ORO);
+    new Persona("Mónica Agudelo",8748155,Rol.MODISTA,8,false,Membresia.ORO);  
+    new Persona("Daniel Valencia",9818534,Rol.EJECUTIVO,10,false,Membresia.BRONCE);
+    new Persona("Efraín Rodriguez",8256519,Rol.VENDEDOR,10,false,Membresia.NULA);
+    new Persona("Mauricio Brightman",8823954,Rol.ASISTENTE,10,false,Membresia.ORO);
+    new Persona("Nicolás Mora",4365567,Rol.EJECUTIVO,2,false,Membresia.NULA);
+    new Persona("Roberto Mendoza",28096740,Rol.PRESIDENTE,2,false,Membresia.ORO);
+    new Persona("Hermes Pinzón",21077781,Rol.ASISTENTE,2,false,Membresia.NULA);
+    new Persona("Julia Solano",28943158,Rol.SECRETARIA,10,false,Membresia.BRONCE);
+    new Persona("Maria Beatriz Valencia",6472799,Rol.ASISTENTE,2,false,Membresia.BRONCE);
+    new Persona("Antonio Sanchéz",8922998,Rol.VENDEDOR,12,false,Membresia.NULA);
 }
+
 
     static int nextIntSeguro(Scanner in){
         while (!in.hasNextInt()){
