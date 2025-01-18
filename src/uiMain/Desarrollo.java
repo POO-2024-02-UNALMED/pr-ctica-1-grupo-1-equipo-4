@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Administracion.Area;
+import gestorAplicacion.Administracion.Banco;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Fecha;
@@ -22,7 +23,7 @@ public class Desarrollo {
         int numero = in.nextInt();
         switch (numero) {
             case 1:
-                break;
+                verBancos(in);
             case 2:
                 verSedes(in);
             case 0:
@@ -31,6 +32,51 @@ public class Desarrollo {
                 break;
         }
         }
+    }
+
+    static void verBancos(Scanner in){
+        System.out.println("Tenemos estos bancos:");
+        for (int idxBanco=0; idxBanco<Sede.getlistaSedes().size(); idxBanco++){
+            System.out.println("Cuenta de sede"+idxBanco+". "+Sede.getlistaSedes().get(idxBanco).getCuentaSede());
+        }
+        System.out.println("Cuenta principal: -1."+Banco.getCuentaPrincipal());
+        bucleBancos:
+        while(true){
+            String comando = in.next();
+            switch (comando) {
+                case "atras":
+                    break bucleBancos;
+                case "quitar":
+                    System.out.println("Cual quieres quitar?");
+                    int idxBanco = in.nextInt();
+                    if (idxBanco==-1){
+                        System.out.println("No puedes quitar la cuenta principal.");
+                        break;
+                    }
+                    Banco.getListaBancos().remove(Banco.getListaBancos().get(idxBanco));
+                    Sede sedeSinCuenta= Sede.getlistaSedes().get(idxBanco);
+                    sedeSinCuenta.setCuentaSede(null);
+                    System.out.println("Le quitaste la cuenta a la sede "+sedeSinCuenta.getNombre()+", las sedes nececitan una cuenta para facturar.");
+                    break;
+                case "agregar":
+                    System.out.println("Cual es el nombre del banco?");
+                    String nombre = in.next();
+                    System.out.println("Cual es el nombre de la cuenta");
+                    String cuenta = in.next();
+                    System.out.println("Cual es el saldo inicial?");
+                    int saldo = Main.nextIntSeguro(in);
+                    Banco nuevoBanco = new Banco(nombre, cuenta,saldo);
+                    break;
+                case "ver":
+                    System.out.println("Cual quieres ver?");
+                    int idxSede = in.nextInt();
+                    menuSede(in, Sede.getlistaSedes().get(idxSede));
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 
     static void verSedes(Scanner in){
@@ -155,13 +201,10 @@ public class Desarrollo {
             String comando = in.next();
             switch (comando) {
                 case "quitar":
-                    System.out.println("Cual quieres quitar?");
+                    System.out.println("Cual quieres quitar? Esto eliminará el insumo de todas partes.");
                     int idxInsumo = Main.nextIntSeguro(in);
-                    System.out.println("Cuanto quieres quitar");
-                    int cantidad = Main.nextIntSeguro(in);
-                    sede.getCantidadInsumosBodega().set(idxInsumo, sede.getCantidadInsumosBodega().get(idxInsumo)-cantidad);
+                    Sede.quitarInsumoDeBodegas(sede.getListaInsumosBodega().get(idxInsumo));
                     break;
-
                 case "atras":
                     break bucleInsumos;
             

@@ -83,4 +83,8 @@ public class Banco implements Serializable {
 	public static Banco getCuentaPrincipal() {
 		return cuentaPrincipal;
 	}
+
+	public String toString(){
+		return "Cuenta: "+nombreCuenta+" Ahorro: "+ahorroBanco;
+	}
 }

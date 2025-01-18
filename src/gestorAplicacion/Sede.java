@@ -11,9 +11,10 @@ import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Bodega.Insumo;
 import gestorAplicacion.Bodega.Maquinaria;
 import gestorAplicacion.Bodega.Prenda;
+import gestorAplicacion.Administracion.Banco;
 public class Sede implements Serializable{
 
-	private static final long serializarVersionUID = 1L; // Para serializacion
+	private static final long serialVersionUID = 1L; // Para serializacion
 
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 	private ArrayList<Empleado> listaEmpleado = new ArrayList<Empleado>();
@@ -26,6 +27,7 @@ public class Sede implements Serializable{
 	// Una lista  de cantidad de prendas a producior por sede
 	private ArrayList<Prenda> prendasProduccion;
 	private String nombre;
+	private Banco cuentaSede;
 	private int distancia;
 	//Con respecto a la principal
 
@@ -150,6 +152,8 @@ public class Sede implements Serializable{
 	public String getNombre(){return nombre;}
 	public void setNombre(String nombre){this.nombre=nombre;}	
 	public int getDistancia(){return distancia;}
+	public void setCuentaSede(Banco cuenta){cuentaSede=cuenta;}
+	public Banco getCuentaSede(){return cuentaSede;}
 	public void setDistancia(int distancia){this.distancia=distancia;}	
 	public void anadirEmpleado(Empleado emp){listaEmpleado.add(emp);}
 	public void quitarEmpleado(Empleado emp){listaEmpleado.remove(emp);}
@@ -239,5 +243,17 @@ public class Sede implements Serializable{
 
 	public String toString(){
 		return nombre+" con "	+listaEmpleado.size()+" empleados";
+	}
+
+	// Usado para eliminar un Insumo limpiamente
+	public static void quitarInsumoDeBodegas(Insumo insumo){
+		for (Sede sede : listaSedes){
+			for (int idxInsumo=0; idxInsumo<sede.getListaInsumosBodega().size(); idxInsumo++){
+				if (sede.getListaInsumosBodega().get(idxInsumo).equals(insumo)){
+					sede.getListaInsumosBodega().remove(idxInsumo);
+					sede.getCantidadInsumosBodega().remove(idxInsumo);
+				}
+			}
+		}
 	}
 }
