@@ -12,7 +12,7 @@ public class Banco implements Serializable {
 	private long ahorroBanco;
 	private float interes;
 	private static ArrayList<Banco> listaBancos = new ArrayList<Banco>();
-	private static Banco cuentaPrincipal = new Banco("Banco Montreal","principal",125_000_000);
+	private static Banco cuentaPrincipal = new Banco("principal","Bancolombia",125_000_000);
 
 
 	public Banco(String cuenta, String nombre, int ahorro){
@@ -85,6 +85,6 @@ public class Banco implements Serializable {
 	}
 
 	public String toString(){
-		return "Cuenta: "+nombreCuenta+" Ahorro: "+ahorroBanco;
+		return "Cuenta: "+nombreCuenta+" en "+nombreEntidad+ " Ahorro: "+String.format("%,d", ahorroBanco);
 	}
 }

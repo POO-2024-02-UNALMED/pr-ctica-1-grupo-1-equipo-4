@@ -35,13 +35,14 @@ public class Desarrollo {
     }
 
     static void verBancos(Scanner in){
-        System.out.println("Tenemos estos bancos:");
-        for (int idxBanco=0; idxBanco<Sede.getlistaSedes().size(); idxBanco++){
-            System.out.println("Cuenta de sede"+idxBanco+". "+Sede.getlistaSedes().get(idxBanco).getCuentaSede());
-        }
-        System.out.println("Cuenta principal: -1."+Banco.getCuentaPrincipal());
         bucleBancos:
         while(true){
+            System.out.println("Tenemos estos bancos:");
+            for (int idxBanco=0; idxBanco<Sede.getlistaSedes().size(); idxBanco++){
+                System.out.println("Cuenta de sede"+idxBanco+". "+Sede.getlistaSedes().get(idxBanco).getCuentaSede());
+            }
+            System.out.println("Cuenta principal: -1."+Banco.getCuentaPrincipal());
+            System.out.println("Usa el comando 'monto' para restar o sumar a una cuenta");
             String comando = in.next();
             switch (comando) {
                 case "atras":
@@ -67,10 +68,16 @@ public class Desarrollo {
                     int saldo = Main.nextIntSeguro(in);
                     Banco nuevoBanco = new Banco(nombre, cuenta,saldo);
                     break;
-                case "ver":
-                    System.out.println("Cual quieres ver?");
-                    int idxSede = in.nextInt();
-                    menuSede(in, Sede.getlistaSedes().get(idxSede));
+                case "monto":
+                    System.out.println("Cual es el monto? Negativo para restar, positivo para sumar.");
+                    int monto = Main.nextIntSeguro(in);
+                    System.out.println("A que cuenta?");
+                    int idxCuenta = Main.nextIntSeguro(in);
+                    if (idxCuenta==-1){
+                        Banco.getCuentaPrincipal().transaccion(monto);
+                    } else {
+                        Sede.getlistaSedes().get(idxCuenta).getCuentaSede().transaccion(monto);
+                    }
                     break;
                 default:
                     break;
