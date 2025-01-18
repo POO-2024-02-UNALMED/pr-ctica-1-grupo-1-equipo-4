@@ -56,7 +56,7 @@ public class Main {
             ArrayList<Deuda> deuda = comprarInsumos(fecha, listaA);
             break;
 
-        case 3:
+        case 3:;
             fecha = ingresarFecha(in);
             Evaluacionfinanciera balanceAnterior= calcularBalanceAnterior(fecha, in);
             long diferenciaEstimada= calcularEstimado(fecha,balanceAnterior,in);

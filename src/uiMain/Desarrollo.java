@@ -85,6 +85,7 @@ public class Desarrollo {
                 case 3:
                     break;
                 case 4:
+                    menuInsumos(in, sede);
                     break;
                 case 0:
                     break bucleSede;
@@ -141,6 +142,32 @@ public class Desarrollo {
                 default:
                     break;
             }
+        }
+    }
+
+    static void menuInsumos(Scanner in, Sede sede){
+        bucleInsumos:
+        while(true){
+            System.out.println("Hay estos insumos:");
+            for (int idxInsumo=0; idxInsumo<sede.getListaInsumosBodega().size(); idxInsumo++){
+                System.out.println(idxInsumo+". "+"de "+sede.getListaInsumosBodega().get(idxInsumo)+" hay "+sede.getCantidadInsumosBodega().get(idxInsumo));
             }
+            String comando = in.next();
+            switch (comando) {
+                case "quitar":
+                    System.out.println("Cual quieres quitar?");
+                    int idxInsumo = Main.nextIntSeguro(in);
+                    System.out.println("Cuanto quieres quitar");
+                    int cantidad = Main.nextIntSeguro(in);
+                    sede.getCantidadInsumosBodega().set(idxInsumo, sede.getCantidadInsumosBodega().get(idxInsumo)-cantidad);
+                    break;
+
+                case "atras":
+                    break bucleInsumos;
+            
+                default:
+                    break;
+            }
+        }
     }
 }

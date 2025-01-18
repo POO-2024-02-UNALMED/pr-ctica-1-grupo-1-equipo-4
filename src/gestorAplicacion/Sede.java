@@ -20,8 +20,8 @@ public class Sede implements Serializable{
 	private ArrayList <Maquinaria> listaMaquina;
 	private ArrayList<Venta> historialVentas;
 	private static ArrayList<Prenda> prendasInventadas;
-	private ArrayList<Insumo> listaInsumosBodega;
-	private ArrayList<Integer> cantidadInsumosBodega;
+	private ArrayList<Insumo> listaInsumosBodega = new ArrayList<Insumo>();
+	private ArrayList<Integer> cantidadInsumosBodega = new ArrayList<Integer>();
 	private ArrayList<Integer> produccionAproximada;
 	// Una lista  de cantidad de prendas a producior por sede
 	private ArrayList<Prenda> prendasProduccion;
