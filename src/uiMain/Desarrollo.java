@@ -54,7 +54,7 @@ public class Desarrollo {
                 case "agregar":
                     System.out.println("Cual es el nombre de la sede?");
                     Sede nuevaSede = new Sede();
-                    nuevaSede.setNombre(in.nextLine());
+                    nuevaSede.setNombre(in.next());
                     break;
                 case "ver":
                     System.out.println("Cual quieres ver?");
@@ -75,7 +75,7 @@ public class Desarrollo {
             System.out.println("3.Produccion");
             System.out.println("4.Bodega");
             System.out.println("0.atras");
-            int numero = in.nextInt();
+            int numero = Main.nextIntSeguro(in);
             switch (numero) {
                 case 1:
                     menuEmpleados(in, sede);
@@ -112,7 +112,7 @@ public class Desarrollo {
                     break;
                 case "agregar":
                     System.out.println("Cual es el nombre del empleado?");
-                    String nombre = in.nextLine();
+                    String nombre = in.next();
                     
                     System.out.println("En que area trabaja?");
                     for (Area area : Area.values()){

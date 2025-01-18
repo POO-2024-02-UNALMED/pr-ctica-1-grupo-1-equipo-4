@@ -683,6 +683,14 @@ public void crearSedesMaquinasRepuestos(){
     
 }
 
+    static int nextIntSeguro(Scanner in){
+        while (!in.hasNextInt()){
+            System.out.println("Por favor, ingrese un número entero.");
+            in.next();
+        }
+        return in.nextInt();
+    }
+
 }
 
 
