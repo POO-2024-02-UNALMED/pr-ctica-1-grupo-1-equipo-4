@@ -56,7 +56,7 @@ public class Main {
             ArrayList<Deuda> deuda = comprarInsumos(fecha, listaA);
             break;
 
-        case 3:
+        case 3:;
             fecha = ingresarFecha(in);
             Evaluacionfinanciera balanceAnterior= calcularBalanceAnterior(fecha, in);
             long diferenciaEstimada= calcularEstimado(fecha,balanceAnterior,in);
@@ -82,7 +82,7 @@ public class Main {
         
         case 7:
             Desarrollo.menu(in);
-            
+            break;
         default:
             System.out.println("Esa opción no es valida.");
         }
@@ -701,6 +701,14 @@ public void crearSedesMaquinasRepuestos(){
         maquinasSede6.sede = sede6;
     }
 }
+
+    static int nextIntSeguro(Scanner in){
+        while (!in.hasNextInt()){
+            System.out.println("Por favor, ingrese un número entero.");
+            in.next();
+        }
+        return in.nextInt();
+    }
 
 }
 

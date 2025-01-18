@@ -1,6 +1,10 @@
 package gestorAplicacion;
 
-public class Fecha{
+import java.io.Serializable;
+
+public class Fecha implements Serializable{
+
+	private static final long serializarVersionUID = 1L; // Para serializacion
 	private int dia;
 	private int mes;
 	private int año;

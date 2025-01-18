@@ -43,6 +43,7 @@ public class Deserializador {
                     fis = new FileInputStream(file);
                     ois = new ObjectInputStream(fis);
                     Banco.setListaBancos((ArrayList<Banco>) ois.readObject());;
+                    Banco.setCuentaPrincipal((Banco) ois.readObject());
                 } catch (FileNotFoundException e) {
                     System.out.println("Hubo un error al cargar la lista de bancos, no se encontro el archivo, stack trace:");
                     e.printStackTrace();
