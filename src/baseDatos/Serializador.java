@@ -74,6 +74,7 @@ public class Serializador {
                     oos = new ObjectOutputStream(fos);
                     // Escribimos el objeto en el flujo de bytes.
                     oos.writeObject(Banco.getListaBancos());
+                    oos.writeObject(Banco.getCuentaPrincipal());
                     // Cerramos el flujo de bytes.
                     oos.close();
                     System.out.println("Bancos/cuentas serializadas");

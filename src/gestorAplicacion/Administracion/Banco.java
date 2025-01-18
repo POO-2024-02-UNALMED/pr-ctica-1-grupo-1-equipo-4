@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import baseDatos.Deserializador;
 
 public class Banco implements Serializable {
-	private static final long serializarVersionUID = 3L; // Para serializacion
+	private static final long serialVersionUID = 1L; // Para serializacion
 	private String nombreEntidad;
 	private String nombreCuenta;
 	private ArrayList<Deuda> deuda;
 	private long ahorroBanco;
 	private float interes;
 	private static ArrayList<Banco> listaBancos = new ArrayList<Banco>();
-	private static Banco cuentaPrincipal = new Banco("principal","Bancolombia",125_000_000);
+	private static Banco cuentaPrincipal;
 
 
 	public Banco(String cuenta, String nombre, int ahorro){
@@ -82,6 +82,10 @@ public class Banco implements Serializable {
 
 	public static Banco getCuentaPrincipal() {
 		return cuentaPrincipal;
+	}
+
+	public static void setCuentaPrincipal(Banco cuentaPrincipal) {
+		Banco.cuentaPrincipal = cuentaPrincipal;
 	}
 
 	public String toString(){

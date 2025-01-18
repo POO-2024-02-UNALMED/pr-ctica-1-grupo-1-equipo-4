@@ -15,17 +15,20 @@ public class Desarrollo {
     static void menu(Scanner in){
         System.out.println("En la mayoría de listas puedes usar los commandos quitar, agregar, ver y atras para navegar y modificar cosas.");
         System.out.println("por ejemplo, para quitar el elemento 1, pon quitar, enter, luego 1");
+        
+        bucleDesarrollo:
+        while (true) {
         System.out.println("1.Bancos");
         System.out.println("2.Sedes");
         System.out.println("0.atras");
-        bucleDesarrollo:
-        while (true) {  
         int numero = in.nextInt();
         switch (numero) {
             case 1:
                 verBancos(in);
+                break;
             case 2:
                 verSedes(in);
+                break;
             case 0:
                 break bucleDesarrollo;
             default:
@@ -66,7 +69,15 @@ public class Desarrollo {
                     String cuenta = in.next();
                     System.out.println("Cual es el saldo inicial?");
                     int saldo = Main.nextIntSeguro(in);
-                    Banco nuevoBanco = new Banco(nombre, cuenta,saldo);
+                    Banco nuevoBanco = new Banco(cuenta,nombre,saldo);
+                    System.out.println("Quieres configurar esta cuenta como principal? (s/n)");
+                    if (in.next().equals("s")){
+                        Banco.setCuentaPrincipal(nuevoBanco);
+                    } else {
+                        System.out.println("A que sede le quieres asignar esta cuenta?");
+                        int idxSede = Main.nextIntSeguro(in);
+                        Sede.getlistaSedes().get(idxSede).setCuentaSede(nuevoBanco);
+                    }
                     break;
                 case "monto":
                     System.out.println("Cual es el monto? Negativo para restar, positivo para sumar.");

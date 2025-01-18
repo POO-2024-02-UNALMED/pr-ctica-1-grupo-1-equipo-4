@@ -82,7 +82,7 @@ public class Main {
         
         case 7:
             Desarrollo.menu(in);
-            
+            break;
         default:
             System.out.println("Esa opción no es valida.");
         }
