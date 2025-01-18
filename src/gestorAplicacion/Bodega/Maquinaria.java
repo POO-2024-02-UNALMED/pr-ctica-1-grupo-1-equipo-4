@@ -28,6 +28,11 @@ public class Maquinaria {
 
 	}
 
+		//metodo para hacer una copia de un objeto de tipo Maquinaria, con la misma inicializacion de atributos del que queremos copiar
+	public Maquinaria copiar(){
+		return new Maquinaria(this.nombre, this.valor, this.horaRevision, this.repuestos);
+	}
+
 	public static long gastoMensualClase(){
 		long gastoMaquinaria=0;
 		for (Sede sede:Sede.getlistaSedes()){
@@ -76,6 +81,7 @@ public class Maquinaria {
 	public int getHorasUso(){
 		return horasUso;
 	}
+
 
 	public void hacerMantenimiento(){
 		ArrayList<Maquinaria> maqDisponibles = new ArrayList<>();	//listado temporal de maquinarias disponibles, el cual será pasado como argumento para la segunda interracion
