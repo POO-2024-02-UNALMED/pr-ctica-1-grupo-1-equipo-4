@@ -25,6 +25,11 @@ public class Repuesto {
         return horasDeUso;
     }
 
+        //metodo para hacer una copia de un objeto de tipo Repuesto, con la misma inicializacion de atributos del que queremos copiar
+    public Repuesto copiar(){
+        return new Repuesto(this.nombre, this.horasDeVidaUtil);
+    }
+
     public float calcularGastoMensual(){
         return 0.0F;
     }

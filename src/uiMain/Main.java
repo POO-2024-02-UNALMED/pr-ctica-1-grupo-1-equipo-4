@@ -569,8 +569,11 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
     return deudas;
 }
 
-
+    //METODO PARA CREAR LAS SEDES, LAS MAQUINAS Y LOS REPUESTOS,
+    //REQUERIDO PARA LA INTERACCION 1 DE LA FUNCIONALIDAD DE PRODUCCION....
+    
 public void crearSedesMaquinasRepuestos(){
+        //CREACION DE TODOS LOS REPUESTOS QUE MANEJAREMOS PARA LA FUNCIONALIDAD PRODUCCION
     Repuesto AgujasMC = new Repuesto("Agujas de la Maquina de Coser", 12);
     Repuesto Aceite = new Repuesto("Aceite", 60);
     Repuesto PiePrensaTela = new Repuesto("Pie Prensa Tela", 1000);
@@ -587,7 +590,7 @@ public void crearSedesMaquinasRepuestos(){
 
     Repuesto BandasDeTransmision = new Repuesto("Bandas de Transmision", 2500);
 
-
+        //AGRUPACION DE LOS REPUESTOS EN LISTAS PARA ENVIARLOS A LAS MAQUINAS CORRESPONDIENTES
     ArrayList<Repuesto> repuestosMC = new ArrayList<>();
     ArrayList<Repuesto> repuestosMCorte = new ArrayList<>();
     ArrayList<Repuesto> repuestosPI = new ArrayList<>();
@@ -608,15 +611,15 @@ public void crearSedesMaquinasRepuestos(){
     repuestosPI.add(MangueraDeVapor);
 
     repuestosBI.add(AgujasBI);
-    repuestosBI.add(Aceite);
+    repuestosBI.add(Aceite.copiar());
 
     repuestosMTermofijado.add(BandasDeTransmision);
-    repuestosMTermofijado.add(ResistenciaElectrica);
+    repuestosMTermofijado.add(ResistenciaElectrica.copiar());
 
-    repuestosMTijereado.add(Cuchillas);
-    repuestosMTijereado.add(Aceite);
+    repuestosMTijereado.add(Cuchillas.copiar());
+    repuestosMTijereado.add(Aceite.copiar());
 
-    //creacion de maquinas
+        //CREACION DE LAS MAQUINAS QUE MANEJAREMOS CON SUS RESPECTIVOS RESPUESTOS
     Maquinaria MaquinaDeCoser = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC);
     Maquinaria MaquinaDeCorte = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte);
     Maquinaria PlanchaIndustrial = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI);
@@ -624,11 +627,59 @@ public void crearSedesMaquinasRepuestos(){
     Maquinaria MaquinaDeTermofijado = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado);
     Maquinaria MaquinaDeTijereado = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado);
 
-    //debo investigar qué maquinas de las creadas pueden ir en cada sede y añadirlas en arrayslists así como los repuestos, para luego sí crear las sedes con dichos arraylists de maquinas ya listos
+        //AGRUPACION DE LAS MAQUINAS EN LISTAS PARA ENVIARLAS A LAS SEDES CORRESPONDIENTES
+    ArrayList<Maquinaria> maqSedeP = new ArrayList<>();
+    ArrayList<Maquinaria> maqSede2 = new ArrayList<>();
+    ArrayList<Maquinaria> maqSede3 = new ArrayList<>();
+    ArrayList<Maquinaria> maqSede4 = new ArrayList<>();
+    ArrayList<Maquinaria> maqSede5 = new ArrayList<>();
+    ArrayList<Maquinaria> maqSede6 = new ArrayList<>();
 
+    maqSedeP.add(MaquinaDeCoser);
+    maqSedeP.add(MaquinaDeCorte);
+    maqSedeP.add(PlanchaIndustrial);
+    maqSedeP.add(BordadoraIndustrial);
+    maqSedeP.add(MaquinaDeTermofijado);
+    maqSedeP.add(MaquinaDeTijereado);
+
+    maqSede2.add(MaquinaDeCoser.copiar());
+    maqSede2.add(MaquinaDeCorte.copiar());
+    maqSede2.add(PlanchaIndustrial.copiar());
+    maqSede2.add(BordadoraIndustrial.copiar());
+    maqSede2.add(MaquinaDeTermofijado.copiar());
+    maqSede2.add(MaquinaDeTijereado.copiar());
+
+    maqSede3.add(MaquinaDeCoser.copiar());
+    maqSede3.add(MaquinaDeCorte.copiar());
+    maqSede3.add(PlanchaIndustrial.copiar());
+    maqSede3.add(BordadoraIndustrial.copiar());
+    maqSede3.add(MaquinaDeTermofijado.copiar());
+    maqSede3.add(MaquinaDeTijereado.copiar());
+
+    maqSede4.add(MaquinaDeCoser.copiar());
+    maqSede4.add(MaquinaDeCorte.copiar());
+    maqSede4.add(PlanchaIndustrial.copiar());
+    maqSede4.add(BordadoraIndustrial.copiar());
+    maqSede4.add(MaquinaDeTermofijado.copiar());
+    maqSede4.add(MaquinaDeTijereado.copiar());
+
+    maqSede5.add(MaquinaDeCoser.copiar());
+    maqSede5.add(MaquinaDeCorte.copiar());
+    maqSede5.add(PlanchaIndustrial.copiar());
+    maqSede5.add(MaquinaDeTijereado.copiar());
+
+    maqSede6.add(MaquinaDeCoser.copiar());
+    maqSede6.add(MaquinaDeCorte.copiar());
+    maqSede6.add(PlanchaIndustrial.copiar());
+    maqSede6.add(MaquinaDeTijereado.copiar());
     
-    //creacion de sedes
-
+        //CREACION DE LAS SEDES QUE MANEJAREMOS, CON SUS RESPECTIVAS MAQUINAS EN CADA UNA DE ELLAS
+    Sede sedeP = new Sede("Sede Principal", maqSedeP);
+    Sede sede2 = new Sede("Sede 2", maqSede2);
+    Sede sede3 = new Sede("Sede 3", maqSede3);
+    Sede sede4 = new Sede("Sede 4", maqSede4);
+    Sede sede5 = new Sede("Sede 5", maqSede5);
+    Sede sede6 = new Sede("Sede 6", maqSede6);
     
 }
 
