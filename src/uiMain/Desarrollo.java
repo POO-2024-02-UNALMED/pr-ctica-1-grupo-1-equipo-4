@@ -40,7 +40,7 @@ public class Desarrollo {
             for (int idxSede=0; idxSede<Sede.getlistaSedes().size(); idxSede++){
                 System.out.println(idxSede+". "+Sede.getlistaSedes().get(idxSede).getNombre());
             }
-            String comando = in.nextLine();
+            String comando = in.next();
             int idxSede;
             switch (comando) {
                 case "atras":
@@ -68,29 +68,29 @@ public class Desarrollo {
     }
 
     static void menuSede(Scanner in, Sede sede){
-        System.out.println("1.Empleados");
-        System.out.println("2.Ventas");
-        System.out.println("3.Produccion");
-        System.out.println("4.Bodega");
-        System.out.println("0.atras");
         bucleSede:
         while (true) {  
-        int numero = in.nextInt();
-        switch (numero) {
-            case 1:
-                menuEmpleados(in, sede);
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 0:
-                break bucleSede;
-            default:
-                break;
-        }
+            System.out.println("1.Empleados");
+            System.out.println("2.Ventas");
+            System.out.println("3.Produccion");
+            System.out.println("4.Bodega");
+            System.out.println("0.atras");
+            int numero = in.nextInt();
+            switch (numero) {
+                case 1:
+                    menuEmpleados(in, sede);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 0:
+                    break bucleSede;
+                default:
+                    break;
+            }
         }
     }
 
@@ -102,7 +102,7 @@ public class Desarrollo {
                 System.out.println(idxEmpleado+". "+sede.getlistaEmpleados().get(idxEmpleado));
             }
 
-            String comando = in.nextLine();
+            String comando = in.next();
             switch (comando) {
                 case "quitar":
                     System.out.println("Cual quieres quitar?");
