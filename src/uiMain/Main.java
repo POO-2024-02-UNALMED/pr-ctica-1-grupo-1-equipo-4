@@ -23,6 +23,7 @@ import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
 
+
 public class Main {
     public static void main (String[] args){
         Deserializador.deserializar();
@@ -37,7 +38,8 @@ public class Main {
         System.out.println("4.Vender un producto");
         System.out.println("5.Producir prendas");
         System.out.println("6.Salir");
-        
+        System.out.println("7. Inspeccionar memoria");
+
         int opcion = in.nextInt();
         Fecha fecha;
         switch(opcion) {
@@ -77,6 +79,9 @@ public class Main {
             Serializador.serializar();
             System.exit(0);
             break buclePrincipal;
+        
+        case 7:
+            Desarrollo.menu(in);
             
         default:
             System.out.println("Esa opción no es valida.");
