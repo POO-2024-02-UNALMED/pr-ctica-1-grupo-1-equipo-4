@@ -22,12 +22,12 @@ public enum Area {
         this.MaquinariaNecesaria=MaquinariaNecesaria;
     }
     
-    public static ArrayList<Float> rendimientoDeseadoActual(Sede sede) {
+    public static ArrayList<Float> rendimientoDeseadoActual(Sede sede, Fecha fecha) {
         ArrayList<Float> rendimientoSede = new ArrayList<>();
         for (Area a : Area.values()) {
             switch (a) {
                 case DIRECCION:
-                    a.rendimientoDeseado = 3 / 5f;
+                    a.rendimientoDeseado = (3 / 5f)*100;
                     rendimientoSede.add(a.rendimientoDeseado);
                     break;
                 case OFICINA:
@@ -37,7 +37,7 @@ public enum Area {
                             cantidadEmpleadosOfi++;
                         }
                     }
-                    a.rendimientoDeseado = (float) sede.getHistorialVentas().size() / cantidadEmpleadosOfi;
+                    a.rendimientoDeseado = (float) Venta.filtrarPorMes(sede.getHistorialVentas(), fecha).size() / cantidadEmpleadosOfi; // Cantidad de ventas por empleado de oficina
                     rendimientoSede.add(a.rendimientoDeseado);
                     break;
                 case VENTAS:

@@ -68,6 +68,16 @@ public class Venta implements Serializable {
 		return asesoradas;
 	}
 
+	static public int cantidadVentasEncargadasEnMes(Empleado empleado, Fecha fecha){
+		int cantidad=0;
+		for (Venta venta : empleado.getSede().getHistorialVentas()){
+			if (venta.encargado.equals(empleado)&&venta.getFechaVenta().getMes()==fecha.getMes()&&venta.getFechaVenta().getAño()==fecha.getAño()){
+				cantidad++;
+			}
+		}
+		return cantidad;
+	}
+
 	static public int cantidadVentasEncargadas(Empleado empleado){
 		int cantidad=0;
 		for (Venta venta : empleado.getSede().getHistorialVentas()){
@@ -107,11 +117,12 @@ public class Venta implements Serializable {
 		return balanceCostosProduccion;
 	}
 
+	// Retorna de 0 a 0.5 el porcentaje que sube el monto de ventas el black friday
 	static public float blackFriday(Fecha fecha){
 	int año;
 	if (fecha.getMes()>11){año=fecha.getAño();}
 	else if (fecha.getMes()==11 && fecha.getDia()<=24){año=fecha.getAño();}
-	else{año=fecha.getAño()-1;}
+	else{año=fecha.getAño()-1;} // Si no ha pasado black friday, usar el año anterior
 	ArrayList<Fecha> diasBlackFriday=new ArrayList();
 	diasBlackFriday.add(new Fecha(28,11,año));diasBlackFriday.add(new Fecha(29,11,año));diasBlackFriday.add(new Fecha(30,11,año));
 	ArrayList<Fecha> FechasNormales=new ArrayList();
