@@ -46,7 +46,8 @@ public class Main {
         Fecha fecha;
         switch(opcion) {
         case 1:
-            ArrayList<Empleado> despedidos = despedirEmpleados(in);
+            fecha = ingresarFecha(in);
+            ArrayList<Empleado> despedidos = despedirEmpleados(in,fecha);
             ArrayList<Empleado> aContratar = reorganizarEmpleados(in, despedidos);
             contratarEmpleados(aContratar, in);
             break;
@@ -110,9 +111,9 @@ public class Main {
     }
     
     // Interaccion 1 de Gestion Humana https://docs.google.com/document/d/1IomqwzQR1ZRXw9dFlHx5mA_2oOowyIbxauZeJ6Rqy6Q/edit?tab=t.0#heading=h.z9eys2stm4gz
-    static public ArrayList<Empleado> despedirEmpleados(Scanner scanner) {
+    static public ArrayList<Empleado> despedirEmpleados(Scanner scanner,Fecha fecha) {
         System.out.println("Obteniendo lista sugerida de empleados");
-        ArrayList<Empleado> aDespedir = Empleado.listaInicialDespedirEmpleado();
+        ArrayList<Empleado> aDespedir = Empleado.listaInicialDespedirEmpleado(fecha);
         for (Empleado emp : aDespedir) {
             System.out.println(emp.getNombre()+" "+emp.getAreaActual());
         }

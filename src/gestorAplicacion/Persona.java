@@ -89,6 +89,7 @@ public class Persona implements Serializable{
 					break;
 				}
 			}
+			emp.setSalario(persona.getRol().getSalarioInicial()+persona.getRol().getSalarioInicial()*0.5*persona.getExperiencia());
 		}
 	}
 

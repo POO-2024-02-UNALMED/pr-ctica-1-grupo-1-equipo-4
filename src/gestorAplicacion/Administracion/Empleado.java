@@ -68,7 +68,7 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
     }
 
     // Interacción 1 de Gestion Humana
-    static public ArrayList <Empleado> listaInicialDespedirEmpleado(){
+    static public ArrayList <Empleado> listaInicialDespedirEmpleado(Fecha fecha){
         // Preparamos las listas de empleados
         ArrayList <Empleado> listaADespedir = new ArrayList<Empleado>(); // A en el doc. 
         ArrayList <ArrayList<Empleado>> listaATransferir = new ArrayList<>(Arrays.asList()); // B en el doc.
@@ -93,11 +93,11 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
                         float acumuladoVentasSede = 0;
                         for (Empleado empAcumulado : sede.getlistaEmpleados()){
                             if (empAcumulado.areaActual == Area.VENTAS){
-                                acumuladoVentasSede+=Venta.cantidadVentasEncargadas(empAcumulado);
+                                acumuladoVentasSede+=Venta.cantidadVentasEncargadasMes(empAcumulado,fecha);
                             }
                         }
                         float promedioVentasSede = acumuladoVentasSede/sede.getlistaEmpleados().size();
-                        rendimiento = (int) ((Venta.cantidadVentasEncargadas(emp)/promedioVentasSede)*100);
+                        rendimiento = (int) ((Venta.cantidadVentasEncargadasMes(emp,fecha)/promedioVentasSede)*100);
 
                         break;
 
@@ -135,12 +135,13 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
                     if (emp.areaActual.equals(Area.CORTE)==false && emp.traslados<2){
                         boolean puedeCambiarArea = true;
                         for (Area areaPasada : emp.areas){
-                            if (areaPasada.ordinal()<emp.areaActual.ordinal()){
+                            if (areaPasada.ordinal()>emp.areaActual.ordinal()){ // Al parecer areas mayores tienen ordinales mayores
                                 puedeCambiarArea = false; // Por haber trabajado en un área más baja.
                                 break;
                             }
                         }
-                        if (puedeCambiarArea){
+                        if (puedeCambiarArea && emp.areaActual.ordinal()<Area.values().length-1){ // verificamos tambien si hay area mas baja
+                            empleado.setAreaActual(Area.values()[emp.areaActual.ordinal()+1]);
                             seVaADespedir=false;
                             listaADespedir.remove(emp);
                         }
@@ -164,14 +165,15 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
 
     // Interaccion 2 gestion humana. Puedes poner conTransacciones en falso en caso de que quieras quitar al empleado "Limpiamente", por ejemplo
     // en el modulo de Desarrollo.
-    static public void despedirEmpleados(ArrayList<Empleado> empleados, boolean conTransacciones){
+    static public void despedirEmpleados(ArrayList<Empleado> empleados, boolean conTransacciones, Fecha fecha){
         for (Empleado emp : empleados){
             emp.sede.getlistaEmpleados().remove(emp);
             listaEmpleados.remove(emp);
 
             if(conTransacciones){
                 int aPagar = Maquinaria.remuneracionDanos(emp);
-                Banco.getCuentaPrincipal().transaccion(aPagar);
+                int cesantias = emp.salario*(emp.fechaContratacion.diasHasta(fecha))/360;
+                Banco.getCuentaPrincipal().transaccion((cesantias-aPagar)*-1);
             }
             Maquinaria.liberarMaquinariaDe(emp);
         }

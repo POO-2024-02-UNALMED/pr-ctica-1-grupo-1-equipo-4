@@ -52,4 +52,35 @@ public class Fecha implements Serializable{
 	public static boolean compararFecha(Fecha fecha1, Fecha fecha2) {
 		return (compararAño(fecha1.año, fecha2.año) && compararMes(fecha1.mes, fecha2.mes) && compararDia(fecha1.dia, fecha2.dia));
 	}
+
+	public int diasHasta(Fecha hasta) {
+		int dias = 0;
+		Fecha fecha = new Fecha(this.dia, this.mes, this.año);
+		while (!compararFecha(fecha, hasta)) {
+			dias++;
+			fecha = fecha.siguienteDia();
+		}
+		return dias;
+	}
+
+	// Actua in-place, modifica la fecha.
+	public void siguienteDia(){
+		dia++;
+		if (dia==32 && (mes==1 || mes==3 || mes==5 || mes==7 || mes==8 || mes==10 || mes==12)){
+			mes++;
+			dia=0;
+		}
+		if (dia==31 && (mes==4 || mes==6 || mes==9 || mes==11)){
+			mes++;
+			dia=0;
+		}
+		if (dia==30 && mes==2){
+			mes++;
+			dia=0;
+		}
+		if(mes==12){
+			año++;
+			mes=0;
+		}
+	}
 }

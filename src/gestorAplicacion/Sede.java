@@ -213,6 +213,7 @@ public class Sede implements Serializable{
 	// Interaccion 2 de gestión humana
 	static public void reemplazarPorCambioSede(ArrayList<Empleado> despedidos,ArrayList<Empleado> aTransferir){
 		for (Empleado despedido : despedidos){
+			// Buscamos en la lista de empleados a transferir, quien pudo ser seleccionado como reemplazo.
 			for (Empleado reemplazo: aTransferir){
 				if (despedido.getRol() == reemplazo.getRol()){
 					int aPagar = Maquinaria.remuneracionDanos(reemplazo);
