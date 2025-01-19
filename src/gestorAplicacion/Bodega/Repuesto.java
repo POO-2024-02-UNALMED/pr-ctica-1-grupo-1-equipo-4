@@ -1,14 +1,17 @@
 package gestorAplicacion.Bodega;
 
-public class Repuesto {
-	private final String nombre;
-    private final int horasDeVidaUtil;
+import java.util.ArrayList;
+
+public class Repuesto extends Insumo{
+    //hereda el atributo nombre
+    //hereda el atributo horasDeVidaUtil
+    private static ArrayList<Repuesto> listadoRepuestos = new ArrayList<>();
     private int horasDeUso;
     
 
-    public Repuesto(String nombre, int horasDeVidaUtil){
-        this.nombre = nombre;
-        this.horasDeVidaUtil = horasDeVidaUtil;
+    public Repuesto(String nombre, int horasDeVidaUtil, Proveedor proveedor){
+        super(nombre, horasDeVidaUtil, proveedor);
+        listadoRepuestos.add(this);
     }
 
     public String getNombre(){
@@ -24,10 +27,13 @@ public class Repuesto {
     public int getHorasDeUso(){
         return horasDeUso;
     }
+    public static ArrayList<Repuesto> getListadoRepuestoss(){
+        return listadoRepuestos;
+    }
 
         //metodo para hacer una copia de un objeto de tipo Repuesto, con la misma inicializacion de atributos del que queremos copiar
     public Repuesto copiar(){
-        return new Repuesto(this.nombre, this.horasDeVidaUtil);
+        return new Repuesto(this.nombre, this.horasDeVidaUtil, this.proveedor);
     }
 
     public float calcularGastoMensual(){

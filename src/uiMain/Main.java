@@ -25,9 +25,12 @@ import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.Bodega.Camisa;
 import java.lang.reflect.Array;
+import java.security.cert.PolicyQualifierInfo;
 
 
 public class Main {
+    Sede sedeP, sede2;
+    private static Proveedor proveedorBdelmain;
     public static void main (String[] args){
         Deserializador.deserializar();
         Scanner in = new Scanner(System.in);
@@ -97,7 +100,7 @@ public class Main {
         in.close();
     }
 
-    // Método ingresarFecha
+    // Metodo ingresarFecha
     static public Fecha ingresarFecha(Scanner scanner){
         int dia=-1;
         int mes=-1;
@@ -554,28 +557,143 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
     //REQUERIDO PARA LA INTERACCION 1 DE LA FUNCIONALIDAD DE PRODUCCION....
     
 public void crearSedesMaquinasRepuestos(){
+
+    //Episodio 43
+    Proveedor p1=new Proveedor(15000,"Rag Tela");
+    p1.setInsumo(new Insumo("Tela", p1));
+    Proveedor p2=new Proveedor(20000,"Macro Telas");
+    p2.setInsumo(new Insumo("Hilo", p2));
+    Proveedor p4=new Proveedor(7000,"Insumos textileros");
+    p4.setInsumo(new Insumo("Cremallera", p4));
+    Proveedor p3=new Proveedor(5000,"San Remo");
+    p3.setInsumo(new Insumo("Boton", p3));
+    Proveedor p5=new Proveedor(18000,"Fatelares");
+    p5.setInsumo(new Insumo("Tela", p5));
+    Proveedor p6=new Proveedor(20000,"Macro Textil");
+    p6.setInsumo(new Insumo("Tela", p6));
+    Proveedor p9=new Proveedor(25000,"Hilos Venus");
+    p9.setInsumo(new Insumo("Hilo", p9));
+    Proveedor p7=new Proveedor(10000,"Insumos para Confección");
+    p7.setInsumo(new Insumo("Cremallera", p7));
+    Proveedor p8=new Proveedor(8000,"InduBoton");
+    p8.setInsumo(new Insumo("Boton", p8));
+    Proveedor p10=new Proveedor(5000,"Primavera");
+    p10.setDescuento(0.06F);
+    p10.setInsumo(new Bolsa("Bolsa", p10));
+    Proveedor p11=new Proveedor(8000,"Empaques y Cartones");
+    p11.setInsumo(new Bolsa("Bolsa", p11));
+    p11.setDescuento(0.1F);
+    Proveedor p12=new Proveedor(6000,"Plastienda");
+    p10.setDescuento(0.05F);
+    p12.setInsumo(new Bolsa("Bolsa", p12));
+
+        //PROVEEDORES QUE VENDEN AGUJAS DE LA MAQUINA DE COSER:
+    Proveedor p13 = new Proveedor(80500, "Solo Agujas");
+    p13.setInsumo(new Insumo("Agujas de la Maquina de Coser", p13));
+    Proveedor p14 = new Proveedor(92000, "Agujas y mas");
+    p14.setInsumo(new Insumo("Agujas de la Maquina de Coser", p14));
+    Proveedor p15 = new Proveedor(70000, "Las propias agujas");
+    p15.setInsumo(new Insumo("Agujas de la Maquina de Coser", p15));
+
+        //PROVEEDORES QUE VENDEN ACEITE:
+    Proveedor p16 = new Proveedor(24000, "Aceites y mas");
+    p16.setInsumo(new Insumo("Aceite 946 ml", p16));
+    Proveedor p17 = new Proveedor(30000, "Aceitunas");
+    p17.setInsumo(new Insumo("Aceite 946 ml", p17));
+    Proveedor p18 = new Proveedor(20000, "El barato del Aceite");
+    p18.setInsumo(new Insumo("Aceite 946 ml", p18));
+        
+        //PROVEEDORES QUE VENDEN CUCHILLAS
+    Proveedor p19 = new Proveedor(32000, "El de las Cuchillas");
+    p19.setInsumo(new Insumo("Cuchillas", p19));
+    Proveedor p20 = new Proveedor(28000, "El barato de las cuchillas");
+    p20.setInsumo(new Insumo("Cuchillas", p20));
+    Proveedor p21 = new Proveedor(37000, "El carero de las cuchillas");
+    p21.setInsumo(new Insumo("Cuchillas", p21));
+
+        //PROVEEDORES QUE VENDEN AFILADORES
+    Proveedor p22 = new Proveedor(72000, "El afilador");
+    p22.setInsumo(new Insumo("Afiladores", p22));
+    Proveedor p23 = new Proveedor(60000, "La bodega del afilador");
+    p23.setInsumo(new Insumo("Afiladores", p23));
+    Proveedor p24 = new Proveedor(80000, "Afilamos caro");
+    p24.setInsumo(new Insumo("Afiladores", p24));
+
+        //PROVEEDORES QUE VENDEN RESISTENCIAS ELECTRICAS:
+    Proveedor p25 = new Proveedor(160000, "Resistencias y mas");
+    p25.setInsumo(new Insumo("Resistencia electrica", p25));
+    Proveedor p26 = new Proveedor(140000, "Electricos");
+    p26.setInsumo(new Insumo("Resistencia electrica", p26));
+
+        //PROVEEDORES QUE VENDEN MANGUERAS DE VAPOR:
+    Proveedor p27 = new Proveedor(120000, "Mangueras y mas");
+    p27.setInsumo(new Insumo("Manguera de vapor", p27));
+    Proveedor p28 = new Proveedor(140000, "Mangueras Don Diego");
+    p28.setInsumo(new Insumo("Manguera de vapor", p28));
+
+        //PROVEEDORES QUE VENDEN AGUJAS DE LA BORDADORA INDUSTRIAL:
+    Proveedor p29 = new Proveedor(55000, "El Agujero");
+    p29.setInsumo(new Insumo("Agujas de la Bordadora industrial", p29));
+    Proveedor p30 = new Proveedor(45000, "La bodega del Agujero");
+    p30.setInsumo(new Insumo("Agujas de la Bordadora industrial", p30));
+
+        //PROVEEDORES QUE VENDEN BANDAS DE TRANSMISION:
+    Proveedor p31 = new Proveedor(200000, "El de las Bandas");
+    p31.setInsumo(new Insumo("Bandas de transmision", p31));
+    Proveedor p32 = new Proveedor(250000, "El carero de las Bandas");
+    p32.setInsumo(new Insumo("Bandas de transmision", p32));
+
+        //PROVEEDORES QUE VENDEN TINTA NEGRA PARA IMPRESORA:
+    Proveedor p33 = new Proveedor(44000, "Tinta por aqui");
+    p33.setInsumo(new Insumo("Tinta Negra 90 ml", p33));
+    Proveedor p34 = new Proveedor(50000, "El tintoso");
+    p34.setInsumo(new Insumo("Tinta Negra 90 ml", p34));
+
+        //PROVEEDORES QUE VENDEN LECTORES DE BARRAS:
+    Proveedor p35 = new Proveedor(120000, "Mega tecnologies");
+    p35.setInsumo(new Insumo("Lector de barras", p35));
+    Proveedor p36 = new Proveedor(160000, "HP");
+    p36.setInsumo(new Insumo("Lector de barras", p36));
+
+        //PROVEEDORES QUE VENDEN PAPEL QUIMICO:
+    Proveedor p37 = new Proveedor(40000, "Panamericana");
+    p37.setInsumo(new Insumo("Papel quimico", p37));
+    Proveedor p38 = new Proveedor(50000, "SSKaisen");
+    p38.setInsumo(new Insumo("Papel quimico", p38));
+
+        //PROVEEDORES QUE VENDEN CARGADORES PARA PORTATILES:
+    Proveedor p39 = new Proveedor(150000, "Homecenter");
+    p39.setInsumo(new Insumo("Cargador Computador", p39));
+    Proveedor p40 = new Proveedor(180000, "Todo en cargadores");
+    p40.setInsumo(new Insumo("Cargador Computador", p40));
+
+        //PROVEEDORES QUE VENDER MOUSE PARA PORTATILES:
+    Proveedor p41 = new Proveedor(20000, "Mecado Libre");
+    p41.setInsumo(new Insumo("Mouse Computador", p41));
+    Proveedor p42 = new Proveedor(30000, "Asus");
+    p42.setInsumo(new Insumo("Mouse Computador", p42));
+
         //CREACION DE TODOS LOS REPUESTOS QUE MANEJAREMOS PARA LA FUNCIONALIDAD PRODUCCION
-    Repuesto AgujasMC = new Repuesto("Agujas de la Maquina de Coser", 12);
-    Repuesto Aceite = new Repuesto("Aceite", 60);
+    Repuesto AgujasMC = new Repuesto("Agujas de la Maquina de coser", 12, p13);
+    Repuesto Aceite = new Repuesto("Aceite", 60, p16);
 
-    Repuesto Cuchillas = new Repuesto("Cuchillas", 60);
-    Repuesto Afiladores = new Repuesto("Afiladores", 750);
+    Repuesto Cuchillas = new Repuesto("Cuchillas", 60, p19);
+    Repuesto Afiladores = new Repuesto("Afiladores", 750, p22);
 
-    Repuesto ResistenciaElectrica = new Repuesto("Resistencia Electrica", 1500);
-    Repuesto MangueraDeVapor = new Repuesto("Manguera de Vapor", 750);
+    Repuesto ResistenciaElectrica = new Repuesto("Resistencia Electrica", 1500, p25);
+    Repuesto MangueraDeVapor = new Repuesto("Manguera de Vapor", 750, p27);
 
-    Repuesto AgujasBI = new Repuesto("Agujas de la Bordadora Industrial", 25);
+    Repuesto AgujasBI = new Repuesto("Agujas de la Bordadora Industrial", 25, p29);
 
-    Repuesto BandasDeTransmision = new Repuesto("Bandas de Transmision", 2500);
+    Repuesto BandasDeTransmision = new Repuesto("Bandas de Transmision", 2500, p31);
    
-    Repuesto TintaN = new Repuesto("Tinta Negra Impresora", 3000);
+    Repuesto TintaN = new Repuesto("Tinta Negra Impresora", 3000, p33);
 
-    
-    Repuesto Lector = new Repuesto("Lector de barras", 3000);
-    Repuesto PapelQuimico = new Repuesto("Papel químico", 72);
+    Repuesto Lector = new Repuesto("Lector de barras", 3000, p35);
+    Repuesto PapelQuimico = new Repuesto("Papel químico", 72, p37);
 
-    Repuesto Cargador = new Repuesto("Cargador Computador", 6000);
-    Repuesto Mouse = new Repuesto("Mouse Computador", 9000);
+    Repuesto Cargador = new Repuesto("Cargador Computador", 6000, p39);
+    Repuesto Mouse = new Repuesto("Mouse Computador", 9000, p41);
     
     //AGRUPACION DE LOS REPUESTOS EN LISTAS PARA ENVIARLOS A LAS MAQUINAS CORRESPONDIENTES
     ArrayList<Repuesto> repuestosMC = new ArrayList<>();
@@ -626,8 +744,8 @@ public void crearSedesMaquinasRepuestos(){
     Maquinaria Computador = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp);
 
         //CREACION DE LAS SEDES QUE MANEJAREMOS, CON SUS RESPECTIVAS MAQUINAS EN CADA UNA DE ELLAS
-    Sede sedeP = new Sede("Sede Principal");
-    Sede sede2 = new Sede("Sede 2");
+    sedeP = new Sede("Sede Principal");
+    sede2 = new Sede("Sede 2");
     
     new Banco("Banco Montreal","principal",400_000_000,0.05F);
     Banco b1=new Banco("Banco Montreal","secundaria",5_000_000,0.05F);
@@ -647,35 +765,6 @@ public void crearSedesMaquinasRepuestos(){
     tm.actualizarDeuda(new Deuda(new Fecha(30,9,22),150_000_000,"Inversiones Terramoda","Banco",18));
     tm.actualizarDeuda(new Deuda(new Fecha(20,2,23),800_000,"Inversiones Terramoda","Banco",18));
 
-    //Episodio 43
-    
-    Proveedor p1=new Proveedor(15000,"Rag Tela");
-    p1.setInsumo(new Insumo("Tela", p1));
-    Proveedor p2=new Proveedor(20000,"Macro Telas");
-    p2.setInsumo(new Insumo("Hilo", p2));
-    Proveedor p4=new Proveedor(7000,"Insumos textileros");
-    p4.setInsumo(new Insumo("Cremallera", p4));
-    Proveedor p3=new Proveedor(5000,"San Remo");
-    p3.setInsumo(new Insumo("Boton", p3));
-    Proveedor p5=new Proveedor(18000,"Fatelares");
-    p5.setInsumo(new Insumo("Tela", p5));
-    Proveedor p6=new Proveedor(20000,"Macro Textil");
-    p6.setInsumo(new Insumo("Tela", p6));
-    Proveedor p9=new Proveedor(25000,"Hilos Venus");
-    p9.setInsumo(new Insumo("Hilo", p9));
-    Proveedor p7=new Proveedor(10000,"Insumos para Confección");
-    p7.setInsumo(new Insumo("Cremallera", p7));
-    Proveedor p8=new Proveedor(8000,"InduBoton");
-    p8.setInsumo(new Insumo("Boton", p8));
-    Proveedor p10=new Proveedor(5000,"Primavera");
-    p10.setDescuento(0.06F);
-    p10.setInsumo(new Bolsa("Bolsa", p10));
-    Proveedor p11=new Proveedor(8000,"Empaques y Cartones");
-    p11.setInsumo(new Bolsa("Bolsa", p11));
-    p11.setDescuento(0.1F);
-    Proveedor p12=new Proveedor(6000,"Plastienda");
-    p10.setDescuento(0.05F);
-    p12.setInsumo(new Bolsa("Bolsa", p12));
 
     Insumo i1=new Insumo("Tela",1*20, p1,sedeP);
     Insumo i2=new Insumo("Tela",1*20, p1,sede2);
@@ -768,6 +857,44 @@ public void crearSedesMaquinasRepuestos(){
 
 }
 
+    //para la interaccion 1 de produccion
+public void dondeRetirar(){
+    Scanner scanner = new Scanner(System.in);
+    crearSedesMaquinasRepuestos();
+
+    System.out.println("¿Desde cual sede quieres comprar el repuesto requerido?");
+    System.out.println("1. " + sedeP.getNombre() + " tiene disponible: " + sedeP.getCuentaSede().getAhorroBanco());
+    System.out.println("2. " + sede2.getNombre() + " tiene disponible: " + sede2.getCuentaSede().getAhorroBanco());
+    
+    int opcion = scanner.nextInt();
+
+    if (opcion == 1) {
+        long nuevoDineroSede = (sedeP.getCuentaSede().getAhorroBanco() - proveedorBdelmain.getInsumo().getPrecioIndividual());
+        sedeP.getCuentaSede().setAhorroBanco(nuevoDineroSede);
+
+        System.out.println("El repuesto se compro exitosamente desde la sede " + sedeP.getNombre() + ", saldo disponible:");
+        System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
+        System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
+
+    } else if (opcion == 2) {
+        long nuevoDineroSede = (sede2.getCuentaSede().getAhorroBanco() - proveedorBdelmain.getInsumo().getPrecioIndividual());
+        sede2.getCuentaSede().setAhorroBanco(nuevoDineroSede);
+
+        System.out.println("El repuesto se compro exitosamente desde la sede " + sede2.getNombre() + ", saldo disponible:");
+        System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
+        System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
+    } else{
+        System.out.println("Opcion incorrecta, marque 1 o 2 segun desee");
+    }
+
+}
+
+public static void recibeProveedorB(Proveedor proveedorB){
+    Main.proveedorBdelmain = proveedorB;
+}
+public static Proveedor getProveedorBDelMain(){
+    return Main.proveedorBdelmain;
+}
 
     static int nextIntSeguro(Scanner in){
         while (!in.hasNextInt()){

@@ -13,6 +13,7 @@ public class Insumo{
 	protected int ultimoPrecio;
 	// Actualizado al surtir
 	//Precio por toda la compra
+	protected int horasDeVidaUtil;
 
 	public Insumo(String nombre,float cantidad,Proveedor proveedor,Sede sede){
 		this.nombre=nombre;
@@ -33,6 +34,12 @@ public class Insumo{
 		this.proveedor=proveedor;
 		this.precioXUnidad = proveedor.getPrecio();
 	}
+
+	public Insumo(String nombre, int horasDeVidaUtil, Proveedor proveedor){
+		this(nombre, proveedor);
+		this.horasDeVidaUtil = horasDeVidaUtil;
+	}
+
 
 
 	
