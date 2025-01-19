@@ -23,16 +23,6 @@ public class Venta implements Serializable {
 	private int costoEnvio;
 	private int subtotal;
 	private static float pesimismo;
-<<<<<<< HEAD
-	
-    //public Venta(Empleado encargado, Empleado asesor, Fecha fecha, ArrayList<Prenda> productosComprar){
-	//	this.encargado = encargado;
-	//	this.asesor = asesor;
-	//	this.fechaVenta = fecha;
-	//	this.articulos = productosComprar;   
-	//}
-     
-=======
 
 	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado v,ArrayList<Prenda> articulos, ArrayList<Integer> cantidades){
 		this(sede, fecha, c);
