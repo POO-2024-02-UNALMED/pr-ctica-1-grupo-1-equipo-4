@@ -1,5 +1,6 @@
 package gestorAplicacion.Bodega;
 import gestorAplicacion.Administracion.Empleado;
+import uiMain.Main;
 import gestorAplicacion.Sede;
 
 import java.net.ResponseCache;
@@ -19,6 +20,13 @@ public class Maquinaria {
 	int horaRevision;
 	ArrayList<Repuesto> repuestos;
 	ArrayList<Integer> horasUltimoCambio;
+
+	Proveedor proveedorBarato;
+	ArrayList<Proveedor> listProveedoresBaratos = new ArrayList<>();
+
+	public Maquinaria(){
+		this.nombre = "maquinaEjemplo";
+	}
 
 	public Maquinaria(String nombre, long valor, int horaRevision, ArrayList<Repuesto> repuestos){
 		this.nombre = nombre;
@@ -85,6 +93,9 @@ public class Maquinaria {
 
 	public ArrayList<Maquinaria> agruparMaquinasDisponibles(){
 		ArrayList<Maquinaria> maqDisponibles = new ArrayList<>();	//listado temporal de maquinarias disponibles, el cual será pasado como argumento para la segunda interracion
+		ArrayList<Proveedor> todosProvBaratos = new ArrayList<>();
+		Main main = new Main();
+		boolean encontrado = false;
 
 		for(Sede cadaSede : Sede.getlistaSedes()){
 			for(Maquinaria cadaMaquina : cadaSede.getlistaMaquinas()){
@@ -94,6 +105,35 @@ public class Maquinaria {
 					for(Repuesto cadaRepuesto : cadaMaquina.getRepuestos()){
 						if ((cadaRepuesto.getHorasDeVidaUtil() - cadaRepuesto.getHorasDeUso()) <= 0){
 							//se debe reemplazar
+							//llamando al metodo que encuentra los proveedores mas baratos de los repuestos existentes
+							todosProvBaratos = encontrarProveedoresBaratos();
+							for(Proveedor elMasEconomico : todosProvBaratos){
+								proveedorBarato = null;
+								if(elMasEconomico.getInsumo().getNombre().equalsIgnoreCase(cadaRepuesto.getNombre())){
+									proveedorBarato = elMasEconomico;
+									Main.recibeProveedorB(proveedorBarato);
+									break;
+								}
+							}
+							//procederemos a comprarlo preguntandole al usuario de cual sede quiere restar la money
+							//pero antes hay que ver si la plata de alguna de las dos sedes creadas alcanza para comprarlo
+							for(Sede sedeCreada: Sede.getlistaSedes()){
+								//lo siguiente dira que si la plata de cualquiera de las sedes es mayor a lo que vale el repuesto
+								//mas barato que requerimos, se procede a hacer la eleccion de cual sede se quiere descontar la plata:
+								if(sedeCreada.getCuentaSede().getAhorroBanco() >= proveedorBarato.getInsumo().getPrecioIndividual()){
+									//se llamara al metodo dondeRetirar() en donde se le pregunta al usuario de cual sede
+									//quiere retirar la plata
+									main.dondeRetirar();
+									//AHORA FALTA QUITAR EL REPUESTO QUE NO SIRVE DEL ARRAYLIST DE REPUESTOS DE LA MAQUINA Y
+									//AGREGAR UNA COPIA DEL REPUESTO A DICHO ARRAYLIST DE REPUESTOS DE LA MAQUINA AFECTADA
+									
+									encontrado = true;
+									break;
+								}	
+							}
+							if (!encontrado) {
+								System.out.println("Ninguna de las sedes cuenta con dinero suficiente, considere pedir un prestamo.");
+							}
 						}
 					}
 				} else{
@@ -111,8 +151,31 @@ public class Maquinaria {
 		return maqDisponibles;
 	}
 
-	public void reemplazarRepuesto(){
-		
+	public ArrayList<Proveedor> encontrarProveedoresBaratos(){
+
+		for(Repuesto cadaRepuesto : Repuesto.getListadoRepuestoss()){
+			proveedorBarato = null;
+			for(Proveedor proveedores : Proveedor.getListaProveedores()){
+				//ver si el nombre del repuesto o insumo es igual al nombre del insumo que tiene el proveedor en su atributo insumo
+				//o sea, que vende el proveedor:
+				if(proveedores.getInsumo().getNombre().equalsIgnoreCase(cadaRepuesto.getNombre())){
+					//con estos if se determina cual proveedor vende mas barato el insumo a reemplazar
+					//y se guarda en la variable proveedorBarato:
+					if(proveedorBarato == null){
+						proveedorBarato = proveedores;
+					}
+					else if(proveedores.getInsumo().getPrecioIndividual() <= proveedorBarato.getInsumo().getPrecioIndividual()){
+						proveedorBarato = proveedores;
+					}
+
+				}
+			}
+
+			listProveedoresBaratos.add(proveedorBarato);
+		}	
+		proveedorBarato = null;
+
+		return listProveedoresBaratos;
 	}
 
 	static public void asignarMaquinaria(Empleado emp){
