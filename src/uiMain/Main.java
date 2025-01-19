@@ -348,10 +348,10 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
     for(Sede x: Sede.getlistaSedes()){
         
         for(Prenda prenda: Sede.getPrendasInventadas()){
-            int proyeccion = predecirVentas(fecha, x, prenda); 
+            int proyeccion = Venta.predecirVentas(fecha, x, prenda);
 
             System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion+ 
-                                " Porcentaje de pesimismo: "+Venta.getPesimismo());
+                                " Porcentaje de pesimismo: "+(Venta.getPesimismo()*100));
             System.out.println("Seleccione una de las siguientes opciones:");
             System.out.println("1. Estoy de acuerdo con el porcentaje de pesimismo");
             System.out.println("2. Deseo cambiar el porcentaje de pesimismo");  
@@ -362,9 +362,10 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
             case 1:
                 break;
             case 2:
-                Scanner porcentaje = new Scanner(System.in);
+                System.out.println("Ingrese el nuevo porcentaje de pesimismo % ");
+                Scanner porcentaje = new Scanner(System.in); 
                 int newPesimism = porcentaje.nextInt();
-                Venta.setPesimismo(newPesimism);
+                Venta.setPesimismo(newPesimism/100);
                 break;
             default:
                 System.out.println("Esa opción no es valida.");
@@ -387,34 +388,6 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
         retorno.add(listaXSede);}
         //retorno.add(listaGuia);}
     return retorno; }
-
-// Regresión lineal    
-// Utiliza minimos cuadrados para predecir las ventas de una prenda en una sede
-static public int predecirVentas(Fecha fechaActual,Sede sede, Prenda prenda){
-    int n=5; // Cantidad de meses previos a usar
-    int sumatoriax=0+1+2+3+4+5;
-    int sumatoriaxCuadrado=1+2^3+3^2+4^2+5^2;
-    int sumatoriaY=0;
-    int sumatoriaYCuadrado=0;
-    int sumatoriaXY=0;  
-    // Iteramos por los 5 meses anteriores
-    for(int meses=0;meses<5;meses++){
-        //Iteramos por las ventas de la sede de ese mes
-        int sumatoriaYMes=0;
-        for(Venta venta: Venta.filtrarPorMes(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
-            if (venta.getArticulos().contains(prenda)){
-                sumatoriaYMes+=venta.getCantidades().get(venta.getArticulos().indexOf(prenda));
-            }
-        }
-        sumatoriaY+=sumatoriaYMes;
-        sumatoriaYCuadrado+=sumatoriaYMes^2;
-        sumatoriaXY+=sumatoriaYMes*meses;
-    }
-    //Calculamos los datos de la funcion lineal
-    double pendiente=(n*sumatoriaXY-sumatoriax*sumatoriaY)/(n*sumatoriaxCuadrado-sumatoriax^2);
-    double intercepcion = (sumatoriaY-pendiente*sumatoriax)/n;
-    // y=pendiente*x+intercepcion
-    return (int) Math.ceil(pendiente*6+intercepcion); }
 
     
     

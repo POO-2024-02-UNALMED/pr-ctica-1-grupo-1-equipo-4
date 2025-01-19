@@ -22,7 +22,7 @@ public class Venta implements Serializable {
 	private int numero; 
 	private int costoEnvio;
 	private int subtotal;
-	private static float pesimismo;
+	private static float pesimismo = 0.02F;
 
 	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado v,ArrayList<Prenda> articulos, ArrayList<Integer> cantidades){
 		this(sede, fecha, c);
@@ -46,6 +46,7 @@ public class Venta implements Serializable {
 		cliente=c;
 		sede.actualizarHistorialVentas(venta);
 	}
+
 	// Metodo ayudante para Empleado.listaInicialDespedirEmpleado,
 	// que calcula el acumulado de ventas asesoradas o registradas por empleado en pesos.
 	static public int acumuladoVentasAsesoradas(Empleado empleado){
@@ -152,6 +153,36 @@ public class Venta implements Serializable {
 	   }
 	   return ventasMes;
    }
+
+
+   // Regresión lineal    
+	// Utiliza minimos cuadrados para predecir las ventas de una prenda en una sede
+	static public int predecirVentas(Fecha fechaActual,Sede sede, Prenda prenda){
+		int n=5; // Cantidad de meses previos a usar
+		int sumatoriax=0+1+2+3+4+5;
+		int sumatoriaxCuadrado=1+2^3+3^2+4^2+5^2;
+		int sumatoriaY=0;
+		int sumatoriaYCuadrado=0;
+		int sumatoriaXY=0;  
+		// Iteramos por los 5 meses anteriores
+		for(int meses=0;meses<5;meses++){
+			//Iteramos por las ventas de la sede de ese mes
+			int sumatoriaYMes=0;
+			for(Venta venta: Venta.filtrarPorMes(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
+				if (venta.getArticulos().contains(prenda)){
+					sumatoriaYMes+=venta.getCantidades().get(venta.getArticulos().indexOf(prenda));
+				}
+			}
+			sumatoriaY+=sumatoriaYMes;
+			sumatoriaYCuadrado+=sumatoriaYMes^2;
+			sumatoriaXY+=sumatoriaYMes*meses;
+		}
+		//Calculamos los datos de la funcion lineal
+		double pendiente=(n*sumatoriaXY-sumatoriax*sumatoriaY)/(n*sumatoriaxCuadrado-sumatoriax^2);
+		double intercepcion = (sumatoriaY-pendiente*sumatoriax)/n;
+		// y=pendiente*x+intercepcion
+    	return (int) Math.ceil(pendiente*6+intercepcion); }
+
 
 	public ArrayList<Prenda> getArticulos(){return articulos;}
 	public void setArticulos(ArrayList<Prenda> articulos){this.articulos=articulos;}
