@@ -792,38 +792,6 @@ public void crearSedesMaquinasRepuestos(){
     tm.actualizarDeuda(new Deuda(new Fecha(30,9,22),150_000_000,"Inversiones Terramoda","Banco",18));
     tm.actualizarDeuda(new Deuda(new Fecha(20,2,23),800_000,"Inversiones Terramoda","Banco",18));
 
-<<<<<<< Updated upstream
-    //Episodio 43
-    
-    Proveedor p1=new Proveedor(15000,"Rag Tela");
-    p1.setInsumo(new Insumo("Tela", p1));
-    Proveedor p2=new Proveedor(20000,"Macro Telas");
-    p2.setInsumo(new Insumo("Hilo", p2));
-    Proveedor p4=new Proveedor(7000,"Insumos textileros");
-    p4.setInsumo(new Insumo("Cremallera", p4));
-    Proveedor p3=new Proveedor(5000,"San Remo");
-    p3.setInsumo(new Insumo("Boton", p3));
-    Proveedor p5=new Proveedor(18000,"Fatelares");
-    p5.setInsumo(new Insumo("Tela", p5));
-    Proveedor p6=new Proveedor(20000,"Macro Textil");
-    p6.setInsumo(new Insumo("Tela", p6));
-    Proveedor p9=new Proveedor(25000,"Hilos Venus");
-    p9.setInsumo(new Insumo("Hilo", p9));
-    Proveedor p7=new Proveedor(10000,"Insumos para Confección");
-    p7.setInsumo(new Insumo("Cremallera", p7));
-    Proveedor p8=new Proveedor(8000,"InduBoton");
-    p8.setInsumo(new Insumo("Boton", p8));
-    Proveedor p10=new Proveedor(5000,"Primavera");
-    p10.setDescuento(0.06F);
-    p10.setInsumo(new Bolsa("Bolsa", p10));
-    Proveedor p11=new Proveedor(8000,"Empaques y Cartones");
-    p11.setInsumo(new Bolsa("Bolsa", p11));
-    p11.setDescuento(0.1F);
-    Proveedor p12=new Proveedor(6000,"Plastienda");
-    p10.setDescuento(0.05F);
-    p12.setInsumo(new Bolsa("Bolsa", p12));
-=======
->>>>>>> Stashed changes
 
     Insumo i1=new Insumo("Tela",1*20, p1,sedeP);
     Insumo i2=new Insumo("Tela",1*20, p1,sede2);
