@@ -46,10 +46,6 @@ public class Venta implements Serializable {
 		cliente=c;
 		sede.actualizarHistorialVentas(venta);
 	}
-<<<<<<< Updated upstream
-=======
->>>>>>> d4536f4a89d7d6659c2d521437f03b7f919a68a2
->>>>>>> Stashed changes
 	// Metodo ayudante para Empleado.listaInicialDespedirEmpleado,
 	// que calcula el acumulado de ventas asesoradas o registradas por empleado en pesos.
 	static public int acumuladoVentasAsesoradas(Empleado empleado){

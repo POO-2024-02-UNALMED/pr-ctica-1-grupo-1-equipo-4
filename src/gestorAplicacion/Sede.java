@@ -18,10 +18,6 @@ public class Sede implements Serializable{
 
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 	private ArrayList<Empleado> listaEmpleado = new ArrayList<Empleado>();
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
->>>>>>> Stashed changes
 	private ArrayList <Maquinaria> listaMaquina= new ArrayList<Maquinaria>();
 	private ArrayList<Venta> historialVentas= new ArrayList<Venta>();
 	private ArrayList<Prenda> prendasInventadas;
@@ -30,12 +26,8 @@ public class Sede implements Serializable{
 	private ArrayList<Insumo> listaInsumosBodega= new ArrayList<Insumo>();
 	private ArrayList<Integer> cantidadInsumosBodega= new ArrayList<Integer>();
 	private ArrayList<Integer> produccionAproximada=new ArrayList<Integer>();
-<<<<<<< Updated upstream
-=======
->>>>>>> d4536f4a89d7d6659c2d521437f03b7f919a68a2
->>>>>>> Stashed changes
 	// Una lista  de cantidad de prendas a producior por sede
-	private ArrayList<Prenda> prendasProduccion= new ArrayList<Prenda>();
+	private ArrayList<Prenda> prendasProduccion = new ArrayList<Prenda>();
 	private String nombre;
 	private Banco cuentaSede;
 	private int distancia;
