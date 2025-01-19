@@ -804,7 +804,7 @@ public void crearSedesMaquinasRepuestos(){
         return in.nextInt();
     }
     //Interacción 1 de Facturación
-	public static Sede Vender(Scanner scanner) {
+	public static Venta Vender(Scanner scanner) {
 	    ArrayList<Prenda> productosSeleccionados = new ArrayList<>();
 	    ArrayList<Integer> cantidadProductos = new ArrayList<>();
 
