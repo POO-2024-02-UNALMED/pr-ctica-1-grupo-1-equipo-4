@@ -949,11 +949,25 @@ public void crearSedesMaquinasRepuestos(){
      int monto = subtotal+IVA;
      int subTotal = (int) (monto - (monto * cliente.getMembresia().getPorcentajeDescuento()));
      venta.setSubtotal(subTotal);
-     venta.setCantidades(cantidadProductos);
+     System.out.println("---- FACTURA ----");
+    System.out.println("Prendas compradas:");
+    for (int i = 0; i < productosSeleccionados.size(); i++) {
+        Prenda prenda = productosSeleccionados.get(i);
+        int cantidad = cantidadProductos.get(i);
+        System.out.println(prenda.getNombre() + " - Cantidad: " + cantidad + " - Subtotal: $" + (prenda.calcularPrecio() * cantidad));
+    }
+    System.out.println("Valor total: $" + subTotal);
+    System.out.println("Valor sin IVA: $" + subtotal);
+    System.out.println("IVA: $" + IVA);
+    System.out.println("Venta registrada por: " + vendedor.getNombre());
+    System.out.println("Asesor de la compra: " + encargado.getNombre());
      int comisión = (int)(subTotal * 0.05f);
      encargado.setRendimientoBonificacion(comisión);
      
      return venta;}
+
+     //Interacción 2 Facturación
+
     
 
     }
