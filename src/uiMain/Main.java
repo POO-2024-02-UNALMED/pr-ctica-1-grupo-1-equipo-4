@@ -13,15 +13,6 @@ import gestorAplicacion.Administracion.Evaluacionfinanciera;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Administracion.Resultado;
 import gestorAplicacion.Bodega.Prenda;
-<<<<<<< Updated upstream
-
-=======
-<<<<<<< HEAD
-
-=======
-import gestorAplicacion.Bodega.Bolsa;
->>>>>>> d4536f4a89d7d6659c2d521437f03b7f919a68a2
->>>>>>> Stashed changes
 import gestorAplicacion.Bodega.Insumo;
 import gestorAplicacion.Bodega.Maquinaria;
 import gestorAplicacion.Bodega.Pantalon;
@@ -813,6 +804,7 @@ public void crearSedesMaquinasRepuestos(){
         }
         return in.nextInt();
     }
+    
 
     }
 
