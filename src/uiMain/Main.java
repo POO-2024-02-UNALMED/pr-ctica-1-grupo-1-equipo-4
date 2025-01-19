@@ -496,6 +496,7 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
                     if ((precio != 0) && (precio < mejorPrecio)) {
                         mejorPrecio = precio;
                         mejorProveedor = x;
+                        insumos.get(i).setProveedor(x);
                             }}
                 
                 System.out.println("Tenemos el insumo "+insumos.get(i).getNombre()+" con nuestro proveedor "+proveedores.get(i).getNombre()+".");
