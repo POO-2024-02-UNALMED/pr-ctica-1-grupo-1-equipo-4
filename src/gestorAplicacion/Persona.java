@@ -92,5 +92,49 @@ public class Persona implements Serializable{
 			emp.setSalario(persona.getRol().getSalarioInicial()+persona.getRol().getSalarioInicial()*0.5*persona.getExperiencia());
 		}
 	}
+	public static void imprimirNoEmpleados() {
+		ArrayList<Persona> noEmpleados = new ArrayList<>();
+		System.out.println("Lista de clientes:");
+		for (Persona persona : listaPersonas) {
+			if (!(persona instanceof Empleado)) {
+				noEmpleados.add(persona);
+			}
+		}
+		
+		int index = 0; 
+		for (Persona persona : noEmpleados) {
+			System.out.println(index + ". " + persona);
+			index++;
+     }
+	}
+	public String toString() {
+		String rolString;
+		if (rol != null) {
+			rolString = rol.toString();
+		} else {
+			rolString = "Sin rol";
+		}
+	
+		String trabajaString;
+		if (trabaja) {
+			trabajaString = "Trabaja";
+		} else {
+			trabajaString = "No trabaja";
+		}
+	
+		String membresiaString;
+		if (membresia != null) {
+			membresiaString = membresia.toString();
+		} else {
+			membresiaString = "Sin membresía";
+		}
+	
+		return "Nombre: " + nombre +
+			   ", Documento: " + documento +
+			   ", Rol: " + rolString +
+				", Experiencia: " + experiencia +
+				", Trabaja: " + trabajaString +
+				", Membresía: " + membresiaString;
+}
 
 }

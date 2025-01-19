@@ -232,5 +232,5 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
     public ArrayList<Area> getAreas(){return areas;}
     public void setAreas(ArrayList<Area> areas){this.areas=areas;}
     public int getBonificacion(){return bonificacion;}
-    public void getRendimientoBonificacion(int boni){bonificacion=boni;}
+    public void setRendimientoBonificacion(int boni){bonificacion=boni;}
 }

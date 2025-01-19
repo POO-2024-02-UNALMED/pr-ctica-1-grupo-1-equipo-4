@@ -23,6 +23,16 @@ public class Venta implements Serializable {
 	private int costoEnvio;
 	private int subtotal;
 	private static float pesimismo;
+<<<<<<< HEAD
+	
+    //public Venta(Empleado encargado, Empleado asesor, Fecha fecha, ArrayList<Prenda> productosComprar){
+	//	this.encargado = encargado;
+	//	this.asesor = asesor;
+	//	this.fechaVenta = fecha;
+	//	this.articulos = productosComprar;   
+	//}
+     
+=======
 
 	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado v,ArrayList<Prenda> articulos, ArrayList<Integer> cantidades){
 		this(sede, fecha, c);
@@ -46,6 +56,10 @@ public class Venta implements Serializable {
 		cliente=c;
 		sede.actualizarHistorialVentas(venta);
 	}
+<<<<<<< Updated upstream
+=======
+>>>>>>> d4536f4a89d7d6659c2d521437f03b7f919a68a2
+>>>>>>> Stashed changes
 	// Metodo ayudante para Empleado.listaInicialDespedirEmpleado,
 	// que calcula el acumulado de ventas asesoradas o registradas por empleado en pesos.
 	static public int acumuladoVentasAsesoradas(Empleado empleado){

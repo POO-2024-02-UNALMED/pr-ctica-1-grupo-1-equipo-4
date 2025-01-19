@@ -18,12 +18,22 @@ public class Sede implements Serializable{
 
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 	private ArrayList<Empleado> listaEmpleado = new ArrayList<Empleado>();
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+>>>>>>> Stashed changes
 	private ArrayList <Maquinaria> listaMaquina= new ArrayList<Maquinaria>();
 	private ArrayList<Venta> historialVentas= new ArrayList<Venta>();
-	private static ArrayList<Prenda> prendasInventadas= new ArrayList<Prenda>();
+	private ArrayList<Prenda> prendasInventadas;
+	private static ArrayList<Prenda> prendasInventadasTotales;//Atributo de clase para presentarle al usuario un catálogo completo de las prendas en
+	//Cada sede.
 	private ArrayList<Insumo> listaInsumosBodega= new ArrayList<Insumo>();
 	private ArrayList<Integer> cantidadInsumosBodega= new ArrayList<Integer>();
 	private ArrayList<Integer> produccionAproximada=new ArrayList<Integer>();
+<<<<<<< Updated upstream
+=======
+>>>>>>> d4536f4a89d7d6659c2d521437f03b7f919a68a2
+>>>>>>> Stashed changes
 	// Una lista  de cantidad de prendas a producior por sede
 	private ArrayList<Prenda> prendasProduccion= new ArrayList<Prenda>();
 	private String nombre;
@@ -138,8 +148,9 @@ public class Sede implements Serializable{
 	public void setlistaMaquinas(ArrayList<Maquinaria> Maquinaria){listaMaquina=Maquinaria;}
 	public ArrayList<Venta> getHistorialVentas(){return historialVentas;}
 	public void setHistorialVentas(ArrayList<Venta> venta){historialVentas=venta;}	
-	public static ArrayList<Prenda> getPrendasInventadas(){return prendasInventadas;}
-	public static void setPrendasInventadas(ArrayList<Prenda> prenda){prendasInventadas=prenda;}
+	public ArrayList<Prenda> getPrendasInventadas(){return prendasInventadas;}
+	public void setPrendasInventadas(ArrayList<Prenda> prenda){prendasInventadas=prenda;}
+	public static ArrayList<Prenda> getPrendasInventadasTotales(){return prendasInventadasTotales;}
 	public ArrayList<Insumo> getListaInsumosBodega(){return listaInsumosBodega;}
 	public void setlistaInsumosBodega(ArrayList<Insumo> Insumos){listaInsumosBodega=Insumos;}
 	public ArrayList<Integer> getCantidadInsumosBodega(){return cantidadInsumosBodega;}
