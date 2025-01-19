@@ -32,6 +32,7 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
     public Empleado(Persona p){
         super(p.getNombre(),p.getDocumento(),p.getRol(),p.getExperiencia(),p.isTrabaja(),p.getMembresia());
         listaEmpleados.add(this);
+        sede.getlistaEmpleados().add(this);
     }
 
     public Empleado(Area area,Fecha fecha, Sede sede,Persona p){
@@ -51,6 +52,7 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
         listaEmpleados.add(this);
         maquinaria=maquina;
         sede.getlistaMaquinas().add(maquina);
+        sede.getlistaEmpleados().add(this);
     }
 
     @Override

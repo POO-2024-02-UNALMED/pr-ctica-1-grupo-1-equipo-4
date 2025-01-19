@@ -34,7 +34,10 @@ public abstract class Prenda implements GastoMensual{
         this.descartada=descartada;
         this.terminada=terminada;
         prendasInventadas.add(this);
-        Sede.getPrendasInventadas().add(this);}
+        Sede.getPrendasInventadas().add(this);
+        if(descartada){modista.setPrendasDescartadas(modista.getPrendasDescartadas()+1);}
+        else{modista.setPrendasDescartadas(modista.getPrendasProducidas()+1);}
+    }
     
 
 	public static long gastoMensualClase(Fecha fecha){

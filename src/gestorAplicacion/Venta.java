@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import gestorAplicacion.Administracion.Empleado;
+import gestorAplicacion.Bodega.Bolsa;
 import gestorAplicacion.Bodega.Prenda;
 
 public class Venta implements Serializable {
 	private static final long serializarVersionUID = 1L; // Para serializacion
 	private ArrayList<Prenda> articulos;
 	private ArrayList<Integer> cantidades;
+	private ArrayList<Bolsa> bolsas;
 	private Empleado encargado;
 	private Empleado asesor;
 	private Sede sede;
@@ -21,6 +23,21 @@ public class Venta implements Serializable {
 	private int costoEnvio;
 	private int subtotal;
 	private static float pesimismo;
+
+	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado v,ArrayList<Prenda> articulos, ArrayList<Integer> cantidades){
+		this(sede, fecha, c);
+		asesor=a;
+		encargado=v;
+		this.articulos=articulos;
+		this.cantidades=cantidades;
+	}
+
+	
+	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado v,ArrayList<Prenda> articulos, ArrayList<Integer> cantidades, int sub, int mp){
+		this(sede,fecha,c,a,v,articulos,cantidades);
+		subtotal=sub;
+		montoPagado=mp;
+	}
 
 	public Venta(Sede sede,Fecha fecha, Persona c){
 		this.sede=sede;
@@ -127,6 +144,8 @@ public class Venta implements Serializable {
 
 	public ArrayList<Prenda> getArticulos(){return articulos;}
 	public void setArticulos(ArrayList<Prenda> articulos){this.articulos=articulos;}
+	public ArrayList<Bolsa> getBolsas(){return bolsas;}
+	public void setBolsas(ArrayList<Bolsa> bolsas){this.bolsas=bolsas;}
 	public ArrayList<Integer> getCantidades(){return cantidades;}
 	public void setCantidades(ArrayList<Integer> cantidades){
 		if (cantidades.size()==articulos.size()){this.cantidades=cantidades;}

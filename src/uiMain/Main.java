@@ -16,6 +16,7 @@ import gestorAplicacion.Bodega.Prenda;
 import gestorAplicacion.Bodega.Bolsa;
 import gestorAplicacion.Bodega.Insumo;
 import gestorAplicacion.Bodega.Maquinaria;
+import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
 
@@ -24,6 +25,7 @@ import java.util.Scanner;
 
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
+import gestorAplicacion.Bodega.Camisa;
 import java.lang.reflect.Array;
 
 
@@ -671,6 +673,7 @@ public void crearSedesMaquinasRepuestos(){
     tm.actualizarDeuda(new Deuda(new Fecha(20,2,23),800_000,"Inversiones Terramoda","Banco",18));
 
     //Episodio 43
+    
     Proveedor p1=new Proveedor(15000,"Rag Tela");
     p1.setInsumo(new Insumo("Tela", p1));
     Proveedor p2=new Proveedor(20000,"Macro Telas");
@@ -699,34 +702,46 @@ public void crearSedesMaquinasRepuestos(){
     p10.setDescuento(0.05F);
     p12.setInsumo(new Bolsa("Bolsa", p12));
 
+    Insumo i1=new Insumo("Tela",1*20, p1,sedeP);
+    Insumo i2=new Insumo("Tela",1*20, p1,sede2);
+    Insumo i3=new Insumo("Boton",4*20, p1,sedeP);
+    Insumo i4=new Insumo("Boton",4*20, p1,sede2);
+    Insumo i5=new Insumo("Cremallera",1*20, p1,sedeP);
+    Insumo i6=new Insumo("Cremallera",1*20, p1,sede2);
+    Insumo i7=new Insumo("Hilo",100*20, p1,sedeP);
+    Insumo i8=new Insumo("Hilo",100*20, p1,sede2);
+    Bolsa i9=new Bolsa("Bolsa",1*20, p1,sedeP,8);
+    Bolsa i10=new Bolsa("Bolsa",1*20, p1,sede2,8);
+    Bolsa i11=new Bolsa("Bolsa",1*20, p1,sedeP,3);
+    Bolsa i12=new Bolsa("Bolsa",1*20, p1,sede2,3);
+    Bolsa i13=new Bolsa("Bolsa",1*20, p1,sedeP,1);
+    Bolsa i14=new Bolsa("Bolsa",1*20, p1,sede2,1);
 
     Empleado betty=new Empleado(Area.DIRECCION,new Fecha(1,1,23),sedeP,"Beatriz Pinzón",4269292,Rol.PRESIDENTE,10,Membresia.NULA,Computador);
-    sedeP.getlistaEmpleados().add(betty);
     Empleado Armando=new Empleado(Area.DIRECCION,new Fecha(30,11,20),sedeP,"Armando Mendoza",19121311,Rol.PRESIDENTE,15,Membresia.PLATA,Computador.copiar());
-    sedeP.getlistaEmpleados().add(Armando);
-    sedeP.getlistaEmpleados().add(new Empleado(Area.OFICINA,new Fecha(1,6,16),sedeP,"Catalina Ángel",7296957,Rol.ASISTENTE,20,Membresia.ORO,Impresora));
-    sedeP.getlistaEmpleados().add(new Empleado(Area.OFICINA,new Fecha(30,11,20),sedeP,"Mario Calderón",19256002,Rol.EJECUTIVO,4,Membresia.PLATA,Impresora.copiar()));
-    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,5,14),sedeP,"Hugo Lombardi",7980705,Rol.DISEÑADOR,20,Membresia.ORO,MaquinaDeCorte));
-    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,5,14),sedeP,"Inez Ramirez",23103023,Rol.MODISTA,2,Membresia.NULA,MaquinaDeCoser));
-    sedeP.getlistaEmpleados().add(new Empleado(Area.VENTAS,new Fecha(1,2,23),sedeP,"Aura Maria",4146118,Rol.SECRETARIA,2,Membresia.NULA,Registradora));
-    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(15,9,23),sedeP,"Sandra Patiño",5941859,Rol.SECRETARIA,5,Membresia.NULA,PlanchaIndustrial));
-    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(30,9,22),sedeP,"Sofía Lopez",5079239,Rol.SECRETARIA,6,Membresia.NULA,MaquinaDeTermofijado));
-    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,5,23),sedeP,"Mariana Valdéz",4051807,Rol.SECRETARIA,10,Membresia.BRONCE,MaquinaDeTijereado));
-    sedeP.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(25,2,20),sedeP,"Bertha Muñoz",7137741,Rol.SECRETARIA,15,Membresia.BRONCE,BordadoraIndustrial));
-    sedeP.getlistaEmpleados().add(new Empleado(Area.VENTAS,new Fecha(4,4,22),sedeP,"Wilson Sastoque",9634927,Rol.PLANTA,5,Membresia.NULA,Registradora.copiar()));
+    Empleado Cata=new Empleado(Area.OFICINA,new Fecha(1,6,16),sedeP,"Catalina Ángel",7296957,Rol.ASISTENTE,20,Membresia.ORO,Impresora);
+    Empleado Mario=(new Empleado(Area.OFICINA,new Fecha(30,11,20),sedeP,"Mario Calderón",19256002,Rol.EJECUTIVO,4,Membresia.PLATA,Impresora.copiar()));
+    Empleado Hugo=(new Empleado(Area.CORTE,new Fecha(1,5,14),sedeP,"Hugo Lombardi",7980705,Rol.DISEÑADOR,20,Membresia.ORO,MaquinaDeCorte));
+    Empleado Inez=(new Empleado(Area.CORTE,new Fecha(1,5,14),sedeP,"Inez Ramirez",23103023,Rol.MODISTA,2,Membresia.NULA,MaquinaDeCoser));
+    Empleado Aura=(new Empleado(Area.VENTAS,new Fecha(1,2,23),sedeP,"Aura Maria",4146118,Rol.SECRETARIA,2,Membresia.NULA,Registradora));
+    Empleado Sandra=(new Empleado(Area.CORTE,new Fecha(15,9,23),sedeP,"Sandra Patiño",5941859,Rol.SECRETARIA,5,Membresia.NULA,PlanchaIndustrial));
+    Empleado Sofia=(new Empleado(Area.CORTE,new Fecha(30,9,22),sedeP,"Sofía Lopez",5079239,Rol.SECRETARIA,6,Membresia.NULA,MaquinaDeTermofijado));
+    Empleado Mariana=(new Empleado(Area.CORTE,new Fecha(1,5,23),sedeP,"Mariana Valdéz",4051807,Rol.SECRETARIA,10,Membresia.BRONCE,MaquinaDeTijereado));
+    Empleado Bertha=(new Empleado(Area.CORTE,new Fecha(25,2,20),sedeP,"Bertha Muñoz",7137741,Rol.SECRETARIA,15,Membresia.BRONCE,BordadoraIndustrial));
+    Empleado Wilson=(new Empleado(Area.VENTAS,new Fecha(4,4,22),sedeP,"Wilson Sastoque",9634927,Rol.PLANTA,5,Membresia.NULA,Registradora.copiar()));
 
-    sede2.getlistaEmpleados().add(new Empleado(Area.DIRECCION,new Fecha(5,8,19),sede2,"Saul Gutierrez",9557933,Rol.EJECUTIVO,11,Membresia.NULA,Computador.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.DIRECCION,new Fecha(30,11,20),sede2,"Marcela Valencia",8519803,Rol.EJECUTIVO,10,Membresia.ORO,Computador.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.VENTAS,new Fecha(1,1,24),sede2,"Gabriela Garza",5287925,Rol.VENDEDOR,9,Membresia.PLATA,Registradora.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.OFICINA,new Fecha(5,2,23),sede2,"Patricia Fernandez",4595311,Rol.SECRETARIA,6,Membresia.BRONCE,Impresora.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,1,24),sede2,"Kenneth Johnson",7494184,Rol.VENDEDOR,8,Membresia.ORO,PlanchaIndustrial.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.OFICINA,new Fecha(12,10,24),sede2,"Miguel Robles",7518004,Rol.VENDEDOR,7,Membresia.BRONCE,Impresora.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,2,24),sede2,"Alejandra Zingg",6840296,Rol.VENDEDOR,2,Membresia.BRONCE,BordadoraIndustrial.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,2,23),sede2,"Cecilia Bolocco",7443886,Rol.ASISTENTE,10,Membresia.PLATA,MaquinaDeCoser.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.VENTAS,new Fecha(31,1,22),sede2,"Freddy Contreras",6740561,Rol.PLANTA,5,Membresia.NULA,Registradora.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(18,6,25),sede2,"Adriana arboleda",5927947,Rol.MODISTA,20,Membresia.ORO,MaquinaDeCorte.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(9,3,25),sede2,"Karina Larson",5229381,Rol.MODISTA,2,Membresia.PLATA,MaquinaDeTermofijado.copiar()));
-    sede2.getlistaEmpleados().add(new Empleado(Area.CORTE,new Fecha(1,8,24),sede2,"Jenny Garcia",4264643,Rol.MODISTA,1,Membresia.ORO,MaquinaDeTijereado.copiar()));
+    Empleado Gutierrez=(new Empleado(Area.DIRECCION,new Fecha(5,8,19),sede2,"Saul Gutierrez",9557933,Rol.EJECUTIVO,11,Membresia.NULA,Computador.copiar()));
+    Empleado Marcela=(new Empleado(Area.DIRECCION,new Fecha(30,11,20),sede2,"Marcela Valencia",8519803,Rol.EJECUTIVO,10,Membresia.ORO,Computador.copiar()));
+    Empleado Gabriela=new Empleado(Area.VENTAS,new Fecha(1,1,24),sede2,"Gabriela Garza",5287925,Rol.VENDEDOR,9,Membresia.PLATA,Registradora.copiar());
+    Empleado Patricia=(new Empleado(Area.OFICINA,new Fecha(5,2,23),sede2,"Patricia Fernandez",4595311,Rol.SECRETARIA,6,Membresia.BRONCE,Impresora.copiar()));
+    Empleado Kenneth=(new Empleado(Area.CORTE,new Fecha(1,1,24),sede2,"Kenneth Johnson",7494184,Rol.VENDEDOR,8,Membresia.ORO,PlanchaIndustrial.copiar()));
+    Empleado Robles=(new Empleado(Area.OFICINA,new Fecha(12,10,24),sede2,"Miguel Robles",7518004,Rol.VENDEDOR,7,Membresia.BRONCE,Impresora.copiar()));
+    Empleado Alejandra=(new Empleado(Area.CORTE,new Fecha(1,2,24),sede2,"Alejandra Zingg",6840296,Rol.VENDEDOR,2,Membresia.BRONCE,BordadoraIndustrial.copiar()));
+    Empleado Cecilia=(new Empleado(Area.CORTE,new Fecha(1,2,23),sede2,"Cecilia Bolocco",7443886,Rol.ASISTENTE,10,Membresia.PLATA,MaquinaDeCoser.copiar()));
+    Empleado Freddy=(new Empleado(Area.VENTAS,new Fecha(31,1,22),sede2,"Freddy Contreras",6740561,Rol.PLANTA,5,Membresia.NULA,Registradora.copiar()));
+    Empleado Adriana=(new Empleado(Area.CORTE,new Fecha(18,6,25),sede2,"Adriana arboleda",5927947,Rol.MODISTA,20,Membresia.ORO,MaquinaDeCorte.copiar()));
+    Empleado Karina=(new Empleado(Area.CORTE,new Fecha(9,3,25),sede2,"Karina Larson",5229381,Rol.MODISTA,2,Membresia.PLATA,MaquinaDeTermofijado.copiar()));
+    Empleado Jenny=(new Empleado(Area.CORTE,new Fecha(1,8,24),sede2,"Jenny Garcia",4264643,Rol.MODISTA,1,Membresia.ORO,MaquinaDeTijereado.copiar()));
     Empleado ol=new Empleado(Area.DIRECCION,new Fecha(1,2,20),sede2,"Gustavo Olarte",7470922,Rol.EJECUTIVO,3,Membresia.NULA,Computador.copiar());
     ol.setTraslados(3);
     ArrayList<Area> a=new ArrayList<Area>();
@@ -736,19 +751,46 @@ public void crearSedesMaquinasRepuestos(){
     new Evaluacionfinanciera(50_000_000,betty);new Evaluacionfinanciera(1_000_000,betty);
     new Evaluacionfinanciera(500_000,Armando);new Evaluacionfinanciera(-10_000,Armando);
 
-    new Persona("Claudia Elena Vásquez",5162307,Rol.MODISTA,2,false,Membresia.BRONCE);
-    new Persona("Michel Doniel",9458074,Rol.ASISTENTE,4,false,Membresia.BRONCE);
-    new Persona("Claudia Bosch",5975399,Rol.MODISTA,4,false,Membresia.ORO);
-    new Persona("Mónica Agudelo",8748155,Rol.MODISTA,8,false,Membresia.ORO);  
-    new Persona("Daniel Valencia",9818534,Rol.EJECUTIVO,10,false,Membresia.BRONCE);
-    new Persona("Efraín Rodriguez",8256519,Rol.VENDEDOR,10,false,Membresia.NULA);
-    new Persona("Mauricio Brightman",8823954,Rol.ASISTENTE,10,false,Membresia.ORO);
-    new Persona("Nicolás Mora",4365567,Rol.EJECUTIVO,2,false,Membresia.NULA);
-    new Persona("Roberto Mendoza",28096740,Rol.PRESIDENTE,2,false,Membresia.ORO);
-    new Persona("Hermes Pinzón",21077781,Rol.ASISTENTE,2,false,Membresia.NULA);
-    new Persona("Julia Solano",28943158,Rol.SECRETARIA,10,false,Membresia.BRONCE);
-    new Persona("Maria Beatriz Valencia",6472799,Rol.ASISTENTE,2,false,Membresia.BRONCE);
-    new Persona("Antonio Sanchéz",8922998,Rol.VENDEDOR,12,false,Membresia.NULA);
+    Persona c1=new Persona("Claudia Elena Vásquez",5162307,Rol.MODISTA,2,false,Membresia.BRONCE);
+    Persona c2=new Persona("Michel Doniel",9458074,Rol.ASISTENTE,4,false,Membresia.BRONCE);
+    Persona c3=new Persona("Claudia Bosch",5975399,Rol.MODISTA,4,false,Membresia.ORO);
+    Persona c4=new Persona("Mónica Agudelo",8748155,Rol.MODISTA,8,false,Membresia.ORO);  
+    Persona c5=new Persona("Daniel Valencia",9818534,Rol.EJECUTIVO,10,false,Membresia.BRONCE);
+    Persona c6=new Persona("Efraín Rodriguez",8256519,Rol.VENDEDOR,10,false,Membresia.NULA);
+    Persona c7=new Persona("Mauricio Brightman",8823954,Rol.ASISTENTE,10,false,Membresia.ORO);
+    Persona c8=new Persona("Nicolás Mora",4365567,Rol.EJECUTIVO,2,false,Membresia.NULA);
+    Persona c9=new Persona("Roberto Mendoza",28096740,Rol.PRESIDENTE,2,false,Membresia.ORO);
+    Persona c10=new Persona("Hermes Pinzón",21077781,Rol.ASISTENTE,2,false,Membresia.NULA);
+    Persona c11=new Persona("Julia Solano",28943158,Rol.SECRETARIA,10,false,Membresia.BRONCE);
+    Persona c12=new Persona("Maria Beatriz Valencia",6472799,Rol.ASISTENTE,2,false,Membresia.BRONCE);
+    Persona c13=new Persona("Antonio Sanchéz",8922998,Rol.VENDEDOR,12,false,Membresia.NULA);
+
+    Prenda r1=new Pantalon(new Fecha(1,1,23),Hugo,false,true,sedeP);
+    Prenda r2=new Pantalon(new Fecha(1,1,23),Inez,false,true,sedeP);
+    Prenda r3=new Pantalon(new Fecha(1,1,23),Sandra,false,true,sedeP);
+    Prenda r4=new Pantalon(new Fecha(1,1,23),Sofia,false,true,sedeP);
+    Prenda r5=new Pantalon(new Fecha(1,1,23),Mariana,false,true,sedeP);
+    Prenda r6=new Pantalon(new Fecha(1,1,23),Bertha,false,true,sedeP);
+    Prenda r7=new Camisa(new Fecha(1,1,23),Hugo,false,true,sedeP);
+    Prenda r8=new Camisa(new Fecha(1,1,23),Inez,false,true,sedeP);
+    Prenda r9=new Camisa(new Fecha(1,1,23),Sandra,false,true,sedeP);
+    Prenda r10=new Camisa(new Fecha(1,1,23),Sofia,false,true,sedeP);
+    Prenda r11=new Camisa(new Fecha(1,1,23),Mariana,false,true,sedeP);
+    Prenda r12=new Camisa(new Fecha(1,1,23),Bertha,false,true,sedeP);
+    Prenda r13=new Pantalon(new Fecha(1,1,23),Jenny,false,true,sede2);
+    Prenda r14=new Pantalon(new Fecha(1,1,23),Karina,true,true,sede2);
+    Prenda r15=new Pantalon(new Fecha(1,1,23),Adriana,false,true,sede2);
+    Prenda r16=new Pantalon(new Fecha(1,1,23),Cecilia,false,true,sede2);
+    Prenda r17=new Pantalon(new Fecha(1,1,23),Alejandra,false,true,sede2);
+    Prenda r18=new Pantalon(new Fecha(1,1,23),Kenneth,false,true,sede2);
+    Prenda r19=new Camisa(new Fecha(1,1,23),Jenny,false,true,sede2);
+    Prenda r20=new Camisa(new Fecha(1,1,23),Karina,true,true,sede2);
+    Prenda r21=new Camisa(new Fecha(1,1,23),Adriana,false,true,sede2);
+    Prenda r22=new Camisa(new Fecha(1,1,23),Cecilia,false,true,sede2);
+    Prenda r23=new Camisa(new Fecha(1,1,23),Alejandra,false,true,sede2);
+    Prenda r24=new Camisa(new Fecha(1,1,23),Kenneth,false,true,sede2);
+    Karina.setPericia(0.1F);
+
 }
 
 

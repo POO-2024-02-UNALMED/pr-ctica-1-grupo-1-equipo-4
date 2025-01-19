@@ -5,7 +5,7 @@ import gestorAplicacion.Sede;
 import java.util.ArrayList;
 
 public class Pantalon extends Prenda {
-    Pantalon(Fecha fecha, Empleado modista, boolean descartada, boolean terminada, Sede sede){
+    public Pantalon(Fecha fecha, Empleado modista, boolean descartada, boolean terminada, Sede sede){
         super(fecha, sede, "Pantalon", modista, descartada, terminada);
     }
     @Override
