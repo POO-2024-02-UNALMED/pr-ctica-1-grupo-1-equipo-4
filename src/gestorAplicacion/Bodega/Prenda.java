@@ -5,18 +5,21 @@ import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Prenda implements GastoMensual{
+public abstract class Prenda implements GastoMensual, Serializable{
+    private static final long serialVersionUID = 1L;
     protected Fecha fechaFabricacion;
 	protected String nombre;
     protected Empleado modista;
     protected boolean descartada;
     protected boolean terminada;
     protected Sede sede;
-    protected static ArrayList<Maquinaria> maquinaria;
-    protected static ArrayList<Float> cantidadInsumo;
-    protected static ArrayList<Insumo> insumo;
+    protected static ArrayList<Maquinaria> maquinaria = new ArrayList<Maquinaria>();
+    protected static ArrayList<Float> cantidadInsumo = new ArrayList<Float>();
+    protected static ArrayList<Insumo> insumo = new ArrayList<Insumo>();
     protected ArrayList<Integer> enStock; //Representa el inventario por sede
     // Esta lista es, en cada sede, cuanto hay en stock
     //de esta prenda. El indice es el mismo de la sede en la lista de sedes.

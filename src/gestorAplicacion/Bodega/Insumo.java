@@ -1,8 +1,11 @@
 package gestorAplicacion.Bodega;
 
+import java.io.Serializable;
+
 import gestorAplicacion.Sede;
 
-public class Insumo{
+public class Insumo implements Serializable{
+	private static final long serialVersionUID = 1L;
 	protected static long precioStockTotal;
 	protected String nombre;
 	protected Proveedor proveedor;

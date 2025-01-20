@@ -3,10 +3,12 @@ import gestorAplicacion.Administracion.Empleado;
 import uiMain.Main;
 import gestorAplicacion.Sede;
 
+import java.io.Serializable;
 import java.net.ResponseCache;
 import java.util.ArrayList;
 
-public class Maquinaria {
+public class Maquinaria implements Serializable{
+	private static final long serialVersionUID = 1L;
 	String nombre;
 	Empleado user;
 	int horasUso;

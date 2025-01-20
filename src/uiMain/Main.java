@@ -367,7 +367,7 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
                 System.out.println("Ingrese el nuevo porcentaje de pesimismo % ");
                 Scanner porcentaje = new Scanner(System.in); 
                 int newPesimism = porcentaje.nextInt();
-                Venta.setPesimismo(newPesimism/100);
+                Venta.setPesimismo(newPesimism/100f);
                 break;
             default:
                 System.out.println("Esa opción no es valida.");
