@@ -472,11 +472,10 @@ static public ArrayList<Object> coordinarBodegas(ArrayList<Object> retorno){
                     
                 }
             }
-    
+        }
         listaSede.add(insumosAPedir);
         listaSede.add(cantidadAPedir);
         listaA.add(listaSede);
-        }
     }
 
     return listaA;
