@@ -79,6 +79,9 @@ public class Main {
             break;
 
         case 5:
+            fecha = ingresarFecha(in);
+            Maquinaria maquina = new Maquinaria();
+            maquina.agruparMaquinasDisponibles(fecha);
             
             break;
 
@@ -879,8 +882,8 @@ public void crearSedesMaquinasRepuestos(){
 
     //para la interaccion 1 de produccion
 public void dondeRetirar(){
+
     Scanner scanner = new Scanner(System.in);
-    crearSedesMaquinasRepuestos();
 
     System.out.println("¿Desde cual sede quieres comprar el repuesto requerido?");
     System.out.println("1. " + sedeP.getNombre() + " tiene disponible: " + sedeP.getCuentaSede().getAhorroBanco());

@@ -257,4 +257,9 @@ public class Sede implements Serializable{
 			}
 		}
 	}
+
+		//interacion 2 de Produccion
+	public void planProduccion(ArrayList<Maquinaria> maqDisponiblee){
+		
+	}
 }

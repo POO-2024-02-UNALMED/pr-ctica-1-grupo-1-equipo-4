@@ -2,6 +2,7 @@ package gestorAplicacion.Bodega;
 import gestorAplicacion.Administracion.Empleado;
 import uiMain.Main;
 import gestorAplicacion.Sede;
+import gestorAplicacion.Fecha;
 
 import java.io.Serializable;
 import java.net.ResponseCache;
@@ -26,6 +27,7 @@ public class Maquinaria implements Serializable{
 
 	Proveedor proveedorBarato;
 	ArrayList<Proveedor> listProveedoresBaratos = new ArrayList<>();
+	Fecha ultFechaRevision;
 
 	public Maquinaria(){
 		this.nombre = "maquinaEjemplo";
@@ -94,7 +96,7 @@ public class Maquinaria implements Serializable{
 	}
 
 
-	public ArrayList<Maquinaria> agruparMaquinasDisponibles(){
+	public ArrayList<Maquinaria> agruparMaquinasDisponibles(Fecha fecha){
 		ArrayList<Maquinaria> maqDisponibles = new ArrayList<>();	//listado temporal de maquinarias disponibles, el cual será pasado como argumento para la segunda interracion
 		ArrayList<Proveedor> todosProvBaratos = new ArrayList<>();
 		Main main = new Main();
@@ -142,6 +144,8 @@ public class Maquinaria implements Serializable{
 									}
 									//AGREGAR UNA COPIA DEL REPUESTO A DICHO ARRAYLIST DE REPUESTOS DE LA MAQUINA AFECTADA
 									cadaMaquina.getRepuestos().add(cadaRepuesto.copiar());
+									cadaMaquina.estado = true;
+									System.out.println("Repuesto " + cadaRepuesto.getNombre() + " añadido correctamente a la " + cadaMaquina.getNombre() + ", de la: " + cadaSede.getNombre());
 
 									encontrado = true;
 									break;
@@ -155,10 +159,11 @@ public class Maquinaria implements Serializable{
 				} else{
 					cadaMaquina.mantenimiento = true;
 					// ver como hacer para realizar la revision y que la maquina pueda volver a ser utilizada
+					cadaMaquina.ultFechaRevision = fecha;
 				}
 				
 				//añadir esta maquina a la lista temporal de las maquinas que estan disponibles
-				if(cadaMaquina.mantenimiento == false){
+				if(cadaMaquina.mantenimiento == false && cadaMaquina.estado == true){
 					maqDisponibles.add(cadaMaquina);
 				}
 			}
