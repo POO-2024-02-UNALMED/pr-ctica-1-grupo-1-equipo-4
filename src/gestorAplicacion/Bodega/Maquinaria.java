@@ -1,3 +1,17 @@
+package gestorAplicacion.Bodega;
+import gestorAplicacion.Administracion.Empleado;
+import uiMain.Main;
+import gestorAplicacion.Sede;
+
+import java.io.Serializable;
+import java.net.ResponseCache;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class Maquinaria implements Serializable{
+	private static final long serialVersionUID = 1L;
+	String nombre;
+    
 
 							}
 						}
