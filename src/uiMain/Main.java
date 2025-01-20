@@ -24,8 +24,6 @@ import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.Bodega.Camisa;
-import java.lang.reflect.Array;
-import java.security.cert.PolicyQualifierInfo;
 
 
 public class Main {
@@ -33,6 +31,7 @@ public class Main {
     private static Proveedor proveedorBdelmain;
     public static void main (String[] args){
         Deserializador.deserializar();
+        new Main().crearSedesMaquinasRepuestos();
         Scanner in = new Scanner(System.in);
         buclePrincipal:
         while (true){
@@ -343,9 +342,6 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
  // Interacción 1 de Insumos
  static public ArrayList<Object> planificarProduccion(Fecha fecha){
     //ArrayList<Insumo> listaGuia = new ArrayList<>();
-    ArrayList<Object> listaXSede = new ArrayList<>();
-    ArrayList<Insumo> insumoXSede = new ArrayList<>();
-    ArrayList<Float> cantidadAPedir = new ArrayList<>();
     ArrayList<Object> retorno= new ArrayList<>();
 
     for(Sede x: Sede.getlistaSedes()){
@@ -354,6 +350,7 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
         System.out.println("Seleccione una de las siguientes opciones:");
         System.out.println("1. Estoy de acuerdo con el porcentaje de pesimismo");
         System.out.println("2. Deseo cambiar el porcentaje de pesimismo");  
+        
         Scanner in = new Scanner(System.in);
             int opcion = in.nextInt();
             switch(opcion) {
@@ -363,11 +360,22 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
                 System.out.println("Ingrese el nuevo porcentaje de pesimismo % ");
                 Scanner porcentaje = new Scanner(System.in); 
                 int newPesimism = porcentaje.nextInt();
-                Venta.setPesimismo(newPesimism/100);
+                Venta.setPesimismo(newPesimism/100f);
                 break;
             default:
                 System.out.println("Esa opción no es valida.");
             }
+
+        ArrayList<Object> listaXSede = new ArrayList<>();
+        ArrayList<Insumo> insumoXSede = new ArrayList<>();
+        ArrayList<Float> cantidadAPedir = new ArrayList<>();
+        
+        for(Prenda prenda: x.getPrendasInventadas()){
+            int proyeccion = Venta.predecirVentas(fecha, x, prenda);
+
+            System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion);
+
+
 
         for(Prenda prenda: x.getPrendasInventadas()){
             int contador1 = 0;
@@ -957,7 +965,7 @@ public static Proveedor getProveedorBDelMain(){
       System.out.println("Seleccione el número del empleado ue se hará cargo del registro de la venta:");
       for(int i = 0; i < sede.getlistaEmpleados().size(); i++) {
           Empleado empleado = sede.getlistaEmpleados().get(i);
-          if (empleado.getAreaActual().equals("Ventas")) {
+          if (empleado.getAreaActual()==Area.VENTAS) {
               System.out.println(i + ". " + empleado.getNombre());
         }
       }
@@ -968,7 +976,7 @@ public static Proveedor getProveedorBDelMain(){
       System.out.println("Seleccione el número del empleado que se hará cargo de asesorar la venta:");
       for(int i = 0; i < sede.getlistaEmpleados().size(); i++) {
           Empleado empleado = sede.getlistaEmpleados().get(i);
-          if (empleado.getAreaActual().equals("Oficina")) {
+          if (empleado.getAreaActual()==Area.OFICINA) {
               System.out.println(i + ". " + empleado.getNombre());
       
             }
@@ -980,13 +988,13 @@ public static Proveedor getProveedorBDelMain(){
       System.out.println("Seleccione el número del producto que venderá:");
       int costosEnvio = 0;
       while(true) {	
-      for(int i = 0; i < Sede.getPrendasInventadasTotales().size(); i++) {
-          Prenda producto = Sede.getPrendasInventadasTotales().get(i);
+      for(int i = 0; i < Prenda.getPrendasInventadas().size(); i++) {
+          Prenda producto = Prenda.getPrendasInventadas().get(i);
               System.out.println(i + ". " + producto.getNombre() + " -Precio " + producto.getPrecio());
               }
       int productoSeleccionado = scanner.nextInt();
       scanner.nextLine();
-      Prenda prendaSeleccionada = Sede.getPrendasInventadasTotales().get(productoSeleccionado);
+      Prenda prendaSeleccionada = Prenda.getPrendasInventadas().get(productoSeleccionado);
       productosSeleccionados.add(prendaSeleccionada); 
       System.out.println("Ingrese la cantidad de unidades que se desea del producto elegido:");
       int cantidadPrenda = scanner.nextInt();

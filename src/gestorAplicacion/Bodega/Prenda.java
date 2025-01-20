@@ -5,18 +5,21 @@ import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Prenda implements GastoMensual{
+public abstract class Prenda implements GastoMensual, Serializable{
+    private static final long serialVersionUID = 1L;
     protected Fecha fechaFabricacion;
 	protected String nombre;
     protected Empleado modista;
     protected boolean descartada;
     protected boolean terminada;
     protected Sede sede;
-    protected static ArrayList<Maquinaria> maquinaria;
-    protected static ArrayList<Float> cantidadInsumo;
-    protected static ArrayList<Insumo> insumo;
+    protected static ArrayList<Maquinaria> maquinaria = new ArrayList<Maquinaria>();
+    protected static ArrayList<Float> cantidadInsumo = new ArrayList<Float>();
+    protected static ArrayList<Insumo> insumo = new ArrayList<Insumo>();
     protected ArrayList<Integer> enStock; //Representa el inventario por sede
     // Esta lista es, en cada sede, cuanto hay en stock
     //de esta prenda. El indice es el mismo de la sede en la lista de sedes.
@@ -26,7 +29,7 @@ public abstract class Prenda implements GastoMensual{
     //costos necesarios para calcular el precio de cada prenda
     protected static float porcentajeGanancia = 0.30f;  // Porcentaje que afecta la cantidad a producir
     //costos necesarios para calcular el precio de cada prenda
-    private static ArrayList<Prenda> prendasInventadas;
+    private static ArrayList<Prenda> prendasInventadas = new ArrayList<Prenda>();
     // Porcentaje que afecta la cantidad a producir
     
     public Prenda(Fecha fecha, Sede sede, String nombre, Empleado modista, boolean descartada, boolean terminada){
@@ -37,7 +40,7 @@ public abstract class Prenda implements GastoMensual{
         this.descartada=descartada;
         this.terminada=terminada;
         prendasInventadas.add(this);
-        Sede.getPrendasInventadas().add(this);
+        sede.getPrendasInventadas().add(this);
         if(descartada){modista.setPrendasDescartadas(modista.getPrendasDescartadas()+1);}
         else{modista.setPrendasDescartadas(modista.getPrendasProducidas()+1);}
     }

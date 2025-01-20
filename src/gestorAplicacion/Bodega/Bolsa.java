@@ -14,6 +14,7 @@ public class Bolsa extends Insumo {
         super(nombre, proveedor);
     }
 
+	// Calcula el precio de la bolsa, que puede diferir del definido como Insumo.
 	@Override
     public int getPrecioIndividual() {
        return Math.round(precioXUnidad-(precioXUnidad*proveedor.getDescuento()*capacidadMaxima));

@@ -1,9 +1,12 @@
 package gestorAplicacion.Bodega;
+import java.io.Serializable;
+import java.sql.SQLData;
 import java.util.ArrayList;
 
 import gestorAplicacion.Administracion.Deuda;
 
-public class Proveedor {
+public class Proveedor implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<Proveedor> listaProveedores=new ArrayList<Proveedor>();
 	Insumo tipoInsumo;
 	//tipoBien:Bien
@@ -11,9 +14,7 @@ public class Proveedor {
 	private int precio;
 	private String nombre;
 	private float descuento;
-	private ArrayList<Deuda> deuda;
-	private ArrayList<Repuesto> repuestosQueVende = new ArrayList<>();
-	private ArrayList<Integer> preciosRepuestos = new ArrayList<>();
+	private ArrayList<Deuda> deuda = new ArrayList<Deuda>();
 
 	
 	public Proveedor(){

@@ -162,19 +162,20 @@ public class Venta implements Serializable {
 		int sumatoriax=0+1+2+3+4+5;
 		int sumatoriaxCuadrado=1+2^3+3^2+4^2+5^2;
 		int sumatoriaY=0;
-		int sumatoriaYCuadrado=0;
+		// No se nececita la sumatoria de y cuadrado pues no usamos el coeficiente de correlacion
 		int sumatoriaXY=0;  
 		// Iteramos por los 5 meses anteriores
 		for(int meses=0;meses<5;meses++){
 			//Iteramos por las ventas de la sede de ese mes
 			int sumatoriaYMes=0;
 			for(Venta venta: Venta.filtrarPorMes(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
-				if (venta.getArticulos().contains(prenda)){
-					sumatoriaYMes+=venta.getCantidades().get(venta.getArticulos().indexOf(prenda));
+				for(int j=0; j<venta.getArticulos().size();j++){
+					if(venta.getArticulos().get(j).getNombre().equals(prenda.getNombre())){
+						sumatoriaYMes+=venta.getCantidades().get(j);
+					}
 				}
 			}
 			sumatoriaY+=sumatoriaYMes;
-			sumatoriaYCuadrado+=sumatoriaYMes^2;
 			sumatoriaXY+=sumatoriaYMes*meses;
 		}
 		//Calculamos los datos de la funcion lineal

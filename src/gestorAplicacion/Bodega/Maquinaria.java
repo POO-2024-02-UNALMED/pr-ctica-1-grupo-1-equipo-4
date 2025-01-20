@@ -3,10 +3,13 @@ import gestorAplicacion.Administracion.Empleado;
 import uiMain.Main;
 import gestorAplicacion.Sede;
 
+import java.io.Serializable;
 import java.net.ResponseCache;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Maquinaria {
+public class Maquinaria implements Serializable{
+	private static final long serialVersionUID = 1L;
 	String nombre;
 	Empleado user;
 	int horasUso;
@@ -117,7 +120,7 @@ public class Maquinaria {
 							}
 							//procederemos a comprarlo preguntandole al usuario de cual sede quiere restar la money
 							//pero antes hay que ver si la plata de alguna de las dos sedes creadas alcanza para comprarlo
-							for(Sede sedeCreada: Sede.getlistaSedes()){
+							for(Sede sedeCreada : Sede.getlistaSedes()){
 								//lo siguiente dira que si la plata de cualquiera de las sedes es mayor a lo que vale el repuesto
 								//mas barato que requerimos, se procede a hacer la eleccion de cual sede se quiere descontar la plata:
 								if(sedeCreada.getCuentaSede().getAhorroBanco() >= proveedorBarato.getInsumo().getPrecioIndividual()){
@@ -125,8 +128,21 @@ public class Maquinaria {
 									//quiere retirar la plata
 									main.dondeRetirar();
 									//AHORA FALTA QUITAR EL REPUESTO QUE NO SIRVE DEL ARRAYLIST DE REPUESTOS DE LA MAQUINA Y
-									//AGREGAR UNA COPIA DEL REPUESTO A DICHO ARRAYLIST DE REPUESTOS DE LA MAQUINA AFECTADA
 									
+									// Aquí quitamos el repuesto que no sirve del ArrayList de repuestos de la máquina
+									for (Iterator<Repuesto> iterator = cadaMaquina.getRepuestos().iterator(); iterator.hasNext(); ) {
+										Repuesto repuestoActual = iterator.next();
+
+										// Si el repuesto actual coincide con "cadaRepuesto", lo eliminamos
+										if (repuestoActual.equals(cadaRepuesto)) {
+											iterator.remove(); // Eliminamos el repuesto
+											System.out.println("Se eliminó el repuesto: " + repuestoActual.getNombre());
+											break; // Salimos del bucle una vez eliminado
+										}
+									}
+									//AGREGAR UNA COPIA DEL REPUESTO A DICHO ARRAYLIST DE REPUESTOS DE LA MAQUINA AFECTADA
+									cadaMaquina.getRepuestos().add(cadaRepuesto.copiar());
+
 									encontrado = true;
 									break;
 								}	

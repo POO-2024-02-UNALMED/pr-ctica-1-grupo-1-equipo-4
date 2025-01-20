@@ -20,9 +20,8 @@ public class Sede implements Serializable{
 	private ArrayList<Empleado> listaEmpleado = new ArrayList<Empleado>();
 	private ArrayList <Maquinaria> listaMaquina= new ArrayList<Maquinaria>();
 	private ArrayList<Venta> historialVentas= new ArrayList<Venta>();
-	private ArrayList<Prenda> prendasInventadas;
-	private static ArrayList<Prenda> prendasInventadasTotales;//Atributo de clase para presentarle al usuario un catálogo completo de las prendas en
-	//Cada sede.
+	private ArrayList<Prenda> prendasInventadas = new ArrayList<Prenda>();
+
 	private ArrayList<Insumo> listaInsumosBodega= new ArrayList<Insumo>();
 	private ArrayList<Integer> cantidadInsumosBodega= new ArrayList<Integer>();
 	private ArrayList<Integer> produccionAproximada=new ArrayList<Integer>();
@@ -142,7 +141,6 @@ public class Sede implements Serializable{
 	public void setHistorialVentas(ArrayList<Venta> venta){historialVentas=venta;}	
 	public ArrayList<Prenda> getPrendasInventadas(){return prendasInventadas;}
 	public void setPrendasInventadas(ArrayList<Prenda> prenda){prendasInventadas=prenda;}
-	public static ArrayList<Prenda> getPrendasInventadasTotales(){return prendasInventadasTotales;}
 	public ArrayList<Insumo> getListaInsumosBodega(){return listaInsumosBodega;}
 	public void setlistaInsumosBodega(ArrayList<Insumo> Insumos){listaInsumosBodega=Insumos;}
 	public ArrayList<Integer> getCantidadInsumosBodega(){return cantidadInsumosBodega;}
