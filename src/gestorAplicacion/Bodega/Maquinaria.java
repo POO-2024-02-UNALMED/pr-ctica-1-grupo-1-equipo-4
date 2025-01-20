@@ -11,7 +11,31 @@ import java.util.Iterator;
 public class Maquinaria implements Serializable{
 	private static final long serialVersionUID = 1L;
 	String nombre;
-	
+	Empleado user;
+	int horasUso;
+	boolean estado = false;
+	// True if buena, False if dañada
+	boolean asignable;
+	boolean mantenimiento;
+	public Sede sede;
+	long valor;
+	int horasVisitaTecnico;
+	int horaRevision;
+	ArrayList<Repuesto> repuestos;
+	ArrayList<Integer> horasUltimoCambio;
+
+	Proveedor proveedorBarato;
+	ArrayList<Proveedor> listProveedoresBaratos = new ArrayList<>();
+
+	public Maquinaria(){
+		this.nombre = "maquinaEjemplo";
+	}
+
+	public Maquinaria(String nombre, long valor, int horaRevision, ArrayList<Repuesto> repuestos){
+		this.nombre = nombre;
+		this.valor = valor;
+		this.horaRevision = horaRevision;
+		this.repuestos = repuestos;
 
 	}
 
