@@ -31,7 +31,6 @@ public class Main {
     private static Proveedor proveedorBdelmain;
     public static void main (String[] args){
         Deserializador.deserializar();
-        new Main().crearSedesMaquinasRepuestos();
         Scanner in = new Scanner(System.in);
         buclePrincipal:
         while (true){
@@ -339,8 +338,8 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
 
 //Funcionalidad Insumos
 
- // Interacción 1 de Insumos
- static public ArrayList<Object> planificarProduccion(Fecha fecha){
+// Interacción 1 de Insumos
+static public ArrayList<Object> planificarProduccion(Fecha fecha){
     //ArrayList<Insumo> listaGuia = new ArrayList<>();
     ArrayList<Object> retorno= new ArrayList<>();
 
@@ -371,13 +370,7 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
         ArrayList<Float> cantidadAPedir = new ArrayList<>();
         
         for(Prenda prenda: x.getPrendasInventadas()){
-            int proyeccion = Venta.predecirVentas(fecha, x, prenda);
 
-            System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion);
-
-
-
-        for(Prenda prenda: x.getPrendasInventadas()){
             int contador1 = 0;
             int contador2 = 0;
             if(prenda instanceof Pantalon && contador1 == 0){
@@ -395,7 +388,7 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
                 }
                 contador1 ++;
             }
-            if(prenda instanceof Camisa && contador2 == 0){
+            else if(prenda instanceof Camisa && contador2 == 0){
                 int proyeccion = Venta.predecirVentas(fecha, x, prenda);
 
                 System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion);
@@ -415,24 +408,25 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
 
         listaXSede.add(insumoXSede);
         listaXSede.add(cantidadAPedir);
-        retorno.add(listaXSede);}
+        retorno.add(listaXSede);
+    }
         //retorno.add(listaGuia);}
-    return retorno; }
-
+    return retorno;
+}
     
     
 // Interacción 2 de Insumos
 static public ArrayList<Object> coordinarBodegas(ArrayList<Object> retorno){
-    ArrayList<Object> listaXSede = new ArrayList<>();
-    ArrayList<Insumo> listaInsumos = new ArrayList<>();
-    ArrayList<Integer> listaCantidades = new ArrayList<>();
-    ArrayList<Insumo> insumosAPedir = new ArrayList<>();
-    ArrayList<Integer> cantidadAPedir = new ArrayList<>();
+    ArrayList<Object> listaXSede = new ArrayList<>(); // Lista extraida de retorno
+    ArrayList<Insumo> listaInsumos = new ArrayList<>(); // Extraida de listaXSede
+    ArrayList<Integer> listaCantidades = new ArrayList<>(); // Extraida de listaXSede
     ArrayList<Object> listaA = new ArrayList<Object>();
-    ArrayList<Object> listaSede = new ArrayList<>();
 
 
     for (Object sede : retorno) {
+        ArrayList<Insumo> insumosAPedir = new ArrayList<>(); 
+        ArrayList<Integer> cantidadAPedir = new ArrayList<>(); // Ambas calculadas en este bucle
+        ArrayList<Object> listaSede = new ArrayList<>(); // Acumula la info de este bucle.
         // Convertir cada elemento en un ArrayList<Object> correspondiente a una sede
         listaXSede = (ArrayList<Object>) sede;
         
@@ -477,12 +471,10 @@ static public ArrayList<Object> coordinarBodegas(ArrayList<Object> retorno){
                     
                 }
             }
-    
-    listaSede.addAll(insumosAPedir);
-    listaSede.addAll(cantidadAPedir);
-    listaA.add(listaSede);
-    
         }
+        listaSede.add(insumosAPedir);
+        listaSede.add(cantidadAPedir);
+        listaA.add(listaSede);
     }
 
     return listaA;
@@ -497,7 +489,6 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
     ArrayList<Proveedor> proveedores = new  ArrayList<>();
     ArrayList<Integer> precios = new ArrayList<>();
     ArrayList<Deuda> deudas = new ArrayList<>();
-
     for (Object s : listaA) {
         sede = (ArrayList<Object>) s;
         insumos = (ArrayList<Insumo>) sede.get(0);
@@ -543,6 +534,7 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
                             System.out.println("Cuanta cantidad más desea pedir del insumo "+insumos.get(i).getNombre());
                             Scanner cant = new Scanner(System.in);
                             cantidadAñadir = cant.nextInt();
+                            cant.close();
                         }
                         else{
                             System.out.println("Esa opción no es valida.");
@@ -574,8 +566,7 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
                 
                 
             
-        
-    }
+        }
     }
     return deudas;
 }
