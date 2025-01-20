@@ -75,7 +75,7 @@ public class Main {
             break;
 
         case 4:
-           Sede venta = Vender(in); 
+           Venta venta = Vender(in); 
            
 
             break;
@@ -164,7 +164,7 @@ public class Main {
 
         // Ya tenemos la lista de empleados a despedir.
 
-        Empleado.despedirEmpleados(seleccion, true);
+        Empleado.despedirEmpleados(seleccion, true, fecha);
         return seleccion;
     }
 

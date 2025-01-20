@@ -95,11 +95,11 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
                         float acumuladoVentasSede = 0;
                         for (Empleado empAcumulado : sede.getlistaEmpleados()){
                             if (empAcumulado.areaActual == Area.VENTAS){
-                                acumuladoVentasSede+=Venta.cantidadVentasEncargadasMes(empAcumulado,fecha);
+                                acumuladoVentasSede+=Venta.cantidadVentasEncargadasEnMes(empAcumulado,fecha);
                             }
                         }
                         float promedioVentasSede = acumuladoVentasSede/sede.getlistaEmpleados().size();
-                        rendimiento = (int) ((Venta.cantidadVentasEncargadasMes(emp,fecha)/promedioVentasSede)*100);
+                        rendimiento = (int) ((Venta.cantidadVentasEncargadasEnMes(emp,fecha)/promedioVentasSede)*100);
 
                         break;
 
@@ -143,7 +143,7 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
                             }
                         }
                         if (puedeCambiarArea && emp.areaActual.ordinal()<Area.values().length-1){ // verificamos tambien si hay area mas baja
-                            empleado.setAreaActual(Area.values()[emp.areaActual.ordinal()+1]);
+                            emp.setAreaActual(Area.values()[emp.areaActual.ordinal()+1]);
                             seVaADespedir=false;
                             listaADespedir.remove(emp);
                         }
@@ -233,4 +233,5 @@ public class Empleado extends Persona implements GastoMensual, Serializable{
     public void setAreas(ArrayList<Area> areas){this.areas=areas;}
     public int getBonificacion(){return bonificacion;}
     public void setRendimientoBonificacion(int boni){bonificacion=boni;}
+    public void setSalario(double salario){this.salario=salario;}
 }
