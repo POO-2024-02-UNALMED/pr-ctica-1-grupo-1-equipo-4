@@ -342,12 +342,12 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
  // Interacción 1 de Insumos
  static public ArrayList<Object> planificarProduccion(Fecha fecha){
     //ArrayList<Insumo> listaGuia = new ArrayList<>();
-    ArrayList<Object> listaXSede = new ArrayList<>();
-    ArrayList<Insumo> insumoXSede = new ArrayList<>();
-    ArrayList<Float> cantidadAPedir = new ArrayList<>();
     ArrayList<Object> retorno= new ArrayList<>();
 
     for(Sede x: Sede.getlistaSedes()){
+        ArrayList<Object> listaXSede = new ArrayList<>();
+        ArrayList<Insumo> insumoXSede = new ArrayList<>();
+        ArrayList<Float> cantidadAPedir = new ArrayList<>();
         
         for(Prenda prenda: x.getPrendasInventadas()){
             int proyeccion = Venta.predecirVentas(fecha, x, prenda);
