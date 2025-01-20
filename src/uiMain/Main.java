@@ -421,7 +421,6 @@ static public ArrayList<Object> coordinarBodegas(ArrayList<Object> retorno){
     ArrayList<Insumo> listaInsumos = new ArrayList<>(); // Extraida de listaXSede
     ArrayList<Integer> listaCantidades = new ArrayList<>(); // Extraida de listaXSede
     ArrayList<Object> listaA = new ArrayList<Object>();
-    System.out.println("Debug entrada 2: "+retorno);
 
 
     for (Object sede : retorno) {
@@ -490,9 +489,6 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
     ArrayList<Proveedor> proveedores = new  ArrayList<>();
     ArrayList<Integer> precios = new ArrayList<>();
     ArrayList<Deuda> deudas = new ArrayList<>();
-    System.out.println("Debug"+listaA);
-    
-    System.out.println("Debug"+listaA.size());
     for (Object s : listaA) {
         sede = (ArrayList<Object>) s;
         insumos = (ArrayList<Insumo>) sede.get(0);
