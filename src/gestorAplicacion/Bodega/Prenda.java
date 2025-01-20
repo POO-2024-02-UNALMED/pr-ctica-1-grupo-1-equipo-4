@@ -26,7 +26,7 @@ public abstract class Prenda implements GastoMensual{
     //costos necesarios para calcular el precio de cada prenda
     protected static float porcentajeGanancia = 0.30f;  // Porcentaje que afecta la cantidad a producir
     //costos necesarios para calcular el precio de cada prenda
-    private static ArrayList<Prenda> prendasInventadas;
+    private static ArrayList<Prenda> prendasInventadas = new ArrayList<Prenda>();
     // Porcentaje que afecta la cantidad a producir
     
     public Prenda(Fecha fecha, Sede sede, String nombre, Empleado modista, boolean descartada, boolean terminada){
@@ -37,7 +37,7 @@ public abstract class Prenda implements GastoMensual{
         this.descartada=descartada;
         this.terminada=terminada;
         prendasInventadas.add(this);
-        Sede.getPrendasInventadas().add(this);
+        sede.getPrendasInventadas().add(this);
         if(descartada){modista.setPrendasDescartadas(modista.getPrendasDescartadas()+1);}
         else{modista.setPrendasDescartadas(modista.getPrendasProducidas()+1);}
     }

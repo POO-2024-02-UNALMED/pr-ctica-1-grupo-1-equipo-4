@@ -24,8 +24,6 @@ import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.Bodega.Camisa;
-import java.lang.reflect.Array;
-import java.security.cert.PolicyQualifierInfo;
 
 
 public class Main {
@@ -33,6 +31,7 @@ public class Main {
     private static Proveedor proveedorBdelmain;
     public static void main (String[] args){
         Deserializador.deserializar();
+        new Main().crearSedesMaquinasRepuestos();
         Scanner in = new Scanner(System.in);
         buclePrincipal:
         while (true){
@@ -937,7 +936,7 @@ public static Proveedor getProveedorBDelMain(){
       System.out.println("Seleccione el número del empleado ue se hará cargo del registro de la venta:");
       for(int i = 0; i < sede.getlistaEmpleados().size(); i++) {
           Empleado empleado = sede.getlistaEmpleados().get(i);
-          if (empleado.getAreaActual().equals("Ventas")) {
+          if (empleado.getAreaActual()==Area.VENTAS) {
               System.out.println(i + ". " + empleado.getNombre());
         }
       }
@@ -948,7 +947,7 @@ public static Proveedor getProveedorBDelMain(){
       System.out.println("Seleccione el número del empleado que se hará cargo de asesorar la venta:");
       for(int i = 0; i < sede.getlistaEmpleados().size(); i++) {
           Empleado empleado = sede.getlistaEmpleados().get(i);
-          if (empleado.getAreaActual().equals("Oficina")) {
+          if (empleado.getAreaActual()==Area.OFICINA) {
               System.out.println(i + ". " + empleado.getNombre());
       
             }
@@ -960,13 +959,13 @@ public static Proveedor getProveedorBDelMain(){
       System.out.println("Seleccione el número del producto que venderá:");
       int costosEnvio = 0;
       while(true) {	
-      for(int i = 0; i < Sede.getPrendasInventadasTotales().size(); i++) {
-          Prenda producto = Sede.getPrendasInventadasTotales().get(i);
+      for(int i = 0; i < Prenda.getPrendasInventadas().size(); i++) {
+          Prenda producto = Prenda.getPrendasInventadas().get(i);
               System.out.println(i + ". " + producto.getNombre() + " -Precio " + producto.getPrecio());
               }
       int productoSeleccionado = scanner.nextInt();
       scanner.nextLine();
-      Prenda prendaSeleccionada = Sede.getPrendasInventadasTotales().get(productoSeleccionado);
+      Prenda prendaSeleccionada = Prenda.getPrendasInventadas().get(productoSeleccionado);
       productosSeleccionados.add(prendaSeleccionada); 
       System.out.println("Ingrese la cantidad de unidades que se desea del producto elegido:");
       int cantidadPrenda = scanner.nextInt();
