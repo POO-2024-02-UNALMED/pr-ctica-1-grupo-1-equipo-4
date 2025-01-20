@@ -169,8 +169,10 @@ public class Venta implements Serializable {
 			//Iteramos por las ventas de la sede de ese mes
 			int sumatoriaYMes=0;
 			for(Venta venta: Venta.filtrarPorMes(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
-				if (venta.getArticulos().contains(prenda)){
-					sumatoriaYMes+=venta.getCantidades().get(venta.getArticulos().indexOf(prenda));
+				for(int j=0; j<venta.getArticulos().size();j++){
+					if(venta.getArticulos().get(j).getNombre().equals(prenda.getNombre())){
+						sumatoriaYMes+=venta.getCantidades().get(j);
+					}
 				}
 			}
 			sumatoriaY+=sumatoriaYMes;
