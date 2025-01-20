@@ -339,26 +339,19 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
 
 //Funcionalidad Insumos
 
- // Interacción 1 de Insumos
- static public ArrayList<Object> planificarProduccion(Fecha fecha){
+// Interacción 1 de Insumos
+static public ArrayList<Object> planificarProduccion(Fecha fecha){
     //ArrayList<Insumo> listaGuia = new ArrayList<>();
     ArrayList<Object> retorno= new ArrayList<>();
 
     for(Sede x: Sede.getlistaSedes()){
-        ArrayList<Object> listaXSede = new ArrayList<>();
-        ArrayList<Insumo> insumoXSede = new ArrayList<>();
-        ArrayList<Float> cantidadAPedir = new ArrayList<>();
+        System.out.println("Para la "+ x.getNombre());
+        System.out.println(" Tenemos un porcentaje de pesimismo: "+(Venta.getPesimismo()*100));
+        System.out.println("Seleccione una de las siguientes opciones:");
+        System.out.println("1. Estoy de acuerdo con el porcentaje de pesimismo");
+        System.out.println("2. Deseo cambiar el porcentaje de pesimismo");  
         
-        for(Prenda prenda: x.getPrendasInventadas()){
-            int proyeccion = Venta.predecirVentas(fecha, x, prenda);
-
-            System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion+ 
-                                " Porcentaje de pesimismo: "+(Venta.getPesimismo()*100));
-            System.out.println("Seleccione una de las siguientes opciones:");
-            System.out.println("1. Estoy de acuerdo con el porcentaje de pesimismo");
-            System.out.println("2. Deseo cambiar el porcentaje de pesimismo");  
-    
-            Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
             int opcion = in.nextInt();
             switch(opcion) {
             case 1:
@@ -373,24 +366,58 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
                 System.out.println("Esa opción no es valida.");
             }
 
-            float prediccion = proyeccion * (1 - Venta.getPesimismo());
+        ArrayList<Object> listaXSede = new ArrayList<>();
+        ArrayList<Insumo> insumoXSede = new ArrayList<>();
+        ArrayList<Float> cantidadAPedir = new ArrayList<>();
+        
+        for(Prenda prenda: x.getPrendasInventadas()){
+            int proyeccion = Venta.predecirVentas(fecha, x, prenda);
 
-            for(Prenda p:Prenda.getPrendasInventadas()){
-                for(Insumo insumo: p.getInsumo()){
+            System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion);
+
+
+
+        for(Prenda prenda: x.getPrendasInventadas()){
+            int contador1 = 0;
+            int contador2 = 0;
+            if(prenda instanceof Pantalon && contador1 == 0){
+                int proyeccion = Venta.predecirVentas(fecha, x, prenda);
+
+                System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion);
+
+                float prediccion = proyeccion * (1 - Venta.getPesimismo());
+
+                for(Insumo insumo: prenda.getInsumo()){
                     insumoXSede.add(insumo);
                 }
                 for(Float i: Prenda.getCantidadInsumo()){
                     cantidadAPedir.add(i * prediccion);
                 }
+                contador1 ++;
             }
+            if(prenda instanceof Camisa && contador2 == 0){
+                int proyeccion = Venta.predecirVentas(fecha, x, prenda);
+
+                System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion);
+
+                float prediccion = proyeccion * (1 - Venta.getPesimismo());
+
+                for(Insumo insumo: prenda.getInsumo()){
+                    insumoXSede.add(insumo);
+                }
+                for(Float i: Prenda.getCantidadInsumo()){
+                    cantidadAPedir.add(i * prediccion);
+                }
+                contador2 ++;
+            }
+          
         }
 
         listaXSede.add(insumoXSede);
         listaXSede.add(cantidadAPedir);
         retorno.add(listaXSede);}
         //retorno.add(listaGuia);}
-    return retorno; }
-
+    return retorno; }
     
     
 // Interacción 2 de Insumos
