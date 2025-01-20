@@ -12,8 +12,6 @@ public class Proveedor {
 	private String nombre;
 	private float descuento;
 	private ArrayList<Deuda> deuda;
-	private ArrayList<Repuesto> repuestosQueVende = new ArrayList<>();
-	private ArrayList<Integer> preciosRepuestos = new ArrayList<>();
 
 	
 	public Proveedor(){

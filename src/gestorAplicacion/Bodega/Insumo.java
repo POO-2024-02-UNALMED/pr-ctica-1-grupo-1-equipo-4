@@ -5,7 +5,6 @@ import gestorAplicacion.Sede;
 public class Insumo{
 	protected static long precioStockTotal;
 	protected String nombre;
-	protected float cantidad;
 	protected Proveedor proveedor;
 	protected Sede sede;
 	protected int precioCompra;
@@ -17,7 +16,6 @@ public class Insumo{
 
 	public Insumo(String nombre,float cantidad,Proveedor proveedor,Sede sede){
 		this.nombre=nombre;
-		this.cantidad=cantidad;
 		this.proveedor=proveedor;
 		this.sede=sede;
 		this.precioXUnidad = Math.round(precioCompra/cantidad);
@@ -51,16 +49,6 @@ public class Insumo{
 	public void setProveedor(Proveedor p){proveedor=p;}
 	public Sede getSede (){return sede;}
 	public void setSede(Sede s){sede=s;}
-	public float getCantidad(){return cantidad;} 
-	public void setCantidad(float cant){
-		this.cantidad = cant;
-		for (int i=0;i<sede.getListaInsumosBodega().size();i++){
-			Insumo insumo = sede.getListaInsumosBodega().get(i);
-			if(insumo.nombre.equals(this.nombre)){
-				sede.getCantidadInsumosBodega().set(i,Math.round(cant));
-			}
-		}
-	} 
 	public int getPrecioCompra(){return precioCompra;} 
 	public void setPrecioCompra(int precio){this.precioCompra=precio;} 
 	public int getPrecioIndividual(){return precioXUnidad;} 
