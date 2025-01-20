@@ -58,7 +58,7 @@ public class Maquinaria implements Serializable{
         return gastoMaquinaria;
     }
 
-	/Retorna el valor de la maquinaria dañada asignada a un empleado, ayuda a Empleado.listaInicialDespedirEmpelado/
+	//Retorna el valor de la maquinaria dañada asignada a un empleado, ayuda a Empleado.listaInicialDespedirEmpelado/
 	static public int remuneracionDanos(Empleado empleado){
 		int remuneracion = 0;
 		for (Maquinaria maq : empleado.getSede().getlistaMaquinas()){
