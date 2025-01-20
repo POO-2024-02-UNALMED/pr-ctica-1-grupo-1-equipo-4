@@ -10,9 +10,8 @@ import gestorAplicacion.Membresia;
 import gestorAplicacion.Venta;
 import gestorAplicacion.Bodega.Maquinaria;
 
-public class Empleado extends Persona implements GastoMensual, Serializable{
+public class Empleado extends Persona implements GastoMensual{
 	
-	private static final long serializarVersionUID = 1L; // Para serializacion
 
 	public static ArrayList <Empleado> listaEmpleados=new ArrayList<Empleado>();
     ArrayList<Integer> balances = new ArrayList<Integer>();
