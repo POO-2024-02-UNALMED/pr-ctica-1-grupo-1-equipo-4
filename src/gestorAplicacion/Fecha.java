@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Fecha implements Serializable{
 
-	private static final long serializarVersionUID = 1L; // Para serializacion
+	private static final long serialVersionUID = 1L; // Para serializacion
 	private int dia;
 	private int mes;
 	private int año;
@@ -58,7 +58,7 @@ public class Fecha implements Serializable{
 		Fecha fecha = new Fecha(this.dia, this.mes, this.año);
 		while (!compararFecha(fecha, hasta)) {
 			dias++;
-			fecha = fecha.siguienteDia();
+			fecha.siguienteDia();
 		}
 		return dias;
 	}

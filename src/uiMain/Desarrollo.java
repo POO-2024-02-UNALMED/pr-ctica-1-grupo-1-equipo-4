@@ -10,6 +10,7 @@ import gestorAplicacion.Administracion.Banco;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Fecha;
+import gestorAplicacion.Membresia;
 
 public class Desarrollo {
     static void menu(Scanner in){
@@ -173,7 +174,7 @@ public class Desarrollo {
                     System.out.println("Cual quieres quitar?");
                     int idxEmpleado = in.nextInt();
                     Empleado empleado= sede.getlistaEmpleados().get(idxEmpleado);
-                    Empleado.despedirEmpleados(new ArrayList<>(Arrays.asList(empleado)), false);
+                    Empleado.despedirEmpleados(new ArrayList<>(Arrays.asList(empleado)), false, Main.ingresarFecha(in));
                     break;
                 case "agregar":
                     System.out.println("Cual es el nombre del empleado?");
@@ -197,7 +198,7 @@ public class Desarrollo {
                     }
                     Rol rol = Rol.values()[in.nextInt()];
 
-                    Empleado nuevoEmpleado = new Empleado(area,fechaContratacion,sede,nombre,doc,rol,0,null);
+                    Empleado nuevoEmpleado = new Empleado(area,fechaContratacion,sede,nombre,doc,rol,0,Membresia.NULA,null);
 
                     sede.anadirEmpleado(nuevoEmpleado);
                     break;

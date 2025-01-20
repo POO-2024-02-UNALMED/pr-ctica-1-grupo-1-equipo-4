@@ -266,7 +266,7 @@ public static Evaluacionfinanciera calcularBalanceAnterior(Fecha fecha, Scanner 
     System.out.println("Obteniendo balance de ventas/producción");
             double balanceCostosProduccion =Venta.calcularBalanceVentaProduccion(fecha);
             int eleccion=0;
-            while (eleccion<=0 || eleccion>=3){
+            while (eleccion<=0 || eleccion>3){
             System.out.println("Ingrese las deudas que quiere calcular");
             System.out.println("Ingrese 1 para proveedor, 2 para Banco o 3 para ambos");
             eleccion = in.nextInt();}
@@ -350,7 +350,7 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
 
     for(Sede x: Sede.getlistaSedes()){
         
-        for(Prenda prenda: Sede.getPrendasInventadas()){
+        for(Prenda prenda: x.getPrendasInventadas()){
             int proyeccion = Venta.predecirVentas(fecha, x, prenda);
 
             System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion+ 

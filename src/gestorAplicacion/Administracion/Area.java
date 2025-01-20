@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
+import gestorAplicacion.Fecha;
 
 public enum Area {
 
