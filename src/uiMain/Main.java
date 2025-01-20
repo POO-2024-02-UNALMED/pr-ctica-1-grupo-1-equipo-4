@@ -371,13 +371,7 @@ static public ArrayList<Object> planificarProduccion(Fecha fecha){
         ArrayList<Float> cantidadAPedir = new ArrayList<>();
         
         for(Prenda prenda: x.getPrendasInventadas()){
-            int proyeccion = Venta.predecirVentas(fecha, x, prenda);
 
-            System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion);
-
-
-
-        for(Prenda prenda: x.getPrendasInventadas()){
             int contador1 = 0;
             int contador2 = 0;
             if(prenda instanceof Pantalon && contador1 == 0){
@@ -395,7 +389,7 @@ static public ArrayList<Object> planificarProduccion(Fecha fecha){
                 }
                 contador1 ++;
             }
-            if(prenda instanceof Camisa && contador2 == 0){
+            else if(prenda instanceof Camisa && contador2 == 0){
                 int proyeccion = Venta.predecirVentas(fecha, x, prenda);
 
                 System.out.println("Sede: "+x+"Prenda: "+prenda+"Proyección: "+proyeccion);
@@ -415,9 +409,12 @@ static public ArrayList<Object> planificarProduccion(Fecha fecha){
 
         listaXSede.add(insumoXSede);
         listaXSede.add(cantidadAPedir);
-        retorno.add(listaXSede);}
+        retorno.add(listaXSede);
+        in.close();
+    }
         //retorno.add(listaGuia);}
-    return retorno; }
+    return retorno;
+}
     
     
 // Interacción 2 de Insumos

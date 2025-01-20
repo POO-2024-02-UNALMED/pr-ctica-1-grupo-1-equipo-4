@@ -12,6 +12,8 @@ import gestorAplicacion.Bodega.Maquinaria;
 
 public class Empleado extends Persona implements GastoMensual{
 	
+    
+    private static final long serialVersionUID = 1L;
 
 	public static ArrayList <Empleado> listaEmpleados=new ArrayList<Empleado>();
     ArrayList<Integer> balances = new ArrayList<Integer>();
