@@ -395,16 +395,16 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
     
 // Interacción 2 de Insumos
 static public ArrayList<Object> coordinarBodegas(ArrayList<Object> retorno){
-    ArrayList<Object> listaXSede = new ArrayList<>();
-    ArrayList<Insumo> listaInsumos = new ArrayList<>();
-    ArrayList<Integer> listaCantidades = new ArrayList<>();
-    ArrayList<Insumo> insumosAPedir = new ArrayList<>();
-    ArrayList<Integer> cantidadAPedir = new ArrayList<>();
+    ArrayList<Object> listaXSede = new ArrayList<>(); // Lista extraida de retorno
+    ArrayList<Insumo> listaInsumos = new ArrayList<>(); // Extraida de listaXSede
+    ArrayList<Integer> listaCantidades = new ArrayList<>(); // Extraida de listaXSede
     ArrayList<Object> listaA = new ArrayList<Object>();
-    ArrayList<Object> listaSede = new ArrayList<>();
 
 
     for (Object sede : retorno) {
+        ArrayList<Insumo> insumosAPedir = new ArrayList<>(); 
+        ArrayList<Integer> cantidadAPedir = new ArrayList<>(); // Ambas calculadas en este bucle
+        ArrayList<Object> listaSede = new ArrayList<>(); // Acumula la info de este bucle.
         // Convertir cada elemento en un ArrayList<Object> correspondiente a una sede
         listaXSede = (ArrayList<Object>) sede;
         
@@ -515,6 +515,7 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
                             System.out.println("Cuanta cantidad más desea pedir del insumo "+insumos.get(i).getNombre());
                             Scanner cant = new Scanner(System.in);
                             cantidadAñadir = cant.nextInt();
+                            cant.close();
                         }
                         else{
                             System.out.println("Esa opción no es valida.");
