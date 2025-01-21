@@ -19,11 +19,11 @@ import gestorAplicacion.Bodega.Maquinaria;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
+import gestorAplicacion.Bodega.Camisa;
 import java.util.ArrayList;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
-import gestorAplicacion.Bodega.Camisa;
 
 
 public class Main {
@@ -43,7 +43,7 @@ public class Main {
         System.out.println("6.Salir");
         System.out.println("7. Inspeccionar memoria");
 
-        int opcion = in.nextInt();
+        int opcion = nextIntSeguro(in);
         Fecha fecha;
         switch(opcion) {
         case 1:
@@ -289,7 +289,7 @@ public static Evaluacionfinanciera calcularBalanceAnterior(Fecha fecha, Scanner 
                 int i =-1;
                 while (i<0||i>=elegible.size()){
                     System.out.println("Ingrese número de 0 a "+(elegible.size()-1+""));
-                    i=in.nextInt();
+                    i=Main.nextIntSeguro(in);
                     empleado = elegible.get(i);}
             }
             Evaluacionfinanciera nuevoBalance=new Evaluacionfinanciera (balanceTotal,empleado);

@@ -11,6 +11,7 @@ import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Membresia;
+import gestorAplicacion.Bodega.Insumo;
 
 public class Desarrollo {
     static void menu(Scanner in){
@@ -19,20 +20,21 @@ public class Desarrollo {
         
         bucleDesarrollo:
         while (true) {
-        System.out.println("1.Bancos");
-        System.out.println("2.Sedes");
-        System.out.println("0.atras");
-        int numero = in.nextInt();
-        switch (numero) {
-            case 1:
+        System.out.println("- Bancos");
+        System.out.println("- Sedes");
+        System.out.println("- atras");
+        String comando = in.next().toLowerCase();
+        switch (comando) {
+            case "bancos":
                 verBancos(in);
                 break;
-            case 2:
+            case "sedes":
                 verSedes(in);
                 break;
-            case 0:
+            case "atras":
                 break bucleDesarrollo;
             default:
+                System.out.println("Comando no reconocido");
                 break;
         }
         }
@@ -47,7 +49,7 @@ public class Desarrollo {
             }
             System.out.println("Cuenta principal: -1."+Banco.getCuentaPrincipal());
             System.out.println("Usa el comando 'monto' para restar o sumar a una cuenta");
-            String comando = in.next();
+            String comando = in.next().toLowerCase();
             switch (comando) {
                 case "atras":
                     break bucleBancos;
@@ -107,7 +109,7 @@ public class Desarrollo {
             for (int idxSede=0; idxSede<Sede.getlistaSedes().size(); idxSede++){
                 System.out.println(idxSede+". "+Sede.getlistaSedes().get(idxSede).getNombre());
             }
-            String comando = in.next();
+            String comando = in.next().toLowerCase();
             int idxSede;
             switch (comando) {
                 case "atras":
@@ -137,26 +139,22 @@ public class Desarrollo {
     static void menuSede(Scanner in, Sede sede){
         bucleSede:
         while (true) {  
-            System.out.println("1.Empleados");
-            System.out.println("2.Ventas");
-            System.out.println("3.Produccion");
-            System.out.println("4.Bodega");
-            System.out.println("0.atras");
-            int numero = Main.nextIntSeguro(in);
-            switch (numero) {
-                case 1:
+            System.out.println("- Empleados");
+            System.out.println("- Ventas");
+            System.out.println("- insumos");
+            System.out.println("- atras");
+            String comando = in.next().toLowerCase();
+            switch (comando) {
+                case "empleados":
                     menuEmpleados(in, sede);
                     break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
+                case "insumos":
                     menuInsumos(in, sede);
                     break;
-                case 0:
+                case "atras":
                     break bucleSede;
                 default:
+                    System.out.println("Esa no nos la sabemos");
                     break;
             }
         }
@@ -217,7 +215,7 @@ public class Desarrollo {
         while(true){
             System.out.println("Hay estos insumos:");
             for (int idxInsumo=0; idxInsumo<sede.getListaInsumosBodega().size(); idxInsumo++){
-                System.out.println(idxInsumo+". "+"de "+sede.getListaInsumosBodega().get(idxInsumo)+" hay "+sede.getCantidadInsumosBodega().get(idxInsumo));
+                System.out.println(idxInsumo+". "+"de "+sede.getListaInsumosBodega().get(idxInsumo).getNombre()+" hay "+sede.getCantidadInsumosBodega().get(idxInsumo));
             }
             String comando = in.next();
             switch (comando) {
@@ -226,8 +224,30 @@ public class Desarrollo {
                     int idxInsumo = Main.nextIntSeguro(in);
                     Sede.quitarInsumoDeBodegas(sede.getListaInsumosBodega().get(idxInsumo));
                     break;
+                case "ver":
+                    System.out.println("Cual quieres ver?");
+                    idxInsumo = Main.nextIntSeguro(in);
+                    menuInsumo(in, sede.getListaInsumosBodega().get(idxInsumo));
+                    break;
                 case "atras":
                     break bucleInsumos;
+            
+                default:
+                    break;
+            }
+        }
+    }
+
+    static void menuInsumo(Scanner in, Insumo insumo){
+        bucleInsumo:
+        while(true){
+            System.out.println("Insumo: "+insumo.getNombre()+ " es proveido por "+insumo.getProveedor().getNombre()+". costoXUnidad: "+insumo.getPrecioIndividual());
+            System.out.println("fue comprado por ultima vez a "+insumo.getUltimoPrecio()+" y tiene precioCompra de "+insumo.getPrecioCompra());
+            System.out.println("comandos:");
+            String comando = in.next();
+            switch (comando) {
+                case "atras":
+                    break bucleInsumo;
             
                 default:
                     break;
