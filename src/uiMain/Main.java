@@ -928,6 +928,7 @@ public static Proveedor getProveedorBDelMain(){
     }
     //Interacción 1 de Facturación
 	public static Venta Vender(Scanner scanner) {
+        Venta venta = null;
 	    ArrayList<Prenda> productosSeleccionados = new ArrayList<>();
 	    ArrayList<Integer> cantidadProductos = new ArrayList<>();
       System.out.println("Ingrese la fecha de la venta:");
@@ -979,6 +980,7 @@ public static Proveedor getProveedorBDelMain(){
          
       System.out.println("Seleccione el número del producto que venderá:");
       int costosEnvio = 0;
+    
       while(true) {	
       for(int i = 0; i < Prenda.getPrendasInventadas().size(); i++) {
           Prenda producto = Prenda.getPrendasInventadas().get(i);
@@ -1046,7 +1048,8 @@ public static Proveedor getProveedorBDelMain(){
       }
       if(!desicion.equals("si")) {
       	break;
-      }        
+      } 
+     }       
     }
     int sumaPreciosPrendas = 0;
     int cantidadCamisas = 0;
@@ -1069,7 +1072,7 @@ public static Proveedor getProveedorBDelMain(){
         }
      int IVA = (int)((costosEnvio+sumaPreciosPrendas)*0.19f);
   
-     Venta venta = new Venta(sede, fechaVenta, cliente, encargado, vendedor, productosSeleccionados, cantidadProductos);
+     venta = new Venta(sede, fechaVenta, cliente, encargado, vendedor, productosSeleccionados, cantidadProductos);
      venta.setCostoEnvio(costosEnvio);
      int monto = sumaPreciosPrendas+IVA+costosEnvio;
      int MontoPagar = (int) (monto - (monto * cliente.getMembresia().getPorcentajeDescuento()));
@@ -1089,13 +1092,163 @@ public static Proveedor getProveedorBDelMain(){
     System.out.println("Asesor de la compra: " + encargado.getNombre());
     int comisión = (int)(MontoPagar * 0.05f);
     vendedor.setRendimientoBonificacion(comisión);
+    
      
      return venta;}
 
      //Interacción 2 Facturación
+    public static void realizarVenta(Scanner scanner) {
+	    // Se llama al método vender para obtener la venta inicial
+	    Venta venta = Vender(scanner);
+
+	    ArrayList<Prenda> productosSeleccionados = venta.getArticulos();
+	    Sede sede = venta.getSede();
+        Banco banco = sede.getCuentaSede();
+	    int totalPrendas = 0;
+	    for(int i =0; i < productosSeleccionados.size(); i++) {
+	        totalPrendas += venta.getCantidades().get(i);
+	    }
+	 
+	    ArrayList<Insumo> InsumosBodega = sede.getListaInsumosBodega();
+	    ArrayList<Integer> cantidadInsumosBodega = sede.getCantidadInsumosBodega();
+   
+	    ArrayList<Bolsa> bolsasSeleccionadas = new ArrayList<>();
+	    int capacidadTotal = 0;
+        
+	    Insumo insumo = null;
+	    while (capacidadTotal >= totalPrendas) {
+	        System.out.println("Seleccione el tamaño de bolsa:");	        
+	        // Muestra opciones disponibles
+	        for (int i = 0; i < InsumosBodega.size(); i++) {
+	            Insumo bolsaI = InsumosBodega.get(i);	            
+	            if (bolsaI instanceof Bolsa) {
+                    Bolsa bolsa = (Bolsa)bolsaI;
+	                int capacidad = bolsa.getCapacidadMaxima();
+	                int cantidad = sede.getCantidadInsumosBodega().get(i);
+	                if (capacidad == 1 && cantidad > 0) {
+	                    System.out.println("1. Bolsa pequeña (1 producto)");
+	                } else if (capacidad == 3 && cantidad > 0) {
+	                    System.out.println("2. Bolsa mediana (3 productos)");
+	                } else if (capacidad == 8 && cantidad > 0) {
+	                    System.out.println("3. Bolsa grande (8 productos)");
+	                }
+	            }
+	        }
+
+	        int opcionBolsa = scanner.nextInt();
+	        scanner.nextLine();
+
+	        int capacidadBolsa = 0;
+	        String nombreBolsa = null;
+
+	        switch (opcionBolsa) {
+	            case 1 -> {
+                        capacidadBolsa = 1;
+                        nombreBolsa = "Bolsa pequeña";
+                    }
+	            case 2 -> {
+                        capacidadBolsa = 3;
+                        nombreBolsa = "Bolsa mediana";
+                    }
+	            case 3 -> {
+                        capacidadBolsa = 8;
+                        nombreBolsa = "Bolsa grande";
+                    }
+	            default -> {
+                        System.out.println("Opción inválida. Intente nuevamente.");
+                        continue;
+                    }
+	        }
+	        //Busca la bolsa requerida y se lo asigna a la lista de bolsas seleccionadas
+	        boolean bolsaEncontrada = false;
+	        int cantidadDisponible = 0;
+	        for (int i = 0; i < sede.getListaInsumosBodega().size(); i++) {
+	            Insumo bolsa = sede.getListaInsumosBodega().get(i);
+	            if (bolsa instanceof Bolsa) {
+	                Bolsa bolsaEncontrar = (Bolsa)bolsa;
+	                if (bolsaEncontrar.getCapacidadMaxima() == capacidadBolsa) {
+	                    cantidadDisponible += cantidadInsumosBodega.get(i);
+	                    if (cantidadDisponible > 0) {
+	                        bolsasSeleccionadas.add(bolsaEncontrar);
+	                        int cantidadActual = cantidadInsumosBodega.get(i);  
+                            cantidadInsumosBodega.set(i, cantidadActual - 1); 
+	                        bolsaEncontrada = true;
+	                        break;
+	                    }
+	                }
+	            }
+	        }
+
+	        // Si no hay suficiente stock, compra más bolsas al proveedor
+	        if (!bolsaEncontrada || cantidadDisponible < 10) {
+	            System.out.println("No hay suficiente stock de " + nombreBolsa + ". Comprando al proveedor...");
+	            for (int i = 0; i < sede.getListaInsumosBodega().size(); i++) {
+	            	insumo =  sede.getListaInsumosBodega().get(i);
+	                if (insumo instanceof Bolsa && insumo.getNombre().equals(nombreBolsa)) {
+	                	System.out.println("¿Cuántas bolsa de " + nombreBolsa + " desea comprar?");
+	                    int cantidadComprar = scanner.nextInt();
+	                    scanner.nextLine();
+	                    int costoCompra = Proveedor.costoDeLaCantidad(insumo, cantidadComprar);
+                        banco.setAhorroBanco(banco.getAhorroBanco()-costoCompra); // Reducir los ahorros de la empresa respecto a la compra
+	                    cantidadInsumosBodega.set(i, cantidadInsumosBodega.get(i) + cantidadComprar);
+	                    insumo.setPrecioCompra(costoCompra);
+	                    insumo.setUltimoPrecio(costoCompra);
+	                    System.out.println("Se compraron " + cantidadComprar + " " + nombreBolsa + " por un costo total de " + costoCompra);
+	                    break;
+	                }
+	            }
+	        }
+	        for (Sede revisarSedes : sede.getlistaSedes()) {
+	            ArrayList<Insumo> listaInsumos = sede.getListaInsumosBodega();
+	            ArrayList<Integer> cantidadInsumos = sede.getCantidadInsumosBodega();
+
+	            for (int i = 0; i < listaInsumos.size(); i++) {
+	                if (listaInsumos.get(i) instanceof Bolsa) {
+	                    if (cantidadInsumos.get(i) < 10) {
+	                        System.out.println("La sede " + sede.getNombre() +
+	                                " tiene un menos de 10 bolsas en stock " +
+	                                " (Cantidad: " + cantidadInsumos.get(i) + ").");
+	                        System.out.println("Comprando al proveedor...");
+	                        for (int e = 0; e < sede.getListaInsumosBodega().size(); e++) {
+	        	            	insumo =  sede.getListaInsumosBodega().get(e);
+	        	                if (insumo instanceof Bolsa && insumo.getNombre().equals(nombreBolsa)) {
+	        	                	System.out.println("¿Cuántas bolsa de " + nombreBolsa + " desea comprar?");
+	        	                    int cantidadComprar = scanner.nextInt();
+	        	                    scanner.nextLine();
+	        	                    int costoCompra = Proveedor.costoDeLaCantidad(insumo, cantidadComprar);
+                                    banco.setAhorroBanco(banco.getAhorroBanco()-costoCompra); // Reducir los ahorros de la empresa respecto a la compra
+	        	                    cantidadInsumosBodega.set(e, cantidadInsumosBodega.get(e) + cantidadComprar);
+	        	                    insumo.setPrecioCompra(costoCompra);
+	        	                    insumo.setUltimoPrecio(costoCompra);
+	        	                    System.out.println("Se compraron " + cantidadComprar + " " + nombreBolsa + " por un costo total de " + costoCompra);
+	        	                    break;
+		        	                }
+		        	            }
+		        	        }
+	                    else {
+	                           break;}
+	                    }
+	                }
+	            }
+
+	        if (capacidadTotal < totalPrendas) {
+	            System.out.println("Todavía se necesitan más bolsas para cubrir los productos.");
+	        }
+	    }
+
+
+	    venta.setBolsas(bolsasSeleccionadas);
+
+	    int totalVenta = venta.getMontoPagado() + bolsasSeleccionadas.size()*2000;
+	    venta.setMontoPagado(totalVenta);
+
+	    System.out.println("Venta finalizada. Total de la venta con bolsas: " + totalVenta);
+	    sede.getHistorialVentas().add(venta);
+	}
+ }
 
     
 
-}}
+
 
 
