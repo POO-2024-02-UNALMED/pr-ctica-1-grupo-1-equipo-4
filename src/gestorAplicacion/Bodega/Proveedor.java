@@ -45,25 +45,18 @@ public class Proveedor implements Serializable{
 		return precio;
 	}
 	
-	static public ArrayList<Deuda> unificarDeudasXProveedor(ArrayList<Deuda> deudas){
-		for (Deuda deuda : deudas){
-			for(Proveedor proveedor : Proveedor.getListaProveedores()){
-				if (deuda.getEntidad()){
-					
-				}
-			}
-		}
-		
-	}
 
 	static public ArrayList<Deuda> unificarDeudasXProveedor(ArrayList<Deuda> deudas){
+		ArrayList<Deuda> listaDeudas= new  ArrayList<Deuda> ();
 		for (Deuda deuda : deudas){
 			for(Proveedor proveedor : Proveedor.getListaProveedores()){
-				if (deuda.getEntidad()){
+				if (deuda.getEntidad()=="Proveedor"){
 					
 				}
 			}
 		}
+
+		return listaDeudas;
 		
 	}
 

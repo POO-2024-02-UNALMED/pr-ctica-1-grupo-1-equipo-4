@@ -2,6 +2,7 @@ package gestorAplicacion.Bodega;
 import gestorAplicacion.Administracion.Empleado;
 import uiMain.Main;
 import gestorAplicacion.Sede;
+import gestorAplicacion.Fecha;
 
 import java.io.Serializable;
 import java.net.ResponseCache;
@@ -94,7 +95,7 @@ public class Maquinaria implements Serializable{
 	}
 
 
-	public ArrayList<Maquinaria> agruparMaquinasDisponibles(){
+	public ArrayList<Maquinaria> agruparMaquinasDisponibles(Fecha fecha){
 		ArrayList<Maquinaria> maqDisponibles = new ArrayList<>();	//listado temporal de maquinarias disponibles, el cual será pasado como argumento para la segunda interracion
 		ArrayList<Proveedor> todosProvBaratos = new ArrayList<>();
 		Main main = new Main();

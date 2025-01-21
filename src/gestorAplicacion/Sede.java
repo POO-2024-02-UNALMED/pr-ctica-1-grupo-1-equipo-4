@@ -130,7 +130,7 @@ public class Sede implements Serializable{
 
 
 	public void actualizarHistorialVentas(Venta venta){historialVentas.add(venta);}
-	public float getRendimientoDeseado(Area area){return Area.rendimientoDeseadoActual(this).get(area.ordinal());}
+	public float getRendimientoDeseado(Area area,Fecha fecha){return Area.rendimientoDeseadoActual(this,fecha).get(area.ordinal());}
 	public static ArrayList<Sede> getlistaSedes(){return listaSedes;}
 	public static void setlistaSedes(ArrayList<Sede> Sede){listaSedes=Sede;}
 	public ArrayList<Empleado> getlistaEmpleados(){return listaEmpleado;}

@@ -24,12 +24,15 @@ public class Venta implements Serializable {
 	private int subtotal;
 	private static float pesimismo = 0.02F;
 
-	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado v,ArrayList<Prenda> articulos, ArrayList<Integer> cantidades){
+	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado e,ArrayList<Prenda> articulos, ArrayList<Integer> cantidades){
 		this(sede, fecha, c);
 		asesor=a;
-		encargado=v;
+		encargado=e;
 		this.articulos=articulos;
 		this.cantidades=cantidades;
+		for(Prenda prenda : articulos){
+		sede.getPrendasInventadas().remove(prenda);
+	}
 	}
 
 	
@@ -122,7 +125,7 @@ public class Venta implements Serializable {
 	static public float blackFriday(Fecha fecha){
 	int año;
 	if (fecha.getMes()>11){año=fecha.getAño();}
-	else if (fecha.getMes()==11 && fecha.getDia()<=24){año=fecha.getAño();}
+	else if (fecha.getMes()==11 && fecha.getDia()>=24){año=fecha.getAño();}
 	else{año=fecha.getAño()-1;} // Si no ha pasado black friday, usar el año anterior
 	ArrayList<Fecha> diasBlackFriday=new ArrayList();
 	diasBlackFriday.add(new Fecha(28,11,año));diasBlackFriday.add(new Fecha(29,11,año));diasBlackFriday.add(new Fecha(30,11,año));

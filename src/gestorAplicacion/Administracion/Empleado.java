@@ -121,13 +121,13 @@ public class Empleado extends Persona implements GastoMensual{
                     }
                 
                 // Añadimos a la lista los empleados con rendimiento insuficiente.
-                if (rendimiento < emp.getSede().getRendimientoDeseado(emp.areaActual)){
+                if (rendimiento < emp.getSede().getRendimientoDeseado(emp.areaActual,fecha)){
                     seVaADespedir = true;
                     listaADespedir.add(emp);
                 }
                 // Verificamos posibilidades de transferencia.
                 for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
-                    if (Sede.getlistaSedes().get(idxSede).getRendimientoDeseado(emp.areaActual) <= rendimiento + 20){
+                    if (Sede.getlistaSedes().get(idxSede).getRendimientoDeseado(emp.areaActual,fecha) <= rendimiento + 20){
                         listaADespedir.remove(emp);
                         listaATransferir.get(idxSede).add(emp);
                         seVaADespedir = false;
@@ -234,5 +234,5 @@ public class Empleado extends Persona implements GastoMensual{
     public void setAreas(ArrayList<Area> areas){this.areas=areas;}
     public int getBonificacion(){return bonificacion;}
     public void setRendimientoBonificacion(int boni){bonificacion=boni;}
-    public void setSalario(double salario){this.salario=salario;}
+    public void setSalario(int salario){this.salario=salario;}
 }
