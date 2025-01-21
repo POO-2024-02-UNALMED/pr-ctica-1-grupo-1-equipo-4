@@ -21,6 +21,7 @@ import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Bodega.Camisa;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
@@ -1168,6 +1169,7 @@ public static Proveedor getProveedorBDelMain(){
   
      venta = new Venta(sede, fechaVenta, cliente, encargado, vendedor, productosSeleccionados, cantidadProductos);
      venta.setCostoEnvio(costosEnvio);
+     sumaPreciosPrendas += costosEnvio;
      int monto = sumaPreciosPrendas+IVA+costosEnvio;
      int MontoPagar = (int) (monto - (monto * cliente.getMembresia().getPorcentajeDescuento()));
      venta.setMontoPagado(MontoPagar);
@@ -1182,8 +1184,8 @@ public static Proveedor getProveedorBDelMain(){
     System.out.println("Valor total: $" + MontoPagar);
     System.out.println("Valor sin IVA: $" + sumaPreciosPrendas);
     System.out.println("IVA: $" + IVA);
-    System.out.println("Venta registrada por: " + vendedor.getNombre());
-    System.out.println("Asesor de la compra: " + encargado.getNombre());
+    System.out.println("Venta registrada por: " + encargado.getNombre());
+    System.out.println("Asesor de la compra: " + vendedor.getNombre());
     int comisión = (int)(MontoPagar * 0.05f);
     vendedor.setRendimientoBonificacion(comisión);
     
@@ -1274,28 +1276,9 @@ public static Proveedor getProveedorBDelMain(){
 	        }
 
 	        // Si no hay suficiente stock, compra más bolsas al proveedor
-	        if (!bolsaEncontrada || cantidadDisponible < 10) {
-	            System.out.println("No hay suficiente stock de " + nombreBolsa + ". Comprando al proveedor...");
-	            for (int i = 0; i < sede.getListaInsumosBodega().size(); i++) {
-	            	insumo =  sede.getListaInsumosBodega().get(i);
-	                if (insumo instanceof Bolsa && insumo.getNombre().equals(nombreBolsa)) {
-	                	System.out.println("¿Cuántas bolsa de " + nombreBolsa + " desea comprar?");
-	                    int cantidadComprar = scanner.nextInt();
-	                    scanner.nextLine();
-	                    int costoCompra = Proveedor.costoDeLaCantidad(insumo, cantidadComprar);
-                        banco.setAhorroBanco(banco.getAhorroBanco()-costoCompra); // Reducir los ahorros de la empresa respecto a la compra
-	                    cantidadInsumosBodega.set(i, cantidadInsumosBodega.get(i) + cantidadComprar);
-	                    insumo.setPrecioCompra(costoCompra);
-	                    insumo.setUltimoPrecio(costoCompra);
-	                    System.out.println("Se compraron " + cantidadComprar + " " + nombreBolsa + " por un costo total de " + costoCompra);
-	                    break;
-	                }
-	            }
-	        }
-	        for (Sede revisarSedes : sede.getlistaSedes()) {
+                for (Sede revisarSedes : sede.getlistaSedes()) {
 	            ArrayList<Insumo> listaInsumos = sede.getListaInsumosBodega();
 	            ArrayList<Integer> cantidadInsumos = sede.getCantidadInsumosBodega();
-
 	            for (int i = 0; i < listaInsumos.size(); i++) {
 	                if (listaInsumos.get(i) instanceof Bolsa) {
 	                    if (cantidadInsumos.get(i) < 10) {
@@ -1336,7 +1319,7 @@ public static Proveedor getProveedorBDelMain(){
 	    int totalVenta = venta.getMontoPagado() + bolsasSeleccionadas.size()*2000;
 	    venta.setMontoPagado(totalVenta);
 
-	    System.out.println("Venta finalizada. Total de la venta con bolsas: " + totalVenta);
+	    System.out.println("Venta realizada. Total de la venta con bolsas: " + totalVenta);
 	    sede.getHistorialVentas().add(venta);
 	}
  }
