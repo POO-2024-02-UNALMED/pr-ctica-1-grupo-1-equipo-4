@@ -3,6 +3,7 @@ package gestorAplicacion;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import gestorAplicacion.Administracion.Area;
 import gestorAplicacion.Administracion.Empleado;
@@ -31,6 +32,9 @@ public class Sede implements Serializable{
 	private Banco cuentaSede;
 	private int distancia;
 	//Con respecto a la principal
+
+	ArrayList<Maquinaria> maqProduccion = new ArrayList<>();
+	ArrayList<Maquinaria> maqOficina = new ArrayList<>();
 
 	public void Vender(ArrayList<Prenda> productos, ArrayList<Integer> cantidades,Empleado vendedor, Empleado Oficina, Sede sede){
 		for(Prenda prenda : productos){
@@ -130,7 +134,7 @@ public class Sede implements Serializable{
 
 
 	public void actualizarHistorialVentas(Venta venta){historialVentas.add(venta);}
-	public float getRendimientoDeseado(Area area){return Area.rendimientoDeseadoActual(this).get(area.ordinal());}
+	public float getRendimientoDeseado(Area area, Fecha fecha){return Area.rendimientoDeseadoActual(this,fecha).get(area.ordinal());}
 	public static ArrayList<Sede> getlistaSedes(){return listaSedes;}
 	public static void setlistaSedes(ArrayList<Sede> Sede){listaSedes=Sede;}
 	public ArrayList<Empleado> getlistaEmpleados(){return listaEmpleado;}
@@ -259,7 +263,79 @@ public class Sede implements Serializable{
 	}
 
 		//interacion 2 de Produccion
-	public void planProduccion(ArrayList<Maquinaria> maqDisponiblee){
+	public void planProduccion(ArrayList<Maquinaria> maqDisponiblee, Scanner scanner){
+		ArrayList<Maquinaria> maqSedeP = new ArrayList<>();
+		ArrayList<Maquinaria> maqSede2 = new ArrayList<>();
+		int señal = 0;
 		
+			//dividir las maquinas disponibles por sedes:
+		for(Maquinaria todMaquinas : maqDisponiblee){
+			if(todMaquinas.getSede().getNombre().equalsIgnoreCase("Sede Principal")){
+				maqSedeP.add(todMaquinas);
+			} else {
+				maqSede2.add(todMaquinas);
+			}
+		}
+
+			//dividir las maquinas de cada sede por funcion:
+		for(Maquinaria todMaqSedeP : maqSedeP){
+			if(todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de coser industrial") || todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de Corte") || todMaqSedeP.getNombre().equalsIgnoreCase("Plancha industrial") || todMaqSedeP.getNombre().equalsIgnoreCase("Bordadora Industrial") || todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de termofijado") || todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de tijereado")){
+				maqProduccion.add(todMaqSedeP);
+			} else{
+				maqOficina.add(todMaqSedeP);
+			}
+		}
+		for(Maquinaria todMaqSede2 : maqSede2){
+			if(todMaqSede2.getNombre().equalsIgnoreCase("Maquina de coser industrial") || todMaqSede2.getNombre().equalsIgnoreCase("Maquina de Corte") || todMaqSede2.getNombre().equalsIgnoreCase("Plancha industrial") || todMaqSede2.getNombre().equalsIgnoreCase("Bordadora Industrial") || todMaqSede2.getNombre().equalsIgnoreCase("Maquina de termofijado") || todMaqSede2.getNombre().equalsIgnoreCase("Maquina de tijereado")){
+				maqProduccion.add(todMaqSede2);
+			} else{
+				maqOficina.add(todMaqSede2);
+			}
+		}
+
+
+		if(getlistaSedes().get(0).maqProduccion.size() >= 3){
+			señal = 5;
+		}
+		if(getlistaSedes().get(1).maqProduccion.size() >= 3){
+			señal = señal + 10;
+		}
+
+		if(señal == 5){
+			System.out.println("La Sede 2 no está trabajando por falta de maquinaria disponible...");
+			System.out.println("¿Desea delegar toda la produccion a la Sede Principal o poner en espera la produccion de la Sede 2? \n");
+			System.out.println("1. Delegar");
+			System.out.println("2. Poner en espera");
+
+			int opcion = scanner.nextInt();
+			if(opcion == 1){
+				//llamar a un metodo1 para empezar a producir todo en la sede principal
+			} else if(opcion == 2){
+				//llamar a otro metodo2 para pasar la produccion a una lista de espera
+			} else{
+				System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+			}
+		} else if (señal == 10) {
+			System.out.println("La Sede Principal no esta trabajando por falta de maquinaria disponible...");
+			System.out.println("¿Desea delegar toda la produccion a la Sede 2 o poner en espera la produccion de la Sede Principal? \n");
+			System.out.println("1. Delegar");
+			System.out.println("2. Poner en espera");
+
+			int opcion = scanner.nextInt();
+			if(opcion == 1){
+				//llamar a un metodo3 para empezar a producir todo en la sede 2
+			} else if(opcion == 2){
+				//llamar a otro metodo2 para pasar la produccion a una lista de espera
+			} else{
+				System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+			}
+		} else if(señal == 15){
+			//EMPEZAR A PRODUCIR TODO NORMALMENTE, PREFERIBLEMENTE CON UN METODO4, APARTE DE LOS OTROS TRES
+		} else{
+			System.out.println("\n Lo sentimos, se debe arreglar la maquinaria en alguna de las dos sedes para comenzar a producir...\n");
+		}
+
+
 	}
+	
 }
