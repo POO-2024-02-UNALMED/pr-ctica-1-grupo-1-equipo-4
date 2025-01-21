@@ -1,8 +1,6 @@
 package gestorAplicacion;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Bodega.Bolsa;
@@ -13,6 +11,8 @@ public class Venta implements Serializable {
 	private ArrayList<Prenda> articulos;
 	private ArrayList<Integer> cantidades;
 	private ArrayList<Bolsa> bolsas;
+	private static ArrayList<String> codigosRegalo = new ArrayList<>();
+    private static ArrayList<Integer> montosRegalo = new ArrayList<>();
 	private Empleado encargado;
 	private Empleado asesor;
 	private Sede sede;
@@ -213,4 +213,9 @@ public class Venta implements Serializable {
 	public void setSubtotal(int monto){subtotal=monto;}
 	static public void setPesimismo(float newPesimism){Venta.pesimismo = newPesimism;}
 	static public float getPesimismo(){return Venta.pesimismo;}
+	public static ArrayList<String> getCodigosRegalo(){return Venta.codigosRegalo;}
+	public static void setCodigosRegalos(ArrayList<String> codigo){Venta.codigosRegalo=codigo;}
+	public static ArrayList<Integer> getMontosRegalo(){return Venta.montosRegalo;}
+	public static void setMontosRegalo(ArrayList<Integer> montos){Venta.montosRegalo=montos;}
+	
 }
