@@ -2,7 +2,7 @@ package gestorAplicacion.Bodega;
 import java.io.Serializable;
 import java.sql.SQLData;
 import java.util.ArrayList;
-
+import gestorAplicacion.Fecha;
 import gestorAplicacion.Administracion.Deuda;
 
 public class Proveedor implements Serializable{
@@ -14,7 +14,7 @@ public class Proveedor implements Serializable{
 	private int precio;
 	private String nombre;
 	private float descuento;
-	private ArrayList<Deuda> deuda = new ArrayList<Deuda>();
+	private Deuda deuda;
 
 	
 	public Proveedor(){
@@ -46,24 +46,18 @@ public class Proveedor implements Serializable{
 	}
 	
 
-	static public ArrayList<Deuda> unificarDeudasXProveedor(ArrayList<Deuda> deudas){
-		ArrayList<Deuda> listaDeudas= new  ArrayList<Deuda> ();
-		for (Deuda deuda : deudas){
-			for(Proveedor proveedor : Proveedor.getListaProveedores()){
-				if (deuda.getEntidad()=="Proveedor"){
-					
-				}
+	public void unificarDeudasXProveedor(Fecha fecha, int montoDeuda, String Nombre, int cuotas){
+			if (deuda.getEntidad().equals(Nombre)&&!deuda.getEstadodePago()){
+					deuda.actualizarDeuda(fecha,montoDeuda,cuotas);
 			}
-		}
-
-		return listaDeudas;
+			
 		
 	}
 
 	public static ArrayList<Proveedor> getListaProveedores(){return listaProveedores;}
 	public static void setListaProveedores(ArrayList<Proveedor> lista){listaProveedores=lista;}
-	public ArrayList<Deuda> getDeuda (){return deuda;}
-	public void setDeuda (ArrayList<Deuda> deuda){this.deuda=deuda;}
+	public Deuda getDeuda (){return deuda;}
+	public void setDeuda (Deuda deuda){this.deuda=deuda;}
 	public Insumo getInsumo(){return tipoInsumo;}
 	public void setInsumo(Insumo insumo){this.tipoInsumo=insumo;}
 	public int getPrecio (){return precio;}

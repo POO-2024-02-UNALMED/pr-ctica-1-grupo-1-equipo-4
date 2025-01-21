@@ -40,6 +40,7 @@ public class Venta implements Serializable {
 		this(sede,fecha,c,a,v,articulos,cantidades);
 		subtotal=sub;
 		montoPagado=mp;
+		sede.getCuentaSede().setAhorroBanco(sede.getCuentaSede().getAhorroBanco()+montoPagado);
 	}
 
 	public Venta(Sede sede,Fecha fecha, Persona c){
@@ -205,7 +206,16 @@ public class Venta implements Serializable {
 	public Fecha getFechaVenta(){return fechaVenta;}
 	public void setFechaVenta(Fecha fecha){fechaVenta=fecha;}
 	public int getMontoPagado(){return montoPagado;}
-	public void setMontoPagado(int monto){montoPagado=monto;}
+	public void setMontoPagado(int monto){
+		if (montoPagado==0){
+			sede.getCuentaSede().setAhorroBanco(sede.getCuentaSede().getAhorroBanco()+monto);
+			montoPagado=monto;
+		}
+		else{
+			sede.getCuentaSede().setAhorroBanco(sede.getCuentaSede().getAhorroBanco()-montoPagado);
+			montoPagado=monto;
+			sede.getCuentaSede().setAhorroBanco(sede.getCuentaSede().getAhorroBanco()-monto);}
+		}
 	public Persona getCliente(){return cliente;}
 	public void setCliente(Persona persona){cliente=persona;}
 	public int getNumero(){return numero;}

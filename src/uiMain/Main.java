@@ -303,6 +303,10 @@ public static long calcularEstimado(Fecha fecha,Evaluacionfinanciera balanceAnte
 
 //Interaccion 3 Sistema Financiero
 public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scanner in){
+    if (diferenciaEstimada>0){
+        System.out.println("El estimado es positivo, las ventas superan las deudas");
+        Deuda.compararDeudas(fecha);
+    }
     if (diferenciaEstimada<=0){
         System.out.println("El estimado es negativo, la deuda supera las ventas");
         int i =-1;
@@ -558,8 +562,12 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
                     if(insumos.get(i).getProveedor().getNombre().equals(proveedor.getNombre())){
                         montoDeuda += insumos.get(i).getPrecioIndividual()*cantidad.get(i);
                     }
+                    Deuda deuda=null;
                     if(montoDeuda > 0){
-                        Deuda deuda = new Deuda(fecha, montoDeuda, "entidad", "tipo", 5);
+                        if(!(proveedor.getDeuda().getEstadodePago())){
+                        proveedor.unificarDeudasXProveedor(fecha, montoDeuda, proveedor.getNombre(),5);
+                        deuda=proveedor.getDeuda();}
+                        else{deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor", 5);}
                         deudas.add(deuda);
                     }
                     
@@ -776,6 +784,7 @@ public void crearSedesMaquinasRepuestos(){
     Banco b4=new Banco ("Banco Davivienda","principal",80_000_000,0.1F); 
     Banco b2=new Banco ("Banco de Bogotá","principal",140_000_000,0.07F);
     Banco tm=new Banco("Inversiones Terramoda","principal",160_000_000,0.0F);
+    Banco.setCuentaPrincipal(bp);sede2.setCuentaSede(b1);sedeP.setCuentaSede(bp);
 
     Deuda d1=new Deuda(new Fecha(15,1,20),20_000_000,"Bancolombia","Banco",1);
     b3.actualizarDeuda(d1);
@@ -882,22 +891,29 @@ public void crearSedesMaquinasRepuestos(){
     ArrayList<Integer> ct1=new ArrayList<Integer>();ct1.add(2);ct1.add(1);
     Venta v1=new Venta(sede2,new Fecha(28,11,24),c8, Gabriela, Patricia,ps1,ct1, 200000, 250000);
     v1.setCostoEnvio(20000);b1.setAhorroBanco(b1.getAhorroBanco()+250000);
-    
+    int com1 = (int)(250000 * 0.05f);
+    Gabriela.setRendimientoBonificacion(com1);
+
     ArrayList<Prenda> ps2= new ArrayList<Prenda>(); ps2.add(r15); ps2.add(r16);
     ArrayList<Integer> ct2=new ArrayList<Integer>();ct2.add(2);ct2.add(0);
     Venta v2=new Venta(sede2,new Fecha(29,11,24),c13, Freddy, Patricia,ps2,ct2, 400000, 600000);
     v2.setCostoEnvio(1000000);b2.setAhorroBanco(b2.getAhorroBanco()+600000);
+    int com2 = (int)(600000 * 0.05f);
+    Freddy.setRendimientoBonificacion(com2);
 
     ArrayList<Prenda> ps3= new ArrayList<Prenda>(); ps3.add(r1); ps3.add(r2);ps3.add(r7);
     ArrayList<Integer> ct3=new ArrayList<Integer>();ct3.add(2);ct3.add(1);
     Venta v3=new Venta(sedeP,new Fecha(30,11,24),c6, Aura, Cata,ps3,ct3, 500000, 700000);
     v3.setCostoEnvio(100000);b1.setAhorroBanco(b1.getAhorroBanco()+700000);
-    
+    int com3 = (int)(700000 * 0.05f);
+    Aura.setRendimientoBonificacion(com3);
+
     ArrayList<Prenda> ps4= new ArrayList<Prenda>(); ps4.add(r15); ps4.add(r16);
     ArrayList<Integer> ct4=new ArrayList<Integer>();ct4.add(2);ct4.add(0);
     Venta v4=new Venta(sedeP,new Fecha(25,11,24),c4, Wilson, Mario,ps4,ct4, 400000, 60000);
     v4.setCostoEnvio(100000);b3.setAhorroBanco(b3.getAhorroBanco()+600000);
-
+    int com4 = (int)(600000 * 0.05f);
+    Wilson.setRendimientoBonificacion(com4);
 }
 
     //para la interaccion 1 de produccion
