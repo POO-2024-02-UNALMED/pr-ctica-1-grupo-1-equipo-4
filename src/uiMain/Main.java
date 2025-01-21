@@ -930,7 +930,6 @@ public static Proveedor getProveedorBDelMain(){
 	public static Venta Vender(Scanner scanner) {
 	    ArrayList<Prenda> productosSeleccionados = new ArrayList<>();
 	    ArrayList<Integer> cantidadProductos = new ArrayList<>();
-
       System.out.println("Ingrese la fecha de la venta:");
       Fecha fechaVenta = ingresarFecha(scanner); 
 
@@ -956,29 +955,28 @@ public static Proveedor getProveedorBDelMain(){
       scanner.nextLine();
       Sede sede = Sede.getlistaSedes().get(sedeSeleccionada);
       
-      System.out.println("Seleccione el número del empleado ue se hará cargo del registro de la venta:");
+      System.out.println("Seleccione el número del empleado que se hará cargo del registro de la venta:");
       for(int i = 0; i < sede.getlistaEmpleados().size(); i++) {
-          Empleado empleado = sede.getlistaEmpleados().get(i);
-          if (empleado.getAreaActual()==Area.VENTAS) {
-              System.out.println(i + ". " + empleado.getNombre());
-        }
-      }
-      int vendedorSeleccionado = scanner.nextInt();
-      scanner.nextLine();
-      Empleado vendedor = sede.getlistaEmpleados().get(vendedorSeleccionado);
-      
+        Empleado empleado = sede.getlistaEmpleados().get(i);
+        if (empleado.getAreaActual()==Area.OFICINA) {
+            System.out.println(i + ". " + empleado.getNombre());
+    
+          }
+     }
+    int encargadoSeleccionado = scanner.nextInt();
+    scanner.nextLine();
+    Empleado encargado = sede.getlistaEmpleados().get(encargadoSeleccionado);      
       System.out.println("Seleccione el número del empleado que se hará cargo de asesorar la venta:");
       for(int i = 0; i < sede.getlistaEmpleados().size(); i++) {
-          Empleado empleado = sede.getlistaEmpleados().get(i);
-          if (empleado.getAreaActual()==Area.OFICINA) {
-              System.out.println(i + ". " + empleado.getNombre());
-      
-            }
-       }
-      int encargadoSeleccionado = scanner.nextInt();
-      scanner.nextLine();
-      Empleado encargado = sede.getlistaEmpleados().get(encargadoSeleccionado);
-     
+        Empleado empleado = sede.getlistaEmpleados().get(i);
+        if (empleado.getAreaActual()==Area.VENTAS) {
+            System.out.println(i + ". " + empleado.getNombre());
+      }
+    }
+    int vendedorSeleccionado = scanner.nextInt();
+    scanner.nextLine();
+    Empleado vendedor = sede.getlistaEmpleados().get(vendedorSeleccionado);
+         
       System.out.println("Seleccione el número del producto que venderá:");
       int costosEnvio = 0;
       while(true) {	
@@ -989,11 +987,15 @@ public static Proveedor getProveedorBDelMain(){
       int productoSeleccionado = scanner.nextInt();
       scanner.nextLine();
       Prenda prendaSeleccionada = Prenda.getPrendasInventadas().get(productoSeleccionado);
-      productosSeleccionados.add(prendaSeleccionada); 
       System.out.println("Ingrese la cantidad de unidades que se desea del producto elegido:");
       int cantidadPrenda = scanner.nextInt();
       scanner.nextLine();
       cantidadProductos.add(cantidadPrenda);
+      if (cantidadPrenda > 0 && cantidadPrenda <= sede.getPrendasInventadas().size()) {
+        for (int i = 0; i < cantidadPrenda; i++) {
+            sede.getPrendasInventadas().remove(prendaSeleccionada); // Remover del inicio de prendasInventadas
+            productosSeleccionados.add(prendaSeleccionada);         // Agregarla a productosSeleccionados
+        }
       int camisas = 0;
       int pantalones = 0;
       for(Prenda prenda: sede.getPrendasInventadas()) {//A mejorar
@@ -1046,7 +1048,7 @@ public static Proveedor getProveedorBDelMain(){
       	break;
       }        
     }
-    int subtotal = 0;
+    int sumaPreciosPrendas = 0;
     int cantidadCamisas = 0;
     int cantidadPantalon = 0;
     for(int i = 0; i < productosSeleccionados.size(); i++) {//A mejorar
@@ -1055,23 +1057,24 @@ public static Proveedor getProveedorBDelMain(){
             cantidadCamisas++;
             int calculoCamisas = (int) (cantidadCamisas * index.getPrecio());
             if (cantidadCamisas >= 10) {int descuento = (int)(calculoCamisas * 0.05f);
-            subtotal += calculoCamisas-descuento;}
-            else if(cantidadCamisas < 10) {subtotal += calculoCamisas;}
+                sumaPreciosPrendas += calculoCamisas-descuento;}
+            else if(cantidadCamisas < 10) {sumaPreciosPrendas += calculoCamisas;}
             }
         else if(index instanceof Pantalon){//A mejorar
             cantidadPantalon++;
             int calculoPantalones = (int)(cantidadPantalon * index.getPrecio());
             if (cantidadPantalon >= 10) {int descuento = (int)(cantidadPantalon * 0.05f);
-            subtotal += calculoPantalones-descuento;}
-            else if(cantidadPantalon < 10) {subtotal += calculoPantalones;}}
+                sumaPreciosPrendas += calculoPantalones-descuento;}
+            else if(cantidadPantalon < 10) {sumaPreciosPrendas += calculoPantalones;}}
         }
-     int IVA = (int)(subtotal*0.19f);
+     int IVA = (int)((costosEnvio+sumaPreciosPrendas)*0.19f);
   
      Venta venta = new Venta(sede, fechaVenta, cliente, encargado, vendedor, productosSeleccionados, cantidadProductos);
      venta.setCostoEnvio(costosEnvio);
-     int monto = subtotal+IVA;
-     int subTotal = (int) (monto - (monto * cliente.getMembresia().getPorcentajeDescuento()));
-     venta.setSubtotal(subTotal);
+     int monto = sumaPreciosPrendas+IVA+costosEnvio;
+     int MontoPagar = (int) (monto - (monto * cliente.getMembresia().getPorcentajeDescuento()));
+     venta.setMontoPagado(MontoPagar);
+     venta.setSubtotal(MontoPagar);
      System.out.println("---- FACTURA ----");
     System.out.println("Prendas compradas:");
     for (int i = 0; i < productosSeleccionados.size(); i++) {
@@ -1079,13 +1082,13 @@ public static Proveedor getProveedorBDelMain(){
         int cantidad = cantidadProductos.get(i);
         System.out.println(prenda.getNombre() + " - Cantidad: " + cantidad + " - Subtotal: $" + (prenda.calcularPrecio() * cantidad));
     }
-    System.out.println("Valor total: $" + subTotal);
-    System.out.println("Valor sin IVA: $" + subtotal);
+    System.out.println("Valor total: $" + MontoPagar);
+    System.out.println("Valor sin IVA: $" + sumaPreciosPrendas);
     System.out.println("IVA: $" + IVA);
     System.out.println("Venta registrada por: " + vendedor.getNombre());
     System.out.println("Asesor de la compra: " + encargado.getNombre());
-     int comisión = (int)(subTotal * 0.05f);
-     encargado.setRendimientoBonificacion(comisión);
+    int comisión = (int)(MontoPagar * 0.05f);
+    vendedor.setRendimientoBonificacion(comisión);
      
      return venta;}
 
@@ -1093,6 +1096,6 @@ public static Proveedor getProveedorBDelMain(){
 
     
 
-    }
+}}
 
 
