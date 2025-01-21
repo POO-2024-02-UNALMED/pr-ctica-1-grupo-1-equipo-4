@@ -37,8 +37,7 @@ public class Repuesto extends Insumo { // Implementa serializable por repuesto
     public Repuesto copiar(){
         return new Repuesto(this.nombre, this.horasDeVidaUtil, this.proveedor);
     }
-
-    public int calcularGastoMensual(){
-        return 0;
+	public int calcularGastoMensual() {
+		return this.proveedor.getPrecio();
     }
 }

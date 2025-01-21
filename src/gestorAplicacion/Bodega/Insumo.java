@@ -82,4 +82,7 @@ public class Insumo implements GastoMensual,Serializable{
 	public int getPrecioIndividual(){return precioXUnidad;} 
 	public void setUltimoPrecio(int precio){this.ultimoPrecio=precio;} 
 	public int getUltimoPrecio(){return ultimoPrecio;}
+	public String toString(){
+		return "El insumo "+nombre+", comprado al proveedor"+proveedor.getNombre()+" y almacenado en la sede"+sede.getNombre()+" costó aproximadamente $"+precioXUnidad+" por unidad";
+	}
 }
