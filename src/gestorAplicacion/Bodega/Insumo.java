@@ -2,9 +2,12 @@ package gestorAplicacion.Bodega;
 
 import java.io.Serializable;
 
+import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
+import gestorAplicacion.Venta;
+import gestorAplicacion.Administracion.GastoMensual;
 
-public class Insumo implements Serializable{
+public class Insumo implements GastoMensual,Serializable{
 	private static final long serialVersionUID = 1L;
 	protected static long precioStockTotal;
 	protected String nombre;
@@ -41,8 +44,30 @@ public class Insumo implements Serializable{
 		this.horasDeVidaUtil = horasDeVidaUtil;
 	}
 
+	public static long gastoMensualClase(Fecha fecha){
+		long gastoInsumo=0;
+        long gastoActual=0;
+        long gastoPasado=0;
+		for (Sede sede: Sede.getlistaSedes()){
+		for (Venta venta: sede.getHistorialVentas()){
+		for (Insumo i:venta.getBolsas()){
+			long [] lista=i.gastoMensualTipo(fecha, venta.getFechaVenta(), i);
+			gastoActual+=lista[0];
+			gastoPasado+=lista[1];
+		if (gastoActual!=0){gastoInsumo=gastoActual;}else{gastoInsumo=gastoPasado;}
+        }
+	}}
+	return gastoInsumo;
+    }
 
-
+	@Override
+	public int calcularGastoMensual() {
+		int valor=0;
+		for(int i=0;i<sede.getListaInsumosBodega().size();i++){
+		if (sede.getListaInsumosBodega().get(i).equals(this)){
+		valor=(this.getPrecioIndividual()*sede.getCantidadInsumosBodega().get(i));}}
+		return valor;
+	}
 	
 	public static long getPrecioStockTotal(){return precioStockTotal;}
 	public static void setPrecioStockTotal(long pSt){Insumo.precioStockTotal = pSt;}
@@ -56,5 +81,5 @@ public class Insumo implements Serializable{
 	public void setPrecioCompra(int precio){this.precioCompra=precio;} 
 	public int getPrecioIndividual(){return precioXUnidad;} 
 	public void setUltimoPrecio(int precio){this.ultimoPrecio=precio;} 
-	public int getUltimoPrecio(){return ultimoPrecio;} 
+	public int getUltimoPrecio(){return ultimoPrecio;}
 }

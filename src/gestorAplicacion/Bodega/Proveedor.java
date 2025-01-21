@@ -39,7 +39,8 @@ public class Proveedor implements Serializable{
 		int precio = 0;
 		for(Proveedor p: listaProveedores){
 			if(p.tipoInsumo.equals(i)){
-				precio = (p.precio)*c;
+				Bolsa b=(Bolsa)i;
+				precio = (p.precio-Math.round((p.precio*p.descuento*b.getCapacidadMaxima())))*c;
 			}
 		}
 		return precio;

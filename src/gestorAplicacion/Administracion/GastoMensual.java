@@ -1,5 +1,6 @@
 package gestorAplicacion.Administracion;
 
+import gestorAplicacion.Bodega.Insumo;
 import gestorAplicacion.Bodega.Maquinaria;
 import gestorAplicacion.Bodega.Prenda;
 import gestorAplicacion.Fecha;
@@ -25,6 +26,7 @@ public interface GastoMensual {
         long GastosMaquinaria=Maquinaria.gastoMensualClase();
         long GastosPrenda=Prenda.gastoMensualClase(fecha);
         long GastosNomina=Empleado.gastoMensualClase();
-        long suma=GastosMaquinaria+GastosPrenda+GastosNomina;
+        long GastoBolsa=Insumo.gastoMensualClase(fecha);
+        long suma=GastosMaquinaria+GastosPrenda+GastosNomina+GastoBolsa;
         return suma;}
 }
