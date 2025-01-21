@@ -19,11 +19,11 @@ import gestorAplicacion.Bodega.Maquinaria;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
+import gestorAplicacion.Bodega.Camisa;
 import java.util.ArrayList;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
-import gestorAplicacion.Bodega.Camisa;
 
 
 public class Main {
@@ -43,7 +43,7 @@ public class Main {
         System.out.println("6.Salir");
         System.out.println("7. Inspeccionar memoria");
 
-        int opcion = in.nextInt();
+        int opcion = nextIntSeguro(in);
         Fecha fecha;
         switch(opcion) {
         case 1:
@@ -120,7 +120,14 @@ public class Main {
     // Interaccion 1 de Gestion Humana https://docs.google.com/document/d/1IomqwzQR1ZRXw9dFlHx5mA_2oOowyIbxauZeJ6Rqy6Q/edit?tab=t.0#heading=h.z9eys2stm4gz
     static public ArrayList<Empleado> despedirEmpleados(Scanner scanner,Fecha fecha) {
         System.out.println("Obteniendo lista sugerida de empleados");
-        ArrayList<Empleado> aDespedir = Empleado.listaInicialDespedirEmpleado(fecha);
+        ArrayList<Object> infoDespidos = Empleado.listaInicialDespedirEmpleado(fecha);
+        ArrayList<Empleado> aDespedir = (ArrayList<Empleado>) infoDespidos.get(0);
+        ArrayList<String> mensajes = (ArrayList<String>) infoDespidos.get(1); // Canal para imprimir cosas mas que todo para debuggear.
+
+        for (String mensaje : mensajes) {
+            System.out.println(mensaje);
+        }
+
         for (Empleado emp : aDespedir) {
             System.out.println(emp.getNombre()+" "+emp.getAreaActual());
         }
@@ -282,7 +289,7 @@ public static Evaluacionfinanciera calcularBalanceAnterior(Fecha fecha, Scanner 
                 int i =-1;
                 while (i<0||i>=elegible.size()){
                     System.out.println("Ingrese número de 0 a "+(elegible.size()-1+""));
-                    i=in.nextInt();
+                    i=Main.nextIntSeguro(in);
                     empleado = elegible.get(i);}
             }
             Evaluacionfinanciera nuevoBalance=new Evaluacionfinanciera (balanceTotal,empleado);
@@ -725,8 +732,12 @@ public void crearSedesMaquinasRepuestos(){
 
     Repuesto Cargador = new Repuesto("Cargador Computador", 6000, p39);
     Repuesto Mouse = new Repuesto("Mouse Computador", 9000, p41);
+
+        //CREACION DE LAS SEDES QUE MANEJAREMOS, CON SUS RESPECTIVAS MAQUINAS EN CADA UNA DE ELLAS
+    sedeP = new Sede("Sede Principal");
+    sede2 = new Sede("Sede 2");
     
-    //AGRUPACION DE LOS REPUESTOS EN LISTAS PARA ENVIARLOS A LAS MAQUINAS CORRESPONDIENTES
+        //AGRUPACION DE LOS REPUESTOS EN LISTAS PARA ENVIARLOS A LAS MAQUINAS CORRESPONDIENTES
     ArrayList<Repuesto> repuestosMC = new ArrayList<>();
     ArrayList<Repuesto> repuestosMCorte = new ArrayList<>();
     ArrayList<Repuesto> repuestosPI = new ArrayList<>();
@@ -736,6 +747,16 @@ public void crearSedesMaquinasRepuestos(){
     ArrayList<Repuesto> repuestosImp = new ArrayList<>();
     ArrayList<Repuesto> repuestosRe = new ArrayList<>();
     ArrayList<Repuesto> repuestosComp= new ArrayList<>();
+
+    ArrayList<Repuesto> repuestosMC2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosMCorte2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosPI2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosBI2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosMTermofijado2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosMTijereado2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosImp2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosRe2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosComp2 = new ArrayList<>();
 
     repuestosImp.add(TintaN);
 
@@ -763,20 +784,57 @@ public void crearSedesMaquinasRepuestos(){
     repuestosMTijereado.add(Cuchillas.copiar());
     repuestosMTijereado.add(Aceite.copiar());
 
-        //CREACION DE LAS MAQUINAS QUE MANEJAREMOS CON SUS RESPECTIVOS RESPUESTOS
-    Maquinaria MaquinaDeCoser = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC);
-    Maquinaria MaquinaDeCorte = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte);
-    Maquinaria PlanchaIndustrial = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI);
-    Maquinaria BordadoraIndustrial = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI);
-    Maquinaria MaquinaDeTermofijado = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado);
-    Maquinaria MaquinaDeTijereado = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado);
-    Maquinaria Impresora = new Maquinaria("Impresora", 800000, 2000, repuestosImp);
-    Maquinaria Registradora = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe);
-    Maquinaria Computador = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp);
+        //respuestos para las maquinas de la sede2
+    repuestosImp2.add(TintaN.copiar());
 
-        //CREACION DE LAS SEDES QUE MANEJAREMOS, CON SUS RESPECTIVAS MAQUINAS EN CADA UNA DE ELLAS
-    sedeP = new Sede("Sede Principal");
-    sede2 = new Sede("Sede 2");
+    repuestosRe2.add(PapelQuimico.copiar());
+    repuestosRe2.add(Lector.copiar());
+
+    repuestosComp2.add(Mouse.copiar());
+    repuestosComp2.add(Cargador.copiar());
+
+    repuestosMC2.add(AgujasMC.copiar());
+    repuestosMC2.add(Aceite.copiar());
+
+    repuestosMCorte2.add(Cuchillas.copiar());
+    repuestosMCorte2.add(Afiladores.copiar());
+
+    repuestosPI2.add(ResistenciaElectrica.copiar());
+    repuestosPI2.add(MangueraDeVapor.copiar());
+
+    repuestosBI2.add(AgujasBI.copiar());
+    repuestosBI2.add(Aceite.copiar());
+
+    repuestosMTermofijado2.add(BandasDeTransmision.copiar());
+    repuestosMTermofijado2.add(ResistenciaElectrica.copiar());
+
+    repuestosMTijereado2.add(Cuchillas.copiar());
+    repuestosMTijereado2.add(Aceite.copiar());    
+
+        //CREACION DE LAS MAQUINAS QUE MANEJAREMOS CON SUS RESPECTIVOS RESPUESTOS
+    //sedeP
+    Maquinaria MaquinaDeCoser = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC, sedeP);
+    Maquinaria MaquinaDeCorte = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte, sedeP);
+    Maquinaria PlanchaIndustrial = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI, sedeP);
+    Maquinaria BordadoraIndustrial = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI, sedeP);
+    Maquinaria MaquinaDeTermofijado = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado, sedeP);
+    Maquinaria MaquinaDeTijereado = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado, sedeP);
+    Maquinaria Impresora = new Maquinaria("Impresora", 800000, 2000, repuestosImp, sedeP);
+    Maquinaria Registradora = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe, sedeP);
+    Maquinaria Computador = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp, sedeP);
+
+    //sede2
+    Maquinaria MaquinaDeCoser2 = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC2, sede2);
+    Maquinaria MaquinaDeCorte2 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2);
+    Maquinaria PlanchaIndustrial2 = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI2, sede2);
+    Maquinaria BordadoraIndustrial2 = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI2, sede2);
+    Maquinaria MaquinaDeTermofijado2 = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado2, sede2);
+    Maquinaria MaquinaDeTijereado2 = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado2, sede2);
+    Maquinaria Impresora2 = new Maquinaria("Impresora", 800000, 2000, repuestosImp2, sede2);
+    Maquinaria Registradora2 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2);
+    Maquinaria Computador2 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2);
+
+        
     
     Banco bp=new Banco("Banco Montreal","principal",400_000_000,0.05F);
     Banco b1=new Banco("Banco Montreal","secundaria",5_000_000,0.05F);
@@ -964,6 +1022,7 @@ public static Proveedor getProveedorBDelMain(){
     }
     //Interacción 1 de Facturación
 	public static Venta Vender(Scanner scanner) {
+        Venta venta = null;
 	    ArrayList<Prenda> productosSeleccionados = new ArrayList<>();
 	    ArrayList<Integer> cantidadProductos = new ArrayList<>();
       System.out.println("Ingrese la fecha de la venta:");
@@ -1015,6 +1074,7 @@ public static Proveedor getProveedorBDelMain(){
          
       System.out.println("Seleccione el número del producto que venderá:");
       int costosEnvio = 0;
+    
       while(true) {	
       for(int i = 0; i < Prenda.getPrendasInventadas().size(); i++) {
           Prenda producto = Prenda.getPrendasInventadas().get(i);
@@ -1082,7 +1142,8 @@ public static Proveedor getProveedorBDelMain(){
       }
       if(!desicion.equals("si")) {
       	break;
-      }        
+      } 
+     }       
     }
     int sumaPreciosPrendas = 0;
     int cantidadCamisas = 0;
@@ -1105,7 +1166,7 @@ public static Proveedor getProveedorBDelMain(){
         }
      int IVA = (int)((costosEnvio+sumaPreciosPrendas)*0.19f);
   
-     Venta venta = new Venta(sede, fechaVenta, cliente, encargado, vendedor, productosSeleccionados, cantidadProductos);
+     venta = new Venta(sede, fechaVenta, cliente, encargado, vendedor, productosSeleccionados, cantidadProductos);
      venta.setCostoEnvio(costosEnvio);
      int monto = sumaPreciosPrendas+IVA+costosEnvio;
      int MontoPagar = (int) (monto - (monto * cliente.getMembresia().getPorcentajeDescuento()));
@@ -1125,13 +1186,163 @@ public static Proveedor getProveedorBDelMain(){
     System.out.println("Asesor de la compra: " + encargado.getNombre());
     int comisión = (int)(MontoPagar * 0.05f);
     vendedor.setRendimientoBonificacion(comisión);
+    
      
      return venta;}
 
      //Interacción 2 Facturación
+    public static void realizarVenta(Scanner scanner) {
+	    // Se llama al método vender para obtener la venta inicial
+	    Venta venta = Vender(scanner);
+
+	    ArrayList<Prenda> productosSeleccionados = venta.getArticulos();
+	    Sede sede = venta.getSede();
+        Banco banco = sede.getCuentaSede();
+	    int totalPrendas = 0;
+	    for(int i =0; i < productosSeleccionados.size(); i++) {
+	        totalPrendas += venta.getCantidades().get(i);
+	    }
+	 
+	    ArrayList<Insumo> InsumosBodega = sede.getListaInsumosBodega();
+	    ArrayList<Integer> cantidadInsumosBodega = sede.getCantidadInsumosBodega();
+   
+	    ArrayList<Bolsa> bolsasSeleccionadas = new ArrayList<>();
+	    int capacidadTotal = 0;
+        
+	    Insumo insumo = null;
+	    while (capacidadTotal >= totalPrendas) {
+	        System.out.println("Seleccione el tamaño de bolsa:");	        
+	        // Muestra opciones disponibles
+	        for (int i = 0; i < InsumosBodega.size(); i++) {
+	            Insumo bolsaI = InsumosBodega.get(i);	            
+	            if (bolsaI instanceof Bolsa) {
+                    Bolsa bolsa = (Bolsa)bolsaI;
+	                int capacidad = bolsa.getCapacidadMaxima();
+	                int cantidad = sede.getCantidadInsumosBodega().get(i);
+	                if (capacidad == 1 && cantidad > 0) {
+	                    System.out.println("1. Bolsa pequeña (1 producto)");
+	                } else if (capacidad == 3 && cantidad > 0) {
+	                    System.out.println("2. Bolsa mediana (3 productos)");
+	                } else if (capacidad == 8 && cantidad > 0) {
+	                    System.out.println("3. Bolsa grande (8 productos)");
+	                }
+	            }
+	        }
+
+	        int opcionBolsa = scanner.nextInt();
+	        scanner.nextLine();
+
+	        int capacidadBolsa = 0;
+	        String nombreBolsa = null;
+
+	        switch (opcionBolsa) {
+	            case 1 -> {
+                        capacidadBolsa = 1;
+                        nombreBolsa = "Bolsa pequeña";
+                    }
+	            case 2 -> {
+                        capacidadBolsa = 3;
+                        nombreBolsa = "Bolsa mediana";
+                    }
+	            case 3 -> {
+                        capacidadBolsa = 8;
+                        nombreBolsa = "Bolsa grande";
+                    }
+	            default -> {
+                        System.out.println("Opción inválida. Intente nuevamente.");
+                        continue;
+                    }
+	        }
+	        //Busca la bolsa requerida y se lo asigna a la lista de bolsas seleccionadas
+	        boolean bolsaEncontrada = false;
+	        int cantidadDisponible = 0;
+	        for (int i = 0; i < sede.getListaInsumosBodega().size(); i++) {
+	            Insumo bolsa = sede.getListaInsumosBodega().get(i);
+	            if (bolsa instanceof Bolsa) {
+	                Bolsa bolsaEncontrar = (Bolsa)bolsa;
+	                if (bolsaEncontrar.getCapacidadMaxima() == capacidadBolsa) {
+	                    cantidadDisponible += cantidadInsumosBodega.get(i);
+	                    if (cantidadDisponible > 0) {
+	                        bolsasSeleccionadas.add(bolsaEncontrar);
+	                        int cantidadActual = cantidadInsumosBodega.get(i);  
+                            cantidadInsumosBodega.set(i, cantidadActual - 1); 
+	                        bolsaEncontrada = true;
+	                        break;
+	                    }
+	                }
+	            }
+	        }
+
+	        // Si no hay suficiente stock, compra más bolsas al proveedor
+	        if (!bolsaEncontrada || cantidadDisponible < 10) {
+	            System.out.println("No hay suficiente stock de " + nombreBolsa + ". Comprando al proveedor...");
+	            for (int i = 0; i < sede.getListaInsumosBodega().size(); i++) {
+	            	insumo =  sede.getListaInsumosBodega().get(i);
+	                if (insumo instanceof Bolsa && insumo.getNombre().equals(nombreBolsa)) {
+	                	System.out.println("¿Cuántas bolsa de " + nombreBolsa + " desea comprar?");
+	                    int cantidadComprar = scanner.nextInt();
+	                    scanner.nextLine();
+	                    int costoCompra = Proveedor.costoDeLaCantidad(insumo, cantidadComprar);
+                        banco.setAhorroBanco(banco.getAhorroBanco()-costoCompra); // Reducir los ahorros de la empresa respecto a la compra
+	                    cantidadInsumosBodega.set(i, cantidadInsumosBodega.get(i) + cantidadComprar);
+	                    insumo.setPrecioCompra(costoCompra);
+	                    insumo.setUltimoPrecio(costoCompra);
+	                    System.out.println("Se compraron " + cantidadComprar + " " + nombreBolsa + " por un costo total de " + costoCompra);
+	                    break;
+	                }
+	            }
+	        }
+	        for (Sede revisarSedes : sede.getlistaSedes()) {
+	            ArrayList<Insumo> listaInsumos = sede.getListaInsumosBodega();
+	            ArrayList<Integer> cantidadInsumos = sede.getCantidadInsumosBodega();
+
+	            for (int i = 0; i < listaInsumos.size(); i++) {
+	                if (listaInsumos.get(i) instanceof Bolsa) {
+	                    if (cantidadInsumos.get(i) < 10) {
+	                        System.out.println("La sede " + sede.getNombre() +
+	                                " tiene un menos de 10 bolsas en stock " +
+	                                " (Cantidad: " + cantidadInsumos.get(i) + ").");
+	                        System.out.println("Comprando al proveedor...");
+	                        for (int e = 0; e < sede.getListaInsumosBodega().size(); e++) {
+	        	            	insumo =  sede.getListaInsumosBodega().get(e);
+	        	                if (insumo instanceof Bolsa && insumo.getNombre().equals(nombreBolsa)) {
+	        	                	System.out.println("¿Cuántas bolsa de " + nombreBolsa + " desea comprar?");
+	        	                    int cantidadComprar = scanner.nextInt();
+	        	                    scanner.nextLine();
+	        	                    int costoCompra = Proveedor.costoDeLaCantidad(insumo, cantidadComprar);
+                                    banco.setAhorroBanco(banco.getAhorroBanco()-costoCompra); // Reducir los ahorros de la empresa respecto a la compra
+	        	                    cantidadInsumosBodega.set(e, cantidadInsumosBodega.get(e) + cantidadComprar);
+	        	                    insumo.setPrecioCompra(costoCompra);
+	        	                    insumo.setUltimoPrecio(costoCompra);
+	        	                    System.out.println("Se compraron " + cantidadComprar + " " + nombreBolsa + " por un costo total de " + costoCompra);
+	        	                    break;
+		        	                }
+		        	            }
+		        	        }
+	                    else {
+	                           break;}
+	                    }
+	                }
+	            }
+
+	        if (capacidadTotal < totalPrendas) {
+	            System.out.println("Todavía se necesitan más bolsas para cubrir los productos.");
+	        }
+	    }
+
+
+	    venta.setBolsas(bolsasSeleccionadas);
+
+	    int totalVenta = venta.getMontoPagado() + bolsasSeleccionadas.size()*2000;
+	    venta.setMontoPagado(totalVenta);
+
+	    System.out.println("Venta finalizada. Total de la venta con bolsas: " + totalVenta);
+	    sede.getHistorialVentas().add(venta);
+	}
+ }
 
     
 
-}}
+
 
 

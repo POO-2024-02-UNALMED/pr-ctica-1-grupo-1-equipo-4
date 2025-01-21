@@ -144,11 +144,11 @@ public class Deuda implements Serializable {
 		return FECHACREACION;
 	}
 	
-	public void setListaDeudas(ArrayList<Deuda> listaDeudas) {
+	public static void setListaDeudas(ArrayList<Deuda> listaDeudas) {
 	 if (listaDeudas == null) {
             throw new IllegalArgumentException("La lista no puede ser nula");
         }
-		this.listaDeudas = listaDeudas;
+		Deuda.listaDeudas = listaDeudas;
 	}
 	
 	public void setValorinicialDeuda(long valorinicialDeuda) {

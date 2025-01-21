@@ -28,7 +28,6 @@ public enum Area {
             switch (a) {
                 case DIRECCION:
                     a.rendimientoDeseado = (3 / 5f)*100;
-                    rendimientoSede.add(a.rendimientoDeseado);
                     break;
                 case OFICINA:
                     int cantidadEmpleadosOfi = 0;
@@ -38,7 +37,6 @@ public enum Area {
                         }
                     }
                     a.rendimientoDeseado = (float) Venta.filtrarPorMes(sede.getHistorialVentas(), fecha).size() / cantidadEmpleadosOfi; // Cantidad de ventas por empleado de oficina
-                    rendimientoSede.add(a.rendimientoDeseado);
                     break;
                 case VENTAS:
                     int montoTotal = 0;
@@ -46,7 +44,6 @@ public enum Area {
                         montoTotal += venta.getMontoPagado();
                     }
                     a.rendimientoDeseado = ((float) montoTotal / sede.getlistaEmpleados().size())*0.8f;
-                    rendimientoSede.add(a.rendimientoDeseado);
                     break;
                 case CORTE:
                     int prendasDescartadas = 0;
@@ -61,6 +58,8 @@ public enum Area {
 
                     break;
             }
+            rendimientoSede.add(a.rendimientoDeseado);
+
         }
         return rendimientoSede;
     }

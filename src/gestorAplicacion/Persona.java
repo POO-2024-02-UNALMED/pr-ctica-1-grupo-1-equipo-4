@@ -90,7 +90,7 @@ public class Persona implements Serializable{
 					break;
 				}
 			}
-			emp.setSalario((int) (persona.getRol().getSalarioInicial()+Math.round(persona.getRol().getSalarioInicial()*0.5*persona.getExperiencia())));
+			emp.setSalario((int) (persona.getRol().getSalarioInicial()+persona.getRol().getSalarioInicial()*0.5f*persona.getExperiencia()));
 		}
 	}
 	public static void imprimirNoEmpleados() {
