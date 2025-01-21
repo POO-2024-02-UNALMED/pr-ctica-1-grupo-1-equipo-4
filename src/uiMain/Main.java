@@ -717,8 +717,12 @@ public void crearSedesMaquinasRepuestos(){
 
     Repuesto Cargador = new Repuesto("Cargador Computador", 6000, p39);
     Repuesto Mouse = new Repuesto("Mouse Computador", 9000, p41);
+
+        //CREACION DE LAS SEDES QUE MANEJAREMOS, CON SUS RESPECTIVAS MAQUINAS EN CADA UNA DE ELLAS
+    sedeP = new Sede("Sede Principal");
+    sede2 = new Sede("Sede 2");
     
-    //AGRUPACION DE LOS REPUESTOS EN LISTAS PARA ENVIARLOS A LAS MAQUINAS CORRESPONDIENTES
+        //AGRUPACION DE LOS REPUESTOS EN LISTAS PARA ENVIARLOS A LAS MAQUINAS CORRESPONDIENTES
     ArrayList<Repuesto> repuestosMC = new ArrayList<>();
     ArrayList<Repuesto> repuestosMCorte = new ArrayList<>();
     ArrayList<Repuesto> repuestosPI = new ArrayList<>();
@@ -728,6 +732,16 @@ public void crearSedesMaquinasRepuestos(){
     ArrayList<Repuesto> repuestosImp = new ArrayList<>();
     ArrayList<Repuesto> repuestosRe = new ArrayList<>();
     ArrayList<Repuesto> repuestosComp= new ArrayList<>();
+
+    ArrayList<Repuesto> repuestosMC2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosMCorte2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosPI2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosBI2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosMTermofijado2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosMTijereado2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosImp2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosRe2 = new ArrayList<>();
+    ArrayList<Repuesto> repuestosComp2 = new ArrayList<>();
 
     repuestosImp.add(TintaN);
 
@@ -755,20 +769,57 @@ public void crearSedesMaquinasRepuestos(){
     repuestosMTijereado.add(Cuchillas.copiar());
     repuestosMTijereado.add(Aceite.copiar());
 
-        //CREACION DE LAS MAQUINAS QUE MANEJAREMOS CON SUS RESPECTIVOS RESPUESTOS
-    Maquinaria MaquinaDeCoser = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC);
-    Maquinaria MaquinaDeCorte = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte);
-    Maquinaria PlanchaIndustrial = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI);
-    Maquinaria BordadoraIndustrial = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI);
-    Maquinaria MaquinaDeTermofijado = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado);
-    Maquinaria MaquinaDeTijereado = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado);
-    Maquinaria Impresora = new Maquinaria("Impresora", 800000, 2000, repuestosImp);
-    Maquinaria Registradora = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe);
-    Maquinaria Computador = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp);
+        //respuestos para las maquinas de la sede2
+    repuestosImp2.add(TintaN.copiar());
 
-        //CREACION DE LAS SEDES QUE MANEJAREMOS, CON SUS RESPECTIVAS MAQUINAS EN CADA UNA DE ELLAS
-    sedeP = new Sede("Sede Principal");
-    sede2 = new Sede("Sede 2");
+    repuestosRe2.add(PapelQuimico.copiar());
+    repuestosRe2.add(Lector.copiar());
+
+    repuestosComp2.add(Mouse.copiar());
+    repuestosComp2.add(Cargador.copiar());
+
+    repuestosMC2.add(AgujasMC.copiar());
+    repuestosMC2.add(Aceite.copiar());
+
+    repuestosMCorte2.add(Cuchillas.copiar());
+    repuestosMCorte2.add(Afiladores.copiar());
+
+    repuestosPI2.add(ResistenciaElectrica.copiar());
+    repuestosPI2.add(MangueraDeVapor.copiar());
+
+    repuestosBI2.add(AgujasBI.copiar());
+    repuestosBI2.add(Aceite.copiar());
+
+    repuestosMTermofijado2.add(BandasDeTransmision.copiar());
+    repuestosMTermofijado2.add(ResistenciaElectrica.copiar());
+
+    repuestosMTijereado2.add(Cuchillas.copiar());
+    repuestosMTijereado2.add(Aceite.copiar());    
+
+        //CREACION DE LAS MAQUINAS QUE MANEJAREMOS CON SUS RESPECTIVOS RESPUESTOS
+    //sedeP
+    Maquinaria MaquinaDeCoser = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC, sedeP);
+    Maquinaria MaquinaDeCorte = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte, sedeP);
+    Maquinaria PlanchaIndustrial = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI, sedeP);
+    Maquinaria BordadoraIndustrial = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI, sedeP);
+    Maquinaria MaquinaDeTermofijado = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado, sedeP);
+    Maquinaria MaquinaDeTijereado = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado, sedeP);
+    Maquinaria Impresora = new Maquinaria("Impresora", 800000, 2000, repuestosImp, sedeP);
+    Maquinaria Registradora = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe, sedeP);
+    Maquinaria Computador = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp, sedeP);
+
+    //sede2
+    Maquinaria MaquinaDeCoser2 = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC2, sede2);
+    Maquinaria MaquinaDeCorte2 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2);
+    Maquinaria PlanchaIndustrial2 = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI2, sede2);
+    Maquinaria BordadoraIndustrial2 = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI2, sede2);
+    Maquinaria MaquinaDeTermofijado2 = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado2, sede2);
+    Maquinaria MaquinaDeTijereado2 = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado2, sede2);
+    Maquinaria Impresora2 = new Maquinaria("Impresora", 800000, 2000, repuestosImp2, sede2);
+    Maquinaria Registradora2 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2);
+    Maquinaria Computador2 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2);
+
+        
     
     new Banco("Banco Montreal","principal",400_000_000,0.05F);
     Banco b1=new Banco("Banco Montreal","secundaria",5_000_000,0.05F);

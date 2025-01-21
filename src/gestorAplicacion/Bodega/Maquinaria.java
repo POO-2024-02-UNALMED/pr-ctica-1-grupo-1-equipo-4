@@ -2,6 +2,7 @@ package gestorAplicacion.Bodega;
 import gestorAplicacion.Administracion.Empleado;
 import uiMain.Main;
 import gestorAplicacion.Sede;
+import gestorAplicacion.Fecha;
 
 import java.io.Serializable;
 import java.net.ResponseCache;
@@ -26,22 +27,23 @@ public class Maquinaria implements Serializable{
 
 	Proveedor proveedorBarato;
 	ArrayList<Proveedor> listProveedoresBaratos = new ArrayList<>();
+	Fecha ultFechaRevision;
 
 	public Maquinaria(){
 		this.nombre = "maquinaEjemplo";
 	}
 
-	public Maquinaria(String nombre, long valor, int horaRevision, ArrayList<Repuesto> repuestos){
+	public Maquinaria(String nombre, long valor, int horaRevision, ArrayList<Repuesto> repuestos, Sede sede){
 		this.nombre = nombre;
 		this.valor = valor;
 		this.horaRevision = horaRevision;
 		this.repuestos = repuestos;
-
+		this.sede = sede;
 	}
 
 		//metodo para hacer una copia de un objeto de tipo Maquinaria, con la misma inicializacion de atributos del que queremos copiar
 	public Maquinaria copiar(){
-		return new Maquinaria(this.nombre, this.valor, this.horaRevision, this.repuestos);
+		return new Maquinaria(this.nombre, this.valor, this.horaRevision, this.repuestos, this.sede);
 	}
 
 	public static long gastoMensualClase(){
@@ -58,7 +60,7 @@ public class Maquinaria implements Serializable{
         return gastoMaquinaria;
     }
 
-	//Retorna el valor de la maquinaria dañada asignada a un empleado, ayuda a Empleado.listaInicialDespedirEmpelado/
+	/*Retorna el valor de la maquinaria dañada asignada a un empleado, ayuda a Empleado.listaInicialDespedirEmpelado*/
 	static public int remuneracionDanos(Empleado empleado){
 		int remuneracion = 0;
 		for (Maquinaria maq : empleado.getSede().getlistaMaquinas()){
@@ -93,8 +95,11 @@ public class Maquinaria implements Serializable{
 		return horasUso;
 	}
 
+	public Sede getSede(){
+		return this.sede;
+	}
 
-	public ArrayList<Maquinaria> agruparMaquinasDisponibles(){
+	public ArrayList<Maquinaria> agruparMaquinasDisponibles(Fecha fecha){
 		ArrayList<Maquinaria> maqDisponibles = new ArrayList<>();	//listado temporal de maquinarias disponibles, el cual será pasado como argumento para la segunda interracion
 		ArrayList<Proveedor> todosProvBaratos = new ArrayList<>();
 		Main main = new Main();
@@ -142,6 +147,9 @@ public class Maquinaria implements Serializable{
 									}
 									//AGREGAR UNA COPIA DEL REPUESTO A DICHO ARRAYLIST DE REPUESTOS DE LA MAQUINA AFECTADA
 									cadaMaquina.getRepuestos().add(cadaRepuesto.copiar());
+									cadaRepuesto.setProveedor(proveedorBarato);
+									cadaMaquina.estado = true;
+									System.out.println("Repuesto " + cadaRepuesto.getNombre() + " añadido correctamente a la " + cadaMaquina.getNombre() + ", de la: " + cadaSede.getNombre());
 
 									encontrado = true;
 									break;
@@ -152,9 +160,6 @@ public class Maquinaria implements Serializable{
 							}
 						}
 					}
-    
-
-				
 				} else{
 					cadaMaquina.mantenimiento = true;
 					// ver como hacer para realizar la revision y que la maquina pueda volver a ser utilizada
