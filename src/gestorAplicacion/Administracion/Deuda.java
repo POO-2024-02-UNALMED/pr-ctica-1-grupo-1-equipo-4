@@ -6,6 +6,7 @@ import gestorAplicacion.Fecha;
 import gestorAplicacion.Bodega.Camisa;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
+import java.awt.image.BandCombineOp;
 
 public class Deuda implements Serializable {
 	private static final long serialVersionUID = 1L; // Para serializacion
@@ -60,12 +61,12 @@ public class Deuda implements Serializable {
 		switch (eleccion){
                 case 1:
 					for (Proveedor proveedor : Proveedor.getListaProveedores()) {
-						for(Deuda deudaP: proveedor.getDeuda()){
+							Deuda deudaP= proveedor.getDeuda();
 							ArrayList<String> listaInsumos=Pantalon.getTipoInsumo();
 							listaInsumos.addAll(Camisa.getTipoInsumo());
 							if (!listaInsumos.contains(proveedor.getInsumo().getNombre())){
 							deudaCalculada+=deudaP.deudaMensual(fecha.getAño());}
-						}
+						
 					}
 					break;
 				case 2:
@@ -77,12 +78,12 @@ public class Deuda implements Serializable {
 					break;
 				case 3:
 					for (Proveedor proveedor : Proveedor.getListaProveedores()) {
-						for(Deuda deudaP: proveedor.getDeuda()){
+							Deuda deudaP= proveedor.getDeuda();
 							ArrayList<String> listaInsumos=Pantalon.getTipoInsumo();
 							listaInsumos.addAll(Camisa.getTipoInsumo());
 							if (listaInsumos.contains(proveedor.getInsumo().getNombre())){
 							deudaCalculada+=deudaP.deudaMensual(fecha.getAño());}
-						}
+						
 					}
 					for (Banco banco : Banco.getListaBancos()) {
 						for(Deuda deudaB: banco.getDeuda()){
@@ -94,7 +95,6 @@ public class Deuda implements Serializable {
 
 	return deudaCalculada;
 	}
-
 
 	static public int calcularCuotas(int monto){
 		int cuotas = 0;
@@ -169,5 +169,54 @@ public class Deuda implements Serializable {
 	public void setCapitalPagado(long capitalPagado) {
 		this.capitalPagado = capitalPagado;
 	}
+
+    public void actualizarDeuda(Fecha fecha, int montoDeuda, int cuotas) {
+		long deudaActual=this.deudaActual(fecha.getAño());
+		valorinicialDeuda=montoDeuda+deudaActual;
+		capitalPagado=0;
+		this.cuotas=this.cuotas-fecha.getAño()-FECHACREACION.getAño()+cuotas;
+    }
 	
+	public static void compararDeudas(Fecha fecha){
+		Banco mayorBanco= null;
+        Proveedor mayorProveedor = null;
+        long mayorPrecioB = 0;
+		long mayorPrecioP = 0;
+		Deuda deudaP=null;
+		Deuda deudaB=null;
+		for (Deuda deuda:listaDeudas){
+                for (Proveedor proveedor: Proveedor.getListaProveedores()){
+                    long deudap=proveedor.getDeuda().deudaActual(fecha.getAño());
+                    if ((deudap != 0) && (!proveedor.getDeuda().estadodePago) && (deudap < mayorPrecioP)) {
+                        mayorPrecioP=deudap;
+						mayorProveedor=proveedor;
+						deudaP=proveedor.getDeuda();
+					}
+					for (Banco banco: Banco.getListaBancos()){
+						for (Deuda deudaa: banco.getDeuda()){
+						long deudab=deudaa.deudaActual(fecha.getAño());
+						if ((deudab != 0) && (!deudaa.estadodePago) && (deudab < mayorPrecioB)) {
+							mayorPrecioB=deudab;
+							mayorBanco=banco;
+							deudaB=deudaa;
+		}}}}}
+		long pagoP=deudaP.pagarDeuda(fecha);
+		deudaP.capitalPagado+=deudaP.deudaActual(fecha.getAño())-pagoP;
+		long pagoB=deudaB.pagarDeuda(fecha);
+		deudaB.capitalPagado+=deudaB.deudaActual(fecha.getAño())-pagoB;
+
+	}
+	public long pagarDeuda(Fecha fecha){
+		long pagar=deudaActual(fecha.getAño());
+		for (Banco banco : Banco.getListaBancos()){
+			while (banco.getAhorroBanco()>=3_000_000){
+			if(pagar>0 && pagar-500_000>=0){
+				banco.setAhorroBanco(banco.getAhorroBanco()-500_000);
+				pagar-=500_000;
+			}
+			else if (pagar>0){banco.setAhorroBanco(banco.getAhorroBanco()-pagar);}
+			else if(pagar==0){estadodePago=true;}
+		}}
+		return pagar;
+	}
 }

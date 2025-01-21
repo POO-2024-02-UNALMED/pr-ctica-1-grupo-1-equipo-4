@@ -34,6 +34,9 @@ public class Persona implements Serializable{
 		listaPersonas.add(this);
 	}
 
+        @Override
+	public String toString(){
+		return "Nombre: "+nombre+"\n"+"Documento: "+documento+"\n"+"Rol: "+rol;}
 	public Rol getRol(){return rol;}
 	public Membresia getMembresia(){return membresia;}
 	public int getDocumento(){return documento;}
@@ -105,7 +108,7 @@ public class Persona implements Serializable{
 			index++;
      }
 	}
-	public String toString() {
+	public String rolString() {
 		String rolString;
 		if (rol != null) {
 			rolString = rol.toString();

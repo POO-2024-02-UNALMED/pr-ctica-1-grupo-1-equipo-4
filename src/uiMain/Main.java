@@ -311,6 +311,10 @@ public static long calcularEstimado(Fecha fecha,Evaluacionfinanciera balanceAnte
 
 //Interaccion 3 Sistema Financiero
 public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scanner in){
+    if (diferenciaEstimada>0){
+        System.out.println("El estimado es positivo, las ventas superan las deudas");
+        Deuda.compararDeudas(fecha);
+    }
     if (diferenciaEstimada<=0){
         System.out.println("El estimado es negativo, la deuda supera las ventas");
         int i =-1;
@@ -566,8 +570,12 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
                     if(insumos.get(i).getProveedor().getNombre().equals(proveedor.getNombre())){
                         montoDeuda += insumos.get(i).getPrecioIndividual()*cantidad.get(i);
                     }
+                    Deuda deuda=null;
                     if(montoDeuda > 0){
-                        Deuda deuda = new Deuda(fecha, montoDeuda, "entidad", "tipo", 5);
+                        if(!(proveedor.getDeuda().getEstadodePago())){
+                        proveedor.unificarDeudasXProveedor(fecha, montoDeuda, proveedor.getNombre(),5);
+                        deuda=proveedor.getDeuda();}
+                        else{deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor", 5);}
                         deudas.add(deuda);
                     }
                     
@@ -829,12 +837,13 @@ public void crearSedesMaquinasRepuestos(){
 
         
     
-    new Banco("Banco Montreal","principal",400_000_000,0.05F);
+    Banco bp=new Banco("Banco Montreal","principal",400_000_000,0.05F);
     Banco b1=new Banco("Banco Montreal","secundaria",5_000_000,0.05F);
     Banco b3=new Banco ("Bancolombia","principal",125_000_000,0.09F);
-    new Banco ("Banco Davivienda","principal",80_000_000,0.1F); 
+    Banco b4=new Banco ("Banco Davivienda","principal",80_000_000,0.1F); 
     Banco b2=new Banco ("Banco de Bogotá","principal",140_000_000,0.07F);
     Banco tm=new Banco("Inversiones Terramoda","principal",160_000_000,0.0F);
+    Banco.setCuentaPrincipal(bp);sede2.setCuentaSede(b1);sedeP.setCuentaSede(bp);
 
     Deuda d1=new Deuda(new Fecha(15,1,20),20_000_000,"Bancolombia","Banco",1);
     b3.actualizarDeuda(d1);
@@ -848,20 +857,20 @@ public void crearSedesMaquinasRepuestos(){
     tm.actualizarDeuda(new Deuda(new Fecha(20,2,23),800_000,"Inversiones Terramoda","Banco",18));
 
 
-    Insumo i1=new Insumo("Tela",1*20, p1,sedeP);
-    Insumo i2=new Insumo("Tela",1*20, p1,sede2);
-    Insumo i3=new Insumo("Boton",4*20, p1,sedeP);
-    Insumo i4=new Insumo("Boton",4*20, p1,sede2);
-    Insumo i5=new Insumo("Cremallera",1*20, p1,sedeP);
-    Insumo i6=new Insumo("Cremallera",1*20, p1,sede2);
-    Insumo i7=new Insumo("Hilo",100*20, p1,sedeP);
-    Insumo i8=new Insumo("Hilo",100*20, p1,sede2);
-    Bolsa i9=new Bolsa("Bolsa",1*20, p1,sedeP,8);
-    Bolsa i10=new Bolsa("Bolsa",1*20, p1,sede2,8);
-    Bolsa i11=new Bolsa("Bolsa",1*20, p1,sedeP,3);
-    Bolsa i12=new Bolsa("Bolsa",1*20, p1,sede2,3);
-    Bolsa i13=new Bolsa("Bolsa",1*20, p1,sedeP,1);
-    Bolsa i14=new Bolsa("Bolsa",1*20, p1,sede2,1);
+    Insumo i1=new Insumo("Tela",1*20, p5,sedeP);
+    Insumo i2=new Insumo("Tela",1*20, p5,sede2);
+    Insumo i3=new Insumo("Boton",4*20, p3,sedeP);
+    Insumo i4=new Insumo("Boton",4*20, p3,sede2);
+    Insumo i5=new Insumo("Cremallera",1*20, p4,sedeP);
+    Insumo i6=new Insumo("Cremallera",1*20, p4,sede2);
+    Insumo i7=new Insumo("Hilo",100*20, p2,sedeP);
+    Insumo i8=new Insumo("Hilo",100*20, p2,sede2);
+    Bolsa i9=new Bolsa("Bolsa",1*20, p10,sedeP,8);
+    Bolsa i10=new Bolsa("Bolsa",1*20, p10,sede2,8);
+    Bolsa i11=new Bolsa("Bolsa",1*20, p10,sedeP,3);
+    Bolsa i12=new Bolsa("Bolsa",1*20, p10,sede2,3);
+    Bolsa i13=new Bolsa("Bolsa",1*20, p10,sedeP,1);
+    Bolsa i14=new Bolsa("Bolsa",1*20, p10,sede2,1);
 
     Empleado betty=new Empleado(Area.DIRECCION,new Fecha(1,1,23),sedeP,"Beatriz Pinzón",4269292,Rol.PRESIDENTE,10,Membresia.NULA,Computador);
     Empleado Armando=new Empleado(Area.DIRECCION,new Fecha(30,11,20),sedeP,"Armando Mendoza",19121311,Rol.PRESIDENTE,15,Membresia.PLATA,Computador.copiar());
@@ -937,6 +946,33 @@ public void crearSedesMaquinasRepuestos(){
     Prenda r24=new Camisa(new Fecha(1,1,23),Kenneth,false,true,sede2);
     Karina.setPericia(0.1F);
 
+    ArrayList<Prenda> ps1= new ArrayList<Prenda>(); ps1.add(r13); 
+    ArrayList<Integer> ct1=new ArrayList<Integer>();ct1.add(2);ct1.add(1);
+    Venta v1=new Venta(sede2,new Fecha(28,11,24),c8, Gabriela, Patricia,ps1,ct1, 200000, 250000);
+    v1.setCostoEnvio(20000);b1.setAhorroBanco(b1.getAhorroBanco()+250000);
+    int com1 = (int)(250000 * 0.05f);
+    Gabriela.setRendimientoBonificacion(com1);
+
+    ArrayList<Prenda> ps2= new ArrayList<Prenda>(); ps2.add(r15); ps2.add(r16);
+    ArrayList<Integer> ct2=new ArrayList<Integer>();ct2.add(2);ct2.add(0);
+    Venta v2=new Venta(sede2,new Fecha(29,11,24),c13, Freddy, Patricia,ps2,ct2, 400000, 600000);
+    v2.setCostoEnvio(1000000);b2.setAhorroBanco(b2.getAhorroBanco()+600000);
+    int com2 = (int)(600000 * 0.05f);
+    Freddy.setRendimientoBonificacion(com2);
+
+    ArrayList<Prenda> ps3= new ArrayList<Prenda>(); ps3.add(r1); ps3.add(r2);ps3.add(r7);
+    ArrayList<Integer> ct3=new ArrayList<Integer>();ct3.add(2);ct3.add(1);
+    Venta v3=new Venta(sedeP,new Fecha(30,11,24),c6, Aura, Cata,ps3,ct3, 500000, 700000);
+    v3.setCostoEnvio(100000);b1.setAhorroBanco(b1.getAhorroBanco()+700000);
+    int com3 = (int)(700000 * 0.05f);
+    Aura.setRendimientoBonificacion(com3);
+
+    ArrayList<Prenda> ps4= new ArrayList<Prenda>(); ps4.add(r15); ps4.add(r16);
+    ArrayList<Integer> ct4=new ArrayList<Integer>();ct4.add(2);ct4.add(0);
+    Venta v4=new Venta(sedeP,new Fecha(25,11,24),c4, Wilson, Mario,ps4,ct4, 400000, 60000);
+    v4.setCostoEnvio(100000);b3.setAhorroBanco(b3.getAhorroBanco()+600000);
+    int com4 = (int)(600000 * 0.05f);
+    Wilson.setRendimientoBonificacion(com4);
 }
 
     //para la interaccion 1 de produccion

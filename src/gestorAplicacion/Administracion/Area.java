@@ -1,11 +1,10 @@
 package gestorAplicacion.Administracion;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
-import gestorAplicacion.Fecha;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public enum Area {
 
