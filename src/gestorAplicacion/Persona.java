@@ -34,8 +34,6 @@ public class Persona implements Serializable{
 		listaPersonas.add(this);
 	}
 
-	public String toString(){
-		return "Nombre: "+nombre+"\n"+"Documento: "+documento+"\n"+"Rol: "+rol;}
 	public Rol getRol(){return rol;}
 	public Membresia getMembresia(){return membresia;}
 	public int getDocumento(){return documento;}
@@ -89,7 +87,7 @@ public class Persona implements Serializable{
 					break;
 				}
 			}
-			emp.setSalario(persona.getRol().getSalarioInicial()+persona.getRol().getSalarioInicial()*0.5*persona.getExperiencia());
+			emp.setSalario((int) (persona.getRol().getSalarioInicial()+persona.getRol().getSalarioInicial()*0.5f*persona.getExperiencia()));
 		}
 	}
 	public static void imprimirNoEmpleados() {

@@ -70,7 +70,9 @@ public class Desarrollo {
                     String cuenta = in.next();
                     System.out.println("Cual es el saldo inicial?");
                     int saldo = Main.nextIntSeguro(in);
-                    Banco nuevoBanco = new Banco(cuenta,nombre,saldo);
+                    System.out.println("Cual es el interes de la cuenta?");
+                    float interes = in.nextFloat();
+                    Banco nuevoBanco = new Banco(cuenta,nombre,saldo, interes);
                     System.out.println("Quieres configurar esta cuenta como principal? (s/n)");
                     if (in.next().equals("s")){
                         Banco.setCuentaPrincipal(nuevoBanco);
