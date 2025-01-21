@@ -3,7 +3,7 @@ package gestorAplicacion.Bodega;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Repuesto extends Insumo implements Serializable{
+public class Repuesto extends Insumo { // Implementa serializable por repuesto
     private static final long serialVersionUID = 1L;
     //hereda el atributo nombre
     //hereda el atributo horasDeVidaUtil

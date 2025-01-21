@@ -70,9 +70,12 @@ public class Empleado extends Persona implements GastoMensual{
     }
 
     // Interacción 1 de Gestion Humana
-    static public ArrayList <Empleado> listaInicialDespedirEmpleado(Fecha fecha){
+    // Retorna la gente a despedir, que no se pudo transferir para evitar despido, y una lista de mensajes si se nececita imprimir algo.
+    static public ArrayList <Object> listaInicialDespedirEmpleado(Fecha fecha){
         // Preparamos las listas de empleados
         ArrayList <Empleado> listaADespedir = new ArrayList<Empleado>(); // A en el doc. 
+        ArrayList<String> mensajes = new ArrayList<String>();
+        ArrayList <Object> retorno = new ArrayList<Object>(Arrays.asList(listaADespedir,mensajes));
         ArrayList <ArrayList<Empleado>> listaATransferir = new ArrayList<>(Arrays.asList()); // B en el doc.
         for (int i = 0; i < Sede.getlistaSedes().size(); i++){
             listaATransferir.add(new ArrayList<Empleado>());
@@ -88,7 +91,12 @@ public class Empleado extends Persona implements GastoMensual{
                         rendimiento = (emp.prendasProducidas/emp.prendasDescartadas)*100;
                         break;
                     case VENTAS:
-                        rendimiento= Venta.acumuladoVentasAsesoradas(emp)/Venta.listaVentasAsesoradas(emp).size();
+                        int ventasAsesoradas = Venta.listaVentasAsesoradas(emp).size();
+                        if (ventasAsesoradas!=0){
+                            rendimiento= Venta.acumuladoVentasAsesoradas(emp)/ventasAsesoradas;
+                        } else {
+                            rendimiento=100; // Evita dividir por 0 y despedir nuevos
+                        }
                         break;
 
                     case OFICINA:
@@ -162,11 +170,11 @@ public class Empleado extends Persona implements GastoMensual{
 
         for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
             for (Empleado emp : listaATransferir.get(idxSede)){
-                emp.trasladarEmpleado(Sede.getlistaSedes().get(idxSede));
+                mensajes.addAll(emp.trasladarEmpleado(Sede.getlistaSedes().get(idxSede)));
             }
         }
         
-        return listaADespedir;
+        return retorno;
     }
 
     // Interaccion 2 gestion humana. Puedes poner conTransacciones en falso en caso de que quieras quitar al empleado "Limpiamente", por ejemplo
@@ -187,10 +195,15 @@ public class Empleado extends Persona implements GastoMensual{
 
 
     // Interaccion 1 gestion humana
-
-    private void trasladarEmpleado(Sede sedeNueva){
+    // El retorno es solo por si la funcion nececita avisar algo al usuario y debe imprimirse.
+    private ArrayList<String> trasladarEmpleado(Sede sedeNueva){
+        ArrayList<String> mensajes = new ArrayList<String>();
         int aPagar = Maquinaria.remuneracionDanos(this);
-        Banco.getCuentaPrincipal().transaccion(aPagar);
+        if (Banco.getCuentaPrincipal()!=null){
+            Banco.getCuentaPrincipal().transaccion(aPagar);
+        } else {
+            mensajes.add("Perdonenos pero disculpenos: No se ha podido recibir la remuneración de daños, no hay cuenta principal, sugerimos añadir una.");
+        }
         modificarBonificacion(aPagar*-1);
         Maquinaria.liberarMaquinariaDe(this);
 
@@ -198,6 +211,7 @@ public class Empleado extends Persona implements GastoMensual{
         setSede(sedeNueva);
 
         Maquinaria.asignarMaquinaria(this);
+        return mensajes;
     }
 
     // ------------------ Getters y Setters ------------------

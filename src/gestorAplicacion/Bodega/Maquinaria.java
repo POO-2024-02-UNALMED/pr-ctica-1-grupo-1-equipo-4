@@ -64,7 +64,7 @@ public class Maquinaria implements Serializable{
 	static public int remuneracionDanos(Empleado empleado){
 		int remuneracion = 0;
 		for (Maquinaria maq : empleado.getSede().getlistaMaquinas()){
-			if (maq.user.equals(empleado)  && maq.estado){
+			if (maq.user==empleado  && maq.estado){
 				remuneracion += maq.valor;
 			}
 		}
@@ -73,7 +73,7 @@ public class Maquinaria implements Serializable{
 
 	static public void liberarMaquinariaDe(Empleado empleado){
 		for (Maquinaria maq : empleado.getSede().getlistaMaquinas()){
-			if (maq.user.equals(empleado)){
+			if (maq.user== empleado){
 				maq.user = null;
 			}
 		}
