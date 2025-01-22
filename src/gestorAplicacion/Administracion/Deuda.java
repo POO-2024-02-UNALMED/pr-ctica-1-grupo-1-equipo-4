@@ -96,7 +96,7 @@ public class Deuda implements Serializable {
 	return deudaCalculada;
 	}
 
-	static public int calcularCuotas(int monto){
+	static public int calcularCuotas(long monto){
 		int cuotas = 0;
 		if(monto > 0 && monto < 1000000){
 			cuotas = 1;

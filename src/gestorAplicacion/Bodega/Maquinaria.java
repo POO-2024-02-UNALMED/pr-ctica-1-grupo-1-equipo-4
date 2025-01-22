@@ -21,11 +21,11 @@ public class Maquinaria implements Serializable{
 	long valor;
 	int horasVisitaTecnico;
 	int horaRevision;
-	ArrayList<Repuesto> repuestos;
-	ArrayList<Integer> horasUltimoCambio;
+	ArrayList<Repuesto> repuestos=new ArrayList<Repuesto>();
+	ArrayList<Integer> horasUltimoCambio=new ArrayList<Integer>();
 
 	Proveedor proveedorBarato;
-	ArrayList<Proveedor> listProveedoresBaratos = new ArrayList<>();
+	ArrayList<Proveedor> listProveedoresBaratos = new ArrayList<Proveedor>();
 	Fecha ultFechaRevision;
 
 	public Maquinaria(){
@@ -78,6 +78,14 @@ public class Maquinaria implements Serializable{
 		}
 	}
 	
+	public ArrayList<Integer> getHorasUltimoCambio(){
+		return horasUltimoCambio;
+	}
+
+	public ArrayList<Integer> setHorasUltimoCambio(){
+		return horasUltimoCambio;
+	}
+
 	public String getNombre(){
 		return nombre;
 	}

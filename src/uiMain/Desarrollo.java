@@ -1,17 +1,17 @@
 package uiMain;
 // Debemos quitar esta clase antes de entregar.
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-import gestorAplicacion.Sede;
 import gestorAplicacion.Administracion.Area;
 import gestorAplicacion.Administracion.Banco;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Rol;
+import gestorAplicacion.Bodega.Insumo;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Membresia;
-import gestorAplicacion.Bodega.Insumo;
+import gestorAplicacion.Sede;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Desarrollo {
     static void menu(Scanner in){
@@ -44,8 +44,8 @@ public class Desarrollo {
         bucleBancos:
         while(true){
             System.out.println("Tenemos estos bancos:");
-            for (int idxBanco=0; idxBanco<Sede.getlistaSedes().size(); idxBanco++){
-                System.out.println("Cuenta de sede"+idxBanco+". "+Sede.getlistaSedes().get(idxBanco).getCuentaSede());
+            for (int idxBanco=0; idxBanco<Banco.getListaBancos().size(); idxBanco++){
+                System.out.println("Cuenta de sede"+idxBanco+". "+Banco.getListaBancos().get(idxBanco));
             }
             System.out.println("Cuenta principal: -1."+Banco.getCuentaPrincipal());
             System.out.println("Usa el comando 'monto' para restar o sumar a una cuenta");

@@ -31,7 +31,7 @@ public class Empleado extends Persona implements GastoMensual{
     private int bonificacion=0;  
     public Empleado(Persona p){
         super(p.getNombre(),p.getDocumento(),p.getRol(),p.getExperiencia(),p.isTrabaja(),p.getMembresia());
-        listaEmpleados.add(this);
+        Empleado.listaEmpleados.add(this);
         sede.getlistaEmpleados().add(this);
     }
 
@@ -49,7 +49,7 @@ public class Empleado extends Persona implements GastoMensual{
         this.areas.add(area);
         fechaContratacion=fecha;
         this.sede=sede;
-        listaEmpleados.add(this);
+        Empleado.listaEmpleados.add(this);
         maquinaria=maquina;
         sede.getlistaMaquinas().add(maquina);
         sede.getlistaEmpleados().add(this);

@@ -8,11 +8,11 @@ import gestorAplicacion.Bodega.Prenda;
 
 public class Venta implements Serializable {
 	private static final long serializarVersionUID = 1L; // Para serializacion
-	private ArrayList<Prenda> articulos;
-	private ArrayList<Integer> cantidades;
-	private ArrayList<Bolsa> bolsas;
-	private static ArrayList<String> codigosRegalo = new ArrayList<>();
-    private static ArrayList<Integer> montosRegalo = new ArrayList<>();
+	private ArrayList<Prenda> articulos= new ArrayList<Prenda>();
+	private ArrayList<Integer> cantidades=  new ArrayList<Integer>();
+	private ArrayList<Bolsa> bolsas=new ArrayList<Bolsa>();
+	private static ArrayList<String> codigosRegalo = new ArrayList<String>();
+    private static ArrayList<Integer> montosRegalo = new ArrayList<Integer>();
 	private Empleado encargado;
 	private Empleado asesor;
 	private Sede sede;

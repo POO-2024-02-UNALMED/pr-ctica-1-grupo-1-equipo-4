@@ -18,10 +18,11 @@ public class Pantalon extends Prenda {
         }
         return gasto;
     }
-    private static ArrayList<Float> cantidadInsumo;
-    private ArrayList<Insumo> insumo;
-    public  ArrayList<Insumo> getInsumo(){return insumo;}
-    private static ArrayList<String> tipoinsumo;
+    private static ArrayList<Float> cantidadInsumo=new ArrayList<Float>();
+    private static ArrayList<String> tipoinsumo=new ArrayList<String>();
+    
     public static ArrayList<String> getTipoInsumo(){return tipoinsumo;}
     public static ArrayList<Float> getCantidadInsumo(){return cantidadInsumo;}
+    public static void setTipoInsumo(ArrayList<String> tipos){tipoinsumo=tipos;}
+    public static void setCantidadInsumo(ArrayList<Float> cantidades){cantidadInsumo=cantidades;}
 }

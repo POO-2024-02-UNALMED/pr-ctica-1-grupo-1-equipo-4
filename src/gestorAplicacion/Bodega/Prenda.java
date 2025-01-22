@@ -39,7 +39,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
         this.modista=modista;
         this.descartada=descartada;
         this.terminada=terminada;
-        prendasInventadas.add(this);
+        Prenda.prendasInventadas.add(this);
         sede.getPrendasInventadas().add(this);
         if(descartada){modista.setPrendasDescartadas(modista.getPrendasDescartadas()+1);}
         else{modista.setPrendasDescartadas(modista.getPrendasProducidas()+1);}

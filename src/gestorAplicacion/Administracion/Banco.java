@@ -19,7 +19,7 @@ public class Banco implements Serializable {
 		this.nombreEntidad=nombre;
 		this.nombreCuenta = cuenta;
 		this.ahorroBanco = ahorro;
-		listaBancos.add(this);
+		Banco.listaBancos.add(this);
 	}
 
 	public void actualizarDeuda(Deuda ndeuda){deuda.add(ndeuda);}

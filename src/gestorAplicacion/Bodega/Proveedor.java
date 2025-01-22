@@ -18,7 +18,7 @@ public class Proveedor implements Serializable{
 	private Deuda deuda;
 	
 	public Proveedor(){
-		listaProveedores.add(this);
+		Proveedor.listaProveedores.add(this);
 	}
 	
 	public Proveedor(int precio,String nombre){
@@ -46,11 +46,14 @@ public class Proveedor implements Serializable{
 		return precio;
 	}
 	
-	public void unificarDeudasXProveedor(Fecha fecha, int montoDeuda, String Nombre, int cuotas){
-			if (deuda.getEntidad().equals(Nombre)&&!deuda.getEstadodePago()){
+	public void unificarDeudasXProveedor(Fecha fecha, int montoDeuda, String Nombre){
+		int cuotas=Deuda.calcularCuotas(montoDeuda+deuda.getValorinicialDeuda()-deuda.getCapitalPagado());
+		if (deuda.getEntidad().equals(Nombre)&&!deuda.getEstadodePago()){
 					deuda.actualizarDeuda(fecha,montoDeuda,cuotas);
 			}
 		}
+
+	
 
 	public static ArrayList<Proveedor> getListaProveedores(){return listaProveedores;}
 	public static void setListaProveedores(ArrayList<Proveedor> lista){listaProveedores=lista;}
