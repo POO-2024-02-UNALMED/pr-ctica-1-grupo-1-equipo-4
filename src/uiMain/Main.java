@@ -343,7 +343,7 @@ public class Main {
             System.out.println("El estimado es positivo, las ventas superan las deudas");
             Deuda.compararDeudas(fecha);
         }
-        if (diferenciaEstimada <= 0) {
+        else if (diferenciaEstimada <= 0) {
             System.out.println("El estimado es negativo, la deuda supera las ventas");
             int i = -1;
             String Nombrebanco = null;
@@ -361,7 +361,7 @@ public class Main {
         }
         float descuento = Venta.blackFriday(fecha);
         String BFString = null;
-        if (descuento == 0.0F) {
+        if (descuento <= 0.0F) {
             BFString = "El análisis de ventas realizado sobre el Black Friday arrojó que la audiencia no reacciona tan bien a los descuentos, propusimos no hacer descuentos";
             System.out.println("Según las Ventas anteriores,  aplicar descuentos no funcionará");
         } else {
@@ -657,7 +657,6 @@ public class Main {
         Proveedor p12 = new Proveedor(6000, "Plastienda");
         p10.setDescuento(0.05F);
         p12.setInsumo(new Bolsa("Bolsa", p12));
-
         // PROVEEDORES QUE VENDEN AGUJAS DE LA MAQUINA DE COSER:
         Proveedor p13 = new Proveedor(80500, "Solo Agujas");
         p13.setInsumo(new Insumo("Agujas de la Maquina de Coser", p13));
@@ -665,7 +664,8 @@ public class Main {
         p14.setInsumo(new Insumo("Agujas de la Maquina de Coser", p14));
         Proveedor p15 = new Proveedor(70000, "Las propias agujas");
         p15.setInsumo(new Insumo("Agujas de la Maquina de Coser", p15));
-
+        p1.setDeuda(new Deuda(new Fecha(15, 1, 24), 500_000, p1.getNombre(), "Proveedor", 5));
+        p2.setDeuda(new Deuda(new Fecha(15, 1, 24), 1_000_000, p2.getNombre(), "Proveedor", 10));
         // PROVEEDORES QUE VENDEN ACEITE:
         Proveedor p16 = new Proveedor(24000, "Aceites y mas");
         p16.setInsumo(new Insumo("Aceite 946 ml", p16));
