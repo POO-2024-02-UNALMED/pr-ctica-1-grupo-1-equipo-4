@@ -22,7 +22,6 @@ public class Maquinaria implements Serializable{
 	int horasVisitaTecnico;
 	int horaRevision;
 	ArrayList<Repuesto> repuestos=new ArrayList<Repuesto>();
-	ArrayList<Integer> horasUltimoCambio=new ArrayList<Integer>();
 
 	Proveedor proveedorBarato;
 	ArrayList<Proveedor> listProveedoresBaratos = new ArrayList<Proveedor>();
@@ -42,17 +41,19 @@ public class Maquinaria implements Serializable{
 
 		//metodo para hacer una copia de un objeto de tipo Maquinaria, con la misma inicializacion de atributos del que queremos copiar
 	public Maquinaria copiar(){
-		return new Maquinaria(this.nombre, this.valor, this.horaRevision, this.repuestos, this.sede);
+		ArrayList<Repuesto> Nuevosrepuestos=new ArrayList<>();
+		for (Repuesto rep:repuestos){
+			Nuevosrepuestos.add(rep.copiar());
+		}
+		return new Maquinaria(this.nombre, this.valor, this.horaRevision, Nuevosrepuestos, this.sede);
 	}
 
 	public static long gastoMensualClase(){
 		long gastoMaquinaria=0;
 		for (Sede sede:Sede.getlistaSedes()){
 			for (Maquinaria maquinaria : sede.getlistaMaquinas()){
-				for (int i=0;i<maquinaria.repuestos.size();i++){
-					int veces=Math.round(744/maquinaria.horasUltimoCambio.get(i));
-					gastoMaquinaria+=maquinaria.repuestos.get(i).calcularGastoMensual()*veces;
-					
+				for (Repuesto repuesto:maquinaria.repuestos){
+					gastoMaquinaria+=repuesto.calcularGastoMensual();
 				}
 			}
 		}
@@ -78,14 +79,6 @@ public class Maquinaria implements Serializable{
 		}
 	}
 	
-	public ArrayList<Integer> getHorasUltimoCambio(){
-		return horasUltimoCambio;
-	}
-
-	public ArrayList<Integer> setHorasUltimoCambio(){
-		return horasUltimoCambio;
-	}
-
 	public String getNombre(){
 		return nombre;
 	}
@@ -154,6 +147,8 @@ public class Maquinaria implements Serializable{
 									}
 									//AGREGAR UNA COPIA DEL REPUESTO A DICHO ARRAYLIST DE REPUESTOS DE LA MAQUINA AFECTADA
 									cadaMaquina.getRepuestos().add(cadaRepuesto.copiar());
+									cadaRepuesto.setPrecioCompra(proveedorBarato.getPrecio());
+									cadaRepuesto.setFechasCompra(fecha);
 									cadaRepuesto.setProveedor(proveedorBarato);
 									cadaMaquina.estado = true;
 									System.out.println("Repuesto " + cadaRepuesto.getNombre() + " añadido correctamente a la " + cadaMaquina.getNombre() + ", de la: " + cadaSede.getNombre());

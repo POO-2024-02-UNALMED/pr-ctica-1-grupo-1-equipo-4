@@ -48,7 +48,7 @@ public class Sede implements Serializable{
 	// necesario para añadir sedes a la lista de sedes, pero dicha lista no está cargada aún y además
 	// se estan creando ahí mismo.
 	public Sede(boolean porDefecto){
-		listaSedes.add(this);
+		this();
 	}
 
 	static public Resultado verificarProductoBodega(Insumo i, Sede sede){

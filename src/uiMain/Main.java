@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
+import gestorAplicacion.Bodega.Proveedor;
+import java.util.Collections;
 
 
 public class Main {
@@ -34,6 +36,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         buclePrincipal:
         while (true){
+        Main.actualizarProveedores();
         System.out.println("¿Que operación desea realizar?");
         System.out.println("1.Reemplazar empleados");
         System.out.println("2.Adquirir insumos para produccion");
@@ -838,7 +841,15 @@ public void crearSedesMaquinasRepuestos(){
     Maquinaria Registradora2 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2);
     Maquinaria Computador2 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2);
 
-        
+    Maquinaria MaquinaDeCoser3 = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC2, sede2);
+    Maquinaria MaquinaDeCorte3 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2);
+    Maquinaria PlanchaIndustrial3 = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI2, sede2);
+    Maquinaria BordadoraIndustrial3 = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI2, sede2);
+    Maquinaria MaquinaDeTermofijado3 = new Maquinaria("Maquina de Termofijado", 20000000, 1000, repuestosMTermofijado2, sede2);
+    Maquinaria MaquinaDeTijereado3 = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado2, sede2);
+    Maquinaria Impresora3 = new Maquinaria("Impresora", 800000, 2000, repuestosImp2, sede2);
+    Maquinaria Registradora3 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2);
+    Maquinaria Computador3 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2);
     
     Banco bp=new Banco("principal","Banco Montreal",400_000_000,0.05F);
     Banco b1=new Banco("secundaria","Banco Montreal",5_000_000,0.05F);
@@ -882,20 +893,20 @@ public void crearSedesMaquinasRepuestos(){
     Empleado Hugo=(new Empleado(Area.CORTE,new Fecha(1,5,14),sedeP,"Hugo Lombardi",7980705,Rol.DISEÑADOR,20,Membresia.ORO,MaquinaDeCorte));
     Empleado Inez=(new Empleado(Area.CORTE,new Fecha(1,5,14),sedeP,"Inez Ramirez",23103023,Rol.MODISTA,2,Membresia.NULA,MaquinaDeCoser));
     Empleado Aura=(new Empleado(Area.VENTAS,new Fecha(1,2,23),sedeP,"Aura Maria",4146118,Rol.SECRETARIA,2,Membresia.NULA,Registradora));
-    Empleado Sandra=(new Empleado(Area.CORTE,new Fecha(15,9,23),sedeP,"Sandra Patiño",5941859,Rol.SECRETARIA,5,Membresia.NULA,PlanchaIndustrial));
-    Empleado Sofia=(new Empleado(Area.CORTE,new Fecha(30,9,22),sedeP,"Sofía Lopez",5079239,Rol.SECRETARIA,6,Membresia.NULA,MaquinaDeTermofijado));
-    Empleado Mariana=(new Empleado(Area.CORTE,new Fecha(1,5,23),sedeP,"Mariana Valdéz",4051807,Rol.SECRETARIA,10,Membresia.BRONCE,MaquinaDeTijereado));
-    Empleado Bertha=(new Empleado(Area.CORTE,new Fecha(25,2,20),sedeP,"Bertha Muñoz",7137741,Rol.SECRETARIA,15,Membresia.BRONCE,BordadoraIndustrial));
+    Empleado Sandra=(new Empleado(Area.CORTE,new Fecha(15,9,23),sedeP,"Sandra Patiño",5941859,Rol.MODISTA,5,Membresia.NULA,PlanchaIndustrial));
+    Empleado Sofia=(new Empleado(Area.CORTE,new Fecha(30,9,22),sedeP,"Sofía Lopez",5079239,Rol.MODISTA,6,Membresia.NULA,MaquinaDeTermofijado));
+    Empleado Mariana=(new Empleado(Area.CORTE,new Fecha(1,5,23),sedeP,"Mariana Valdéz",4051807,Rol.MODISTA,10,Membresia.BRONCE,MaquinaDeTijereado));
+    Empleado Bertha=(new Empleado(Area.CORTE,new Fecha(25,2,20),sedeP,"Bertha Muñoz",7137741,Rol.MODISTA,15,Membresia.BRONCE,BordadoraIndustrial));
     Empleado Wilson=(new Empleado(Area.VENTAS,new Fecha(4,4,22),sedeP,"Wilson Sastoque",9634927,Rol.PLANTA,5,Membresia.NULA,Registradora.copiar()));
 
     Empleado Gutierrez=(new Empleado(Area.DIRECCION,new Fecha(5,8,19),sede2,"Saul Gutierrez",9557933,Rol.EJECUTIVO,11,Membresia.NULA,Computador.copiar()));
     Empleado Marcela=(new Empleado(Area.DIRECCION,new Fecha(30,11,20),sede2,"Marcela Valencia",8519803,Rol.EJECUTIVO,10,Membresia.ORO,Computador.copiar()));
     Empleado Gabriela=new Empleado(Area.VENTAS,new Fecha(1,1,24),sede2,"Gabriela Garza",5287925,Rol.VENDEDOR,9,Membresia.PLATA,Registradora.copiar());
     Empleado Patricia=(new Empleado(Area.OFICINA,new Fecha(5,2,23),sede2,"Patricia Fernandez",4595311,Rol.SECRETARIA,6,Membresia.BRONCE,Impresora.copiar()));
-    Empleado Kenneth=(new Empleado(Area.CORTE,new Fecha(1,1,24),sede2,"Kenneth Johnson",7494184,Rol.VENDEDOR,8,Membresia.ORO,PlanchaIndustrial.copiar()));
+    Empleado Kenneth=(new Empleado(Area.CORTE,new Fecha(1,1,24),sede2,"Kenneth Johnson",7494184,Rol.MODISTA,8,Membresia.ORO,PlanchaIndustrial.copiar()));
     Empleado Robles=(new Empleado(Area.OFICINA,new Fecha(12,10,24),sede2,"Miguel Robles",7518004,Rol.VENDEDOR,7,Membresia.BRONCE,Impresora.copiar()));
-    Empleado Alejandra=(new Empleado(Area.CORTE,new Fecha(1,2,24),sede2,"Alejandra Zingg",6840296,Rol.VENDEDOR,2,Membresia.BRONCE,BordadoraIndustrial.copiar()));
-    Empleado Cecilia=(new Empleado(Area.CORTE,new Fecha(1,2,23),sede2,"Cecilia Bolocco",7443886,Rol.ASISTENTE,10,Membresia.PLATA,MaquinaDeCoser.copiar()));
+    Empleado Alejandra=(new Empleado(Area.CORTE,new Fecha(1,2,24),sede2,"Alejandra Zingg",6840296,Rol.MODISTA,2,Membresia.BRONCE,BordadoraIndustrial.copiar()));
+    Empleado Cecilia=(new Empleado(Area.CORTE,new Fecha(1,2,23),sede2,"Cecilia Bolocco",7443886,Rol.MODISTA,10,Membresia.PLATA,MaquinaDeCoser.copiar()));
     Empleado Freddy=(new Empleado(Area.VENTAS,new Fecha(31,1,22),sede2,"Freddy Contreras",6740561,Rol.PLANTA,5,Membresia.NULA,Registradora.copiar()));
     Empleado Adriana=(new Empleado(Area.CORTE,new Fecha(18,6,25),sede2,"Adriana arboleda",5927947,Rol.MODISTA,20,Membresia.ORO,MaquinaDeCorte.copiar()));
     Empleado Karina=(new Empleado(Area.CORTE,new Fecha(9,3,25),sede2,"Karina Larson",5229381,Rol.MODISTA,2,Membresia.PLATA,MaquinaDeTermofijado.copiar()));
@@ -1333,7 +1344,31 @@ public static Proveedor getProveedorBDelMain(){
 	    System.out.println("Venta realizada. Total de la venta con bolsas: " + totalVenta);
 	    sede.getHistorialVentas().add(venta);
 	}
+
+    public static void actualizarProveedores(){
+        Proveedor.getListaProveedores().get(0);
+        Sede sedeP=null;
+        for (Sede sede:Sede.getlistaSedes()){
+            if (sede.getNombre().equals("Sede Principal")){
+                sedeP=sede;
+            }
+        }
+        for (Insumo insumo:sedeP.getListaInsumosBodega()){
+            ArrayList<Proveedor> compatibles=new ArrayList<Proveedor>();
+            for (Proveedor prov: Proveedor.getListaProveedores()){
+                if (prov.getInsumo().getNombre().equals(insumo.getNombre())){
+                   compatibles.add(prov);
+                }
+            ArrayList<Proveedor> nuevos=(ArrayList<Proveedor>)compatibles.clone();
+            Collections.shuffle(nuevos);
+            for (int i=0; i<nuevos.size();i++){
+                compatibles.get(i).setPrecio(nuevos.get(i).getPrecio());
+            }
+            }
+            
+    }
  }
+}
 
     
 
