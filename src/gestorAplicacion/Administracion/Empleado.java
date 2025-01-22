@@ -15,7 +15,6 @@ public class Empleado extends Persona implements GastoMensual{
     private static final long serialVersionUID = 1L;
 
 	public static ArrayList <Empleado> listaEmpleados=new ArrayList<Empleado>();
-    ArrayList<Integer> balances = new ArrayList<Integer>();
     // Usado para empleados de Dirección.
 
     private Area areaActual;
@@ -115,11 +114,13 @@ public class Empleado extends Persona implements GastoMensual{
                     case DIRECCION:
                         int balancesPositivos = 0;
                         int balancesNegativos = 0;
-                        for (int balance : emp.balances){
-                            if (balance > 0){
-                                balancesPositivos++;
-                            } else {
-                                balancesNegativos++;
+                        for (Evaluacionfinanciera evaluacion : Evaluacionfinanciera.getHistorialEvaluaciones()){
+                            if (evaluacion.getPresidente()==emp){
+                                if (evaluacion.getBalance()>0){
+                                    balancesPositivos++;
+                                } else {
+                                    balancesNegativos++;
+                                }
                             }
                         }
                         if (balancesNegativos+balancesPositivos==0){ // Evita dividir por 0 y despedir nuevos
