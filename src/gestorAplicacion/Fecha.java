@@ -83,4 +83,8 @@ public class Fecha implements Serializable{
 			mes=0;
 		}
 	}
+
+	public String toString(){
+		return "Día: "+dia+" Mes: "+mes+" Año:"+año;
+	}
 }

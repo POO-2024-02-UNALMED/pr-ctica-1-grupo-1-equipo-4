@@ -5,7 +5,6 @@ import gestorAplicacion.Sede;
 import gestorAplicacion.Fecha;
 
 import java.io.Serializable;
-import java.net.ResponseCache;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -213,5 +212,9 @@ public class Maquinaria implements Serializable{
 				break;
 			}
 		}
+	}
+
+	public String toString(){
+		return "La "+nombre+" operada por "+user.getNombre()+" ubicada en la sede "+sede.getNombre()+" tiene "+horasUso+" horas de uso";
 	}
 }

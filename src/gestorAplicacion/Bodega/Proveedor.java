@@ -4,6 +4,7 @@ import java.sql.SQLData;
 import java.util.ArrayList;
 import gestorAplicacion.Fecha;
 
+import gestorAplicacion.Fecha;
 import gestorAplicacion.Administracion.Deuda;
 
 public class Proveedor implements Serializable{
@@ -16,7 +17,6 @@ public class Proveedor implements Serializable{
 	private String nombre;
 	private float descuento;
 	private Deuda deuda;
-
 	
 	public Proveedor(){
 		listaProveedores.add(this);
@@ -64,4 +64,7 @@ public class Proveedor implements Serializable{
 	public void setNombre (String nom){nombre=nom;}
 	public float getDescuento (){return descuento;}
 	public void setDescuento (float monto){descuento=monto;}
+	public String toString(){
+		return "El proveedor "+nombre+" vende insumos de tipo "+tipoInsumo.getNombre()+" y valen "+precio;
+	}
 }

@@ -230,5 +230,22 @@ public class Venta implements Serializable {
 	public static void setCodigosRegalos(ArrayList<String> codigo){Venta.codigosRegalo=codigo;}
 	public static ArrayList<Integer> getMontosRegalo(){return Venta.montosRegalo;}
 	public static void setMontosRegalo(ArrayList<Integer> montos){Venta.montosRegalo=montos;}
-	
+	public String toString(){
+		String retorno;
+		retorno="---- FACTURA ----"+"\n";
+		retorno+=fechaVenta+"\n";
+		retorno+=cliente.nombre+"\n";
+		for (int i = 0; i < articulos.size(); i++) {
+			Prenda prenda = articulos.get(i);
+			int cantidad = cantidades.get(i);
+			retorno+=(prenda.getNombre() + " - Cantidad: "+cantidad+"\n");
+		}
+		if (bolsas.size()>0){retorno+="Incluye bolsa";}
+		retorno+="Subtotal: $" + subtotal;
+		retorno+="Valor total (Con IVA): $" + montoPagado;
+		retorno+="Venta registrada por: " + encargado.getNombre();
+		retorno+="Asesor de la compra: " + asesor.getNombre();
+		retorno+=sede.getNombre();
+		return retorno;
+	}
 }
