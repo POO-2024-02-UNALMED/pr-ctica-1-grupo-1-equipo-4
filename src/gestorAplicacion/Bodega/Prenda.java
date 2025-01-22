@@ -59,6 +59,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
         return gastoPrenda;
     }
 
+    // Retorna el pesimismo
     public static float prevenciones(float descuento, float nuevoDescuento,Fecha fecha){
         for(Sede sede : Sede.getlistaSedes()){
             for (Prenda prenda : sede.getPrendasInventadas()){
@@ -72,7 +73,8 @@ public abstract class Prenda implements GastoMensual, Serializable{
         }}
         return Venta.getPesimismo();
         }
-
+    
+    //-------------------Getters y Setters-------------------
     public boolean getPrendasDescartadas(){return descartada;}
     public String getNombre(){return nombre;}
     public ArrayList<Insumo> getInsumo(){return insumo;}
@@ -81,6 +83,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
     public static ArrayList<Prenda> getPrendasInventadas(){return prendasInventadas;}
     public float getCostoInsumos(){return costoInsumos;}
     public long getPrecio() {return this.precio;}
+
     public String toString(){
         return "La prenda de tipo "+nombre+" a cargo del modista "+modista.getNombre()+" se encuentra actualmente en la sede"+sede.getNombre();
     }

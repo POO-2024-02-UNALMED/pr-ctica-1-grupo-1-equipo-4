@@ -1,6 +1,7 @@
 package gestorAplicacion.Bodega;
 import java.io.Serializable;
 import java.util.ArrayList;
+import gestorAplicacion.Fecha;
 
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Administracion.Deuda;

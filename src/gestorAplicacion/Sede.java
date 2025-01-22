@@ -161,7 +161,7 @@ public class Sede implements Serializable{
 		ArrayList<Sede> transferirDe = new ArrayList<Sede>();
 		ArrayList<Rol> rolesATransferir = new ArrayList<Rol>();
 
-		for (int idxRol=0; idxRol<rolesATransferir.size();idxRol++){
+		for (int idxRol=0; idxRol<Rol.values().length;idxRol++){
 			Rol rol = Rol.values()[idxRol];
 			for (Sede sede : listaSedes){
 				switch(rol){

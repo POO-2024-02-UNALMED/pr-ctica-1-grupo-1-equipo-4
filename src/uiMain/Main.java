@@ -21,11 +21,13 @@ import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Bodega.Camisa;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.Bodega.Proveedor;
 import java.util.Collections;
+import gestorAplicacion.Sede;
 
 
 public class Main {
@@ -76,9 +78,12 @@ public class Main {
             break;
 
         case 4:
-           Venta venta = Vender(in); 
-           
-
+           Venta venta = Vender(in);
+           Main.realizarVenta(in, venta);
+           Main.tarjetaRegalo(in, venta);
+           Sede sede = venta.getSede();
+           sede.getHistorialVentas().add(venta);
+           //NOTA: No juzgar, tengo que arreglar esta vaina...
             break;
 
         case 5:
@@ -1215,9 +1220,9 @@ public static Proveedor getProveedorBDelMain(){
      return venta;}
 
      //Interacción 2 Facturación
-    public static void realizarVenta(Scanner scanner) {
+    public static Venta realizarVenta(Scanner scanner,  Venta venta) {
 	    // Se llama al método vender para obtener la venta inicial
-	    Venta venta = Vender(scanner);
+	    venta = Vender(scanner);
 
 	    ArrayList<Prenda> productosSeleccionados = venta.getArticulos();
 	    Sede sede = venta.getSede();
@@ -1344,31 +1349,7 @@ public static Proveedor getProveedorBDelMain(){
 	    System.out.println("Venta realizada. Total de la venta con bolsas: " + totalVenta);
 	    sede.getHistorialVentas().add(venta);
 	}
-
-    public static void actualizarProveedores(){
-        Proveedor.getListaProveedores().get(0);
-        Sede sedeP=null;
-        for (Sede sede:Sede.getlistaSedes()){
-            if (sede.getNombre().equals("Sede Principal")){
-                sedeP=sede;
-            }
-        }
-        for (Insumo insumo:sedeP.getListaInsumosBodega()){
-            ArrayList<Proveedor> compatibles=new ArrayList<Proveedor>();
-            for (Proveedor prov: Proveedor.getListaProveedores()){
-                if (prov.getInsumo().getNombre().equals(insumo.getNombre())){
-                   compatibles.add(prov);
-                }
-            ArrayList<Proveedor> nuevos=(ArrayList<Proveedor>)compatibles.clone();
-            Collections.shuffle(nuevos);
-            for (int i=0; i<nuevos.size();i++){
-                compatibles.get(i).setPrecio(nuevos.get(i).getPrecio());
-            }
-            }
-            
-    }
  }
-}
 
     
 

@@ -29,6 +29,7 @@ public class Empleado extends Persona implements GastoMensual{
     private int prendasProducidas=0;
     private float pericia; // De 0 a 1, la posibilidad de que una prenda no se arruine al ser manejada por el modista.
     private int bonificacion=0;  
+	protected int salario;
     public Empleado(Persona p){
         super(p.getNombre(),p.getDocumento(),p.getRol(),p.getExperiencia(),p.isTrabaja(),p.getMembresia());
         Empleado.listaEmpleados.add(this);
