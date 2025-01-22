@@ -162,7 +162,8 @@ public class Venta implements Serializable {
 
    // Regresión lineal    
 	// Utiliza minimos cuadrados para predecir las ventas de una prenda en una sede
-	static public int predecirVentas(Fecha fechaActual,Sede sede, Prenda prenda){
+	// preda debe ser el nombre de la prenda
+	static public int predecirVentas(Fecha fechaActual,Sede sede, String prenda){
 		int n=5; // Cantidad de meses previos a usar
 		int sumatoriax=0+1+2+3+4+5;
 		int sumatoriaxCuadrado=1+2^3+3^2+4^2+5^2;
@@ -175,7 +176,7 @@ public class Venta implements Serializable {
 			int sumatoriaYMes=0;
 			for(Venta venta: Venta.filtrar(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
 				for(int j=0; j<venta.getArticulos().size();j++){
-					if(venta.getArticulos().get(j).getNombre().equals(prenda.getNombre())){
+					if(venta.getArticulos().get(j).getNombre().equals(prenda)){
 						sumatoriaYMes+=venta.getCantidades().get(j);
 					}
 				}

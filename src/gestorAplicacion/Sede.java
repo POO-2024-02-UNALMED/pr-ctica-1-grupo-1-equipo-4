@@ -273,7 +273,8 @@ public class Sede implements Serializable{
 	}
 
 		//interacion 2 de Produccion
-	public void planProduccion(ArrayList<Maquinaria> maqDisponiblee, Scanner scanner){
+	public ArrayList<ArrayList<Integer>> planProduccion(ArrayList<Maquinaria> maqDisponiblee, Fecha fecha, Scanner scanner){
+		ArrayList<ArrayList<Integer>> aProducir = new ArrayList<>();
 		ArrayList<Maquinaria> maqSedeP = new ArrayList<>();
 		ArrayList<Maquinaria> maqSede2 = new ArrayList<>();
 		int señal = 0;
@@ -321,7 +322,10 @@ public class Sede implements Serializable{
 			while(opcion != 1 && opcion != 2){
 				opcion = scanner.nextInt();
 				if(opcion == 1){
-					//llamar a un metodo1 para empezar a producir todo en la sede principal
+					//llamar a un metodo1: prodSedeP() para empezar a producir todo en la sede principal
+					aProducir.add(0, prodSedeP(fecha));
+					aProducir.add(1, null);
+					return aProducir;
 				} else if(opcion == 2){
 					//llamar a otro metodo2 para pasar la produccion a una lista de espera
 				} else{
@@ -338,7 +342,10 @@ public class Sede implements Serializable{
 			while(opcion != 1 && opcion != 2){
 				opcion = scanner.nextInt();
 				if(opcion == 1){
-					//llamar a un metodo3 para empezar a producir todo en la sede 2
+					//llamar a un metodo3: prodSede2() para empezar a producir todo en la sede 2
+					aProducir.add(0, null);
+					aProducir.add(1, prodSede2(fecha));
+					return aProducir;
 				} else if(opcion == 2){
 					//llamar a otro metodo2 para pasar la produccion a una lista de espera
 				} else{
@@ -354,23 +361,44 @@ public class Sede implements Serializable{
 	}
 		
 		//aqui se organiza la produccion de cada sede segun el metodo predecirVentas()
-	public void calcProduccionSedes(){
+	public ArrayList<ArrayList<Integer>> calcProduccionSedes(Fecha fecha){
+		ArrayList<ArrayList<Integer>> prodSedesCalculada = new ArrayList<>();
+		ArrayList<Integer> prodCalculadaSedeP = new ArrayList<>();
+		ArrayList<Integer> prodCalculadaSede2 = new ArrayList<>();
+		
+		prodCalculadaSedeP.add(Venta.predecirVentas(fecha, getlistaSedes.get(0), Pantalon));
+		prodCalculadaSedeP.add(Venta.predecirVentas(fecha, getlistaSedes.get(0), Camisa));
 
+		prodCalculadaSede2.add(Venta.predecirVentas(fecha, getlistaSedes.get(1), Pantalon));
+		prodCalculadaSede2.add(Venta.predecirVentas(fecha, getlistaSedes.get(1), Camisa));
+
+		prodSedesCalculada.add(prodCalculadaSedeP);
+		prodSedesCalculada.add(prodCalculadaSede2);
+
+		return prodSedesCalculada;
 	}
 		//aqui se hace que todo se produzca en la sede Principal
-	public ArrayList<Integer> prodSedeP(){
-
+	public ArrayList<Integer> prodSedeP(Fecha fecha){
 		// modificar la produccion aproximada enviando TODO para la sede principal, segun lo que se calculo en calcProduccionSedes
 		// luego retornar dicha produccion de la sede P (siendo esta un array de dos elementos, en el 0 el num pantalones y en el 1 camisas)
 		// se retorna al metodo planProduccion(), en donde todo se produce en la sedeP
+		int pantalonesSedeP = calcProduccionSedes(fecha).get(0).get(0) + calcProduccionSedes(fecha).get(1).get(0);
+		int camisasSedeP = calcProduccionSedes(fecha).get(0).get(1) + calcProduccionSedes(fecha).get(1).get(1);
+
+		prodAproximada.add(pantalonesSedeP);
+		prodAproximada.add(camisasSedeP);
 		
 		return prodAproximada;
 	}
 
 	public ArrayList<Integer> prodSede2(){
-
 		// modificar la produccion aproximada enviando TODO para la sede 2, segun lo que se calculo en calcProduccionSedes
 		// luego retornar dicha produccion de la sede 2 al metodo planProduccion(), en donde todo se produce en la sede2
+		int pantalonesSede2 = calcProduccionSedes(fecha).get(1).get(0) + calcProduccionSedes(fecha).get(0).get(0);
+		int camisasSede2 = calcProduccionSedes(fecha).get(1).get(1) + calcProduccionSedes(fecha).get(0).get(1);
+
+		prodAproximada.add(pantalonesSede2);
+		prodAproximada.add(camisasSede2);
 
 		return prodAproximada;
 	}
