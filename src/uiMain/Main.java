@@ -21,7 +21,6 @@ import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Bodega.Camisa;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
@@ -326,9 +325,10 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
         int cuotas=0;
         while (i<=0||i>=180){
             System.out.println("Ingrese número de 1 a 180");
-            cuotas=in.nextInt();}
-        Deuda deudaAdquirir=new Deuda(fecha,diferenciaEstimada,Nombrebanco, "Banco",cuotas); 
+            cuotas=in.nextInt();
         }
+        Deuda deudaAdquirir=new Deuda(fecha,diferenciaEstimada,Nombrebanco, "Banco",cuotas); 
+    }
     float descuento=Venta.blackFriday(fecha);
     String BFString=null;
     if (descuento==0.0F){

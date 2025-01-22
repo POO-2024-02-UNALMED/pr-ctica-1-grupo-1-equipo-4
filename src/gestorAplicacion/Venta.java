@@ -7,7 +7,7 @@ import gestorAplicacion.Bodega.Bolsa;
 import gestorAplicacion.Bodega.Prenda;
 
 public class Venta implements Serializable {
-	private static final long serializarVersionUID = 1L; // Para serializacion
+	private static final long serialVersionUID = 1L; // Para serializacion
 	private ArrayList<Prenda> articulos;
 	private ArrayList<Integer> cantidades;
 	private ArrayList<Bolsa> bolsas;
