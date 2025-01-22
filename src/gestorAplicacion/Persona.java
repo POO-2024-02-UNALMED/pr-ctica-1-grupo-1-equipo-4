@@ -1,7 +1,6 @@
 package gestorAplicacion;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Rol;
