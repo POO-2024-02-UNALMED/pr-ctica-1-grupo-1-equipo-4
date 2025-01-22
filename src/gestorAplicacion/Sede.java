@@ -33,6 +33,9 @@ public class Sede implements Serializable{
 	private int distancia;
 	//Con respecto a la principal
 
+	privete ArrayList<Integer> prodAproximada = new ArrayList<>();  // este atributo sera equivalente al de arriba,
+																	// no uso el de arriba porque este lo usaré solo como una lista de dos enteros
+																	// la posición 0 para pantalones y la 1 para el numero de camisas a producir
 	ArrayList<Maquinaria> maqProduccion = new ArrayList<>();
 	ArrayList<Maquinaria> maqOficina = new ArrayList<>();
 
@@ -153,6 +156,10 @@ public class Sede implements Serializable{
 	public void setDistancia(int distancia){this.distancia=distancia;}	
 	public void anadirEmpleado(Empleado emp){listaEmpleado.add(emp);}
 	public void quitarEmpleado(Empleado emp){listaEmpleado.remove(emp);}
+	
+	public ArrayList<Integer> getProdAproximada(){
+		return prodAproximada;
+	}
 
 	// ---Interacciones---
 	// Interacción 2 de Gestion Humana
@@ -310,13 +317,16 @@ public class Sede implements Serializable{
 			System.out.println("1. Delegar");
 			System.out.println("2. Poner en espera");
 
-			int opcion = scanner.nextInt();
-			if(opcion == 1){
-				//llamar a un metodo1 para empezar a producir todo en la sede principal
-			} else if(opcion == 2){
-				//llamar a otro metodo2 para pasar la produccion a una lista de espera
-			} else{
-				System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+			int opcion = 0;
+			while(opcion != 1 && opcion != 2){
+				opcion = scanner.nextInt();
+				if(opcion == 1){
+					//llamar a un metodo1 para empezar a producir todo en la sede principal
+				} else if(opcion == 2){
+					//llamar a otro metodo2 para pasar la produccion a una lista de espera
+				} else{
+					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+				}
 			}
 		} else if (señal == 10) {
 			System.out.println("La Sede Principal no esta trabajando por falta de maquinaria disponible...");
@@ -324,13 +334,16 @@ public class Sede implements Serializable{
 			System.out.println("1. Delegar");
 			System.out.println("2. Poner en espera");
 
-			int opcion = scanner.nextInt();
-			if(opcion == 1){
-				//llamar a un metodo3 para empezar a producir todo en la sede 2
-			} else if(opcion == 2){
-				//llamar a otro metodo2 para pasar la produccion a una lista de espera
-			} else{
-				System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+			int opcion = 0;
+			while(opcion != 1 && opcion != 2){
+				opcion = scanner.nextInt();
+				if(opcion == 1){
+					//llamar a un metodo3 para empezar a producir todo en la sede 2
+				} else if(opcion == 2){
+					//llamar a otro metodo2 para pasar la produccion a una lista de espera
+				} else{
+					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+				}
 			}
 		} else if(señal == 15){
 			//EMPEZAR A PRODUCIR TODO NORMALMENTE, PREFERIBLEMENTE CON UN METODO4, APARTE DE LOS OTROS TRES
@@ -338,7 +351,28 @@ public class Sede implements Serializable{
 			System.out.println("\n Lo sentimos, se debe arreglar la maquinaria en alguna de las dos sedes para comenzar a producir...\n");
 		}
 
+	}
+		
+		//aqui se organiza la produccion de cada sede segun el metodo predecirVentas()
+	public void calcProduccionSedes(){
 
+	}
+		//aqui se hace que todo se produzca en la sede Principal
+	public ArrayList<Integer> prodSedeP(){
+
+		// modificar la produccion aproximada enviando TODO para la sede principal, segun lo que se calculo en calcProduccionSedes
+		// luego retornar dicha produccion de la sede P (siendo esta un array de dos elementos, en el 0 el num pantalones y en el 1 camisas)
+		// se retorna al metodo planProduccion(), en donde todo se produce en la sedeP
+		
+		return prodAproximada;
+	}
+
+	public ArrayList<Integer> prodSede2(){
+
+		// modificar la produccion aproximada enviando TODO para la sede 2, segun lo que se calculo en calcProduccionSedes
+		// luego retornar dicha produccion de la sede 2 al metodo planProduccion(), en donde todo se produce en la sede2
+
+		return prodAproximada;
 	}
 	
 }
