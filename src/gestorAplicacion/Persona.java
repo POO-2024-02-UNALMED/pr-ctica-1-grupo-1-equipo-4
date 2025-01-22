@@ -14,7 +14,6 @@ public class Persona implements Serializable{
 	protected static ArrayList <Persona> listaPersonas = new ArrayList<Persona>();
 	protected String nombre;
 	protected int documento;
-	protected int salario;
 	protected Rol rol;
 	protected int experiencia;
 	protected boolean trabaja;
