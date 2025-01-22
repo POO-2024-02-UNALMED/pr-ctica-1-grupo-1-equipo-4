@@ -21,6 +21,7 @@ import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Bodega.Camisa;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
