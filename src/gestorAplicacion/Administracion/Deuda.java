@@ -6,7 +6,6 @@ import gestorAplicacion.Fecha;
 import gestorAplicacion.Bodega.Camisa;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
-import java.awt.image.BandCombineOp;
 
 public class Deuda implements Serializable {
 	private static final long serialVersionUID = 1L; // Para serializacion
