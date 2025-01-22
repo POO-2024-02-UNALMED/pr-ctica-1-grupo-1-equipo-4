@@ -23,7 +23,7 @@ public interface GastoMensual {
         return gastoTotal;
     }
     public static long gastosMensuales(Fecha fecha){
-        long GastosMaquinaria=Maquinaria.gastoMensualClase(fecha);
+        long GastosMaquinaria=Maquinaria.gastoMensualClase();
         long GastosPrenda=Prenda.gastoMensualClase(fecha);
         long GastosNomina=Empleado.gastoMensualClase();
         long GastoBolsa=Insumo.gastoMensualClase(fecha);

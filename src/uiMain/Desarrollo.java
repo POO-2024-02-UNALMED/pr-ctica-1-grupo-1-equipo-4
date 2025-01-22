@@ -190,11 +190,19 @@ public class Desarrollo {
             }
 
             String comando = in.next();
+            Empleado empleado;
+            int idxEmpleado;
             switch (comando) {
+                case "ver":
+                    System.out.println("que empleado quieres inspeccionar?");
+                    idxEmpleado = in.nextInt();
+                    empleado = sede.getlistaEmpleados().get(idxEmpleado);
+                    menuEmpleado(in,empleado);
+                    break;
                 case "quitar":
                     System.out.println("Cual quieres quitar?");
-                    int idxEmpleado = in.nextInt();
-                    Empleado empleado= sede.getlistaEmpleados().get(idxEmpleado);
+                    idxEmpleado = in.nextInt();
+                    empleado= sede.getlistaEmpleados().get(idxEmpleado);
                     Empleado.despedirEmpleados(new ArrayList<>(Arrays.asList(empleado)), false, Main.ingresarFecha(in));
                     break;
                 case "agregar":
@@ -228,6 +236,15 @@ public class Desarrollo {
                 default:
                     break;
             }
+        }
+    }
+
+    static void menuEmpleado(Scanner in, Empleado empleado){
+        System.err.println("Viendo empleado " + empleado);
+        if (empleado.getRol()==Rol.MODISTA){
+            System.out.println("Ha dañado "+empleado.getPrendasDescartadas()+" prendas en producción.");
+            System.out.println("Y ha producido "+empleado.getPrendasProducidas()+" prendas existosamente.");
+            return;
         }
     }
 

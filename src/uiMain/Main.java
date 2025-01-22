@@ -269,7 +269,7 @@ public class Main {
             System.out.println("Se nececitan " + cantidadNecesaria + " " + rol + "s, estos son los candidatos:");
 
             for (Persona persona : aptos) {
-                System.out.println("Nombre: " + persona.getNombre() + " Documento: " + persona.getDocumento() + "con "
+                System.out.println("Nombre: " + persona.getNombre() + " Documento: " + persona.getDocumento() + " con "
                         + persona.getExperiencia() + " años de experiencia.");
             }
 
