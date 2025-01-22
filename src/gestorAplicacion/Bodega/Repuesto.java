@@ -1,6 +1,5 @@
 package gestorAplicacion.Bodega;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Repuesto extends Insumo { // Implementa serializable por repuesto

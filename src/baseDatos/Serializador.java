@@ -28,13 +28,13 @@ public class Serializador {
         System.out.println("Encontramos estos archivos para guardar: " +docs.length);
         System.out.println("En la ruta"+rutaTemp.getAbsolutePath());
 
-        PrintWriter pw;
 
         // Iteramos por cada archivo de la carpeta donde guardamos las cosas de nuestro programa
         for (File file: docs){
             try {
                 // PrintWriter tiene la particularidad de que al crearlo, trunca el archivo.
-                pw = new PrintWriter(file);
+                PrintWriter pw = new PrintWriter(file);
+                pw.close();
             } catch (FileNotFoundException e) {
                 // Esto esta en la presentación, pero parece puesto automaticamente.
                 // Si no se puede abrir un archivo que sabemos que existe, es porque algo muy raro paso y el codigo de arriba falló.

@@ -1,6 +1,5 @@
 package gestorAplicacion.Bodega;
 import java.io.Serializable;
-import java.sql.SQLData;
 import java.util.ArrayList;
 
 import gestorAplicacion.Fecha;
