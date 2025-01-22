@@ -55,34 +55,14 @@ public class Fecha implements Serializable{
 
 	public int diasHasta(Fecha hasta) {
 		int dias = 0;
-		Fecha fecha = new Fecha(this.dia, this.mes, this.año);
-		while (!compararFecha(fecha, hasta)) {
-			dias++;
-			fecha.siguienteDia();
-		}
+		int años = hasta.año - this.año;
+		dias += años * 365;
+		int meses = hasta.mes - this.mes;
+		dias += meses * 30;
+		dias += hasta.dia - this.dia;
 		return dias;
 	}
 
-	// Actua in-place, modifica la fecha.
-	public void siguienteDia(){
-		dia++;
-		if (dia==32 && (mes==1 || mes==3 || mes==5 || mes==7 || mes==8 || mes==10 || mes==12)){
-			mes++;
-			dia=0;
-		}
-		if (dia==31 && (mes==4 || mes==6 || mes==9 || mes==11)){
-			mes++;
-			dia=0;
-		}
-		if (dia==30 && mes==2){
-			mes++;
-			dia=0;
-		}
-		if(mes==12){
-			año++;
-			mes=0;
-		}
-	}
 
 	public String toString(){
 		return "Día: "+dia+" Mes: "+mes+" Año:"+año;

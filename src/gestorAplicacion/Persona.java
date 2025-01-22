@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Rol;
+import gestorAplicacion.Administracion.Area;
 import gestorAplicacion.Bodega.Maquinaria;
 
 public class Persona implements Serializable{
@@ -73,20 +74,26 @@ public class Persona implements Serializable{
 	}
 
 	// Interacción 3 de Gestion Humana
-	static public void contratar(ArrayList<Persona> aContratar, ArrayList<Empleado> aReemplazar){
+	static public void contratar(ArrayList<Persona> aContratar, ArrayList<Empleado> aReemplazar, Fecha fecha){
 		for(Persona persona: aContratar){
 			Persona.listaPersonas.remove(persona);
-			Empleado emp = new Empleado(persona);
+			Area area=null;
+			Sede sede=null;
 			for(Empleado antiguo: aReemplazar){
 				if(antiguo.getRol().equals(persona.getRol())){
-					emp.setAreaActual(antiguo.getAreaActual());
-					emp.setSede(antiguo.getSede());
-					Maquinaria.asignarMaquinaria(emp);
+					area = antiguo.getAreaActual();
+					sede = antiguo.getSede();
 					aReemplazar.remove(antiguo);
 					break;
 				}
 			}
-			emp.setSalario((int) (persona.getRol().getSalarioInicial()+persona.getRol().getSalarioInicial()*0.5f*persona.getExperiencia()));
+			if(area!= null && sede!=null){
+				Empleado emp = new Empleado(area,fecha, sede, persona);
+				Maquinaria.asignarMaquinaria(emp);
+				emp.setSalario((int) (persona.getRol().getSalarioInicial()+persona.getRol().getSalarioInicial()*0.5f*persona.getExperiencia()));
+			} else {
+				System.out.println("No se pudo contratar a "+persona.getNombre()+" ¡No sabemos a quien reemplaza!");
+			}
 		}
 	}
 	public static void imprimirNoEmpleados() {

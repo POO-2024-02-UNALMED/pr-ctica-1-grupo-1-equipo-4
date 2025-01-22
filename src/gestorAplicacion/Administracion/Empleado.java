@@ -32,7 +32,6 @@ public class Empleado extends Persona implements GastoMensual{
     public Empleado(Persona p){
         super(p.getNombre(),p.getDocumento(),p.getRol(),p.getExperiencia(),p.isTrabaja(),p.getMembresia());
         Empleado.listaEmpleados.add(this);
-        sede.getlistaEmpleados().add(this);
     }
 
     public Empleado(Area area,Fecha fecha, Sede sede,Persona p){
@@ -41,6 +40,7 @@ public class Empleado extends Persona implements GastoMensual{
         this.areas.add(area);
         fechaContratacion=fecha;
         this.sede=sede;
+        sede.getlistaEmpleados().add(this);
     }
     
     public Empleado(Area area,Fecha fecha, Sede sede,String nom, int doc, Rol rol, int exp, Membresia mem, Maquinaria maquina){

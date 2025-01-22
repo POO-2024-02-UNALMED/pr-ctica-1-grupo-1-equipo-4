@@ -55,7 +55,7 @@ public class Main {
                     fecha = ingresarFecha(in);
                     ArrayList<Empleado> despedidos = despedirEmpleados(in, fecha);
                     ArrayList<Empleado> aContratar = reorganizarEmpleados(in, despedidos);
-                    contratarEmpleados(aContratar, in);
+                    contratarEmpleados(aContratar, in, fecha);
                     break;
 
                 case 2:
@@ -255,7 +255,7 @@ public class Main {
 
     // Interaccion 3 gestion Humana
     // https://docs.google.com/document/d/1IomqwzQR1ZRXw9dFlHx5mA_2oOowyIbxauZeJ6Rqy6Q/edit?tab=t.0#heading=h.zgpssvyj8l65
-    static public void contratarEmpleados(ArrayList<Empleado> aReemplazar, Scanner in) {
+    static public void contratarEmpleados(ArrayList<Empleado> aReemplazar, Scanner in, Fecha fecha) {
         ArrayList<Object> elecciones = Persona.entrevistar(aReemplazar);
         ArrayList<Persona> aptos = (ArrayList<Persona>) elecciones.get(0);
         ArrayList<Rol> rolesAReemplazar = (ArrayList<Rol>) elecciones.get(1);
@@ -286,7 +286,7 @@ public class Main {
 
         }
 
-        Persona.contratar(aContratar, aReemplazar);
+        Persona.contratar(aContratar, aReemplazar, fecha);
     }
 
     // Interacción 1 Sistema Financiero
@@ -978,7 +978,6 @@ public class Main {
         a.add(Area.VENTAS);
         a.add(Area.OFICINA);
         ol.setAreas(a);
-        sede2.getlistaEmpleados().add(ol);
         new Evaluacionfinanciera(-200_000, ol);
         new Evaluacionfinanciera(-120_000, ol);
         new Evaluacionfinanciera(-50_000, ol);
@@ -1161,17 +1160,6 @@ public class Main {
         System.out.println("Ingrese la fecha de la venta:");
         Fecha fechaVenta = ingresarFecha(scanner);
 
-<<<<<<< Updated upstream
-        System.out.println("Seleccione el cliente al que se le realizará la venta:");
-        Persona.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
-        int clienteSeleccionado = scanner.nextInt();
-        scanner.nextLine();
-        ArrayList<Persona> noEmpleados = new ArrayList<>();
-        for (Persona persona : Persona.getListaPersonas()) { // Recorre listaPersonas para filtrar a los que no son
-                                                             // empleados
-            if (!(persona instanceof Empleado)) {
-                noEmpleados.add(persona);
-=======
       System.out.println("Seleccione el cliente al que se le realizará la venta:");
       Persona.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
       int clienteSeleccionado = scanner.nextInt();
@@ -1288,8 +1276,7 @@ public class Main {
       if(!desicion.equals("si")) {
       	break;
       } 
-     }       
-    }
+    }       
     int sumaPreciosPrendas = 0;
     int cantidadCamisas = 0;
     int cantidadPantalon = 0;
@@ -1301,7 +1288,6 @@ public class Main {
             if (cantidadCamisas >= 10) {int descuento = (int)(calculoCamisas * 0.05f);
                 sumaPreciosPrendas += calculoCamisas-descuento;}
             else if(cantidadCamisas < 10) {sumaPreciosPrendas += calculoCamisas;}
->>>>>>> Stashed changes
             }
         }
 
@@ -1464,18 +1450,12 @@ public class Main {
         vendedor.setRendimientoBonificacion(comisión);
 
         return venta;
+    
     }
 
-<<<<<<< Updated upstream
-    // Interacción 2 Facturación
-    public static Venta realizarVenta(Scanner scanner, Venta venta) {
-        // Se llama al método vender para obtener la venta inicial
-        venta = vender(scanner);
-=======
      //Interacción 2 Facturación
     public static Venta realizarVenta(Scanner scanner,  Venta venta) {
 	    // Se llama al método vender para obtener la venta inicial
->>>>>>> Stashed changes
 
         ArrayList<Prenda> productosSeleccionados = venta.getArticulos();
         Sede sede = venta.getSede();

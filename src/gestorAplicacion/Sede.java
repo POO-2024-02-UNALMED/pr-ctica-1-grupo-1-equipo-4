@@ -161,8 +161,19 @@ public class Sede implements Serializable{
 		ArrayList<Sede> transferirDe = new ArrayList<Sede>();
 		ArrayList<Rol> rolesATransferir = new ArrayList<Rol>();
 
+
 		for (int idxRol=0; idxRol<Rol.values().length;idxRol++){
 			Rol rol = Rol.values()[idxRol];
+			boolean hayEmpleados=false;
+			for (Empleado emp : despedidos){
+				if (emp.getRol() == rol){
+					hayEmpleados = true;
+					break;
+				}
+			}
+			if (!hayEmpleados){
+				continue; // Nos saltamos esta iteración si no hay empleados de este rol por reemplazar.
+			}
 			for (Sede sede : listaSedes){
 				switch(rol){
 					case MODISTA:
