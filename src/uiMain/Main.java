@@ -78,7 +78,7 @@ public class Main {
             break;
 
         case 4:
-           Venta venta = Vender(in);
+           Venta venta = vender(in);
            Main.realizarVenta(in, venta);
            Main.tarjetaRegalo(in, venta);
            Sede sede = venta.getSede();
@@ -1474,6 +1474,30 @@ public static Proveedor getProveedorBDelMain(){
                 }
                 return codigo.toString();
             }
+
+        public static void actualizarProveedores(){
+            Proveedor.getListaProveedores().get(0);
+            Sede sedeP=null;
+            for (Sede sede:Sede.getlistaSedes()){
+                 if (sede.getNombre().equals("Sede Principal")){
+                    sedeP=sede;
+                }
+                }
+            for (Insumo insumo:sedeP.getListaInsumosBodega()){
+                ArrayList<Proveedor> compatibles=new ArrayList<Proveedor>();
+                for (Proveedor prov: Proveedor.getListaProveedores()){
+                    if (prov.getInsumo().getNombre().equals(insumo.getNombre())){
+                        compatibles.add(prov);
+                    }
+                ArrayList<Proveedor> nuevos=(ArrayList<Proveedor>)compatibles.clone();
+                Collections.shuffle(nuevos);
+                for (int i=0; i<nuevos.size();i++){
+                    compatibles.get(i).setPrecio(nuevos.get(i).getPrecio());
+                }
+                }
+                    
+            }
+         }
 
  }
 
