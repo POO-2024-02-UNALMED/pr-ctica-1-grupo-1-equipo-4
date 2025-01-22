@@ -63,15 +63,6 @@ public class Venta implements Serializable {
 		return acumulado;
 	}
 
-	static public ArrayList<Venta> listaVentasAsesoradas(Empleado empleado){
-		ArrayList<Venta> asesoradas = new ArrayList<Venta>();
-		for (Venta venta : empleado.getSede().getHistorialVentas()){
-			if (venta.asesor.equals(empleado)){
-				asesoradas.add(venta);
-			}
-		}
-		return asesoradas;
-	}
 
 	static public int cantidadVentasEncargadasEnMes(Empleado empleado, Fecha fecha){
 		int cantidad=0;
@@ -148,14 +139,24 @@ public class Venta implements Serializable {
 	else {return 0.5F;}
    }
 
-   static public ArrayList<Venta> filtrarPorMes(ArrayList<Venta> ventas, Fecha fecha){
-	   ArrayList<Venta> ventasMes=new ArrayList();
+   static public ArrayList<Venta> filtrar(ArrayList<Venta> ventas, Fecha fecha){
+	   ArrayList<Venta> ventasMes=new ArrayList<Venta>();
 	   for (Venta venta : ventas){
 		   if (Fecha.compararAño(venta.getFechaVenta().getAño(),fecha.getAño())&&Fecha.compararMes(venta.getFechaVenta().getMes(),fecha.getMes())){
 			   ventasMes.add(venta);
 		   }
 	   }
 	   return ventasMes;
+   }
+
+   static public ArrayList<Venta> filtrar(ArrayList<Venta> ventas, Empleado empleado){
+	   ArrayList<Venta> asesoradas = new ArrayList<Venta>();
+	   for (Venta venta : ventas){
+		   if (venta.asesor.equals(empleado)){
+			   asesoradas.add(venta);
+		   }
+	   }
+	   return asesoradas;
    }
 
 

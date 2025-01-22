@@ -91,7 +91,7 @@ public class Empleado extends Persona implements GastoMensual{
                         rendimiento = (emp.prendasProducidas/emp.prendasDescartadas)*100;
                         break;
                     case VENTAS:
-                        int ventasAsesoradas = Venta.listaVentasAsesoradas(emp).size();
+                        int ventasAsesoradas = Venta.filtrar(emp.getSede().getHistorialVentas(),emp).size();
                         if (ventasAsesoradas!=0){
                             rendimiento= Venta.acumuladoVentasAsesoradas(emp)/ventasAsesoradas;
                         } else {
