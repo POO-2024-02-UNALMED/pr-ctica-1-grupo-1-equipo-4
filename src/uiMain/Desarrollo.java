@@ -49,7 +49,7 @@ public class Desarrollo {
         buclePrendas:
         while(true){
             System.out.println("Hay estas prendas:");
-            for (int idxPrenda=0; idxPrenda<Prenda.getPrendasInventadas().size(); idxPrenda++){
+            for (int idxPrenda=0; idxPrenda<Prenda.getPrendasInventadas().size()-1; idxPrenda++){
                 System.out.println(idxPrenda+". "+Prenda.getPrendasInventadas().get(idxPrenda).getNombre());
             }
             String comando = in.next().toLowerCase();

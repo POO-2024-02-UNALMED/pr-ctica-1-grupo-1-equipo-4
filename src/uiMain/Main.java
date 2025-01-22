@@ -35,6 +35,7 @@ public class Main {
     private static Proveedor proveedorBdelmain;
     public static void main (String[] args){
         Deserializador.deserializar();
+        new Main().crearSedesMaquinasRepuestos();
         Scanner in = new Scanner(System.in);
         buclePrincipal:
         while (true){
