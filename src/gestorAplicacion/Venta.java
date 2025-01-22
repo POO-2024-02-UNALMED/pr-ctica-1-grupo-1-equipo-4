@@ -119,9 +119,9 @@ public class Venta implements Serializable {
 	if (fecha.getMes()>11){año=fecha.getAño();}
 	else if (fecha.getMes()==11 && fecha.getDia()>=24){año=fecha.getAño();}
 	else{año=fecha.getAño()-1;} // Si no ha pasado black friday, usar el año anterior
-	ArrayList<Fecha> diasBlackFriday=new ArrayList();
+	ArrayList<Fecha> diasBlackFriday=new ArrayList<Fecha>();
 	diasBlackFriday.add(new Fecha(28,11,año));diasBlackFriday.add(new Fecha(29,11,año));diasBlackFriday.add(new Fecha(30,11,año));
-	ArrayList<Fecha> FechasNormales=new ArrayList();
+	ArrayList<Fecha> FechasNormales=new ArrayList<Fecha>();
 	//Tres Fechas contiguas en el mismo mes pero sin black Fiday
 	FechasNormales.add(new Fecha(23,11,año));FechasNormales.add(new Fecha(24,11,año));FechasNormales.add(new Fecha(25,11,año));
 	long montoventasBF=0;
@@ -173,7 +173,7 @@ public class Venta implements Serializable {
 		for(int meses=0;meses<5;meses++){
 			//Iteramos por las ventas de la sede de ese mes
 			int sumatoriaYMes=0;
-			for(Venta venta: Venta.filtrarPorMes(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
+			for(Venta venta: Venta.filtrar(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
 				for(int j=0; j<venta.getArticulos().size();j++){
 					if(venta.getArticulos().get(j).getNombre().equals(prenda.getNombre())){
 						sumatoriaYMes+=venta.getCantidades().get(j);
