@@ -6,6 +6,7 @@ import gestorAplicacion.Administracion.Banco;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Bodega.Insumo;
+import gestorAplicacion.Bodega.Prenda;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Membresia;
 import gestorAplicacion.Sede;
@@ -22,6 +23,7 @@ public class Desarrollo {
         while (true) {
         System.out.println("- Bancos");
         System.out.println("- Sedes");
+        System.out.println("- Prendas");
         System.out.println("- atras");
         String comando = in.next().toLowerCase();
         switch (comando) {
@@ -31,12 +33,30 @@ public class Desarrollo {
             case "sedes":
                 verSedes(in);
                 break;
+            case "prendas":
+                verPrendas(in);
+                break;
             case "atras":
                 break bucleDesarrollo;
             default:
                 System.out.println("Comando no reconocido");
                 break;
         }
+        }
+    }
+
+    static void verPrendas(Scanner in){
+        buclePrendas:
+        while(true){
+            System.out.println("Hay estas prendas:");
+            for (int idxPrenda=0; idxPrenda<Prenda.getPrendasInventadas().size(); idxPrenda++){
+                System.out.println(idxPrenda+". "+Prenda.getPrendasInventadas().get(idxPrenda).getNombre());
+            }
+            String comando = in.next().toLowerCase();
+            switch (comando) {
+                case "atras":
+                    break buclePrendas;
+            }
         }
     }
 

@@ -179,7 +179,7 @@ public class Empleado extends Persona implements GastoMensual{
         return retorno;
     }
 
-    // Interaccion 2 gestion humana. Puedes poner conTransacciones en falso en caso de que quieras quitar al empleado "Limpiamente", por ejemplo
+    // Interaccion 1 gestion humana. Puedes poner conTransacciones en falso en caso de que quieras quitar al empleado "Limpiamente", por ejemplo
     // en el modulo de Desarrollo.
     static public void despedirEmpleados(ArrayList<Empleado> empleados, boolean conTransacciones, Fecha fecha){
         for (Empleado emp : empleados){
