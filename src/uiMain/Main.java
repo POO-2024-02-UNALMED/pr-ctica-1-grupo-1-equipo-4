@@ -1222,7 +1222,7 @@ public static Proveedor getProveedorBDelMain(){
      //Interacción 2 Facturación
     public static Venta realizarVenta(Scanner scanner,  Venta venta) {
 	    // Se llama al método vender para obtener la venta inicial
-	    venta = Vender(scanner);
+	    venta = vender(scanner);
 
 	    ArrayList<Prenda> productosSeleccionados = venta.getArticulos();
 	    Sede sede = venta.getSede();
@@ -1348,7 +1348,133 @@ public static Proveedor getProveedorBDelMain(){
 
 	    System.out.println("Venta realizada. Total de la venta con bolsas: " + totalVenta);
 	    sede.getHistorialVentas().add(venta);
-	}
+	return venta;}
+      //Interacción 3 Facturación
+      public static void tarjetaRegalo(Scanner scanner, Venta venta) {
+        Sede sede = venta.getSede();
+        Banco banco = sede.getCuentaSede();
+    
+            System.out.println("¿Desea usar una tarjeta de regalo? (si/no)");
+            String respuesta = scanner.nextLine().toLowerCase();
+          int nuevoIntento = 1;
+          while(nuevoIntento==1)
+            if (respuesta.equals("si")) {
+                System.out.println("Ingrese el código de la tarjeta de regalo:");
+                String codigoIngresado = scanner.nextLine(); 
+    
+                if (Venta.getCodigosRegalo().contains(codigoIngresado)) {
+                    System.out.println("Código válido. Procesando tarjeta de regalo...");
+                    int indice = Venta.getCodigosRegalo().indexOf(codigoIngresado);
+                    int montoTarjeta = Venta.getMontosRegalo().get(indice);
+                    int montoVenta = venta.getMontoPagado();
+    
+                    if (montoTarjeta >= montoVenta) {
+                        System.out.println("El monto de la tarjeta cubre la totalidad de la venta.");
+                        int saldoRestante = montoTarjeta - montoVenta;
+                        Venta.getMontosRegalo().add(indice, saldoRestante);
+                        venta.setMontoPagado(0);//La compra fue cubierta por una tarjeta de regalo
+    
+                        System.out.println("Venta pagada con tarjeta de regalo.");
+                        System.out.println("Saldo restante en la tarjeta de regalo: $" + saldoRestante);
+                    } else {
+    
+                        int montoFaltante = montoVenta - montoTarjeta;//Verificar cuánto le faltó a la tarjeta por cubrir
+                        Venta.getMontosRegalo().add(indice, 0);
+                        venta.setMontoPagado(montoFaltante);//Lo que faltó por cubrir con la tarjeta es lo que debe pagar el cliente
+                        System.out.println("El monto de la tarjeta no es suficiente para cubrir la venta.");
+                        System.out.println("Monto restante a pagar: $" + montoFaltante);
+                    }
+                    if (Venta.getMontosRegalo().get(indice) == 0) {
+                        Venta.getCodigosRegalo().remove(indice);//Ya que la tarjeta ha sido usada, se desactiva y elimina de la lista
+                        Venta.getMontosRegalo().remove(indice);
+                        System.out.println("La tarjeta de regalo se ha agotado y ha sido desactivada.");
+                    }
+                } else {
+                    System.out.println("El código ingresado no es válido. Por favor, intentar de nuevo o pagar el monto total");
+                    System.out.println("Ingresa 1 para intentar de nuevo.");
+                    System.out.println("Ingresa 2 para salir del intento");
+                    nuevoIntento = scanner.nextInt();
+                }
+            }
+                System.out.println("¿Desea comprar una tarjeta de regalo? (si/no)");
+                String compraTarjeta = scanner.nextLine().toLowerCase();
+    
+                if (compraTarjeta.equals("si")) {
+                    System.out.println("¿Por cuánto será la tarjeta de regalo? (monto en pesos)");
+                    int montoTarjeta = scanner.nextInt(); 
+                    String codigoGenerado = generarCodigoAleatorio();
+                    Venta.getCodigosRegalo().add(codigoGenerado);
+                    Venta.getMontosRegalo().add(montoTarjeta);
+                    banco.setAhorroBanco(banco.getAhorroBanco() + montoTarjeta);//Se agrega la cuenta de ahorros de la sede 
+                    //el monto a pagar por la tarjeta de regalo de acuerdo al monto del que se desea, sea
+    
+                    System.out.println("Tarjeta de regalo generada exitosamente.");
+                    System.out.println("Código: " + codigoGenerado);
+                    System.out.println("Monto: $" + montoTarjeta);
+                }
+    
+                // Calcular el ingreso de la venta
+                int ingreso = venta.getMontoPagado();
+                System.out.println("Ingreso calculado: $" + ingreso);
+                banco.setAhorroBanco(banco.getAhorroBanco() + ingreso);
+    
+                System.out.println("Monto total en la cuenta de la sede: $" + banco.getAhorroBanco());
+                Banco bancoRecibir = sede.getCuentaSede();
+                Banco bancoTransferir = sede.getCuentaSede();
+                if (!bancoTransferir.getNombreCuenta().equals("principal")) {
+                    System.out.println("¿Desea transferir fondos a la cuenta principal? (si/no)");
+                    String transferirFondos = scanner.nextLine().toLowerCase();            
+                    if (transferirFondos.equals("si")) {
+                        System.out.println("¿Qué porcentaje desea transferir? (20% o 60%)");
+                        int porcentaje = scanner.nextInt();            
+                        if (porcentaje == 20 || porcentaje == 60) {
+                            long montoTransferencia = (bancoTransferir.getAhorroBanco() * porcentaje / 100) - 50000;
+                            if (montoTransferencia > 0) {
+                                    if (bancoRecibir.getNombreCuenta().equals("principal")){
+                                        bancoRecibir.setAhorroBanco(bancoTransferir.getAhorroBanco()-(montoTransferencia + 50000));
+                                        bancoRecibir.setAhorroBanco(bancoRecibir.getAhorroBanco() + montoTransferencia);                
+                                        System.out.println("Transferencia exitosa.");
+                                        System.out.println("Monto transferido: $" + montoTransferencia);
+                                        System.out.println("Costo de transferencia: $50000");}
+                            } else {
+                                System.out.println("Fondos insuficientes para cubrir la transferencia y el costo.");
+                            }
+                        } else {
+                            System.out.println("Porcentaje no válido. No se realizará la transferencia.");
+                        }
+                    }
+                }
+            
+                if (bancoTransferir != null) {
+                    System.out.println("Estado final de la cuenta de la sede: $" + bancoTransferir.getAhorroBanco());
+                }            
+                if (bancoRecibir != null) {
+                    System.out.println("Estado final de la cuenta principal: $" + bancoRecibir.getAhorroBanco());
+                }
+            }
+            //Método auxiliar para generar un código ante la compra de una nueva tarjeta de regalo
+            private static String generarCodigoAleatorio() {
+                Random random = new Random();
+                StringBuilder codigo = new StringBuilder();
+                String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                for (int i = 0; i < 8; i++) {
+                    int indice = random.nextInt(caracteres.length()); 
+                    codigo.append(caracteres.charAt(indice));
+                    while (Venta.getCodigosRegalo().contains(codigo.toString())) {
+                        codigo.setLength(0);  // Limpia el StringBuilder                
+                        for (int e = 0; e < 8; e++) {
+                            int index = random.nextInt(caracteres.length());
+                            codigo.append(caracteres.charAt(index));
+                        }
+                        if (!Venta.getCodigosRegalo().contains(codigo.toString())) {
+                            break;  
+                        }
+                    }
+                    Venta.getCodigosRegalo().add(codigo.toString());
+                }
+                return codigo.toString();
+            }
+
  }
 
     
