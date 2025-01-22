@@ -186,6 +186,7 @@ public class Desarrollo {
             System.out.println("Hay estos empleados");
             for (int idxEmpleado=0; idxEmpleado<sede.getlistaEmpleados().size(); idxEmpleado++){
                 System.out.println(idxEmpleado+". "+sede.getlistaEmpleados().get(idxEmpleado));
+                System.out.println("-----------------");
             }
 
             String comando = in.next();

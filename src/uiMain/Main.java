@@ -142,11 +142,11 @@ public class Main {
             System.out.println(mensaje);
         }
 
-        for (Empleado emp : aDespedir) {
-            System.out.println(emp.getNombre() + " " + emp.getAreaActual());
-        }
 
         System.out.println("Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
+        for (Empleado emp : aDespedir) {
+            System.out.println(emp.getNombre() + " " + emp.getAreaActual() + " " + emp.getDocumento());
+        }
         int opcion = 2;
         while (opcion == 2) {
             System.out.println("1. Elegir a los despedidos");
@@ -175,20 +175,22 @@ public class Main {
         // Ya tenemos la lista definitiva de despedibles, incluidos los que el usuario
         // quiera.
         ArrayList<Empleado> seleccion = new ArrayList<Empleado>();
-        System.out.println("¿Que empleados quieres despedir? Pon sus documentos o FIN para terminar.");
-        String doc = scanner.nextLine();
-        while (!doc.equals("FIN")) {
+        System.out.println("¿Que empleados quieres despedir? Pon sus documentos o 0 para terminar.");
+        int doc = Main.nextIntSeguro(scanner);
+        while (doc!=0) {
             for (Empleado emp : aDespedir) {
-                if (emp.getDocumento() == Integer.parseInt(doc)) {
+                if (emp.getDocumento() == doc) {
                     seleccion.add(emp);
                 }
             }
-            doc = scanner.nextLine();
+            doc = Main.nextIntSeguro(scanner);
         }
 
         // Ya tenemos la lista de empleados a despedir.
 
+        System.out.println("Despidiendo empleados...");
         Empleado.despedirEmpleados(seleccion, true, fecha);
+        System.out.println("Listo!");
         return seleccion;
     }
 
@@ -1206,6 +1208,7 @@ public class Main {
         System.out.println("Seleccione el número del producto que venderá:");
         int costosEnvio = 0;
 
+        bucleAgregarPrenda:
         while (true) {
             for (int i = 0; i < Prenda.getPrendasInventadas().size(); i++) {
                 Prenda producto = Prenda.getPrendasInventadas().get(i);
@@ -1271,10 +1274,10 @@ public class Main {
                 ;
                 if (desicion.equals("no")) {
                     System.out.println("Selección finalizada");
-                    break;
+                    break bucleAgregarPrenda;
                 }
                 if (!desicion.equals("si")) {
-                    break;
+                    break bucleAgregarPrenda;
                 }
             }
         }
