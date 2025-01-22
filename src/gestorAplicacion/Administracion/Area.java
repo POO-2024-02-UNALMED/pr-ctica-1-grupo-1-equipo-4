@@ -36,7 +36,7 @@ public enum Area {
                             cantidadEmpleadosOfi++;
                         }
                     }
-                    a.rendimientoDeseado = (float) Venta.filtrarPorMes(sede.getHistorialVentas(), fecha).size() / cantidadEmpleadosOfi; // Cantidad de ventas por empleado de oficina
+                    a.rendimientoDeseado = (float) Venta.filtrar(sede.getHistorialVentas(), fecha).size() / cantidadEmpleadosOfi; // Cantidad de ventas por empleado de oficina
                     break;
                 case VENTAS:
                     int montoTotal = 0;

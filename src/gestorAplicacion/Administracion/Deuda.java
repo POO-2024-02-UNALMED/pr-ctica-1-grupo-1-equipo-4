@@ -6,7 +6,6 @@ import gestorAplicacion.Fecha;
 import gestorAplicacion.Bodega.Camisa;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
-import java.awt.image.BandCombineOp;
 
 public class Deuda implements Serializable {
 	private static final long serialVersionUID = 1L; // Para serializacion
@@ -96,7 +95,7 @@ public class Deuda implements Serializable {
 	return deudaCalculada;
 	}
 
-	static public int calcularCuotas(int monto){
+	static public int calcularCuotas(long monto){
 		int cuotas = 0;
 		if(monto > 0 && monto < 1000000){
 			cuotas = 1;

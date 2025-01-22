@@ -21,7 +21,6 @@ import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Bodega.Camisa;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
@@ -290,13 +289,16 @@ public static Evaluacionfinanciera calcularBalanceAnterior(Fecha fecha, Scanner 
             for (Empleado emp:Empleado.listaEmpleados){
                 if (emp.getAreaActual().equals(Area.DIRECCION)){
                     elegible.add(emp);
-                }
+                }}
                 int i =-1;
                 while (i<0||i>=elegible.size()){
+                    for (int ii=0;ii<elegible.size();ii++){
+                        System.out.println(ii+" "+elegible.get(ii)+"\n");
+                    }
                     System.out.println("Ingrese número de 0 a "+(elegible.size()-1+""));
                     i=Main.nextIntSeguro(in);
                     empleado = elegible.get(i);}
-            }
+            
             Evaluacionfinanciera nuevoBalance=new Evaluacionfinanciera (balanceTotal,empleado);
             return nuevoBalance;
             }
@@ -305,7 +307,7 @@ public static Evaluacionfinanciera calcularBalanceAnterior(Fecha fecha, Scanner 
 public static long calcularEstimado(Fecha fecha,Evaluacionfinanciera balanceAnterior,Scanner in){
 
     float porcentaje=-1F;
-    while (porcentaje>0.6F || porcentaje<1){
+    while (porcentaje<0.0F && porcentaje>1){
         System.out.println("Ingrese porcentaje a modificar para fidelidd de oro entre 0.6 y 1, o 0.0 si no desea modificarlo");
         porcentaje = in.nextFloat();}
     long diferenciaEstimada=Evaluacionfinanciera.estimadoVentasGastos(fecha, porcentaje, balanceAnterior);
@@ -330,9 +332,10 @@ public static String planRecuperacion(long diferenciaEstimada,Fecha fecha, Scann
         int cuotas=0;
         while (i<=0||i>=180){
             System.out.println("Ingrese número de 1 a 180");
-            cuotas=in.nextInt();}
-        Deuda deudaAdquirir=new Deuda(fecha,diferenciaEstimada,Nombrebanco, "Banco",cuotas); 
+            cuotas=in.nextInt();
         }
+        Deuda deudaAdquirir=new Deuda(fecha,diferenciaEstimada,Nombrebanco, "Banco",cuotas); 
+    }
     float descuento=Venta.blackFriday(fecha);
     String BFString=null;
     if (descuento==0.0F){
@@ -577,9 +580,9 @@ static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> lis
                     Deuda deuda=null;
                     if(montoDeuda > 0){
                         if(!(proveedor.getDeuda().getEstadodePago())){
-                        proveedor.unificarDeudasXProveedor(fecha, montoDeuda, proveedor.getNombre(),5);
+                        proveedor.unificarDeudasXProveedor(fecha, montoDeuda, proveedor.getNombre());
                         deuda=proveedor.getDeuda();}
-                        else{deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor", 5);}
+                        else{deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor", Deuda.calcularCuotas(montoDeuda));}
                         deudas.add(deuda);
                     }
                     
@@ -841,12 +844,12 @@ public void crearSedesMaquinasRepuestos(){
 
         
     
-    Banco bp=new Banco("Banco Montreal","principal",400_000_000,0.05F);
-    Banco b1=new Banco("Banco Montreal","secundaria",5_000_000,0.05F);
-    Banco b3=new Banco ("Bancolombia","principal",125_000_000,0.09F);
-    Banco b4=new Banco ("Banco Davivienda","principal",80_000_000,0.1F); 
-    Banco b2=new Banco ("Banco de Bogotá","principal",140_000_000,0.07F);
-    Banco tm=new Banco("Inversiones Terramoda","principal",160_000_000,0.0F);
+    Banco bp=new Banco("principal","Banco Montreal",400_000_000,0.05F);
+    Banco b1=new Banco("secundaria","Banco Montreal",5_000_000,0.05F);
+    Banco b3=new Banco ("principal","Bancolombia",125_000_000,0.09F);
+    Banco b4=new Banco ("principal","Banco Davivienda",80_000_000,0.1F); 
+    Banco b2=new Banco ("principal","Banco de Bogotá",140_000_000,0.07F);
+    Banco tm=new Banco("principal","Inversiones Terramoda",160_000_000,0.0F);
     Banco.setCuentaPrincipal(bp);sede2.setCuentaSede(b1);sedeP.setCuentaSede(bp);
 
     Deuda d1=new Deuda(new Fecha(15,1,20),20_000_000,"Bancolombia","Banco",1);
@@ -923,6 +926,14 @@ public void crearSedesMaquinasRepuestos(){
     Persona c11=new Persona("Julia Solano",28943158,Rol.SECRETARIA,10,false,Membresia.BRONCE);
     Persona c12=new Persona("Maria Beatriz Valencia",6472799,Rol.ASISTENTE,2,false,Membresia.BRONCE);
     Persona c13=new Persona("Antonio Sanchéz",8922998,Rol.VENDEDOR,12,false,Membresia.NULA);
+
+    ArrayList<String> tipos = new ArrayList<String>(); ArrayList<Float> cantidades = new ArrayList<Float>();
+    tipos.add("Tela");tipos.add("Boton");tipos.add("Cremallera");tipos.add("Hilo");
+    cantidades.add(1F);cantidades.add(1F);cantidades.add(1F);cantidades.add(100F);
+    Pantalon.setCantidadInsumo(cantidades);Pantalon.setTipoInsumo(tipos);
+    tipos.clear();tipos.add("Tela");tipos.add("Boton");tipos.add("Hilo");
+    tipos.clear();cantidades.add(1.5F);cantidades.add(3F);cantidades.add(100F);
+    Camisa.setCantidadInsumo(cantidades);Pantalon.setTipoInsumo(tipos);
 
     Prenda r1=new Pantalon(new Fecha(1,1,23),Hugo,false,true,sedeP);
     Prenda r2=new Pantalon(new Fecha(1,1,23),Inez,false,true,sedeP);

@@ -36,14 +36,6 @@ public class Sede implements Serializable{
 	ArrayList<Maquinaria> maqProduccion = new ArrayList<>();
 	ArrayList<Maquinaria> maqOficina = new ArrayList<>();
 
-	public void Vender(ArrayList<Prenda> productos, ArrayList<Integer> cantidades,Empleado vendedor, Empleado Oficina, Sede sede){
-		for(Prenda prenda : productos){
-			ArrayList<Insumo>insumosNecesarios=prenda.getInsumo();
-			for (Insumo insumo : insumosNecesarios){
-				
-			}
-	}
-	}
 	
 	public Sede(){
 		listaSedes.add(this);
@@ -169,7 +161,7 @@ public class Sede implements Serializable{
 		ArrayList<Sede> transferirDe = new ArrayList<Sede>();
 		ArrayList<Rol> rolesATransferir = new ArrayList<Rol>();
 
-		for (int idxRol=0; idxRol<rolesATransferir.size();idxRol++){
+		for (int idxRol=0; idxRol<Rol.values().length;idxRol++){
 			Rol rol = Rol.values()[idxRol];
 			for (Sede sede : listaSedes){
 				switch(rol){
@@ -204,7 +196,7 @@ public class Sede implements Serializable{
 		retorno.add(rolesATransferir);
 		retorno.add(transferirDe);
 
-		ArrayList<Empleado> aReemplazar = (ArrayList) despedidos.clone();
+		ArrayList<Empleado> aReemplazar = (ArrayList<Empleado>) despedidos.clone();
 		for (Empleado emp : despedidos){
 			if (rolesATransferir.contains(emp.getRol())){
 				aReemplazar.remove(emp);

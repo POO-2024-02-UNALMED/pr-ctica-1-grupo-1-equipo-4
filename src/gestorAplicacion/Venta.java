@@ -8,11 +8,11 @@ import gestorAplicacion.Bodega.Prenda;
 
 public class Venta implements Serializable {
 	private static final long serializarVersionUID = 1L; // Para serializacion
-	private ArrayList<Prenda> articulos;
-	private ArrayList<Integer> cantidades;
-	private ArrayList<Bolsa> bolsas;
-	private static ArrayList<String> codigosRegalo = new ArrayList<>();
-    private static ArrayList<Integer> montosRegalo = new ArrayList<>();
+	private ArrayList<Prenda> articulos= new ArrayList<Prenda>();
+	private ArrayList<Integer> cantidades=  new ArrayList<Integer>();
+	private ArrayList<Bolsa> bolsas=new ArrayList<Bolsa>();
+	private static ArrayList<String> codigosRegalo = new ArrayList<String>();
+    private static ArrayList<Integer> montosRegalo = new ArrayList<Integer>();
 	private Empleado encargado;
 	private Empleado asesor;
 	private Sede sede;
@@ -63,15 +63,6 @@ public class Venta implements Serializable {
 		return acumulado;
 	}
 
-	static public ArrayList<Venta> listaVentasAsesoradas(Empleado empleado){
-		ArrayList<Venta> asesoradas = new ArrayList<Venta>();
-		for (Venta venta : empleado.getSede().getHistorialVentas()){
-			if (venta.asesor.equals(empleado)){
-				asesoradas.add(venta);
-			}
-		}
-		return asesoradas;
-	}
 
 	static public int cantidadVentasEncargadasEnMes(Empleado empleado, Fecha fecha){
 		int cantidad=0;
@@ -128,9 +119,9 @@ public class Venta implements Serializable {
 	if (fecha.getMes()>11){año=fecha.getAño();}
 	else if (fecha.getMes()==11 && fecha.getDia()>=24){año=fecha.getAño();}
 	else{año=fecha.getAño()-1;} // Si no ha pasado black friday, usar el año anterior
-	ArrayList<Fecha> diasBlackFriday=new ArrayList();
+	ArrayList<Fecha> diasBlackFriday=new ArrayList<Fecha>();
 	diasBlackFriday.add(new Fecha(28,11,año));diasBlackFriday.add(new Fecha(29,11,año));diasBlackFriday.add(new Fecha(30,11,año));
-	ArrayList<Fecha> FechasNormales=new ArrayList();
+	ArrayList<Fecha> FechasNormales=new ArrayList<Fecha>();
 	//Tres Fechas contiguas en el mismo mes pero sin black Fiday
 	FechasNormales.add(new Fecha(23,11,año));FechasNormales.add(new Fecha(24,11,año));FechasNormales.add(new Fecha(25,11,año));
 	long montoventasBF=0;
@@ -148,14 +139,24 @@ public class Venta implements Serializable {
 	else {return 0.5F;}
    }
 
-   static public ArrayList<Venta> filtrarPorMes(ArrayList<Venta> ventas, Fecha fecha){
-	   ArrayList<Venta> ventasMes=new ArrayList();
+   static public ArrayList<Venta> filtrar(ArrayList<Venta> ventas, Fecha fecha){
+	   ArrayList<Venta> ventasMes=new ArrayList<Venta>();
 	   for (Venta venta : ventas){
 		   if (Fecha.compararAño(venta.getFechaVenta().getAño(),fecha.getAño())&&Fecha.compararMes(venta.getFechaVenta().getMes(),fecha.getMes())){
 			   ventasMes.add(venta);
 		   }
 	   }
 	   return ventasMes;
+   }
+
+   static public ArrayList<Venta> filtrar(ArrayList<Venta> ventas, Empleado empleado){
+	   ArrayList<Venta> asesoradas = new ArrayList<Venta>();
+	   for (Venta venta : ventas){
+		   if (venta.asesor.equals(empleado)){
+			   asesoradas.add(venta);
+		   }
+	   }
+	   return asesoradas;
    }
 
 
@@ -172,7 +173,7 @@ public class Venta implements Serializable {
 		for(int meses=0;meses<5;meses++){
 			//Iteramos por las ventas de la sede de ese mes
 			int sumatoriaYMes=0;
-			for(Venta venta: Venta.filtrarPorMes(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
+			for(Venta venta: Venta.filtrar(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
 				for(int j=0; j<venta.getArticulos().size();j++){
 					if(venta.getArticulos().get(j).getNombre().equals(prenda.getNombre())){
 						sumatoriaYMes+=venta.getCantidades().get(j);

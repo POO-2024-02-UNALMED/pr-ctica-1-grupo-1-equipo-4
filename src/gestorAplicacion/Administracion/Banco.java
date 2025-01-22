@@ -2,8 +2,6 @@ package gestorAplicacion.Administracion;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import baseDatos.Deserializador;
-
 public class Banco implements Serializable {
 	private static final long serialVersionUID = 1L; // Para serializacion
 	private String nombreEntidad;
@@ -19,7 +17,7 @@ public class Banco implements Serializable {
 		this.nombreEntidad=nombre;
 		this.nombreCuenta = cuenta;
 		this.ahorroBanco = ahorro;
-		listaBancos.add(this);
+		Banco.listaBancos.add(this);
 	}
 
 	public void actualizarDeuda(Deuda ndeuda){deuda.add(ndeuda);}
