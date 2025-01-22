@@ -1049,7 +1049,7 @@ public static Proveedor getProveedorBDelMain(){
         return in.nextInt();
     }
     //Interacción 1 de Facturación
-	public static Venta Vender(Scanner scanner) {
+	public static Venta vender(Scanner scanner) {
         Venta venta = null;
 	    ArrayList<Prenda> productosSeleccionados = new ArrayList<>();
 	    ArrayList<Integer> cantidadProductos = new ArrayList<>();
