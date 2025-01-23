@@ -337,9 +337,8 @@ public class Sede implements Serializable{
 			}
 		} else if (señal == 10) {
 			System.out.println("La Sede Principal no esta trabajando por falta de maquinaria disponible...");
-			System.out.println("¿Desea delegar toda la produccion a la Sede 2 o poner en espera la produccion de la Sede Principal? \n");
-			System.out.println("1. Delegar");
-			System.out.println("2. Poner en espera");
+			System.out.println("1. ¿Desea producir todo hoy desde la Sede 2");
+			System.out.println("2. ¿Desea producir mañana lo de la Sede Principal desde la sede 2?");
 
 			int opcion = 0;
 			while(opcion != 1 && opcion != 2){
