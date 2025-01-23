@@ -27,6 +27,8 @@ import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.Bodega.Proveedor;
 import java.util.Collections;
+import java.util.List;
+
 import gestorAplicacion.Sede;
 
 public class Main {
@@ -1204,130 +1206,11 @@ public class Main {
     scanner.nextLine();
     Empleado vendedor = sede.getlistaEmpleados().get(vendedorSeleccionado);
          
-      System.out.println("Seleccione el número del producto que venderá:");
-      int costosEnvio = 0;
-    
-      while(true) {	
-      for(int i = 0; i < Prenda.getPrendasInventadas().size(); i++) {
-          Prenda producto = Prenda.getPrendasInventadas().get(i);
-              System.out.println(i + ". " + producto.getNombre() + " -Precio " + producto.getPrecio());
-              }
-      int productoSeleccionado = scanner.nextInt();
-      scanner.nextLine();
-      Prenda prendaSeleccionada = Prenda.getPrendasInventadas().get(productoSeleccionado);
-      System.out.println("Ingrese la cantidad de unidades que se desea del producto elegido:");
-      int cantidadPrenda = scanner.nextInt();
-      scanner.nextLine();
-      cantidadProductos.add(cantidadPrenda);
-      if (cantidadPrenda > 0 && cantidadPrenda <= sede.getPrendasInventadas().size()) {
-        for (int i = 0; i < cantidadPrenda; i++) {
-            sede.getPrendasInventadas().remove(prendaSeleccionada); // Remover del inicio de prendasInventadas
-            productosSeleccionados.add(prendaSeleccionada);         // Agregarla a productosSeleccionados
-        }
-      int camisas = 0;
-      int pantalones = 0;
-      for(Prenda prenda: sede.getPrendasInventadas()) {//A mejorar
-      	if(prenda instanceof Camisa) {
-      		camisas++;
-      		int camisasfaltantes = 0;
-              if(cantidadPrenda > camisas ) {
-                costosEnvio = 3000;
-              	int camisasFaltantes = cantidadPrenda-camisas;
-                  costosEnvio += camisasFaltantes*1000;
-              	for(int i = 0; i < Sede.getlistaSedes().size(); i++) {
-              	   Sede otraSede = Sede.getlistaSedes().get(i);
-              	   for(Prenda camisasfal: otraSede.getPrendasInventadas()) {
-              		   if(camisasfal instanceof Camisa) {
-              			   camisasfaltantes++;
-              			   if(camisasfaltantes == camisasFaltantes) {
-              			   sede.getPrendasInventadas().add(camisasfal);}
-              			   }
-              		   }
-              	   }
-                  }
-                if(prenda instanceof Pantalon) {//A mejorar
-                pantalones++;
-                int pantalonesfaltantes = 0;
-                if(cantidadPrenda > pantalones) {
-                    costosEnvio = 3000;
-                    int pantalonesFaltantes = cantidadPrenda-pantalones;
-                        costosEnvio += pantalonesFaltantes*1000;
-                    for(int i = 0; i < Sede.getlistaSedes().size(); i++) {
-                        Sede otraSede = Sede.getlistaSedes().get(i);
-                        for(Prenda pantalonesfal: otraSede.getPrendasInventadas()) {
-                            if(pantalonesfal instanceof Camisa) {
-                                pantalonesfaltantes++;
-                                if(pantalonesfaltantes == pantalonesFaltantes) {
-                                    sede.getPrendasInventadas().add(pantalonesfal);}
-      	        			   }
-      	        	        } 
-      	                  }
-      	                }
-                     	}
-                   }}
-      	}
-      scanner.nextLine();
-      System.out.println("¿Deseas agregar otro producto a la venta?: (si/no)");
-      String desicion = scanner.next().toLowerCase();;
-      if(desicion.equals("no")) {
-      	System.out.println("Selección finalizada");
-      	break;
-      }
-      if(!desicion.equals("si")) {
-      	break;
-      } 
-    }       
-    int sumaPreciosPrendas = 0;
-    int cantidadCamisas = 0;
-    int cantidadPantalon = 0;
-    for(int i = 0; i < productosSeleccionados.size(); i++) {//A mejorar
-        Prenda index = productosSeleccionados.get(i);
-        if(index instanceof Camisa) {
-            cantidadCamisas++;
-            int calculoCamisas = (int) (cantidadCamisas * index.getPrecio());
-            if (cantidadCamisas >= 10) {int descuento = (int)(calculoCamisas * 0.05f);
-                sumaPreciosPrendas += calculoCamisas-descuento;}
-            else if(cantidadCamisas < 10) {sumaPreciosPrendas += calculoCamisas;}
-            }
-        }
-
-        Persona cliente = noEmpleados.get(clienteSeleccionado);
-
-        System.out.println("Seleccione el número de la sede en la que se encuentra el cliente:");
-        for (int i = 0; i < Sede.getlistaSedes().size(); i++) {
-            System.out.println(i + ". " + Sede.getlistaSedes().get(i).getNombre());
-        }
-        int sedeSeleccionada = scanner.nextInt();
-        scanner.nextLine();
-        Sede sede = Sede.getlistaSedes().get(sedeSeleccionada);
-
-        System.out.println("Seleccione el número del empleado que se hará cargo del registro de la venta:");
-        for (int i = 0; i < sede.getlistaEmpleados().size(); i++) {
-            Empleado empleado = sede.getlistaEmpleados().get(i);
-            if (empleado.getAreaActual() == Area.OFICINA) {
-                System.out.println(i + ". " + empleado.getNombre());
-
-            }
-        }
-        int encargadoSeleccionado = scanner.nextInt();
-        scanner.nextLine();
-        Empleado encargado = sede.getlistaEmpleados().get(encargadoSeleccionado);
-        System.out.println("Seleccione el número del empleado que se hará cargo de asesorar la venta:");
-        for (int i = 0; i < sede.getlistaEmpleados().size(); i++) {
-            Empleado empleado = sede.getlistaEmpleados().get(i);
-            if (empleado.getAreaActual() == Area.VENTAS) {
-                System.out.println(i + ". " + empleado.getNombre());
-            }
-        }
-        int vendedorSeleccionado = scanner.nextInt();
-        scanner.nextLine();
-        Empleado vendedor = sede.getlistaEmpleados().get(vendedorSeleccionado);
-
-        System.out.println("Seleccione el número del producto que venderá:");
-        int costosEnvio = 0;
+      int costosEnvio = 0;   
 
         bucleAgregarPrenda:
         while (true) {
+            System.out.println("Seleccione el número del producto que venderá:");
             for (int i = 0; i < Prenda.getPrendasInventadas().size(); i++) {
                 Prenda producto = Prenda.getPrendasInventadas().get(i);
                 System.out.println(i + ". " + producto.getNombre() + " -Precio " + producto.getPrecio());
@@ -1335,61 +1218,31 @@ public class Main {
             int productoSeleccionado = scanner.nextInt();
             scanner.nextLine();
             Prenda prendaSeleccionada = Prenda.getPrendasInventadas().get(productoSeleccionado);
+            String nombrePrendaSeleccionada = prendaSeleccionada.getNombre();
             System.out.println("Ingrese la cantidad de unidades que se desea del producto elegido:");
             int cantidadPrenda = scanner.nextInt();
             scanner.nextLine();
             cantidadProductos.add(cantidadPrenda);
-            if (cantidadPrenda > 0 && cantidadPrenda <= sede.getPrendasInventadas().size()) {
-                for (int i = 0; i < cantidadPrenda; i++) {
-                    sede.getPrendasInventadas().remove(prendaSeleccionada); // Remover del inicio de prendasInventadas
-                    productosSeleccionados.add(prendaSeleccionada); // Agregarla a productosSeleccionados
-                }
-                int camisas = 0;
-                int pantalones = 0;
-                for (Prenda prenda : sede.getPrendasInventadas()) {// A mejorar
-                    if (prenda instanceof Camisa) {
-                        camisas++;
-                        int camisasfaltantes = 0;
-                        if (cantidadPrenda > camisas) {
-                            int camisasFaltantes = cantidadPrenda - camisas;
-                            costosEnvio += camisasFaltantes * 1000;
-                            for (int i = 0; i < Sede.getlistaSedes().size(); i++) {
-                                Sede otraSede = Sede.getlistaSedes().get(i);
-                                for (Prenda camisasfal : otraSede.getPrendasInventadas()) {
-                                    if (camisasfal instanceof Camisa) {
-                                        camisasfaltantes++;
-                                        if (camisasfaltantes == camisasFaltantes) {
-                                            sede.getPrendasInventadas().add(camisasfal);
-                                        }
-                                    }
-                                }
-                            }
-                        } else if (prenda instanceof Pantalon) {// A mejorar
-                            pantalones++;
-                            int pantalonesfaltantes = 0;
-                            if (cantidadPrenda > pantalones) {
-                                int pantalonesFaltantes = cantidadPrenda - pantalones;
-                                costosEnvio += pantalonesFaltantes * 1000;
-                                for (int i = 0; i < Sede.getlistaSedes().size(); i++) {
-                                    Sede otraSede = Sede.getlistaSedes().get(i);
-                                    for (Prenda pantalonesfal : otraSede.getPrendasInventadas()) {
-                                        if (pantalonesfal instanceof Camisa) {
-                                            pantalonesfaltantes++;
-                                            if (pantalonesfaltantes == pantalonesFaltantes) {
-                                                sede.getPrendasInventadas().add(pantalonesfal);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                costosEnvio += 3000;
+            int cantidadDisponible = 0;
+            for(Prenda prenda: sede.getPrendasInventadas()){
+                if(prenda.equals(prendaSeleccionada)){cantidadDisponible+=1;}
+            }
+            manejarFaltantes(sede, cantidadPrenda, cantidadDisponible, nombrePrendaSeleccionada, costosEnvio);//Método que aumenta el stock faltante
+            //De la prenda seleccionada en la sede.
+            if (cantidadPrenda > 0 && cantidadPrenda < Prenda.getPrendasInventadas().size()) {
+                int eliminadas = 0;
+                for (int i = 0;  i < Prenda.getPrendasInventadas().size() && eliminadas < cantidadPrenda; i++) {
+                    if (Prenda.getPrendasInventadas().get(i) == prendaSeleccionada) {
+                    Prenda eliminada = Prenda.getPrendasInventadas().get(i);
+                    Prenda.getPrendasInventadas().remove(i);// Remueve de la lista de prendasInventadas de la empresa
+                    sede.getPrendasInventadas().remove(eliminada); // Remueve de la lista de prendasInventadas de la sede
+                    productosSeleccionados.add(eliminada); // Agregarla a productosSeleccionados
+                    eliminadas++;
+                    i--;
+                }}}
                 scanner.nextLine();
                 System.out.println("¿Deseas agregar otro producto a la venta?: (si/no)");
                 String desicion = scanner.next().toLowerCase();
-                ;
                 if (desicion.equals("no")) {
                     System.out.println("Selección finalizada");
                     break bucleAgregarPrenda;
@@ -1398,7 +1251,7 @@ public class Main {
                     break bucleAgregarPrenda;
                 }
             }
-        }
+
         int sumaPreciosPrendas = 0;
         int cantidadCamisas = 0;
         int cantidadPantalon = 0;
@@ -1425,7 +1278,6 @@ public class Main {
             }
         }
         int IVA = (int) ((costosEnvio + sumaPreciosPrendas) * 0.19f);
-
         venta = new Venta(sede, fechaVenta, cliente, encargado, vendedor, productosSeleccionados, cantidadProductos);
         venta.setCostoEnvio(costosEnvio);
         sumaPreciosPrendas += costosEnvio;
@@ -1449,13 +1301,10 @@ public class Main {
         int comisión = (int) (MontoPagar * 0.05f);
         vendedor.setRendimientoBonificacion(comisión);
 
-        return venta;
-    
-    }
+        return venta;}
 
      //Interacción 2 Facturación
     public static Venta realizarVenta(Scanner scanner,  Venta venta) {
-	    // Se llama al método vender para obtener la venta inicial
 
         ArrayList<Prenda> productosSeleccionados = venta.getArticulos();
         Sede sede = venta.getSede();
@@ -1472,7 +1321,7 @@ public class Main {
         int capacidadTotal = 0;
 
         Insumo insumo = null;
-        while (capacidadTotal >= totalPrendas) {
+        while (capacidadTotal <= totalPrendas) {
             System.out.println("Seleccione el tamaño de bolsa:");
             // Muestra opciones disponibles
             for (int i = 0; i < InsumosBodega.size(); i++) {
@@ -1526,6 +1375,7 @@ public class Main {
                         cantidadDisponible += cantidadInsumosBodega.get(i);
                         if (cantidadDisponible > 0) {
                             bolsasSeleccionadas.add(bolsaEncontrar);
+                            capacidadTotal += capacidadBolsa;
                             int cantidadActual = cantidadInsumosBodega.get(i);
                             cantidadInsumosBodega.set(i, cantidadActual - 1);
                             bolsaEncontrada = true;
@@ -1533,6 +1383,8 @@ public class Main {
                         }
                     }
                 }
+             if(capacidadTotal == totalPrendas)
+             break;
             }
 
             // Si no hay suficiente stock, compra más bolsas al proveedor
@@ -1569,10 +1421,6 @@ public class Main {
                         }
                     }
                 }
-            }
-
-            if (capacidadTotal < totalPrendas) {
-                System.out.println("Todavía se necesitan más bolsas para cubrir los productos.");
             }
         }
 
@@ -1696,6 +1544,37 @@ public class Main {
             System.out.println("Estado final de la cuenta principal: $" + bancoRecibir.getAhorroBanco());
         }
     }
+    //Método auxiliar para transferencia de prendas
+    private static void manejarFaltantes(Sede sede, int cantidadPrenda, int disponibles, String tipoPrenda, int costosEnvio) { 
+    int faltantes = cantidadPrenda - disponibles;
+
+    if (faltantes > 0) {
+        costosEnvio += 3000 + (faltantes * 1000);
+        System.out.println("Valor de costos de envío: " + costosEnvio);    
+        int prendasTransferidas = 0;
+        for (Sede otraSede : Sede.getlistaSedes()) {
+            if (otraSede != sede) {
+                for (int i = 0; i < otraSede.getPrendasInventadas().size() && prendasTransferidas < faltantes; i++) {
+                    Prenda prenda = otraSede.getPrendasInventadas().get(i);
+                    if (prenda.getNombre().equals(tipoPrenda)) {
+                        otraSede.getPrendasInventadas().remove(prenda);
+                        sede.getPrendasInventadas().add(prenda);
+                        prendasTransferidas++;
+                    }
+                }
+    
+                if (prendasTransferidas == faltantes) {
+                    break;
+                }
+            }
+        }
+    
+        if (prendasTransferidas < faltantes) {
+            System.out.println("No se pudieron transferir todas las prendas faltantes. Faltan " + (faltantes - prendasTransferidas) + " unidades.");
+        }
+    }
+}
+
 
     // Método auxiliar para generar un código ante la compra de una nueva tarjeta de
     // regalo
@@ -1744,5 +1623,6 @@ public class Main {
 
         }
     }
-
 }
+
+
