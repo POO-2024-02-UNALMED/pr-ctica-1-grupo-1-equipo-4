@@ -189,25 +189,26 @@ public class Deuda implements Serializable {
 		Deuda deudaB=null;
 		for (Deuda deuda:listaDeudas){
                 for (Proveedor proveedor: Proveedor.getListaProveedores()){
+					if(proveedor.getDeuda()!=null){
                     long deudap=proveedor.getDeuda().deudaActual(fecha.getAño());
-                    if ((deudap != 0) && (!proveedor.getDeuda().estadodePago) && (deudap < mayorPrecioP)) {
+                    if ((deudap != 0) && (!proveedor.getDeuda().estadodePago) && (deudap > mayorPrecioP)) {
                         mayorPrecioP=deudap;
 						mayorProveedor=proveedor;
 						deudaP=proveedor.getDeuda();
-					}
+					}}}
 					for (Banco banco: Banco.getListaBancos()){
 						for (Deuda deudaa: banco.getDeuda()){
+						if(deudaa!=null){
 						long deudab=deudaa.deudaActual(fecha.getAño());
-						if ((deudab != 0) && (!deudaa.estadodePago) && (deudab < mayorPrecioB)) {
+						if ((deudab != 0) && (!deudaa.estadodePago) && (deudab > mayorPrecioB)) {
 							mayorPrecioB=deudab;
 							mayorBanco=banco;
-							deudaB=deudaa;
-		}}}}}
+							deudaB=deudaa;}}
+					}}}
 		long pagoP=deudaP.pagarDeuda(fecha);
 		deudaP.capitalPagado+=deudaP.deudaActual(fecha.getAño())-pagoP;
 		long pagoB=deudaB.pagarDeuda(fecha);
 		deudaB.capitalPagado+=deudaB.deudaActual(fecha.getAño())-pagoB;
-
 	}
 	public long pagarDeuda(Fecha fecha){
 		long pagar=deudaActual(fecha.getAño());
@@ -218,7 +219,7 @@ public class Deuda implements Serializable {
 				pagar-=500_000;
 			}
 			else if (pagar>0){banco.setAhorroBanco(banco.getAhorroBanco()-pagar);}
-			else if(pagar==0){estadodePago=true;}
+			else if(pagar==0){estadodePago=true;break;}
 		}}
 		return pagar;
 	}

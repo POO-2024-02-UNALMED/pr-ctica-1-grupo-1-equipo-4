@@ -54,7 +54,7 @@ public enum Area {
                         prendasProducidas += emp.getPrendasProducidas();
                     }
 
-                    a.rendimientoDeseado = ((float) prendasProducidas / (prendasDescartadas + prendasProducidas))*0.9f;
+                    a.rendimientoDeseado = ((float) prendasProducidas / (prendasDescartadas + prendasProducidas))*90f;
 
                     break;
             }

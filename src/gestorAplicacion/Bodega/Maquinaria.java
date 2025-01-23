@@ -48,12 +48,12 @@ public class Maquinaria implements Serializable{
 		return new Maquinaria(this.nombre, this.valor, this.horaRevision, Nuevosrepuestos, this.sede);
 	}
 
-	public static long gastoMensualClase(){
+	public static long gastoMensualClase(Fecha fecha){
 		long gastoMaquinaria=0;
 		for (Sede sede:Sede.getlistaSedes()){
 			for (Maquinaria maquinaria : sede.getlistaMaquinas()){
 				for (Repuesto repuesto:maquinaria.repuestos){
-					gastoMaquinaria+=repuesto.calcularGastoMensual();
+					gastoMaquinaria+=repuesto.calcularGastoMensual(fecha);
 				}
 			}
 		}

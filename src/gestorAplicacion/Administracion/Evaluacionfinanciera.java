@@ -65,4 +65,12 @@ public class Evaluacionfinanciera {
 	public void setPresidente(Empleado presidente){
 		if (presidente.getAreaActual()==Area.DIRECCION && presidente.getRol()==Rol.PRESIDENTE){
 			this.presidente=presidente;}}	
+	static float promedioBalance(){
+		float promedio=0;
+		for (Evaluacionfinanciera evaluacion : historialEvaluaciones){
+			promedio+=evaluacion.balance;
+		}
+		promedio=promedio/historialEvaluaciones.size();
+		return promedio;
+	}
 }

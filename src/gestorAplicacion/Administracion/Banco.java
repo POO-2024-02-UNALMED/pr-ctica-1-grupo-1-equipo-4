@@ -89,6 +89,6 @@ public class Banco implements Serializable {
 	}
 
 	public String toString(){
-		return "Cuenta: "+nombreCuenta+" en "+nombreEntidad+ " Ahorro: "+String.format("%,d", ahorroBanco);
+		return " La Cuenta: "+nombreCuenta+" en: "+nombreEntidad+ "tiene un Ahorro de: "+String.format("%,d", ahorroBanco)+" y para pedir un préstamo el Banco tiene un interés de:"+interes*100+"%";
 	}
 }

@@ -84,11 +84,15 @@ public class Empleado extends Persona implements GastoMensual{
         // Juzgamos el rendimiento de todos los empleados
         for (Sede sede : Sede.getlistaSedes()){
             for (Empleado emp : sede.getlistaEmpleados()){
-                int rendimiento=0;
+                float rendimiento=0;
                 boolean seVaADespedir = false;
                 switch (emp.areaActual){
                     case CORTE:
-                        rendimiento = (emp.prendasProducidas/emp.prendasDescartadas)*100;
+                        if (emp.prendasDescartadas==0){
+                            rendimiento = 100; // Nos evitamos divisiones por 0
+                        } else {
+                            rendimiento = (emp.prendasProducidas/emp.prendasDescartadas)*100;
+                        }
                         break;
                     case VENTAS:
                         int ventasAsesoradas = Venta.filtrar(emp.getSede().getHistorialVentas(),emp).size();
@@ -112,21 +116,24 @@ public class Empleado extends Persona implements GastoMensual{
                         break;
 
                     case DIRECCION:
-                        int balancesPositivos = 0;
-                        int balancesNegativos = 0;
+                        float balancesPositivos = 0;
+                        float balancesNegativos = 0;
                         for (Evaluacionfinanciera evaluacion : Evaluacionfinanciera.getHistorialEvaluaciones()){
                             if (evaluacion.getPresidente()==emp){
                                 if (evaluacion.getBalance()>0){
                                     balancesPositivos++;
                                 } else {
                                     balancesNegativos++;
+                                    if (evaluacion.getBalance()> Evaluacionfinanciera.promedioBalance()*-0.2){
+                                        balancesNegativos-=0.5; // Damos mejor rendimiento si la perdida no es mucha.
+                                    }
                                 }
                             }
                         }
                         if (balancesNegativos+balancesPositivos==0){ // Evita dividir por 0 y despedir nuevos
                             rendimiento = 100;
                         } else{
-                            rendimiento = (balancesPositivos/(balancesNegativos+balancesPositivos))*100;
+                            rendimiento = ((float) balancesPositivos/(float)(balancesNegativos+balancesPositivos))*100f;
                         }
 
 
@@ -134,9 +141,11 @@ public class Empleado extends Persona implements GastoMensual{
                     }
                 
                 // Añadimos a la lista los empleados con rendimiento insuficiente.
-                if (rendimiento < emp.getSede().getRendimientoDeseado(emp.areaActual,fecha)){
+                float rendimientoDeseado = emp.getSede().getRendimientoDeseado(emp.areaActual,fecha);
+                if (rendimiento < rendimientoDeseado){
                     seVaADespedir = true;
                     listaADespedir.add(emp);
+                    mensajes.add("El empleado "+emp.getNombre()+" ha sido tiene rendimiento insuficiente, con un rendimiento de "+rendimiento+"% y un rendimiento deseado de "+rendimientoDeseado+"%.");
                 }
                 // Verificamos posibilidades de transferencia.
                 for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
@@ -218,7 +227,7 @@ public class Empleado extends Persona implements GastoMensual{
 
     // ------------------ Getters y Setters ------------------
     public String toString(){
-        return super.toString()+"\n"+"Area: "+areaActual+"\n"+"Sede: "+sede+"\n"+"Traslados: "+traslados;
+        return super.toString()+"\n"+"Area: "+areaActual+" - "+"Sede: "+sede+" - "+"Traslados: "+traslados;
     }
 
     public void modificarBonificacion(int bonificacion){
@@ -230,7 +239,7 @@ public class Empleado extends Persona implements GastoMensual{
     public int getPrendasDescartadas(){return prendasDescartadas;}
     public void setPrendasDescartadas(int prendas){this.prendasDescartadas=prendas;}  
     public int getPrendasProducidas(){return prendasProducidas;}
-    public void setPrendasProcidas(int prendasProducidas){this.prendasProducidas=prendasProducidas;}
+    public void setPrendasProducidas(int prendasProducidas){this.prendasProducidas=prendasProducidas;}
     public float getPericia(){return pericia;}
     public void setPericia(float pericia){this.pericia=pericia;}  
     public Area getAreaActual(){return areaActual;}
