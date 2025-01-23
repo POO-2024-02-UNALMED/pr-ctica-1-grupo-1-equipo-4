@@ -275,10 +275,14 @@ public class Sede implements Serializable{
 		//interacion 2 de Produccion
 	public ArrayList<ArrayList<Integer>> planProduccion(ArrayList<Maquinaria> maqDisponiblee, Fecha fecha, Scanner scanner){
 		ArrayList<ArrayList<Integer>> aProducir = new ArrayList<>();
+		ArrayList<Integer> listaDeCeros = new ArrayList<>();
 		ArrayList<Maquinaria> maqSedeP = new ArrayList<>();
 		ArrayList<Maquinaria> maqSede2 = new ArrayList<>();
 		int señal = 0;
 		
+		listaDeCeros.add(0, 0);
+		listaDeCeros.add(1, 0);
+
 			//dividir las maquinas disponibles por sedes:
 		for(Maquinaria todMaquinas : maqDisponiblee){
 			if(todMaquinas.getSede().getNombre().equalsIgnoreCase("Sede Principal")){
@@ -313,10 +317,9 @@ public class Sede implements Serializable{
 		}
 
 		if(señal == 5){
-			System.out.println("La Sede 2 no está trabajando por falta de maquinaria disponible...");
-			System.out.println("¿Desea delegar toda la produccion a la Sede Principal o poner en espera la produccion de la Sede 2? \n");
-			System.out.println("1. Delegar");
-			System.out.println("2. Poner en espera");
+			System.out.println("La Sede 2 no está trabajando por falta de maquinaria disponible...\n");
+			System.out.println("1. ¿Desea producir todo hoy desde la Sede Principal?");
+			System.out.println("2. ¿Desea producir mañana lo de la Sede 2 desde la sede Principal?");
 
 			int opcion = 0;
 			while(opcion != 1 && opcion != 2){
@@ -324,8 +327,8 @@ public class Sede implements Serializable{
 				if(opcion == 1){
 					//llamar a un metodo1: prodSedeP() para empezar a producir todo en la sede principal
 					aProducir.add(0, prodSedeP(fecha));
-					aProducir.add(1, null);
-					return aProducir;
+					aProducir.add(1, listaDeCeros);
+					
 				} else if(opcion == 2){
 					//llamar a otro metodo2 para pasar la produccion a una lista de espera
 				} else{
@@ -343,9 +346,9 @@ public class Sede implements Serializable{
 				opcion = scanner.nextInt();
 				if(opcion == 1){
 					//llamar a un metodo3: prodSede2() para empezar a producir todo en la sede 2
-					aProducir.add(0, null);
+					aProducir.add(0, listaDeCeros);
 					aProducir.add(1, prodSede2(fecha));
-					return aProducir;
+					
 				} else if(opcion == 2){
 					//llamar a otro metodo2 para pasar la produccion a una lista de espera
 				} else{
@@ -353,12 +356,11 @@ public class Sede implements Serializable{
 				}
 			}
 		} else if(señal == 15){
-			//EMPEZAR A PRODUCIR TODO NORMALMENTE, PREFERIBLEMENTE CON UN METODO4, APARTE DE LOS OTROS TRES
+			//aquí se produce todo entre las dos sedes, después de preguntarle previamente al usuario lo q queria
 		} else{
 			System.out.println("\n Lo sentimos, se debe arreglar la maquinaria en alguna de las dos sedes para comenzar a producir...\n");
 		}
 
-		//Faltaba un return, si esto no era lo que retornaba, lo cambian porfa
 		return aProducir;
 	}
 		
@@ -368,14 +370,14 @@ public class Sede implements Serializable{
 		ArrayList<Integer> prodCalculadaSedeP = new ArrayList<>();
 		ArrayList<Integer> prodCalculadaSede2 = new ArrayList<>();
 		
-		prodCalculadaSedeP.add(Venta.predecirVentas(fecha, getlistaSedes().get(0),"Pantalon"));
-		prodCalculadaSedeP.add(Venta.predecirVentas(fecha, getlistaSedes().get(0), "Camisa"));
+		prodCalculadaSedeP.add(0, Venta.predecirVentas(fecha, getlistaSedes().get(0),"Pantalon"));
+		prodCalculadaSedeP.add(1, Venta.predecirVentas(fecha, getlistaSedes().get(0), "Camisa"));
 
-		prodCalculadaSede2.add(Venta.predecirVentas(fecha, getlistaSedes().get(1), "Pantalon"));
-		prodCalculadaSede2.add(Venta.predecirVentas(fecha, getlistaSedes().get(1), "Camisa"));
+		prodCalculadaSede2.add(0, Venta.predecirVentas(fecha, getlistaSedes().get(1), "Pantalon"));
+		prodCalculadaSede2.add(1, Venta.predecirVentas(fecha, getlistaSedes().get(1), "Camisa"));
 
-		prodSedesCalculada.add(prodCalculadaSedeP);
-		prodSedesCalculada.add(prodCalculadaSede2);
+		prodSedesCalculada.add(0, prodCalculadaSedeP);
+		prodSedesCalculada.add(1, prodCalculadaSede2);
 
 		return prodSedesCalculada;
 	}
@@ -387,8 +389,8 @@ public class Sede implements Serializable{
 		int pantalonesSedeP = calcProduccionSedes(fecha).get(0).get(0) + calcProduccionSedes(fecha).get(1).get(0);
 		int camisasSedeP = calcProduccionSedes(fecha).get(0).get(1) + calcProduccionSedes(fecha).get(1).get(1);
 
-		prodAproximada.add(pantalonesSedeP);
-		prodAproximada.add(camisasSedeP);
+		prodAproximada.add(0, pantalonesSedeP);
+		prodAproximada.add(1, camisasSedeP);
 		
 		return prodAproximada;
 	}
@@ -399,10 +401,12 @@ public class Sede implements Serializable{
 		int pantalonesSede2 = calcProduccionSedes(fecha).get(1).get(0) + calcProduccionSedes(fecha).get(0).get(0);
 		int camisasSede2 = calcProduccionSedes(fecha).get(1).get(1) + calcProduccionSedes(fecha).get(0).get(1);
 
-		prodAproximada.add(pantalonesSede2);
-		prodAproximada.add(camisasSede2);
+		prodAproximada.add(0, pantalonesSede2);
+		prodAproximada.add(1, camisasSede2);
 
 		return prodAproximada;
 	}
+
+	
 	
 }
