@@ -33,7 +33,7 @@ public class Persona implements Serializable{
 
         @Override
 	public String toString(){
-		return "Nombre: "+nombre+"\n"+"Documento: "+documento+"\n"+"Rol: "+rol;}
+		return "Nombre: "+nombre+" - "+"Documento: "+documento+" - "+"Rol: "+rol;}
 	public Rol getRol(){return rol;}
 	public Membresia getMembresia(){return membresia;}
 	public int getDocumento(){return documento;}

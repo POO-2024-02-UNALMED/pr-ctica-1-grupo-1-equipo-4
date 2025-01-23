@@ -227,7 +227,7 @@ public class Empleado extends Persona implements GastoMensual{
 
     // ------------------ Getters y Setters ------------------
     public String toString(){
-        return super.toString()+"\n"+"Area: "+areaActual+"\n"+"Sede: "+sede+"\n"+"Traslados: "+traslados;
+        return super.toString()+"\n"+"Area: "+areaActual+" - "+"Sede: "+sede+" - "+"Traslados: "+traslados;
     }
 
     public void modificarBonificacion(int bonificacion){

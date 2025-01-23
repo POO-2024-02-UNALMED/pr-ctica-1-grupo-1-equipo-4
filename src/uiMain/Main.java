@@ -291,7 +291,7 @@ public class Main {
 
     // Interacción 1 Sistema Financiero
     public static Evaluacionfinanciera calcularBalanceAnterior(Fecha fecha, Scanner in) {
-        System.out.println("Obteniendo balance de ventas/producción");
+        System.out.println("Obteniendo balance entre Ventas y Deudas para saber si las ventas cubren los gastos de la producción de nuestras prendas...");
         double balanceCostosProduccion = Venta.calcularBalanceVentaProduccion(fecha);
         int eleccion = 0;
         while (eleccion <= 0 || eleccion > 3) {
@@ -313,7 +313,7 @@ public class Main {
             for (int ii = 0; ii < elegible.size(); ii++) {
                 System.out.println(ii + " " + elegible.get(ii) + "\n");
             }
-            System.out.println("Ingrese número de 0 a " + (elegible.size() - 1 + ""));
+            System.out.println("Ingrese número de 0 a " + (elegible.size() - 1 + " según el Directivo que escoja para registrar el balance"));
             i = Main.nextIntSeguro(in);
             empleado = elegible.get(i);
         }
@@ -324,7 +324,7 @@ public class Main {
 
     // Interaccion 2 Sistema Financiero
     public static long calcularEstimado(Fecha fecha, Evaluacionfinanciera balanceAnterior, Scanner in) {
-
+        System.out.println("Calculando estimado entre Ventas y Deudas para ver el estado de endeudamiento de la empresa...");
         float porcentaje = -1F;
         while (porcentaje < 0.0F && porcentaje > 1) {
             System.out.println(
@@ -341,24 +341,28 @@ public class Main {
     public static String planRecuperacion(long diferenciaEstimada, Fecha fecha, Scanner in) {
         if (diferenciaEstimada > 0) {
             System.out.println("El estimado es positivo, las ventas superan las deudas");
+            System.out.println("Hay dinero suficiente para hacer el pago de algunas Deudas");
             Deuda.compararDeudas(fecha);
         }
         else if (diferenciaEstimada <= 0) {
             System.out.println("El estimado es negativo, la deuda supera las ventas");
+            System.out.println("No hay Dinero suficiente para cubrir los gastos de la empresa, tendremos que pedir un préstamo");
             int i = -1;
             String Nombrebanco = null;
             while (i < 0 || i >= Banco.getListaBancos().size()) {
-                System.out.println("Ingrese número de 0 a " + (Banco.getListaBancos().size() - 1 + ""));
+                for (Banco banco:Banco.getListaBancos()){System.out.println(banco);}
+                System.out.println("Ingrese número de 0 a " + (Banco.getListaBancos().size() - 1 + " para solicitar el prestamo al Banco de su elección"));
                 i = in.nextInt();
                 Nombrebanco = Banco.getListaBancos().get(i).getNombreEntidad();
             }
             int cuotas = 0;
-            while (i <= 0 || i >= 180) {
-                System.out.println("Ingrese número de 1 a 180");
+            while (i <= 0 || i >= 18) {
+                System.out.println("Ingrese número de 1 a 18 para las cuotas en que se dividirá la deuda");
                 cuotas = in.nextInt();
             }
             Deuda deudaAdquirir = new Deuda(fecha, diferenciaEstimada, Nombrebanco, "Banco", cuotas);
         }
+        System.out.println("Analizando posibilidad de hacer descuentos para subir las ventas...");
         float descuento = Venta.blackFriday(fecha);
         String BFString = null;
         if (descuento <= 0.0F) {
@@ -422,7 +426,7 @@ public class Main {
                 int contador1 = 0;
                 int contador2 = 0;
                 if (prenda instanceof Pantalon && contador1 == 0) {
-                    int proyeccion = Venta.predecirVentas(fecha, x, prenda);
+                    int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
                     System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
 
@@ -436,7 +440,7 @@ public class Main {
                     }
                     contador1++;
                 } else if (prenda instanceof Camisa && contador2 == 0) {
-                    int proyeccion = Venta.predecirVentas(fecha, x, prenda);
+                    int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
                     System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
 
@@ -987,6 +991,7 @@ public class Main {
         new Evaluacionfinanciera(1_000_000, betty);
         new Evaluacionfinanciera(500_000, Armando);
         new Evaluacionfinanciera(-10_000, Armando);
+        new Evaluacionfinanciera(100_000, Armando);
 
         Persona c1 = new Persona("Claudia Elena Vásquez", 5162307, Rol.MODISTA, 2, false, Membresia.BRONCE);
         Persona c2 = new Persona("Michel Doniel", 9458074, Rol.ASISTENTE, 4, false, Membresia.BRONCE);
@@ -995,7 +1000,7 @@ public class Main {
         Persona c5 = new Persona("Daniel Valencia", 9818534, Rol.EJECUTIVO, 10, false, Membresia.BRONCE);
         Persona c6 = new Persona("Efraín Rodriguez", 8256519, Rol.VENDEDOR, 10, false, Membresia.NULA);
         Persona c7 = new Persona("Mauricio Brightman", 8823954, Rol.ASISTENTE, 10, false, Membresia.ORO);
-        Persona c8 = new Persona("Nicolás Mora", 4365567, Rol.EJECUTIVO, 2, false, Membresia.NULA);
+        Persona c8 = new Persona("Nicolás Mora", 4365567, Rol.EJECUTIVO, 8, false, Membresia.NULA);
         Persona c9 = new Persona("Roberto Mendoza", 28096740, Rol.PRESIDENTE, 2, false, Membresia.ORO);
         Persona c10 = new Persona("Hermes Pinzón", 21077781, Rol.ASISTENTE, 2, false, Membresia.NULA);
         Persona c11 = new Persona("Julia Solano", 28943158, Rol.SECRETARIA, 10, false, Membresia.BRONCE);

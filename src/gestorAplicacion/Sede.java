@@ -33,7 +33,7 @@ public class Sede implements Serializable{
 	private int distancia;
 	//Con respecto a la principal
 
-	privete ArrayList<Integer> prodAproximada = new ArrayList<>();  // este atributo sera equivalente al de arriba,
+	private ArrayList<Integer> prodAproximada = new ArrayList<>();  // este atributo sera equivalente al de arriba,
 																	// no uso el de arriba porque este lo usaré solo como una lista de dos enteros
 																	// la posición 0 para pantalones y la 1 para el numero de camisas a producir
 	ArrayList<Maquinaria> maqProduccion = new ArrayList<>();
@@ -358,6 +358,8 @@ public class Sede implements Serializable{
 			System.out.println("\n Lo sentimos, se debe arreglar la maquinaria en alguna de las dos sedes para comenzar a producir...\n");
 		}
 
+		//Faltaba un return, si esto no era lo que retornaba, lo cambian porfa
+		return aProducir;
 	}
 		
 		//aqui se organiza la produccion de cada sede segun el metodo predecirVentas()
@@ -366,11 +368,11 @@ public class Sede implements Serializable{
 		ArrayList<Integer> prodCalculadaSedeP = new ArrayList<>();
 		ArrayList<Integer> prodCalculadaSede2 = new ArrayList<>();
 		
-		prodCalculadaSedeP.add(Venta.predecirVentas(fecha, getlistaSedes.get(0), Pantalon));
-		prodCalculadaSedeP.add(Venta.predecirVentas(fecha, getlistaSedes.get(0), Camisa));
+		prodCalculadaSedeP.add(Venta.predecirVentas(fecha, getlistaSedes().get(0),"Pantalon"));
+		prodCalculadaSedeP.add(Venta.predecirVentas(fecha, getlistaSedes().get(0), "Camisa"));
 
-		prodCalculadaSede2.add(Venta.predecirVentas(fecha, getlistaSedes.get(1), Pantalon));
-		prodCalculadaSede2.add(Venta.predecirVentas(fecha, getlistaSedes.get(1), Camisa));
+		prodCalculadaSede2.add(Venta.predecirVentas(fecha, getlistaSedes().get(1), "Pantalon"));
+		prodCalculadaSede2.add(Venta.predecirVentas(fecha, getlistaSedes().get(1), "Camisa"));
 
 		prodSedesCalculada.add(prodCalculadaSedeP);
 		prodSedesCalculada.add(prodCalculadaSede2);
@@ -391,7 +393,7 @@ public class Sede implements Serializable{
 		return prodAproximada;
 	}
 
-	public ArrayList<Integer> prodSede2(){
+	public ArrayList<Integer> prodSede2(Fecha fecha){
 		// modificar la produccion aproximada enviando TODO para la sede 2, segun lo que se calculo en calcProduccionSedes
 		// luego retornar dicha produccion de la sede 2 al metodo planProduccion(), en donde todo se produce en la sede2
 		int pantalonesSede2 = calcProduccionSedes(fecha).get(1).get(0) + calcProduccionSedes(fecha).get(0).get(0);
