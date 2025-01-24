@@ -33,8 +33,18 @@ public class Main {
     private static Proveedor proveedorBdelmain;
 
     public static void main(String[] args) {
-        Deserializador.deserializar();
         Scanner in = new Scanner(System.in);
+        System.out.println("Ecomoda a la orden, ¿Quieres volver a cargar tus datos?");
+        String respuesta = in.next();
+        if (!respuesta.equals("no")) {
+            Deserializador.deserializar();
+        } else {
+            System.out.println("¿Crear datos por defecto?");
+            respuesta = in.next();
+            if (respuesta.equals("si")) {
+                new Main().crearSedesMaquinasRepuestos();
+            }
+        }
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
             System.out.println("\n"+"¿Que operación desea realizar?");
@@ -149,7 +159,7 @@ public class Main {
         while (opcion == 2) {
             System.out.println("1. Elegir a los despedidos");
             System.out.println("2. Añadir a alguien mas");
-            opcion = scanner.nextInt();
+            opcion = nextIntSeguro(scanner);
             if (opcion == 2) {
                 System.out.println("¿De que sede quieres añadir al empleado?"); // Para no imprimir una lista demasiado
                                                                                 // larga

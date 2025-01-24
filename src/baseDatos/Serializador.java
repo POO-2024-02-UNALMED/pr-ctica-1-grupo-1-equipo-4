@@ -94,7 +94,7 @@ public class Serializador {
                     oos = new ObjectOutputStream(fos);
                     oos.writeObject(Evaluacionfinanciera.getHistorialEvaluaciones());
                     oos.close();
-                    System.out.println("Evaluaciones financieras serializadas");
+                    System.out.println("Escribiendo "+ Evaluacionfinanciera.getHistorialEvaluaciones().size()+" evaluaciones financieras");
                 }
             } catch (FileNotFoundException e) {
                 System.out.println("Archivo "+file.getName()+ "no existe, y de alguna manera esta en la carpeta, llamen a Dios.");

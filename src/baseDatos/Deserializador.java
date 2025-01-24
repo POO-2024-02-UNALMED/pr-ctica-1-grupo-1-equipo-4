@@ -61,6 +61,7 @@ public class Deserializador {
                 fis = new FileInputStream(file);
                 ois = new ObjectInputStream(fis);
                 Evaluacionfinanciera.setHistorialEvaluaciones((ArrayList<Evaluacionfinanciera>) ois.readObject());
+                System.out.println("Cargamos"+ Evaluacionfinanciera.getHistorialEvaluaciones().size()+" evaluaciones financieras");
             }
         } catch (FileNotFoundException e) {
             System.out.println("Archivo "+file.getName()+ "vacío.");
