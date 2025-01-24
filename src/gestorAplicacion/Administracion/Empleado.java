@@ -93,7 +93,7 @@ public class Empleado extends Persona implements GastoMensual{
                 if (rendimiento < rendimientoDeseado){
                     seVaADespedir = true;
                     listaADespedir.add(emp);
-                    mensajes.add("El empleado "+emp.getNombre()+" ha sido tiene rendimiento insuficiente, con un rendimiento de "+rendimiento+"% y un rendimiento deseado de "+rendimientoDeseado+"%.");
+                    mensajes.add("El empleado "+emp.getNombre()+" ha sido tiene rendimiento insuficiente, con un rendimiento de "+String.format("%,d",(int) rendimiento)+" y un rendimiento deseado de "+String.format("%,d",(int) rendimientoDeseado));
                 }
                 // Verificamos posibilidades de transferencia.
                 for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
@@ -202,7 +202,7 @@ public class Empleado extends Persona implements GastoMensual{
             }
             float acumuladoVentasSede = Venta.filtrar(sede.getHistorialVentas(), fecha).size();
             float promedioVentasSede = acumuladoVentasSede/sede.cantidadPorArea(Area.OFICINA);
-            int ventasEncargadas = Venta.cantidadVentasEncargadasEnMes(this,fecha);
+            float ventasEncargadas = Venta.cantidadVentasEncargadasEnMes(this,fecha);
             rendimiento = (int) ((ventasEncargadas/promedioVentasSede)*100);
 
             break;

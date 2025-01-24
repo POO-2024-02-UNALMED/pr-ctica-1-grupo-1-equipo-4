@@ -38,7 +38,7 @@ public enum Area {
                     for (Venta venta : sede.getHistorialVentas()) {
                         montoTotal += venta.getMontoPagado();
                     }
-                    a.rendimientoDeseado = ((float) montoTotal / sede.getlistaEmpleados().size())*0.8f;
+                    a.rendimientoDeseado = ((float) montoTotal / sede.getHistorialVentas().size())*0.8f;
                     break;
                 case CORTE:
                     int prendasDescartadas = 0;
