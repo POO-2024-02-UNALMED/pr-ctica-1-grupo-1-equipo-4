@@ -1093,16 +1093,16 @@ public class Main {
 
         ArrayList<Prenda> ps2 = new ArrayList<Prenda>();
         ps2.add(r16);
-        Venta v2 = new Venta(sede2, new Fecha(29, 11, 24), c13, Freddy, Patricia, ps2, 200000, 350000);
-        v2.setCostoEnvio(1000000);
+        Venta v2 = new Venta(sede2, new Fecha(29, 11, 24), c13, Freddy, Patricia, ps2, 300000, 350000);
+        v2.setCostoEnvio(100000);
         b2.setAhorroBanco(b2.getAhorroBanco() + 350000);
         int com2 = (int) (350000 * 0.05f);
         Freddy.setRendimientoBonificacion(com2);
 
         ArrayList<Prenda> ps3 = new ArrayList<Prenda>();
         ps3.add(r15);
-        Venta v3 = new Venta(sede2, new Fecha(29, 1, 24), c13, Freddy, Patricia, ps3, 200000, 350000);
-        v3.setCostoEnvio(1000000);
+        Venta v3 = new Venta(sede2, new Fecha(29, 1, 24), c13, Freddy, Patricia, ps3, 300000, 350000);
+        v3.setCostoEnvio(100000);
         b3.setAhorroBanco(b2.getAhorroBanco() + 350000);
         int com3 = (int) (350000 * 0.05f);
         Freddy.setRendimientoBonificacion(com3);
