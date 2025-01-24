@@ -1080,7 +1080,7 @@ public class Main {
         Prenda r21 = new Camisa(new Fecha(1, 1, 23), Adriana, false, true, sede2,tiposca);
         Prenda r22 = new Camisa(new Fecha(1, 1, 23), Cecilia, false, true, sede2,tiposcb);
         Prenda r23 = new Camisa(new Fecha(1, 1, 23), Alejandra, false, true, sede2,tiposca);
-    Prenda r24 = new Camisa(new Fecha(1, 1, 23), Kenneth, false, true, sede2,tiposcb);
+        Prenda r24 = new Camisa(new Fecha(1, 1, 23), Kenneth, false, true, sede2,tiposcb);
         Karina.setPericia(0.1F);
 
         ArrayList<Prenda> ps1 = new ArrayList<Prenda>();
@@ -1114,7 +1114,7 @@ public class Main {
         v4.setCostoEnvio(100000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 350000);
         int com4 = (int) (350000 * 0.05f);
-        Aura.setRendimientoBonificacion(com3);
+        Aura.setRendimientoBonificacion(com4);
 
         ArrayList<Prenda> ps5 = new ArrayList<Prenda>();
         ps5.add(r7);
@@ -1122,7 +1122,7 @@ public class Main {
         v5.setCostoEnvio(100000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 350000);
         int com5 = (int) (350000 * 0.05f);
-        Aura.setRendimientoBonificacion(com3);
+        Aura.setRendimientoBonificacion(com5);
 
         ArrayList<Prenda> ps6 = new ArrayList<Prenda>();
         ps6.add(r15);
