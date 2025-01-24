@@ -4,6 +4,7 @@ package uiMain;
 import gestorAplicacion.Administracion.Area;
 import gestorAplicacion.Administracion.Banco;
 import gestorAplicacion.Administracion.Empleado;
+import gestorAplicacion.Administracion.Evaluacionfinanciera;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Bodega.Insumo;
 import gestorAplicacion.Bodega.Prenda;
@@ -240,11 +241,36 @@ public class Desarrollo {
     }
 
     static void menuEmpleado(Scanner in, Empleado empleado){
-        System.err.println("Viendo empleado " + empleado);
-        if (empleado.getRol()==Rol.MODISTA){
+        System.out.println("Viendo empleado " + empleado);
+        switch(empleado.getRol()){
+            case MODISTA:
             System.out.println("Ha dañado "+empleado.getPrendasDescartadas()+" prendas en producción.");
             System.out.println("Y ha producido "+empleado.getPrendasProducidas()+" prendas existosamente.");
-            return;
+            break;
+
+            case EJECUTIVO,PRESIDENTE:
+            System.out.println("Tiene estas evaluaciones financieras");
+            for(Evaluacionfinanciera evaluacion : Evaluacionfinanciera.getHistorialEvaluaciones()){
+                if (evaluacion.getPresidente()==empleado){
+                    System.out.println(evaluacion.Informe());
+                }
+            }
+        }
+        System.out.println("- rendimiento");
+        bucleEmpleado:
+        while (true) {
+            String comando = in.next().toLowerCase();
+            switch (comando) {
+                case "rendimiento":
+                    Fecha fecha = Main.ingresarFecha(in);
+                    System.out.println("Rendimiento: "+empleado.calcularRendimiento(fecha)+"%");
+                    System.out.println("Rendimiento deseado: "+ empleado.getSede().getRendimientoDeseado(empleado.getAreaActual(), fecha)+"%");
+                    break;
+                case "atras":
+                    break bucleEmpleado;
+                default:
+                    break;
+            }
         }
     }
 

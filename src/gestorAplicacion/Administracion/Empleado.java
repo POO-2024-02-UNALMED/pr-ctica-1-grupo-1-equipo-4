@@ -19,7 +19,6 @@ public class Empleado extends Persona implements GastoMensual{
 
     private Area areaActual;
     private Fecha fechaContratacion;
-    private int rendimiento;
     private Sede sede;
     private Maquinaria maquinaria;
     private ArrayList<Area> areas = new ArrayList<Area>();
@@ -84,61 +83,9 @@ public class Empleado extends Persona implements GastoMensual{
         // Juzgamos el rendimiento de todos los empleados
         for (Sede sede : Sede.getlistaSedes()){
             for (Empleado emp : sede.getlistaEmpleados()){
-                float rendimiento=0;
+                float rendimiento=emp.calcularRendimiento(fecha);
                 boolean seVaADespedir = false;
-                switch (emp.areaActual){
-                    case CORTE:
-                        if (emp.prendasDescartadas==0){
-                            rendimiento = 100; // Nos evitamos divisiones por 0
-                        } else {
-                            rendimiento = (emp.prendasProducidas/emp.prendasDescartadas)*100;
-                        }
-                        break;
-                    case VENTAS:
-                        int ventasAsesoradas = Venta.filtrar(emp.getSede().getHistorialVentas(),emp).size();
-                        if (ventasAsesoradas!=0){
-                            rendimiento= Venta.acumuladoVentasAsesoradas(emp)/ventasAsesoradas;
-                        } else {
-                            rendimiento=100; // Evita dividir por 0 y despedir nuevos
-                        }
-                        break;
 
-                    case OFICINA:
-                        float acumuladoVentasSede = 0;
-                        for (Empleado empAcumulado : sede.getlistaEmpleados()){
-                            if (empAcumulado.areaActual == Area.VENTAS){
-                                acumuladoVentasSede+=Venta.cantidadVentasEncargadasEnMes(empAcumulado,fecha);
-                            }
-                        }
-                        float promedioVentasSede = acumuladoVentasSede/sede.getlistaEmpleados().size();
-                        rendimiento = (int) ((Venta.cantidadVentasEncargadasEnMes(emp,fecha)/promedioVentasSede)*100);
-
-                        break;
-
-                    case DIRECCION:
-                        float balancesPositivos = 0;
-                        float balancesNegativos = 0;
-                        for (Evaluacionfinanciera evaluacion : Evaluacionfinanciera.getHistorialEvaluaciones()){
-                            if (evaluacion.getPresidente()==emp){
-                                if (evaluacion.getBalance()>0){
-                                    balancesPositivos++;
-                                } else {
-                                    balancesNegativos++;
-                                    if (evaluacion.getBalance()> Evaluacionfinanciera.promedioBalance()*-0.2){
-                                        balancesNegativos-=0.5; // Damos mejor rendimiento si la perdida no es mucha.
-                                    }
-                                }
-                            }
-                        }
-                        if (balancesNegativos+balancesPositivos==0){ // Evita dividir por 0 y despedir nuevos
-                            rendimiento = 100;
-                        } else{
-                            rendimiento = ((float) balancesPositivos/(float)(balancesNegativos+balancesPositivos))*100f;
-                        }
-
-
-                        break;
-                    }
                 
                 // Añadimos a la lista los empleados con rendimiento insuficiente.
                 float rendimientoDeseado = emp.getSede().getRendimientoDeseado(emp.areaActual,fecha);
@@ -225,6 +172,68 @@ public class Empleado extends Persona implements GastoMensual{
         return mensajes;
     }
 
+    // Metodo ayudante de listarInicialDespedirEmpleado
+    public float calcularRendimiento(Fecha fecha){
+        float rendimiento=0;
+        switch (areaActual){
+            case CORTE:
+
+            if (prendasDescartadas==0){
+                rendimiento = 100; // Nos evitamos divisiones por 0
+            } else {
+                rendimiento = (prendasProducidas/prendasDescartadas)*100;
+            }
+            break;
+
+            case VENTAS:
+
+            int ventasAsesoradas = Venta.filtrar(getSede().getHistorialVentas(),this).size();
+            if (ventasAsesoradas!=0){
+                rendimiento= Venta.acumuladoVentasAsesoradas(this)/ventasAsesoradas;
+            } else {
+                rendimiento=100; // Evita dividir por 0 y despedir nuevos
+            }
+            break;
+
+            case OFICINA:
+
+            float acumuladoVentasSede = 0;
+            for (Empleado empAcumulado : sede.getlistaEmpleados()){
+                if (empAcumulado.areaActual == Area.VENTAS){
+                    acumuladoVentasSede+=Venta.cantidadVentasEncargadasEnMes(empAcumulado,fecha);
+                }
+            }
+            float promedioVentasSede = acumuladoVentasSede/sede.getlistaEmpleados().size();
+            rendimiento = (int) ((Venta.cantidadVentasEncargadasEnMes(this,fecha)/promedioVentasSede)*100);
+
+            break;
+
+            case DIRECCION:
+
+            float balancesPositivos = 0;
+            float balancesNegativos = 0;
+            for (Evaluacionfinanciera evaluacion : Evaluacionfinanciera.getHistorialEvaluaciones()){
+                if (evaluacion.getPresidente()==this){
+                    if (evaluacion.getBalance()>0){
+                        balancesPositivos++;
+                    } else {
+                        balancesNegativos++;
+                        if (evaluacion.getBalance()> Evaluacionfinanciera.promedioBalance()*-0.2){
+                            balancesNegativos-=0.5; // Damos mejor rendimiento si la perdida no es mucha.
+                        }
+                    }
+                }
+            }
+            if (balancesNegativos+balancesPositivos==0){ // Evita dividir por 0 y despedir nuevos
+                rendimiento = 100;
+            } else{
+                rendimiento = ((float) balancesPositivos/(float)(balancesNegativos+balancesPositivos))*100f;
+            }
+            break;
+        }
+        return rendimiento;
+    }
+
     // ------------------ Getters y Setters ------------------
     public String toString(){
         return super.toString()+"\n"+"Area: "+areaActual+" - "+"Sede: "+sede+" - "+"Traslados: "+traslados;
@@ -246,8 +255,6 @@ public class Empleado extends Persona implements GastoMensual{
     public void setAreaActual(Area a){areaActual=a;}
     public Fecha getFechaContratacion(){return fechaContratacion;}
     public void setFechaContratacion(Fecha fecha){fechaContratacion=fecha;}
-    public int getRendimiento(){return rendimiento;}
-    public void getRendimiento(int rend){rendimiento=rend;}
     public Sede getSede(){return sede;}
     public void setSede(Sede sede){
         if (this.sede!=null){

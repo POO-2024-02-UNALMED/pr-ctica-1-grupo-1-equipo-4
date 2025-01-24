@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Administracion.Banco;
+import gestorAplicacion.Administracion.Evaluacionfinanciera;
 import gestorAplicacion.Bodega.Proveedor;
 
 public class Deserializador {
@@ -57,7 +58,11 @@ public class Deserializador {
                         fis = new FileInputStream(file);
                         ois = new ObjectInputStream(fis);
                         Proveedor.setListaProveedores((ArrayList<Proveedor>) ois.readObject());
-            }  
+            }  else if (file.getAbsolutePath().contains("EvaluacionesFinancieras")){
+                fis = new FileInputStream(file);
+                ois = new ObjectInputStream(fis);
+                Evaluacionfinanciera.setHistorialEvaluaciones((ArrayList<Evaluacionfinanciera>) ois.readObject());
+            }
         } catch (FileNotFoundException e) {
             System.out.println("Archivo "+file.getName()+ "vacío.");
         } catch (IOException e) {
