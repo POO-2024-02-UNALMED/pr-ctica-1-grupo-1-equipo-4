@@ -1086,8 +1086,8 @@ public class Main {
         ArrayList<Prenda> ps1 = new ArrayList<Prenda>();
         ps1.add(r13);
         ArrayList<Integer> ct1 = new ArrayList<Integer>();
-        ct1.add(2);
         ct1.add(1);
+        ct1.add(0);
         Venta v1 = new Venta(sede2, new Fecha(28, 11, 24), c8, Gabriela, Patricia, ps1, ct1, 200000, 250000);
         v1.setCostoEnvio(20000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 250000);
@@ -1112,6 +1112,7 @@ public class Main {
         ps3.add(r7);
         ArrayList<Integer> ct3 = new ArrayList<Integer>();
         ct3.add(2);
+        ct3.add(1);
         ct3.add(1);
         Venta v3 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps3, ct3, 500000, 700000);
         v3.setCostoEnvio(100000);

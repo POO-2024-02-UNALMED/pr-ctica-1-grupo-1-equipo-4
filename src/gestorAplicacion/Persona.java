@@ -10,7 +10,7 @@ import gestorAplicacion.Bodega.Maquinaria;
 public class Persona implements Serializable{
 
 	
-	private static final long serialVersionUID = 2L; // Para serializacion
+	private static final long serialVersionUID = 1L; // Para serializacion
 	
 	protected static ArrayList <Persona> listaPersonas = new ArrayList<Persona>();
 	protected String nombre;

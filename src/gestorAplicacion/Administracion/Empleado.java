@@ -186,7 +186,9 @@ public class Empleado extends Persona implements GastoMensual{
             break;
 
             case VENTAS:
-
+            for (Venta venta : getSede().getHistorialVentas()){
+                System.out.println(venta);
+            }
             int ventasAsesoradas = Venta.filtrar(getSede().getHistorialVentas(),this).size();
             if (ventasAsesoradas!=0){
                 rendimiento= Venta.acumuladoVentasAsesoradas(this)/ventasAsesoradas;
@@ -213,7 +215,7 @@ public class Empleado extends Persona implements GastoMensual{
             float balancesPositivos = 0;
             float balancesNegativos = 0;
             for (Evaluacionfinanciera evaluacion : Evaluacionfinanciera.getHistorialEvaluaciones()){
-                if (evaluacion.getPresidente()==this){
+                if (evaluacion.getPresidente().equals(this)){
                     if (evaluacion.getBalance()>0){
                         balancesPositivos++;
                     } else {
