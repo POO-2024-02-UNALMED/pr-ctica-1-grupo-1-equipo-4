@@ -1,11 +1,13 @@
 package gestorAplicacion.Administracion;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
 
-public class Evaluacionfinanciera {
+public class Evaluacionfinanciera implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private static ArrayList <Evaluacionfinanciera> historialEvaluaciones = new ArrayList<Evaluacionfinanciera>();
 	//deudaBanco+deudaProveedores
 	private long pagoPersonas;

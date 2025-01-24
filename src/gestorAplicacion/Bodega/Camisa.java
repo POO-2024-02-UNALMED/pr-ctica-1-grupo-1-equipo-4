@@ -6,6 +6,7 @@ import gestorAplicacion.Sede;
 import java.util.ArrayList;
 
 public class Camisa extends Prenda {
+    private static final long serialVersionUID = 1L;
     public Camisa(Fecha fecha, Empleado modista, boolean descartada, boolean terminada, Sede sede, ArrayList<Insumo> insumos){
         super(fecha, sede, "Camisa", modista, descartada, terminada,insumos);
     }

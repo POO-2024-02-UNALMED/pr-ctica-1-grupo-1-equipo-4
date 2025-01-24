@@ -3,7 +3,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import gestorAplicacion.Fecha;
 
-import gestorAplicacion.Fecha;
 import gestorAplicacion.Administracion.Deuda;
 
 public class Proveedor implements Serializable{

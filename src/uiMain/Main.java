@@ -25,19 +25,15 @@ import java.util.Random;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
-import gestorAplicacion.Bodega.Proveedor;
 import java.util.Collections;
-import java.util.List;
 
-import gestorAplicacion.Sede;
 
 public class Main {
     Sede sedeP, sede2;
     private static Proveedor proveedorBdelmain;
 
     public static void main(String[] args) {
-        //Deserializador.deserializar();
-        new Main().crearSedesMaquinasRepuestos();
+        Deserializador.deserializar();
         Scanner in = new Scanner(System.in);
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
@@ -1432,7 +1428,7 @@ public class Main {
             }
 
             // Si no hay suficiente stock, compra más bolsas al proveedor
-            for (Sede revisarSedes : sede.getlistaSedes()) {
+            for (Sede revisarSedes : Sede.getlistaSedes()) {
                 ArrayList<Insumo> listaInsumos = sede.getListaInsumosBodega();
                 ArrayList<Integer> cantidadInsumos = sede.getCantidadInsumosBodega();
                 for (int i = 0; i < listaInsumos.size(); i++) {

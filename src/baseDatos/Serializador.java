@@ -3,12 +3,15 @@ package baseDatos;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 
 import gestorAplicacion.Sede;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Administracion.Banco;
+import gestorAplicacion.Administracion.Evaluacionfinanciera;
+import gestorAplicacion.Bodega.Proveedor;
 
 
 public class Serializador {
@@ -47,64 +50,61 @@ public class Serializador {
 
         for(File file: docs){
             System.out.println("Miramos archivo: "+ file.getName());
-            if (file.getAbsolutePath().contains("Sedes")) {
             try {
-                // FileOutputStream recibe un archivo y lo abre para escritura.
-                fos = new FileOutputStream(file);
-                // Creamos un ObjectOutputStream, y le decimos a donde pasar los datos.
-                oos = new ObjectOutputStream(fos);
-                // Escribimos el objeto en el flujo de bytes.
-                oos.writeObject(Sede.getlistaSedes());
-                // Cerramos el flujo de bytes.
-                oos.close();
-                System.out.println("Sedes serializadas");
+                if (file.getAbsolutePath().contains("Sedes")) {
+                    // FileOutputStream recibe un archivo y lo abre para escritura.
+                    fos = new FileOutputStream(file);
+                    // Creamos un ObjectOutputStream, y le decimos a donde pasar los datos.
+                    oos = new ObjectOutputStream(fos);
+                    // Escribimos el objeto en el flujo de bytes.
+                    oos.writeObject(Sede.getlistaSedes());
+                    // Cerramos el flujo de bytes.
+                    oos.close();
+                    System.out.println("Sedes serializadas");
+                }
+                else if (file.getAbsolutePath().contains("Bancos")) {
+                        // FileOutputStream recibe un archivo y lo abre para escritura.
+                        fos = new FileOutputStream(file);
+                        // Creamos un ObjectOutputStream, y le decimos a donde pasar los datos.
+                        oos = new ObjectOutputStream(fos);
+                        // Escribimos el objeto en el flujo de bytes.
+                        oos.writeObject(Banco.getListaBancos());
+                        oos.writeObject(Banco.getCuentaPrincipal());
+                        // Cerramos el flujo de bytes.
+                        oos.close();
+                        System.out.println("Bancos/cuentas serializadas");
+                }
+                else if (file.getAbsolutePath().contains("Personas")) {
+                        // FileOutputStream recibe un archivo y lo abre para escritura.
+                        fos = new FileOutputStream(file);
+                        // Creamos un ObjectOutputStream, y le decimos a donde pasar los datos.
+                        oos = new ObjectOutputStream(fos);
+                        // Escribimos el objeto en el flujo de bytes.
+                        oos.writeObject(Persona.getListaPersonas());
+                        // Cerramos el flujo de bytes.
+                        oos.close();
+                        System.out.println("Peronas serializadas");
+                } else if (file.getAbsolutePath().contains("Proveedores")) {
+                        fos = new FileOutputStream(file);
+                        oos = new ObjectOutputStream(fos);
+                        oos.writeObject(Proveedor.getListaProveedores());
+                        oos.close();
+                        System.out.println("Proveedores serializados");
+                } else if (file.getAbsolutePath().contains("EvaluacionesFinancieras")) {
+                    fos = new FileOutputStream(file);
+                    oos = new ObjectOutputStream(fos);
+                    oos.writeObject(Evaluacionfinanciera.getHistorialEvaluaciones());
+                    oos.close();
+                    System.out.println("Evaluaciones financieras serializadas");
+                }
             } catch (FileNotFoundException e) {
-                // Si algo falla, lo imprimimos.
+                System.out.println("Archivo "+file.getName()+ "no existe, y de alguna manera esta en la carpeta, llamen a Dios.");
+            } catch (IOException e) {
+                System.out.println("Hay algo mal con el archivo "+file.getName());
                 e.printStackTrace();
-            } catch (Exception e) {
-                // Si algo falla, lo imprimimos.
-                e.printStackTrace();
             }
-        }
-            if (file.getAbsolutePath().contains("Bancos")) {
-                try {
-                    // FileOutputStream recibe un archivo y lo abre para escritura.
-                    fos = new FileOutputStream(file);
-                    // Creamos un ObjectOutputStream, y le decimos a donde pasar los datos.
-                    oos = new ObjectOutputStream(fos);
-                    // Escribimos el objeto en el flujo de bytes.
-                    oos.writeObject(Banco.getListaBancos());
-                    oos.writeObject(Banco.getCuentaPrincipal());
-                    // Cerramos el flujo de bytes.
-                    oos.close();
-                    System.out.println("Bancos/cuentas serializadas");
-                } catch (FileNotFoundException e) {
-                    // Si algo falla, lo imprimimos.
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    // Si algo falla, lo imprimimos.
-                    e.printStackTrace();
-                }
-            }
-            if (file.getAbsolutePath().contains("Personas")) {
-                try {
-                    // FileOutputStream recibe un archivo y lo abre para escritura.
-                    fos = new FileOutputStream(file);
-                    // Creamos un ObjectOutputStream, y le decimos a donde pasar los datos.
-                    oos = new ObjectOutputStream(fos);
-                    // Escribimos el objeto en el flujo de bytes.
-                    oos.writeObject(Persona.getListaPersonas());
-                    // Cerramos el flujo de bytes.
-                    oos.close();
-                    System.out.println("Peronas serializadas");
-                } catch (FileNotFoundException e) {
-                    // Si algo falla, lo imprimimos.
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    // Si algo falla, lo imprimimos.
-                    e.printStackTrace();
-                }
-            }
+
+
         }
     }
 
