@@ -1092,32 +1092,46 @@ public class Main {
         Gabriela.setRendimientoBonificacion(com1);
 
         ArrayList<Prenda> ps2 = new ArrayList<Prenda>();
-        ps2.add(r15);
         ps2.add(r16);
-        Venta v2 = new Venta(sede2, new Fecha(29, 11, 24), c13, Freddy, Patricia, ps2, 400000, 600000);
+        Venta v2 = new Venta(sede2, new Fecha(29, 11, 24), c13, Freddy, Patricia, ps2, 200000, 350000);
         v2.setCostoEnvio(1000000);
-        b2.setAhorroBanco(b2.getAhorroBanco() + 600000);
-        int com2 = (int) (600000 * 0.05f);
+        b2.setAhorroBanco(b2.getAhorroBanco() + 350000);
+        int com2 = (int) (350000 * 0.05f);
         Freddy.setRendimientoBonificacion(com2);
 
         ArrayList<Prenda> ps3 = new ArrayList<Prenda>();
-        ps3.add(r1);
-        ps3.add(r2);
-        ps3.add(r7);
-        Venta v3 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps3, 500000, 700000);
-        v3.setCostoEnvio(100000);
-        b1.setAhorroBanco(b1.getAhorroBanco() + 700000);
-        int com3 = (int) (700000 * 0.05f);
-        Aura.setRendimientoBonificacion(com3);
+        ps3.add(r15);
+        Venta v3 = new Venta(sede2, new Fecha(29, 11, 24), c13, Freddy, Patricia, ps3, 200000, 350000);
+        v3.setCostoEnvio(1000000);
+        b3.setAhorroBanco(b2.getAhorroBanco() + 350000);
+        int com3 = (int) (350000 * 0.05f);
+        Freddy.setRendimientoBonificacion(com3);
 
         ArrayList<Prenda> ps4 = new ArrayList<Prenda>();
-        ps4.add(r15);
-        ps4.add(r16);
-        Venta v4 = new Venta(sedeP, new Fecha(25, 11, 24), c4, Wilson, Mario, ps4, 400000, 60000);
+        ps4.add(r1);
+        ps4.add(r2);
+        Venta v4 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps4, 500000, 600000);
         v4.setCostoEnvio(100000);
-        b3.setAhorroBanco(b3.getAhorroBanco() + 600000);
+        b1.setAhorroBanco(b1.getAhorroBanco() + 600000);
         int com4 = (int) (600000 * 0.05f);
-        Wilson.setRendimientoBonificacion(com4);
+        Aura.setRendimientoBonificacion(com3);
+
+        ArrayList<Prenda> ps5 = new ArrayList<Prenda>();
+        ps5.add(r7);
+        Venta v5 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps5, 300000, 350000);
+        v5.setCostoEnvio(100000);
+        b1.setAhorroBanco(b1.getAhorroBanco() + 350000);
+        int com5 = (int) (350000 * 0.05f);
+        Aura.setRendimientoBonificacion(com3);
+
+        ArrayList<Prenda> ps6 = new ArrayList<Prenda>();
+        ps6.add(r15);
+        ps6.add(r16);
+        Venta v6 = new Venta(sedeP, new Fecha(25, 11, 24), c4, Wilson, Mario, ps6, 400000, 60000);
+        v6.setCostoEnvio(100000);
+        b3.setAhorroBanco(b3.getAhorroBanco() + 600000);
+        int com6 = (int) (600000 * 0.05f);
+        Wilson.setRendimientoBonificacion(com6);
     }
 
     // para la interaccion 1 de produccion
