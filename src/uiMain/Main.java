@@ -1110,10 +1110,10 @@ public class Main {
         ArrayList<Prenda> ps4 = new ArrayList<Prenda>();
         ps4.add(r1);
         ps4.add(r2);
-        Venta v4 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps4, 500000, 600000);
+        Venta v4 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps4, 300000, 350000);
         v4.setCostoEnvio(100000);
-        b1.setAhorroBanco(b1.getAhorroBanco() + 600000);
-        int com4 = (int) (600000 * 0.05f);
+        b1.setAhorroBanco(b1.getAhorroBanco() + 350000);
+        int com4 = (int) (350000 * 0.05f);
         Aura.setRendimientoBonificacion(com3);
 
         ArrayList<Prenda> ps5 = new ArrayList<Prenda>();
