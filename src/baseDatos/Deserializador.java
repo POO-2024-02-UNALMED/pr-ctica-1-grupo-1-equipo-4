@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Administracion.Banco;
+import gestorAplicacion.Bodega.Proveedor;
 
 public class Deserializador {
     private static File rutaTemp = new File("src\\baseDatos\\temp");
@@ -18,60 +19,53 @@ public class Deserializador {
         
         // Estos File son cada uno un archivo
         File[] docs = rutaTemp.listFiles();
-        FileInputStream fis;
-        ObjectInputStream ois;
 
         for(File file: docs){
+            if (file.length()!=0){
+                cargarArchivo(file);
+            } else {
+                System.out.println("El archivo "+file.getName()+" esta vacio");
+            }
+        }
+          
+    }
+
+    private static void cargarArchivo(File file){
+        FileInputStream fis;
+        ObjectInputStream ois;
+        try {
             if (file.getAbsolutePath().contains("Sedes")) {
-                try {
                     fis = new FileInputStream(file);
                     ois = new ObjectInputStream(fis);
                     Sede.setlistaSedes((ArrayList<Sede>) ois.readObject());
-                } catch (FileNotFoundException e) {
-                    System.out.println("Hubo un error al cargar la lista de sedes, no se encontro el archivo, stack trace:");
-                    e.printStackTrace();
-                } catch (IOException e){
-                    System.out.println("Hubo un error al cargar la lista de sedes, no se pudo leer el archivo, stack trace:");
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e){
-                    System.out.println("Hubo un error al cargar la lista de sedes,hay algo mal con el codigo o el serialVersionUID, stack trace:");
-                    e.printStackTrace();
-                }
+
             }
             if (file.getAbsolutePath().contains("Bancos")) {
-                try {
                     fis = new FileInputStream(file);
                     ois = new ObjectInputStream(fis);
                     Banco.setListaBancos((ArrayList<Banco>) ois.readObject());;
                     Banco.setCuentaPrincipal((Banco) ois.readObject());
-                } catch (FileNotFoundException e) {
-                    System.out.println("Hubo un error al cargar la lista de bancos, no se encontro el archivo, stack trace:");
-                    e.printStackTrace();
-                } catch (IOException e){
-                    System.out.println("Hubo un error al cargar la lista de bancos, no se pudo leer el archivo, stack trace:");
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e){
-                    System.out.println("Hubo un error al cargar la lista de bancos,hay algo mal con el codigo o el serialVersionUID, stack trace:");
-                    e.printStackTrace();
-                }
+
             }
             if (file.getAbsolutePath().contains("Personas")) {
-                try {
+   
                     fis = new FileInputStream(file);
                     ois = new ObjectInputStream(fis);
                     Persona.setListaPersonas((ArrayList<Persona>) ois.readObject());
-                } catch (FileNotFoundException e) {
-                    System.out.println("Hubo un error al cargar la lista de personas, no se encontro el archivo, stack trace:");
-                    e.printStackTrace();
-                } catch (IOException e){
-                    System.out.println("Hubo un error al cargar la lista de personas, no se pudo leer el archivo, stack trace:");
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e){
-                    System.out.println("Hubo un error al cargar la lista de personas,hay algo mal con el codigo o el serialVersionUID, stack trace:");
-                    e.printStackTrace();
-                }
-            }
+
+            } else if (file.getAbsolutePath().contains("Proveedores")){
+                        fis = new FileInputStream(file);
+                        ois = new ObjectInputStream(fis);
+                        Proveedor.setListaProveedores((ArrayList<Proveedor>) ois.readObject());
+            }  
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo "+file.getName()+ "vacío.");
+        } catch (IOException e) {
+            System.out.println("Hay algo mal con el archivo "+file.getName());
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Hay algo mal con la clase asociada a "+file.getName());
+            e.printStackTrace();
         }
     }
-
 }

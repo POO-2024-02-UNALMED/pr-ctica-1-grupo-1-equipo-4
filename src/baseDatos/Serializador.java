@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Administracion.Banco;
+import gestorAplicacion.Bodega.Proveedor;
 
 
 public class Serializador {
@@ -66,7 +67,7 @@ public class Serializador {
                 e.printStackTrace();
             }
         }
-            if (file.getAbsolutePath().contains("Bancos")) {
+            else if (file.getAbsolutePath().contains("Bancos")) {
                 try {
                     // FileOutputStream recibe un archivo y lo abre para escritura.
                     fos = new FileOutputStream(file);
@@ -86,7 +87,7 @@ public class Serializador {
                     e.printStackTrace();
                 }
             }
-            if (file.getAbsolutePath().contains("Personas")) {
+            else if (file.getAbsolutePath().contains("Personas")) {
                 try {
                     // FileOutputStream recibe un archivo y lo abre para escritura.
                     fos = new FileOutputStream(file);
@@ -104,7 +105,20 @@ public class Serializador {
                     // Si algo falla, lo imprimimos.
                     e.printStackTrace();
                 }
+            } else if (file.getAbsolutePath().contains("Proveedores")) {
+                try{
+                    fos = new FileOutputStream(file);
+                    oos = new ObjectOutputStream(fos);
+                    oos.writeObject(Proveedor.getListaProveedores());
+                    oos.close();
+                    System.out.println("Proveedores serializados");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+
         }
     }
 

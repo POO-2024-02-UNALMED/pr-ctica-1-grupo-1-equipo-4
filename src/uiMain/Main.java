@@ -25,11 +25,8 @@ import java.util.Random;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
-import gestorAplicacion.Bodega.Proveedor;
 import java.util.Collections;
-import java.util.List;
 
-import gestorAplicacion.Sede;
 
 public class Main {
     Sede sedeP, sede2;
@@ -37,7 +34,6 @@ public class Main {
 
     public static void main(String[] args) {
         Deserializador.deserializar();
-        new Main().crearSedesMaquinasRepuestos();
         Scanner in = new Scanner(System.in);
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
