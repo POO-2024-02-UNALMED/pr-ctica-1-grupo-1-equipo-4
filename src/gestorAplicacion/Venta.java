@@ -27,6 +27,7 @@ public class Venta implements Serializable {
 		this(sede, fecha, c);
 		asesor=a;
 		encargado=e;
+		encargado.getVentasEncargadas().add(this);
 		this.articulos=articulos;
 		for(Prenda prenda : articulos){
 		sede.getPrendasInventadas().remove(prenda);
@@ -64,18 +65,8 @@ public class Venta implements Serializable {
 
 	static public int cantidadVentasEncargadasEnMes(Empleado empleado, Fecha fecha){
 		int cantidad=0;
-		for (Venta venta : empleado.getSede().getHistorialVentas()){
-			if (venta.encargado.equals(empleado)&&venta.getFechaVenta().getMes()==fecha.getMes()&&venta.getFechaVenta().getAño()==fecha.getAño()){
-				cantidad++;
-			}
-		}
-		return cantidad;
-	}
-
-	static public int cantidadVentasEncargadas(Empleado empleado){
-		int cantidad=0;
-		for (Venta venta : empleado.getSede().getHistorialVentas()){
-			if (venta.encargado.equals(empleado)){
+		for (Venta venta : empleado.getVentasEncargadas()){
+			if (venta.getFechaVenta().getMes()==fecha.getMes()&&venta.getFechaVenta().getAño()==fecha.getAño()){
 				cantidad++;
 			}
 		}

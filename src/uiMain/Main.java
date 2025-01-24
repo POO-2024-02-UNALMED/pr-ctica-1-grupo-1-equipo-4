@@ -264,6 +264,7 @@ public class Main {
     // Interaccion 3 gestion Humana
     // https://docs.google.com/document/d/1IomqwzQR1ZRXw9dFlHx5mA_2oOowyIbxauZeJ6Rqy6Q/edit?tab=t.0#heading=h.zgpssvyj8l65
     static public void contratarEmpleados(ArrayList<Empleado> aReemplazar, Scanner in, Fecha fecha) {
+
         ArrayList<Object> elecciones = Persona.entrevistar(aReemplazar);
         ArrayList<Persona> aptos = (ArrayList<Persona>) elecciones.get(0);
         ArrayList<Rol> rolesAReemplazar = (ArrayList<Rol>) elecciones.get(1);
