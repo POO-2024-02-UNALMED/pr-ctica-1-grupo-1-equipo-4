@@ -62,10 +62,8 @@ public class Persona implements Serializable{
 		for (Persona persona:listaPersonas){
 			if(persona.trabaja==false && rolesAReemplazar.contains(persona.getRol())){
 				aptos.add(persona);
-				break;
 			}
 		}
-
 		ArrayList<Object> retorno = new ArrayList<Object>();
 		retorno.add(aptos);
 		retorno.add(rolesAReemplazar);
@@ -76,7 +74,6 @@ public class Persona implements Serializable{
 	// Interacción 3 de Gestion Humana
 	static public void contratar(ArrayList<Persona> aContratar, ArrayList<Empleado> aReemplazar, Fecha fecha){
 		for(Persona persona: aContratar){
-			Persona.listaPersonas.remove(persona);
 			Area area=null;
 			Sede sede=null;
 			for(Empleado antiguo: aReemplazar){

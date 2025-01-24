@@ -22,6 +22,7 @@ public class Empleado extends Persona implements GastoMensual{
     private Sede sede;
     private Maquinaria maquinaria;
     private ArrayList<Evaluacionfinanciera> evaluaciones = new ArrayList<Evaluacionfinanciera>();
+    private ArrayList<Venta> ventasEncargadas = new ArrayList<Venta>();
     private ArrayList<Area> areas = new ArrayList<Area>();
     private int traslados;
     private int prendasDescartadas=0;
@@ -96,14 +97,17 @@ public class Empleado extends Persona implements GastoMensual{
                     mensajes.add("El empleado "+emp.getNombre()+" ha sido tiene rendimiento insuficiente, con un rendimiento de "+String.format("%,d",(int) rendimiento)+" y un rendimiento deseado de "+String.format("%,d",(int) rendimientoDeseado));
                 }
                 // Verificamos posibilidades de transferencia.
-                for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
-                    if (Sede.getlistaSedes().get(idxSede).getRendimientoDeseado(emp.areaActual,fecha) <= rendimiento + 20){
-                        listaADespedir.remove(emp);
-                        listaATransferir.get(idxSede).add(emp);
-                        seVaADespedir = false;
+                if(seVaADespedir){
+                    for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
+                        if (Sede.getlistaSedes().get(idxSede).getRendimientoDeseado(emp.areaActual,fecha) <= rendimiento + 20 && seVaADespedir){
+                            mensajes.add("El empleado "+emp.getNombre()+" ha sido transferido a la sede "+Sede.getlistaSedes().get(idxSede).getNombre());
+                            listaADespedir.remove(emp);
+                            listaATransferir.get(idxSede).add(emp);
+                            seVaADespedir = false;
+                        }
                     }
+    
                 }
-
                 if (seVaADespedir){
                     if (emp.areaActual.equals(Area.CORTE)==false && emp.traslados<2){
                         boolean puedeCambiarArea = true;
@@ -114,6 +118,7 @@ public class Empleado extends Persona implements GastoMensual{
                             }
                         }
                         if (puedeCambiarArea && emp.areaActual.ordinal()<Area.values().length-1){ // verificamos tambien si hay area mas baja
+                            mensajes.add("El empleado "+emp.getNombre()+" ha sido transferido al area "+Area.values()[emp.areaActual.ordinal()+1]+" de la sede "+emp.getSede().getNombre());
                             emp.setAreaActual(Area.values()[emp.areaActual.ordinal()+1]);
                             seVaADespedir=false;
                             listaADespedir.remove(emp);
@@ -191,15 +196,11 @@ public class Empleado extends Persona implements GastoMensual{
             if (ventasAsesoradas!=0){
                 rendimiento= Venta.acumuladoVentasAsesoradas(this)/ventasAsesoradas;
             } else {
-                rendimiento=100; // Evita dividir por 0 y despedir nuevos
+                rendimiento=0;
             }
             break;
 
             case OFICINA:
-            System.out.println("Calculando rendimiento de oficina");
-            for (Venta venta : sede.getHistorialVentas()){
-                System.out.println(venta.getEncargado());
-            }
             float acumuladoVentasSede = Venta.filtrar(sede.getHistorialVentas(), fecha).size();
             float promedioVentasSede = acumuladoVentasSede/sede.cantidadPorArea(Area.OFICINA);
             float ventasEncargadas = Venta.cantidadVentasEncargadasEnMes(this,fecha);
@@ -270,5 +271,6 @@ public class Empleado extends Persona implements GastoMensual{
     public void setSalario(int salario){this.salario=salario;}
     public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){this.evaluaciones=evaluaciones;}
     public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluaciones;}
+    public ArrayList<Venta> getVentasEncargadas(){return ventasEncargadas;}
 
 }

@@ -169,23 +169,27 @@ public class Sede implements Serializable{
 	// Interacción 2 de Gestion Humana
 	// Retorna una lista con los roles a reemplazar y que sede debe reemplazar los empleados de cada rol, de ser posible. Luego también la cantidad de empleados que quedan por reemplazar.
 	static public ArrayList<Object> obtenerNececidadTransferenciaEmpleados(ArrayList<Empleado> despedidos){ //Despedidos es A en el doc.
+		ArrayList<Rol> rolesARevisar = new ArrayList<Rol>();
+		ArrayList<Sede> sedeOrigen = new ArrayList<Sede>();
+		for (Empleado emp : despedidos){
+			if (!rolesARevisar.contains(emp.getRol())){
+				rolesARevisar.add(emp.getRol());
+				sedeOrigen.add(emp.getSede());
+			}
+		}
+		
 		ArrayList<Sede> transferirDe = new ArrayList<Sede>();
 		ArrayList<Rol> rolesATransferir = new ArrayList<Rol>();
 
 
-		for (int idxRol=0; idxRol<Rol.values().length;idxRol++){
-			Rol rol = Rol.values()[idxRol];
-			boolean hayEmpleados=false;
-			for (Empleado emp : despedidos){
-				if (emp.getRol() == rol){
-					hayEmpleados = true;
-					break;
-				}
-			}
-			if (!hayEmpleados){
-				continue; // Nos saltamos esta iteración si no hay empleados de este rol por reemplazar.
-			}
+		for (int idxRol=0; idxRol<rolesARevisar.size();idxRol++){
+			Rol rol = rolesARevisar.get(idxRol);
+
+			revisarSedesDonadoras:
 			for (Sede sede : listaSedes){
+				if (sede.equals(sedeOrigen.get(idxRol))){
+					continue; // Evitar donacion de la misma sede de origen.
+				}
 				switch(rol){
 					case MODISTA:
 
@@ -197,9 +201,9 @@ public class Sede implements Serializable{
 						int produccionPorModista = produccionTotal / sede.cantidadPorRol(rol);
 
 						if (produccionPorModista<30){
-							transferirDe.set(idxRol, sede);
+							transferirDe.add(sede);
 							rolesATransferir.add(rol);
-							break;
+							break revisarSedesDonadoras;
 						}
 					}
 					break;
@@ -211,7 +215,7 @@ public class Sede implements Serializable{
 					if (!(empleados/secretarias > 18 || ejecutivos/secretarias > 2)){
 						transferirDe.set(idxRol, sede);
 						rolesATransferir.add(rol);
-						break;
+						break revisarSedesDonadoras;
 					}
 				}
 			}
