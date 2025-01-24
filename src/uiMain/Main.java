@@ -1101,7 +1101,7 @@ public class Main {
 
         ArrayList<Prenda> ps3 = new ArrayList<Prenda>();
         ps3.add(r15);
-        Venta v3 = new Venta(sede2, new Fecha(29, 11, 24), c13, Freddy, Patricia, ps3, 200000, 350000);
+        Venta v3 = new Venta(sede2, new Fecha(29, 1, 24), c13, Freddy, Patricia, ps3, 200000, 350000);
         v3.setCostoEnvio(1000000);
         b3.setAhorroBanco(b2.getAhorroBanco() + 350000);
         int com3 = (int) (350000 * 0.05f);
@@ -1118,7 +1118,7 @@ public class Main {
 
         ArrayList<Prenda> ps5 = new ArrayList<Prenda>();
         ps5.add(r7);
-        Venta v5 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps5, 300000, 350000);
+        Venta v5 = new Venta(sedeP, new Fecha(30, 1, 24), c6, Aura, Cata, ps5, 300000, 350000);
         v5.setCostoEnvio(100000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 350000);
         int com5 = (int) (350000 * 0.05f);
