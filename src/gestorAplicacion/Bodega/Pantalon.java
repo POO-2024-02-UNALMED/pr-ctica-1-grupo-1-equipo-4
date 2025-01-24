@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Pantalon extends Prenda {
     public Pantalon(Fecha fecha, Empleado modista, boolean descartada, boolean terminada, Sede sede, ArrayList<Insumo> insumos){
-        super(fecha, sede, "Camisa", modista, descartada, terminada,insumos);
+        super(fecha, sede, "Pantalon", modista, descartada, terminada,insumos);
     }
     @Override
     public int calcularGastoMensual() {

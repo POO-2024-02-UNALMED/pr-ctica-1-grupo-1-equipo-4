@@ -1350,12 +1350,13 @@ public class Main {
         int capacidadTotal = 0;
 
         Insumo insumo = null;
+        boolean bp=false;
+        boolean bm=false;
+        boolean bg=false;
         while (capacidadTotal <= totalPrendas) {
             System.out.println("\n"+"Seleccione el tamaño de bolsa:");
             // Muestra opciones disponibles
-            boolean bp=false;
-            boolean bm=false;
-            boolean bg=false;
+
 
             for (int i = 0; i < InsumosBodega.size(); i++) {
                 Insumo bolsaI = InsumosBodega.get(i);
@@ -1365,17 +1366,19 @@ public class Main {
                     int cantidad = sede.getCantidadInsumosBodega().get(i);
                     if (capacidad == 1 && cantidad > 0) {
                         bp=true;
-                    } else if (capacidad == 3 && cantidad > 0) {
+                    }
+                    if (capacidad == 3 && cantidad > 0) {
                         bm=true;
-                    } else if (capacidad == 8 && cantidad > 0) {
+                    }
+                    if (capacidad == 8 && cantidad > 0) {
                         bg=true;
                     }
                 }
             }
 
             if (bp) {System.out.println("1. Bolsa pequeña (1 producto)");} 
-            else if (bm) {System.out.println("2. Bolsa mediana (3 productos)");} 
-            else if (bg) {System.out.println("3. Bolsa grande (8 productos)");}
+            if (bm) {System.out.println("2. Bolsa mediana (3 productos)");} 
+            if (bg) {System.out.println("3. Bolsa grande (8 productos)");}
 
             int opcionBolsa = scanner.nextInt();
             scanner.nextLine();
