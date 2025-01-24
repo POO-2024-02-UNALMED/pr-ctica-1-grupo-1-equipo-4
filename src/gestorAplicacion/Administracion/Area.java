@@ -30,12 +30,7 @@ public enum Area {
                     a.rendimientoDeseado = (3 / 5f)*100;
                     break;
                 case OFICINA:
-                    int cantidadEmpleadosOfi = 0;
-                    for (Empleado emp : sede.getlistaEmpleados()) {
-                        if (emp.getAreaActual().nombre.equals("Oficina")) {
-                            cantidadEmpleadosOfi++;
-                        }
-                    }
+                    int cantidadEmpleadosOfi =sede.cantidadPorArea(Area.OFICINA);
                     a.rendimientoDeseado = (float) Venta.filtrar(sede.getHistorialVentas(), fecha).size() / cantidadEmpleadosOfi; // Cantidad de ventas por empleado de oficina
                     break;
                 case VENTAS:

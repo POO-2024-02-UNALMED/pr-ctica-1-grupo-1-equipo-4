@@ -196,10 +196,14 @@ public class Empleado extends Persona implements GastoMensual{
             break;
 
             case OFICINA:
-
+            System.out.println("Calculando rendimiento de oficina");
+            for (Venta venta : sede.getHistorialVentas()){
+                System.out.println(venta.getEncargado());
+            }
             float acumuladoVentasSede = Venta.filtrar(sede.getHistorialVentas(), fecha).size();
             float promedioVentasSede = acumuladoVentasSede/sede.cantidadPorArea(Area.OFICINA);
-            rendimiento = (int) ((Venta.cantidadVentasEncargadasEnMes(this,fecha)/promedioVentasSede)*100);
+            int ventasEncargadas = Venta.cantidadVentasEncargadasEnMes(this,fecha);
+            rendimiento = (int) ((ventasEncargadas/promedioVentasSede)*100);
 
             break;
 
