@@ -62,4 +62,8 @@ public enum Area {
     public ArrayList<String> getMaquinariaNecesaria() {
         return MaquinariaNecesaria;
     }
+
+    public String getNombre(){
+        return this.nombre;
+    }
 }

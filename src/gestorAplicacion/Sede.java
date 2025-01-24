@@ -298,7 +298,7 @@ public class Sede implements Serializable{
 		ArrayList<Integer> listaDeCeros = new ArrayList<>();
 		ArrayList<Maquinaria> maqSedeP = new ArrayList<>();
 		ArrayList<Maquinaria> maqSede2 = new ArrayList<>();
-		int señal = 0;
+		int senal = 0;
 		
 		listaDeCeros.add(0, 0);
 		listaDeCeros.add(1, 0);
@@ -330,13 +330,13 @@ public class Sede implements Serializable{
 
 
 		if(getlistaSedes().get(0).maqProduccion.size() >= 3){
-			señal = 5;
+			senal = 5;
 		}
 		if(getlistaSedes().get(1).maqProduccion.size() >= 3){
-			señal = señal + 10;
+			senal = senal + 10;
 		}
 
-		if(señal == 5){
+		if(senal == 5){
 			System.out.println("La Sede 2 no está trabajando por falta de maquinaria disponible...\n");
 			System.out.println("1. ¿Desea producir todo hoy desde la Sede Principal?");
 			System.out.println("2. ¿Desea producir mañana lo de la Sede 2 desde la sede Principal?");
@@ -355,7 +355,7 @@ public class Sede implements Serializable{
 					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
 				}
 			}
-		} else if (señal == 10) {
+		} else if (senal == 10) {
 			System.out.println("La Sede Principal no esta trabajando por falta de maquinaria disponible...");
 			System.out.println("1. ¿Desea producir todo hoy desde la Sede 2");
 			System.out.println("2. ¿Desea producir mañana lo de la Sede Principal desde la sede 2?");
@@ -374,8 +374,20 @@ public class Sede implements Serializable{
 					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
 				}
 			}
-		} else if(señal == 15){
+		} else if(senal == 15){
 			//aquí se produce todo entre las dos sedes, después de preguntarle previamente al usuario lo q queria
+			senalRec = sobreCargada(fecha);
+
+			if(senalRec == 5){
+				//sedeP sobrecargada, preguntar si quiere distribuir la produccion con la sede2(saldria al dia sig lo distribuido) o producirlo el mismo dia con un mayor costo
+			} else if(senalRec == 10){
+				//sede2 sobrecargada, preguntar si quiere distribuir la produccion con la sedeP(saldria al dia sig lo distribuido) o producirlo el mismo dia con un mayor costo
+			} else if(senalRec == 15){
+				//las dos sedes estan sobrecargadas, preguntar si quiere producirlas el otro dia, o todo el mismo dia con un mayor costo
+			} else if(senalRec == 0){
+				//NINGUNA SEDE SOBRECARGADA, RETORNAR PRODUCCION NORMAL, ES DECIR, CON LA LISTA DE ESPERA CON VALORES EN 0
+			}
+
 		} else{
 			System.out.println("\n Lo sentimos, se debe arreglar la maquinaria en alguna de las dos sedes para comenzar a producir...\n");
 		}
@@ -426,6 +438,37 @@ public class Sede implements Serializable{
 		return prodAproximada;
 	}
 
-	
+	public ArrayList<Integer> modistasQueHay(){
+		ArrayList<Integer> modistasEnCadaSede = new ArrayList<>();
+		int enLaP = 0;
+		int enLa2 = 0;
+
+		for(Empleado empCreados : Empleado.getEmpCreadoss){
+			if(empCreados.areaActual.getNombre.equalsIgnoreCase("Corte") && empCreados.sede.getNombre.equalsIgnoreCase("Sede Principal")){
+				++enLaP;
+			}
+			if(empCreados.areaActual.getNombre.equalsIgnoreCase("Corte") && empCreados.sede.getNombre.equalsIgnoreCase("Sede 2")){
+				++enLa2;
+			}
+		}
+
+		modistasEnCadaSede.add(0, enLaP);
+		modistasEnCadaSede.add(1, enLa2);
+
+		return modistasEnCadaSede;
+	}
+
+	public int sobreCargada(Fecha fecha){
+		int senal = 0;
+
+		if( ((calcProduccionSedes(fecha).get(0).get(0) + calcProduccionSedes(fecha).get(0).get(1)) / modistasQueHay().get(0)) > 10 ){
+			senal = 5;
+		} 
+		if( ((calcProduccionSedes(fecha).get(1).get(0) + calcProduccionSedes(fecha).get(1).get(1)) / modistasQueHay().get(1)) > 10 ){
+			senal = senal + 10;
+		}
+
+		return senal;
+	}
 	
 }

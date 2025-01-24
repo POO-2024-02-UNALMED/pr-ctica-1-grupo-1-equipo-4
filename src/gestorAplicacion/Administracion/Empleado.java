@@ -14,7 +14,7 @@ public class Empleado extends Persona implements GastoMensual{
     
     private static final long serialVersionUID = 1L;
 
-	public static ArrayList <Empleado> listaEmpleados=new ArrayList<Empleado>();
+	public static ArrayList<Empleado> listaEmpleados=new ArrayList<Empleado>();
     // Usado para empleados de Dirección.
 
     private Area areaActual;
@@ -272,5 +272,9 @@ public class Empleado extends Persona implements GastoMensual{
     public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){this.evaluaciones=evaluaciones;}
     public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluaciones;}
     public ArrayList<Venta> getVentasEncargadas(){return ventasEncargadas;}
+
+    public static ArrayList<Empleado> getEmpCreadoss(){
+        return Empleado.listaEmpleados;
+    }
 
 }
