@@ -19,12 +19,12 @@ public abstract class Prenda implements GastoMensual, Serializable{
     protected Sede sede;
     protected static ArrayList<Maquinaria> maquinaria = new ArrayList<Maquinaria>();
     protected static ArrayList<Float> cantidadInsumo = new ArrayList<Float>();
-    protected static ArrayList<Insumo> insumo = new ArrayList<Insumo>();
+    protected ArrayList<Insumo> insumo = new ArrayList<Insumo>();
     protected ArrayList<Integer> enStock; //Representa el inventario por sede
     // Esta lista es, en cada sede, cuanto hay en stock
     //de esta prenda. El indice es el mismo de la sede en la lista de sedes.
-    protected float costoInsumos;
-    protected int costoProduccion;
+    protected float costoInsumos=0;
+    protected int costoProduccion=0;
     protected long precio;
     //costos necesarios para calcular el precio de cada prenda
     protected static float porcentajeGanancia = 0.30f;  // Porcentaje que afecta la cantidad a producir
@@ -32,13 +32,17 @@ public abstract class Prenda implements GastoMensual, Serializable{
     private static ArrayList<Prenda> prendasInventadas = new ArrayList<Prenda>();
     // Porcentaje que afecta la cantidad a producir
     
-    public Prenda(Fecha fecha, Sede sede, String nombre, Empleado modista, boolean descartada, boolean terminada){
+    public Prenda(Fecha fecha, Sede sede, String nombre, Empleado modista, boolean descartada, boolean terminada, ArrayList<Insumo> insumos){
         fechaFabricacion=fecha;
         this.sede=sede;
         this.nombre=nombre;
         this.modista=modista;
         this.descartada=descartada;
         this.terminada=terminada;
+        this.insumo=insumos;
+        for (int i=0;i<insumos.size();i++){
+            this.costoInsumos+=insumos.get(i).getPrecioIndividual();
+        }
         Prenda.prendasInventadas.add(this);
         sede.getPrendasInventadas().add(this);
         if(descartada){modista.setPrendasDescartadas(modista.getPrendasDescartadas()+1);}
@@ -115,9 +119,9 @@ public abstract class Prenda implements GastoMensual, Serializable{
         
        public long calcularPrecio() {
            float costoTotal = this.costoInsumos + this.costoProduccion;
-           double gananciaDeseada = costoTotal * (1 + Prenda.porcentajeGanancia);
-           this.precio = Math.round(gananciaDeseada/costoTotal);
-           return this.precio;
+           double gananciaDeseada = costoTotal+ (costoTotal*Prenda.porcentajeGanancia);
+           this.precio = Math.round(gananciaDeseada);
+           return precio;
           }//Este método calcula el precio de la prenda haciendo uso de una suma entre los costos que se requirieron para la creación de la prenda
           //Luego esta suma la multiplica con el porcentaje de ganancia al cuál se le suma un 1 para sacar el porcentaje total que se desea calcular
          //Este 1 se suma para no solo obtener el valor de ganancia adicional a los costos, sino que sumar en definitiva los costos con el valor de

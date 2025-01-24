@@ -1,11 +1,10 @@
 package gestorAplicacion.Bodega;
 
-import java.io.Serializable;
-
+import gestorAplicacion.Administracion.GastoMensual;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
-import gestorAplicacion.Administracion.GastoMensual;
+import java.io.Serializable;
 
 public class Insumo implements GastoMensual,Serializable{
 	private static final long serialVersionUID = 1L;
@@ -24,9 +23,9 @@ public class Insumo implements GastoMensual,Serializable{
 		this.nombre=nombre;
 		this.proveedor=proveedor;
 		this.sede=sede;
+		precioCompra=proveedor.getPrecio()*Math.round(cantidad);
 		this.precioXUnidad = Math.round(precioCompra/cantidad);
 		this.ultimoPrecio = this.precioXUnidad;
-		precioCompra=proveedor.getPrecio()*Math.round(cantidad);
 		precioStockTotal+=precioCompra;
 		sede.getListaInsumosBodega().add(this);
 		sede.getCantidadInsumosBodega().add(Math.round(cantidad));
