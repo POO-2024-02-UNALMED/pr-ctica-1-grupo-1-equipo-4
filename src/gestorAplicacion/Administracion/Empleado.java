@@ -21,6 +21,7 @@ public class Empleado extends Persona implements GastoMensual{
     private Fecha fechaContratacion;
     private Sede sede;
     private Maquinaria maquinaria;
+    private ArrayList<Evaluacionfinanciera> evaluaciones = new ArrayList<Evaluacionfinanciera>();
     private ArrayList<Area> areas = new ArrayList<Area>();
     private int traslados;
     private int prendasDescartadas=0;
@@ -206,18 +207,17 @@ public class Empleado extends Persona implements GastoMensual{
 
             float balancesPositivos = 0;
             float balancesNegativos = 0;
-            for (Evaluacionfinanciera evaluacion : Evaluacionfinanciera.getHistorialEvaluaciones()){
-                if (evaluacion.getPresidente().equals(this)){
-                    if (evaluacion.getBalance()>0){
-                        balancesPositivos++;
-                    } else {
-                        balancesNegativos++;
-                        if (evaluacion.getBalance()> Evaluacionfinanciera.promedioBalance()*-0.2){
-                            balancesNegativos-=0.5; // Damos mejor rendimiento si la perdida no es mucha.
-                        }
+            for (Evaluacionfinanciera evaluacion : evaluaciones){
+                if (evaluacion.getBalance()>0){
+                    balancesPositivos++;
+                } else {
+                    balancesNegativos++;
+                    if (evaluacion.getBalance()> Evaluacionfinanciera.promedioBalance()*-0.2){
+                        balancesNegativos-=0.5; // Damos mejor rendimiento si la perdida no es mucha.
                     }
                 }
             }
+        
             if (balancesNegativos+balancesPositivos==0){ // Evita dividir por 0 y despedir nuevos
                 rendimiento = 100;
             } else{
@@ -264,4 +264,7 @@ public class Empleado extends Persona implements GastoMensual{
     public int getBonificacion(){return bonificacion;}
     public void setRendimientoBonificacion(int boni){bonificacion=boni;}
     public void setSalario(int salario){this.salario=salario;}
+    public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){this.evaluaciones=evaluaciones;}
+    public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluaciones;}
+
 }
