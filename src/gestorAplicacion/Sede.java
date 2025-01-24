@@ -293,8 +293,12 @@ public class Sede implements Serializable{
 	}
 
 		//interacion 2 de Produccion
-	public ArrayList<ArrayList<Integer>> planProduccion(ArrayList<Maquinaria> maqDisponiblee, Fecha fecha, Scanner scanner){
+	public ArrayList<ArrayList<ArrayList<Integer>>> planProduccion(ArrayList<Maquinaria> maqDisponiblee, Fecha fecha, Scanner scanner){
+		ArrayList<ArrayList<ArrayList<Integer>>> aProducirFinal = new ArrayList<>();
 		ArrayList<ArrayList<Integer>> aProducir = new ArrayList<>();
+		ArrayList<ArrayList<Integer>> listaEspera = new ArrayList<>();
+
+		ArrayList<ArrayList<Integer>> listaEsperaVacia = new ArrayList<>();
 		ArrayList<Integer> listaDeCeros = new ArrayList<>();
 		ArrayList<Maquinaria> maqSedeP = new ArrayList<>();
 		ArrayList<Maquinaria> maqSede2 = new ArrayList<>();
@@ -302,6 +306,9 @@ public class Sede implements Serializable{
 		
 		listaDeCeros.add(0, 0);
 		listaDeCeros.add(1, 0);
+
+		listaEsperaVacia.add(0, listaDeCeros);
+		listaEsperaVacia.add(1, listaDeCeros);
 
 			//dividir las maquinas disponibles por sedes:
 		for(Maquinaria todMaquinas : maqDisponiblee){
@@ -380,19 +387,98 @@ public class Sede implements Serializable{
 
 			if(senalRec == 5){
 				//sedeP sobrecargada, preguntar si quiere distribuir la produccion con la sede2(saldria al dia sig lo distribuido) o producirlo el mismo dia con un mayor costo
+				System.out.println("La Sede Principal esta sobrecargada, ¿Que desea hacer? \n");
+				System.out.println("1. Enviar parte de la produccion a la Sede 2, para producir por partes iguales.");
+				System.out.println("2. Ejecutar produccion, asumiendo todo el costo por sobrecarga en la Sede Principal.");
+
+				int opciom = 0;
+				while(opciom != 1 && opciom !=2){
+					opciom = scanner.nextInt();
+					if(opciom == 1){
+						int nuevosPantP = calcProduccionSedes(fecha).get(0).get(0) + (int) Math.ceil( (calcProduccionSedes(fecha).get(0).get(0) + calcProduccionSedes(fecha).get(1).get(0)) / 2 );
+						int nuevosPant2 = calcProduccionSedes(fecha).get(1).get(0) + (int) Math.floor( (calcProduccionSedes(fecha).get(0).get(0) + calcProduccionSedes(fecha).get(1).get(0)) / 2 );
+
+						int nuevasCamP = calcProduccionSedes(fecha).get(0).get(1) + (int) Math.ceil( (calcProduccionSedes(fecha).get(0).get(1) + calcProduccionSedes(fecha).get(1).get(1)) / 2 );
+						int nuevasCam2 = calcProduccionSedes(fecha).get(1).get(1) + (int) Math.floor( (calcProduccionSedes(fecha).get(1).get(1) + calcProduccionSedes(fecha).get(0).get(1)) / 2 );
+
+						ArrayList<Integer> loDeLaP = new ArrayList<>();
+						ArrayList<Integer> loDeLa2 = new ArrayList<>();
+
+						loDeLaP.add(0, nuevosPantP);
+						loDeLaP.add(1, nuevasCamP);
+						loDeLa2.add(0, nuevosPant2);
+						loDeLa2.add(1, nuevasCam2);
+
+						aProducir.add(0, loDeLaP);
+						aProducir.add(1, loDeLa2);
+
+						aProducirFinal.add(0, aProducir);
+						aProducirFinal.add(1, listaEsperaVacia);
+					} else if(opciom == 2){
+						aProducir = calcProduccionSedes(fecha);
+
+						aProducirFinal.add(0, aProducir);
+						aProducirFinal.add(1, listaEsperaVacia);
+
+					} else{
+						System.out.println("Coloca una opcion indicada entre 1 o 2...");
+					}
+				}
+
 			} else if(senalRec == 10){
 				//sede2 sobrecargada, preguntar si quiere distribuir la produccion con la sedeP(saldria al dia sig lo distribuido) o producirlo el mismo dia con un mayor costo
+				System.out.println("La Sede 2 esta sobrecargada, ¿Que desea hacer? \n");
+				System.out.println("1. Enviar parte de la produccion a la Sede Principal, para producir por partes iguales.");
+				System.out.println("2. Ejecutar produccion, asumiendo todo el costo por sobrecarga en la Sede 2.");
+
+				int opciom = 0;
+				while(opciom != 1 && opciom !=2){
+					opciom = scanner.nextInt();
+					if(opciom == 1){
+						int nuevosPantP = calcProduccionSedes(fecha).get(0).get(0) + (int) Math.floor( (calcProduccionSedes(fecha).get(0).get(0) + calcProduccionSedes(fecha).get(1).get(0)) / 2 );
+						int nuevosPant2 = calcProduccionSedes(fecha).get(1).get(0) + (int) Math.ceil( (calcProduccionSedes(fecha).get(0).get(0) + calcProduccionSedes(fecha).get(1).get(0)) / 2 );
+
+						int nuevasCamP = calcProduccionSedes(fecha).get(0).get(1) + (int) Math.floor( (calcProduccionSedes(fecha).get(0).get(1) + calcProduccionSedes(fecha).get(1).get(1)) / 2 );
+						int nuevasCam2 = calcProduccionSedes(fecha).get(1).get(1) + (int) Math.ceil( (calcProduccionSedes(fecha).get(1).get(1) + calcProduccionSedes(fecha).get(0).get(1)) / 2 );
+
+						ArrayList<Integer> loDeLaP = new ArrayList<>();
+						ArrayList<Integer> loDeLa2 = new ArrayList<>();
+
+						loDeLaP.add(0, nuevosPantP);
+						loDeLaP.add(1, nuevasCamP);
+						loDeLa2.add(0, nuevosPant2);
+						loDeLa2.add(1, nuevasCam2);
+
+						aProducir.add(0, loDeLaP);
+						aProducir.add(1, loDeLa2);
+
+						aProducirFinal.add(0, aProducir);
+						aProducirFinal.add(1, listaEsperaVacia);
+					} else if(opciom == 2){
+						aProducir = calcProduccionSedes(fecha);
+
+						aProducirFinal.add(0, aProducir);
+						aProducirFinal.add(1, listaEsperaVacia);
+						
+					} else{
+						System.out.println("Coloca una opcion indicada entre 1 o 2...");
+					}
+				}
 			} else if(senalRec == 15){
 				//las dos sedes estan sobrecargadas, preguntar si quiere producirlas el otro dia, o todo el mismo dia con un mayor costo
 			} else if(senalRec == 0){
 				//NINGUNA SEDE SOBRECARGADA, RETORNAR PRODUCCION NORMAL, ES DECIR, CON LA LISTA DE ESPERA CON VALORES EN 0
+				aProducir = calcProduccionSedes(fecha);
+
+				aProducirFinal.add(0, aProducir);
+				aProducirFinal.add(1, listaEsperaVacia);
 			}
 
 		} else{
 			System.out.println("\n Lo sentimos, se debe arreglar la maquinaria en alguna de las dos sedes para comenzar a producir...\n");
 		}
 
-		return aProducir;
+		return aProducirFinal;
 	}
 		
 		//aqui se organiza la produccion de cada sede segun el metodo predecirVentas()
