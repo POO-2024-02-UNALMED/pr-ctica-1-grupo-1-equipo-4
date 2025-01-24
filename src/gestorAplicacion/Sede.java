@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import gestorAplicacion.Administracion.Area;
 import gestorAplicacion.Administracion.Empleado;
+import gestorAplicacion.Administracion.Evaluacionfinanciera;
 import gestorAplicacion.Administracion.Resultado;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Bodega.Insumo;
@@ -18,6 +19,7 @@ public class Sede implements Serializable{
 	private static final long serialVersionUID = 1L; // Para serializacion
 
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
+	private static ArrayList<Evaluacionfinanciera> evaluacionesFinancieras = new ArrayList<Evaluacionfinanciera>();
 	private ArrayList<Empleado> listaEmpleado = new ArrayList<Empleado>();
 	private ArrayList <Maquinaria> listaMaquina= new ArrayList<Maquinaria>();
 	private ArrayList<Venta> historialVentas= new ArrayList<Venta>();
@@ -156,6 +158,8 @@ public class Sede implements Serializable{
 	public void setDistancia(int distancia){this.distancia=distancia;}	
 	public void anadirEmpleado(Empleado emp){listaEmpleado.add(emp);}
 	public void quitarEmpleado(Empleado emp){listaEmpleado.remove(emp);}
+	static public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){evaluacionesFinancieras=evaluaciones;}
+	static public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluacionesFinancieras;}
 	
 	public ArrayList<Integer> getProdAproximada(){
 		return prodAproximada;
@@ -252,6 +256,16 @@ public class Sede implements Serializable{
 		int cantidad = 0;
 		for (Empleado emp : listaEmpleado) {
 			if (emp.getRol() == rol){
+				cantidad++;
+			}
+		}
+		return cantidad;
+	}
+
+	public int cantidadPorArea(Area area){
+		int cantidad = 0;
+		for (Empleado emp : listaEmpleado) {
+			if (emp.getAreaActual() == area){
 				cantidad++;
 			}
 		}

@@ -21,6 +21,7 @@ public class Empleado extends Persona implements GastoMensual{
     private Fecha fechaContratacion;
     private Sede sede;
     private Maquinaria maquinaria;
+    private ArrayList<Evaluacionfinanciera> evaluaciones = new ArrayList<Evaluacionfinanciera>();
     private ArrayList<Area> areas = new ArrayList<Area>();
     private int traslados;
     private int prendasDescartadas=0;
@@ -195,15 +196,14 @@ public class Empleado extends Persona implements GastoMensual{
             break;
 
             case OFICINA:
-
-            float acumuladoVentasSede = 0;
-            for (Empleado empAcumulado : sede.getlistaEmpleados()){
-                if (empAcumulado.areaActual == Area.VENTAS){
-                    acumuladoVentasSede+=Venta.cantidadVentasEncargadasEnMes(empAcumulado,fecha);
-                }
+            System.out.println("Calculando rendimiento de oficina");
+            for (Venta venta : sede.getHistorialVentas()){
+                System.out.println(venta.getEncargado());
             }
-            float promedioVentasSede = acumuladoVentasSede/sede.getlistaEmpleados().size();
-            rendimiento = (int) ((Venta.cantidadVentasEncargadasEnMes(this,fecha)/promedioVentasSede)*100);
+            float acumuladoVentasSede = Venta.filtrar(sede.getHistorialVentas(), fecha).size();
+            float promedioVentasSede = acumuladoVentasSede/sede.cantidadPorArea(Area.OFICINA);
+            int ventasEncargadas = Venta.cantidadVentasEncargadasEnMes(this,fecha);
+            rendimiento = (int) ((ventasEncargadas/promedioVentasSede)*100);
 
             break;
 
@@ -211,18 +211,17 @@ public class Empleado extends Persona implements GastoMensual{
 
             float balancesPositivos = 0;
             float balancesNegativos = 0;
-            for (Evaluacionfinanciera evaluacion : Evaluacionfinanciera.getHistorialEvaluaciones()){
-                if (evaluacion.getPresidente().equals(this)){
-                    if (evaluacion.getBalance()>0){
-                        balancesPositivos++;
-                    } else {
-                        balancesNegativos++;
-                        if (evaluacion.getBalance()> Evaluacionfinanciera.promedioBalance()*-0.2){
-                            balancesNegativos-=0.5; // Damos mejor rendimiento si la perdida no es mucha.
-                        }
+            for (Evaluacionfinanciera evaluacion : evaluaciones){
+                if (evaluacion.getBalance()>0){
+                    balancesPositivos++;
+                } else {
+                    balancesNegativos++;
+                    if (evaluacion.getBalance()> Evaluacionfinanciera.promedioBalance()*-0.2){
+                        balancesNegativos-=0.5; // Damos mejor rendimiento si la perdida no es mucha.
                     }
                 }
             }
+        
             if (balancesNegativos+balancesPositivos==0){ // Evita dividir por 0 y despedir nuevos
                 rendimiento = 100;
             } else{
@@ -269,4 +268,7 @@ public class Empleado extends Persona implements GastoMensual{
     public int getBonificacion(){return bonificacion;}
     public void setRendimientoBonificacion(int boni){bonificacion=boni;}
     public void setSalario(int salario){this.salario=salario;}
+    public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){this.evaluaciones=evaluaciones;}
+    public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluaciones;}
+
 }

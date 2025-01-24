@@ -8,7 +8,6 @@ import gestorAplicacion.Venta;
 
 public class Evaluacionfinanciera implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static ArrayList <Evaluacionfinanciera> historialEvaluaciones = new ArrayList<Evaluacionfinanciera>();
 	//deudaBanco+deudaProveedores
 	private long pagoPersonas;
 	private double balance;
@@ -23,12 +22,12 @@ public class Evaluacionfinanciera implements Serializable {
 		this(balance);
 		if (presidente.getAreaActual().equals(Area.DIRECCION)){
 			this.presidente=presidente;
+			presidente.getEvaluacionesFinancieras().add(this);
 		}
 	}
 
 	public Evaluacionfinanciera(double balance){
 		this.balance=balance;
-		historialEvaluaciones.add(this);
 	}
 
 	public static long estimadoVentasGastos(Fecha fechaActual,float porcentaje, Evaluacionfinanciera balanceAnterior){
@@ -55,8 +54,6 @@ public class Evaluacionfinanciera implements Serializable {
 
 
 
-	public static ArrayList <Evaluacionfinanciera> getHistorialEvaluaciones(){return historialEvaluaciones;}
-	public static void setHistorialEvaluaciones(ArrayList <Evaluacionfinanciera> historial){historialEvaluaciones=historial;}
 	public long getPagoPersonas(){return pagoPersonas;}
 	public void setPagoPersonas(long pago){pago=pagoPersonas;}
 	public double getBalance(){return balance;}
@@ -69,10 +66,10 @@ public class Evaluacionfinanciera implements Serializable {
 			this.presidente=presidente;}}	
 	static float promedioBalance(){
 		float promedio=0;
-		for (Evaluacionfinanciera evaluacion : historialEvaluaciones){
+		for (Evaluacionfinanciera evaluacion : Sede.getEvaluacionesFinancieras()){
 			promedio+=evaluacion.balance;
 		}
-		promedio=promedio/historialEvaluaciones.size();
+		promedio=promedio/Sede.getEvaluacionesFinancieras().size();
 		return promedio;
 	}
 }
