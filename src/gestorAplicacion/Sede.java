@@ -258,6 +258,16 @@ public class Sede implements Serializable{
 		return cantidad;
 	}
 
+	public int cantidadPorArea(Area area){
+		int cantidad = 0;
+		for (Empleado emp : listaEmpleado) {
+			if (emp.getAreaActual() == area){
+				cantidad++;
+			}
+		}
+		return cantidad;
+	}
+
 	public String toString(){
 		return nombre+" con "	+listaEmpleado.size()+" empleados";
 	}

@@ -196,13 +196,8 @@ public class Empleado extends Persona implements GastoMensual{
 
             case OFICINA:
 
-            float acumuladoVentasSede = 0;
-            for (Empleado empAcumulado : sede.getlistaEmpleados()){
-                if (empAcumulado.areaActual == Area.VENTAS){
-                    acumuladoVentasSede+=Venta.cantidadVentasEncargadasEnMes(empAcumulado,fecha);
-                }
-            }
-            float promedioVentasSede = acumuladoVentasSede/sede.getlistaEmpleados().size();
+            float acumuladoVentasSede = Venta.filtrar(sede.getHistorialVentas(), fecha).size();
+            float promedioVentasSede = acumuladoVentasSede/sede.cantidadPorArea(Area.OFICINA);
             rendimiento = (int) ((Venta.cantidadVentasEncargadasEnMes(this,fecha)/promedioVentasSede)*100);
 
             break;
