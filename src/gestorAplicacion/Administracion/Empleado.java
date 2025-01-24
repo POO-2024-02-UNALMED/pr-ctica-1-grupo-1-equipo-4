@@ -186,9 +186,6 @@ public class Empleado extends Persona implements GastoMensual{
             break;
 
             case VENTAS:
-            for (Venta venta : getSede().getHistorialVentas()){
-                System.out.println(venta);
-            }
             int ventasAsesoradas = Venta.filtrar(getSede().getHistorialVentas(),this).size();
             if (ventasAsesoradas!=0){
                 rendimiento= Venta.acumuladoVentasAsesoradas(this)/ventasAsesoradas;

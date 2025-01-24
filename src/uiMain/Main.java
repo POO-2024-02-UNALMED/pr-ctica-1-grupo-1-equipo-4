@@ -1085,10 +1085,7 @@ public class Main {
 
         ArrayList<Prenda> ps1 = new ArrayList<Prenda>();
         ps1.add(r13);
-        ArrayList<Integer> ct1 = new ArrayList<Integer>();
-        ct1.add(1);
-        ct1.add(0);
-        Venta v1 = new Venta(sede2, new Fecha(28, 11, 24), c8, Gabriela, Patricia, ps1, ct1, 200000, 250000);
+        Venta v1 = new Venta(sede2, new Fecha(28, 11, 24), c8, Gabriela, Patricia, ps1, 200000, 250000);
         v1.setCostoEnvio(20000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 250000);
         int com1 = (int) (250000 * 0.05f);
@@ -1097,10 +1094,7 @@ public class Main {
         ArrayList<Prenda> ps2 = new ArrayList<Prenda>();
         ps2.add(r15);
         ps2.add(r16);
-        ArrayList<Integer> ct2 = new ArrayList<Integer>();
-        ct2.add(2);
-        ct2.add(0);
-        Venta v2 = new Venta(sede2, new Fecha(29, 11, 24), c13, Freddy, Patricia, ps2, ct2, 400000, 600000);
+        Venta v2 = new Venta(sede2, new Fecha(29, 11, 24), c13, Freddy, Patricia, ps2, 400000, 600000);
         v2.setCostoEnvio(1000000);
         b2.setAhorroBanco(b2.getAhorroBanco() + 600000);
         int com2 = (int) (600000 * 0.05f);
@@ -1110,11 +1104,7 @@ public class Main {
         ps3.add(r1);
         ps3.add(r2);
         ps3.add(r7);
-        ArrayList<Integer> ct3 = new ArrayList<Integer>();
-        ct3.add(2);
-        ct3.add(1);
-        ct3.add(1);
-        Venta v3 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps3, ct3, 500000, 700000);
+        Venta v3 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps3, 500000, 700000);
         v3.setCostoEnvio(100000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 700000);
         int com3 = (int) (700000 * 0.05f);
@@ -1123,10 +1113,7 @@ public class Main {
         ArrayList<Prenda> ps4 = new ArrayList<Prenda>();
         ps4.add(r15);
         ps4.add(r16);
-        ArrayList<Integer> ct4 = new ArrayList<Integer>();
-        ct4.add(2);
-        ct4.add(0);
-        Venta v4 = new Venta(sedeP, new Fecha(25, 11, 24), c4, Wilson, Mario, ps4, ct4, 400000, 60000);
+        Venta v4 = new Venta(sedeP, new Fecha(25, 11, 24), c4, Wilson, Mario, ps4, 400000, 60000);
         v4.setCostoEnvio(100000);
         b3.setAhorroBanco(b3.getAhorroBanco() + 600000);
         int com4 = (int) (600000 * 0.05f);
@@ -1310,7 +1297,7 @@ public class Main {
             }
         }
         int IVA = (int) ((costosEnvio + sumaPreciosPrendas) * 0.19f);
-        venta = new Venta(sede, fechaVenta, cliente, encargado, vendedor, productosSeleccionados, cantidadProductos);
+        venta = new Venta(sede, fechaVenta, cliente, encargado, vendedor, productosSeleccionados);
         venta.setCostoEnvio(costosEnvio);
         sumaPreciosPrendas += costosEnvio;
         int monto = sumaPreciosPrendas + IVA + costosEnvio;
@@ -1345,10 +1332,7 @@ public class Main {
         ArrayList<Prenda> productosSeleccionados = venta.getArticulos();
         Sede sede = venta.getSede();
         Banco banco = sede.getCuentaSede();
-        int totalPrendas = 0;
-        for (int i = 0; i < productosSeleccionados.size(); i++) {
-            totalPrendas += venta.getCantidades().get(i);
-        }
+        int totalPrendas = productosSeleccionados.size();
 
         ArrayList<Insumo> InsumosBodega = sede.getListaInsumosBodega();
         ArrayList<Integer> cantidadInsumosBodega = sede.getCantidadInsumosBodega();

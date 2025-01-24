@@ -9,7 +9,6 @@ import gestorAplicacion.Bodega.Prenda;
 public class Venta implements Serializable {
 	private static final long serialVersionUID = 1L; // Para serializacion
 	private ArrayList<Prenda> articulos= new ArrayList<Prenda>();
-	private ArrayList<Integer> cantidades=  new ArrayList<Integer>();
 	private ArrayList<Bolsa> bolsas=new ArrayList<Bolsa>();
 	private static ArrayList<String> codigosRegalo = new ArrayList<String>();
     private static ArrayList<Integer> montosRegalo = new ArrayList<Integer>();
@@ -24,20 +23,19 @@ public class Venta implements Serializable {
 	private int subtotal;
 	private static float pesimismo = 0.02F;
 
-	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado e,ArrayList<Prenda> articulos, ArrayList<Integer> cantidades){
+	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado e,ArrayList<Prenda> articulos){
 		this(sede, fecha, c);
 		asesor=a;
 		encargado=e;
 		this.articulos=articulos;
-		this.cantidades=cantidades;
 		for(Prenda prenda : articulos){
 		sede.getPrendasInventadas().remove(prenda);
 	}
 	}
 
 	
-	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado v,ArrayList<Prenda> articulos, ArrayList<Integer> cantidades, int sub, int mp){
-		this(sede,fecha,c,a,v,articulos,cantidades);
+	public Venta(Sede sede,Fecha fecha, Persona c, Empleado a, Empleado v,ArrayList<Prenda> articulos, int sub, int mp){
+		this(sede,fecha,c,a,v,articulos);
 		subtotal=sub;
 		montoPagado=mp;
 		sede.getCuentaSede().setAhorroBanco(sede.getCuentaSede().getAhorroBanco()+montoPagado);
@@ -177,7 +175,7 @@ public class Venta implements Serializable {
 			for(Venta venta: Venta.filtrar(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
 				for(int j=0; j<venta.getArticulos().size();j++){
 					if(venta.getArticulos().get(j).getNombre().equalsIgnoreCase(prenda)){
-						sumatoriaYMes+=venta.getCantidades().get(j);
+						sumatoriaYMes+=1;
 					}
 				}
 			}
@@ -195,10 +193,6 @@ public class Venta implements Serializable {
 	public void setArticulos(ArrayList<Prenda> articulos){this.articulos=articulos;}
 	public ArrayList<Bolsa> getBolsas(){return bolsas;}
 	public void setBolsas(ArrayList<Bolsa> bolsas){this.bolsas=bolsas;}
-	public ArrayList<Integer> getCantidades(){return cantidades;}
-	public void setCantidades(ArrayList<Integer> cantidades){
-		if (cantidades.size()==articulos.size()){this.cantidades=cantidades;}
-		}
 	public Empleado getEncargado(){return encargado;}
 	public void setEncargado(Empleado emp){encargado=emp;}
 	public Empleado getAsesor(){return asesor;}
@@ -232,22 +226,5 @@ public class Venta implements Serializable {
 	public static void setCodigosRegalos(ArrayList<String> codigo){Venta.codigosRegalo=codigo;}
 	public static ArrayList<Integer> getMontosRegalo(){return Venta.montosRegalo;}
 	public static void setMontosRegalo(ArrayList<Integer> montos){Venta.montosRegalo=montos;}
-	public String toString(){
-		String retorno;
-		retorno="---- FACTURA ----"+"\n";
-		retorno+=fechaVenta+"\n";
-		retorno+=cliente.nombre+"\n";
-		for (int i = 0; i < articulos.size(); i++) {
-			Prenda prenda = articulos.get(i);
-			int cantidad = cantidades.get(i);
-			retorno+=(prenda.getNombre() + " - Cantidad: "+cantidad+"\n");
-		}
-		if (bolsas.size()>0){retorno+="Incluye bolsa";}
-		retorno+="Subtotal: $" + subtotal;
-		retorno+="Valor total (Con IVA): $" + montoPagado;
-		retorno+="Venta registrada por: " + encargado.getNombre();
-		retorno+="Asesor de la compra: " + asesor.getNombre();
-		retorno+=sede.getNombre();
-		return retorno;
-	}
+	
 }
