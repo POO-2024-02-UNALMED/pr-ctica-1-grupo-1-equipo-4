@@ -184,17 +184,19 @@ public class Sede implements Serializable{
 			for (Sede sede : listaSedes){
 				switch(rol){
 					case MODISTA:
-					int produccionTotal = 0;
-					for (int nProduccion: sede.getProduccionAproximada()){
-						produccionTotal += nProduccion;
-					}
 
-					int produccionPorModista = produccionTotal / sede.cantidadPorRol(rol);
+					if (sede.cantidadPorRol(rol)!=0){
+						int produccionTotal = 0;
+						for (int nProduccion: sede.getProduccionAproximada()){
+							produccionTotal += nProduccion;
+						}
+						int produccionPorModista = produccionTotal / sede.cantidadPorRol(rol);
 
-					if (produccionPorModista<30){
-						transferirDe.set(idxRol, sede);
-						rolesATransferir.add(rol);
-						break;
+						if (produccionPorModista<30){
+							transferirDe.set(idxRol, sede);
+							rolesATransferir.add(rol);
+							break;
+						}
 					}
 					break;
 					

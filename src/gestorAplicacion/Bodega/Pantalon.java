@@ -5,8 +5,9 @@ import gestorAplicacion.Sede;
 import java.util.ArrayList;
 
 public class Pantalon extends Prenda {
-    public Pantalon(Fecha fecha, Empleado modista, boolean descartada, boolean terminada, Sede sede){
-        super(fecha, sede, "Pantalon", modista, descartada, terminada);
+    private static final long serialVersionUID = 1L;
+    public Pantalon(Fecha fecha, Empleado modista, boolean descartada, boolean terminada, Sede sede, ArrayList<Insumo> insumos){
+        super(fecha, sede, "Camisa", modista, descartada, terminada,insumos);
     }
     @Override
     public int calcularGastoMensual() {
@@ -17,6 +18,20 @@ public class Pantalon extends Prenda {
             gasto+=Math.round(tipo.getPrecioIndividual()*cantidad);
         }
         return gasto;
+    }
+
+    public static long PrecioVenta(){
+        long precios=0;
+        int cantidades=0;
+        for (Prenda pantalon:Prenda.getPrendasInventadas()){
+            if (pantalon instanceof Pantalon){
+                precios+=pantalon.calcularPrecio();
+                cantidades++;
+            }
+        }
+        long precioVenta=Math.round(precios/cantidades);
+        //Se promedian todos los "precios por los que se deberían vender las prendas para que todas las camisas se vendan al mismo precio"
+        return precioVenta;
     }
     private static ArrayList<Float> cantidadInsumo=new ArrayList<Float>();
     private static ArrayList<String> tipoinsumo=new ArrayList<String>();
