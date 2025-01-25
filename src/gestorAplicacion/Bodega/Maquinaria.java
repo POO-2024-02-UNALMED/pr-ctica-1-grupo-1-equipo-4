@@ -6,6 +6,7 @@ import gestorAplicacion.Fecha;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class Maquinaria implements Serializable{
@@ -219,5 +220,23 @@ public class Maquinaria implements Serializable{
 
 	public String toString(){
 		return "La "+nombre+" operada por "+user.getNombre()+" ubicada en la sede "+sede.getNombre()+" tiene "+horasUso+" horas de uso";
+	}
+
+	// Metodo auxiliar de Prenda.producirListaPrendas
+	static Maquinaria seleccionarDeTipo(Sede sede,String tipo){
+		Collections.shuffle(sede.getlistaMaquinas());
+		for (Maquinaria maq : sede.getlistaMaquinas()){
+			if (maq.nombre.equals(tipo)){
+				return maq;
+			}
+		}
+		return null;
+	}
+
+	void usar(int horas){
+		horasUso+=horas;
+		for (Repuesto repuesto:repuestos){
+			repuesto.usar(horas);
+		}
 	}
 }

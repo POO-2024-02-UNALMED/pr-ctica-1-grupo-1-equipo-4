@@ -50,4 +50,8 @@ public class Repuesto extends Insumo { // Implementa serializable por repuesto
         }
 		return gastoMensual;
     }
+
+    void usar(int horas)    {
+        horasDeUso+=horas;
+    }
 }

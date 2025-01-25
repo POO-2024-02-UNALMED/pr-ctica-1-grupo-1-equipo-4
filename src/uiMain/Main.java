@@ -1686,8 +1686,8 @@ public class Main {
     }
 
     // Metodo auxiliar de la interacción 3 de producción
-    public static Empleado pedirModista(int cantidadPrendas,Sede sede){
-        System.out.println("Seleccione el modista que se encargará de la producción de "+cantidadPrendas+" prendas:");
+    public static Empleado pedirModista(int cantidadPrendas,Sede sede, int idxTanda){
+        System.out.println("Seleccione el modista que se encargará de la tanda #"+idxTanda+ "de producción de "+cantidadPrendas+" prendas:");
 
         Empleado modista = null;
         ArrayList<Empleado> modistas = new ArrayList<Empleado>();

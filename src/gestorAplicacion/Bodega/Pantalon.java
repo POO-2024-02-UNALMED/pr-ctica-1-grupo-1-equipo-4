@@ -39,46 +39,64 @@ public class Pantalon extends Prenda {
     @Override
     ArrayList<Object> siguientePaso() {
         ArrayList<Object> retorno = new ArrayList<Object>();
-        float probabilidadDeExito = 0;
         switch (pasoActual) {
             case 1:
-                probabilidadDeExito = modista.getPericia();
                 retorno.add("Maquina de Corte");
                 retorno.add(5);
                 break;
             case 2:
-                probabilidadDeExito = modista.getPericia()*0.8f;
                 retorno.add("Maquina de Tijereado");
                 retorno.add(2);
                 break;
             case 3:
-                probabilidadDeExito = modista.getPericia()*0.7f;
                 retorno.add("Maquina de Coser Industrial");
                 retorno.add(10);
                 break;
             default:
                 retorno.add("LISTO");
+                terminada=true;
                 break;
         }
-        float suerte = (float) Math.random();
-        if ( suerte > probabilidadDeExito){
-            retorno.clear();
-            retorno.add("DESCARTAR");
+        ultimoPaso=retorno;
+        return retorno;
+    }
+
+    String realizarPaso(Empleado modista){
+        this.modista=modista;
+        float probabilidadDeExito = modista.getPericia();
+        switch (pasoActual) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                probabilidadDeExito*=0.8;
         }
         pasoActual++;
+        String retorno= "CONTINUAR";
+        if (pasoActual>3){
+            retorno="LISTO";
+        }
+        if (Math.random()>probabilidadDeExito){
+            retorno="DESCARTAR";
+        }
         return retorno;
+
     }
 
 
     public static ArrayList<ArrayList<Insumo>> posiblesInsumosNecesarios = new ArrayList<ArrayList<Insumo>>();
     private static ArrayList<Float> cantidadInsumo=new ArrayList<Float>();
     private static ArrayList<String> tipoinsumo=new ArrayList<String>();
-    int pasoActual=0;
+    int pasoActual=1;
     public static ArrayList<String> maquinariaNecesaria = new ArrayList<String>(Arrays.asList("Maquina de Corte", "Maquina de Coser Industrial", "Maquina de Tijereado"));
 
     public static ArrayList<String> getTipoInsumo(){return tipoinsumo;}
     public static ArrayList<Float> getCantidadInsumo(){return cantidadInsumo;}
     public static void setTipoInsumo(ArrayList<String> tipos){tipoinsumo=tipos;}
     public static void setCantidadInsumo(ArrayList<Float> cantidades){cantidadInsumo=cantidades;}
+    public static ArrayList<ArrayList<Insumo>> getPosiblesInsumosNecesarios() {
+        return posiblesInsumosNecesarios;
+    }
 
 }

@@ -9,6 +9,7 @@ import uiMain.Main;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public abstract class Prenda implements GastoMensual, Serializable{
     private static final long serialVersionUID = 1L;
@@ -32,6 +33,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
     //costos necesarios para calcular el precio de cada prenda
     private static ArrayList<Prenda> prendasInventadas = new ArrayList<Prenda>();
     // Porcentaje que afecta la cantidad a producir
+    ArrayList<Object> ultimoPaso = new ArrayList<Object>(); // Reescrito al usar siguientePaso()
     
     public Prenda(Fecha fecha, Sede sede, String nombre, Empleado modista, boolean descartada, boolean terminada, ArrayList<Insumo> insumos){
         fechaFabricacion=fecha;
@@ -64,18 +66,91 @@ public abstract class Prenda implements GastoMensual, Serializable{
     private static void producirListaPrendas(ArrayList<Integer> planProduccion, Sede sede, Fecha fechaProduccion){
         int cantidadPantalones = planProduccion.get(0);
         int cantidadCamisas = planProduccion.get(1);
-        ArrayList<Pantalon> pantalones = new ArrayList<Pantalon>();
-        ArrayList<Camisa> camisas = new ArrayList<Camisa>();
+        ArrayList<Prenda> prendas = new ArrayList<Prenda>();
 
         for (int i=0;i<cantidadPantalones;i++){
-            Pantalon pantalon = new Pantalon(fechaProduccion, sede, "Pantalon", Main.pedirModista(cantidadCamisas+cantidadPantalones,sede), false, false, new ArrayList<Insumo>());
-            pantalones.add(pantalon);
+            Collections.shuffle(Pantalon.posiblesInsumosNecesarios);
+            Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,Pantalon.getPosiblesInsumosNecesarios().get(0));
+            prendas.add(pantalon);
+        }
+        for (int i=0;i<cantidadCamisas;i++){
+            Collections.shuffle(Camisa.posiblesInsumosNecesarios);
+            Camisa camisa = new Camisa(fechaProduccion,null,false, false,sede, Camisa.getPosiblesInsumosNecesarios().get(0));
+            prendas.add(camisa);
+        }
+
+        int idxTanda = 0;
+        while (true){
+            if (prendas.size()==0){
+                break;
+            }
+
+            ArrayList<ArrayList<Prenda>> tandas = new ArrayList<ArrayList<Prenda>>();
+            ArrayList<Prenda> paraCorte = new ArrayList<Prenda>();
+            ArrayList<Prenda> paraTijereado = new ArrayList<Prenda>();
+            ArrayList<Prenda> paraCoser = new ArrayList<Prenda>();
+            ArrayList<Prenda> paraBordadora = new ArrayList<Prenda>();
+            ArrayList<Prenda> paraTermofijado = new ArrayList<Prenda>();
+            ArrayList<Prenda> paraPlancha = new ArrayList<Prenda>();
+
+            for (Prenda paraTanda: prendas){
+                ArrayList<Object> siguientePaso = paraTanda.siguientePaso();
+                switch ((String) siguientePaso.get(0)){
+                    case "Maquina de Corte":
+                        paraCorte.add(paraTanda);
+                        break;
+                    case "Maquina de Tijereado":
+                        paraTijereado.add(paraTanda);
+                        break;
+                    case "Maquina de Coser Industrial":
+                        paraCoser.add(paraTanda);
+                        break;
+                    case "Maquina de Bordadora":
+                        paraBordadora.add(paraTanda);
+                        break;
+                    case "Maquina de Termofijado":
+                        paraTermofijado.add(paraTanda);
+                        break;
+                    case "Plancha Industrial":
+                        paraPlancha.add(paraTanda);
+                        break;
+                }
+            }
+
+            tandas.add(paraTermofijado);
+            tandas.add(paraBordadora);
+            tandas.add(paraPlancha);
+            tandas.add(paraCorte);
+            tandas.add(paraTijereado);
+            tandas.add(paraCoser);
+
+
+            Empleado modista = Main.pedirModista(prendas.size(), sede,idxTanda);
+            for (ArrayList<Prenda> tanda: tandas){
+                Maquinaria maquina = Maquinaria.seleccionarDeTipo(sede,(String) tanda.get(0).ultimoPaso.get(0));
+                for (Prenda prenda: tanda){
+                    maquina.usar((int) prenda.ultimoPaso.get(1));
+                    String resultado = prenda.realizarPaso(modista);
+                    if (resultado.equals("DESCARTAR")){
+                        prenda.descartada=true;
+                        modista.setPrendasDescartadas(modista.getPrendasDescartadas()+1);
+                        prendas.remove(prenda);
+                    } else if (resultado.equals("LISTO")){
+                        prenda.terminada=true;
+                        modista.setPrendasProducidas(modista.getPrendasProducidas()+1);
+                        prendas.remove(prenda);
+                    }
+                }
+            }
+            idxTanda++;
         }
         
+
 
     }
 
     abstract ArrayList<Object> siguientePaso();
+    abstract String realizarPaso(Empleado modista);
     
 
 	public static long gastoMensualClase(Fecha fecha){
