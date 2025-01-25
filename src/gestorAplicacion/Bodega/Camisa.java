@@ -35,8 +35,48 @@ public class Camisa extends Prenda {
         //Se promedian todos los "precios por los que se deberían vender las prendas para que todas las camisas se vendan al mismo"
         return precioVenta;
     }
+
+    @Override
+    ArrayList<Object> siguientePaso(Empleado modista) {
+        ArrayList<Object> retorno = new ArrayList<Object>();
+        float probabilidadDeExito = 0;
+        switch (pasoActual) {
+            case 1:
+                probabilidadDeExito = modista.getPericia();
+                retorno.add("Maquina de Corte");
+                retorno.add(5);
+                break;
+            case 2:
+                probabilidadDeExito = modista.getPericia()*0.8f;
+                retorno.add("Maquina de Coser Industrial");
+                retorno.add(10);
+                break;
+            case 3:
+                probabilidadDeExito = modista.getPericia()*0.7f;
+                retorno.add("Plancha Industrial");
+                retorno.add(5);
+                break;
+            case 4:
+                probabilidadDeExito = modista.getPericia();
+                retorno.add("Maquina de Termofijado");
+                retorno.add(10);
+                break;
+            default:
+                retorno.add("LISTO");
+                break;
+        }
+        float suerte = (float) Math.random();
+        if ( suerte > probabilidadDeExito){
+            retorno.clear();
+            retorno.add("DESCARTAR");
+        }
+        pasoActual++;
+        return retorno;
+    }
+
     private static ArrayList<Float> cantidadInsumo=new ArrayList<Float>();
     private static ArrayList<String> tipoinsumo=new ArrayList<String>();
+    int pasoActual=0;
     public ArrayList<String> maquinariaNecesaria = new ArrayList<String>(Arrays.asList("Maquina de Corte", "Bordadora Industrial", "Maquina de Coser Industrial","Maquina de Termofijado", "Plancha Industrial"));
     
     public static ArrayList<String> getTipoInsumo(){return tipoinsumo;}
