@@ -63,6 +63,20 @@ public class Fecha implements Serializable{
 		return dias;
 	}
 
+	public Fecha diaSiguiente(){
+		Fecha nuevaFecha = new Fecha(dia,mes,año);
+		nuevaFecha.dia++;
+		if (nuevaFecha.dia>31){
+			nuevaFecha.dia=1;
+			nuevaFecha.mes++;
+			if (nuevaFecha.mes>12){
+				nuevaFecha.mes=1;
+				nuevaFecha.año++;
+			}
+		}
+		return nuevaFecha;
+	}
+
 
 	public String toString(){
 		return "Día: "+dia+" Mes: "+mes+" Año:"+año;

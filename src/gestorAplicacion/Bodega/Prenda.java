@@ -49,6 +49,26 @@ public abstract class Prenda implements GastoMensual, Serializable{
         else{modista.setPrendasProducidas(modista.getPrendasProducidas()+1);}
     }
     
+    public static void producirPrendas(ArrayList<ArrayList<ArrayList<Integer>>>planProduccion, Fecha hoy){
+        Fecha diaDeProduccion = hoy;
+        for (ArrayList<ArrayList<Integer>> dia : planProduccion){
+            for (int i=0;i<dia.size();i++){
+                Sede sede=Sede.getlistaSedes().get(i);
+                producirListaPrendas(dia.get(i), sede, diaDeProduccion);
+            }
+            diaDeProduccion=diaDeProduccion.diaSiguiente();
+        }
+    }
+
+    private static void producirListaPrendas(ArrayList<Integer> planProduccion, Sede sede, Fecha fechaProduccion){
+        int cantidadPantalones = planProduccion.get(0);
+        int cantidadCamisas = planProduccion.get(1);
+
+
+    }
+
+    abstract ArrayList<Object> siguientePaso(Empleado modista);
+    
 
 	public static long gastoMensualClase(Fecha fecha){
 		long gastoPrenda=0;
