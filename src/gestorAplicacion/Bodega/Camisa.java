@@ -71,6 +71,7 @@ public class Camisa extends Prenda {
             retorno.add("DESCARTAR");
         }
         pasoActual++;
+        ultimoPasoPedido = retorno;
         return retorno;
     }
 
@@ -78,7 +79,8 @@ public class Camisa extends Prenda {
     private static ArrayList<String> tipoinsumo=new ArrayList<String>();
     int pasoActual=0;
     public ArrayList<String> maquinariaNecesaria = new ArrayList<String>(Arrays.asList("Maquina de Corte", "Bordadora Industrial", "Maquina de Coser Industrial","Maquina de Termofijado", "Plancha Industrial"));
-    
+    ArrayList<Object> ultimoPasoPedido = new ArrayList<Object>();
+
     public static ArrayList<String> getTipoInsumo(){return tipoinsumo;}
     public static ArrayList<Float> getCantidadInsumo(){return cantidadInsumo;}
     public static void setTipoInsumo(ArrayList<String> tipos){tipoinsumo=tipos;}

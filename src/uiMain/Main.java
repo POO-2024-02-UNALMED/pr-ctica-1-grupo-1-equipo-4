@@ -1677,6 +1677,28 @@ public class Main {
 
         }
     }
+
+    // Metodo auxiliar de la interacción 3 de producción
+    public static Empleado pedirModista(int cantidadPrendas,Sede sede){
+        System.out.println("Seleccione el modista que se encargará de la producción de "+cantidadPrendas+" prendas:");
+
+        Empleado modista = null;
+        ArrayList<Empleado> modistas = new ArrayList<Empleado>();
+        for (Empleado empleado : sede.getlistaEmpleados()) {
+            if (empleado.getRol() == Rol.MODISTA) {
+                System.out.println(modistas.size()+". " + empleado.getNombre());
+                modistas.add(empleado);
+            }
+        }
+        Scanner scanner = new Scanner(System.in);
+        int seleccion = nextIntSeguro(scanner);
+        if (seleccion >= 0 && seleccion < modistas.size()) {
+            modista = modistas.get(seleccion);
+        } else {
+            System.out.println("Opción inválida. Intente nuevamente.");
+        }
+        return modista;
+    }
 }
 
 

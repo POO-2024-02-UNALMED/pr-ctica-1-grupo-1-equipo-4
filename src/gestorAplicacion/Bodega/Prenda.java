@@ -5,6 +5,7 @@ import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
+import uiMain.Main;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -63,7 +64,14 @@ public abstract class Prenda implements GastoMensual, Serializable{
     private static void producirListaPrendas(ArrayList<Integer> planProduccion, Sede sede, Fecha fechaProduccion){
         int cantidadPantalones = planProduccion.get(0);
         int cantidadCamisas = planProduccion.get(1);
+        ArrayList<Pantalon> pantalones = new ArrayList<Pantalon>();
+        ArrayList<Camisa> camisas = new ArrayList<Camisa>();
 
+        for (int i=0;i<cantidadPantalones;i++){
+            Pantalon pantalon = new Pantalon(fechaProduccion, sede, "Pantalon", Main.pedirModista(cantidadCamisas+cantidadPantalones), false, false, new ArrayList<Insumo>());
+            pantalones.add(pantalon);
+        }
+        
 
     }
 
