@@ -172,6 +172,7 @@ public class Venta implements Serializable {
 			}
 			sumatoriaY+=sumatoriaYMes;
 			sumatoriaXY+=sumatoriaYMes*meses;
+			
 		}
 		//Calculamos los datos de la funcion lineal
 		double pendiente=(n*sumatoriaXY-sumatoriax*sumatoriaY)/(n*sumatoriaxCuadrado-sumatoriax^2);

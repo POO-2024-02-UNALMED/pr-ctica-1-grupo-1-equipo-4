@@ -428,38 +428,35 @@ public class Main {
 
             ArrayList<Object> listaXSede = new ArrayList<>();
             ArrayList<Insumo> insumoXSede = new ArrayList<>();
-            ArrayList<Float> cantidadAPedir = new ArrayList<>();
-
+            ArrayList<Integer> cantidadAPedir = new ArrayList<>();
+            int contador1 = 0;
+            int contador2 = 0;
             for (Prenda prenda : x.getPrendasInventadas()) {
-
-                int contador1 = 0;
-                int contador2 = 0;
                 if (prenda instanceof Pantalon && contador1 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
                     System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
 
                     float prediccion = proyeccion * (1 - Venta.getPesimismo());
-                    System.out.println(prediccion);
                     for (Insumo insumo : prenda.getInsumo()) {
                         insumoXSede.add(insumo);
                     }
                     for (int i : Pantalon.getCantidadInsumo()) {
-                        cantidadAPedir.add(i * prediccion);
+                        cantidadAPedir.add((int)(Math.ceil(i * prediccion)));
                     }
-                    contador1++;
-                } else if (prenda instanceof Camisa && contador2 == 0) {
+                    contador1++;}
+                    else if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
                     System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
 
                     float prediccion = proyeccion * (1 - Venta.getPesimismo());
 
-                    for (Insumo insumo : prenda.getInsumo()) {
-                        insumoXSede.add(insumo);
-                    }
+                    //for (Insumo insumo : prenda.getInsumo()) {
+                        //insumoXSede.add(insumo);
+                    //}
                     for (int i : Camisa.getCantidadInsumo()) {
-                        cantidadAPedir.add(i * prediccion);
+                        cantidadAPedir.add((int)(Math.ceil(i * prediccion)));
                     }
                     contador2++;
                 }
@@ -469,8 +466,11 @@ public class Main {
             listaXSede.add(0,insumoXSede);
             listaXSede.add(1,cantidadAPedir);
             retorno.add(listaXSede);
+            System.out.print("/n 1"+listaXSede);
+            System.out.print("/n 2"+insumoXSede);System.out.print("/n 3"+cantidadAPedir);
         }
         // retorno.add(listaGuia);}
+        System.out.print(retorno);
         return retorno;
     }
 
@@ -482,16 +482,17 @@ public class Main {
         ArrayList<Object> listaA = new ArrayList<Object>();
 
         for (Object sede : retorno) {
+            Scanner in = new Scanner(System.in);
+
             ArrayList<Insumo> insumosAPedir = new ArrayList<>();
             ArrayList<Integer> cantidadAPedir = new ArrayList<>(); // Ambas calculadas en este bucle
             ArrayList<Object> listaSede = new ArrayList<>(); // Acumula la info de este bucle.
             // Convertir cada elemento en un ArrayList<Object> correspondiente a una sede
-            System.out.print(listaXSede = (ArrayList<Object>) sede);
-
+            listaXSede = (ArrayList<Object>) sede;
+           
             // Extraer las listas internas: insumos y cantidades
             listaInsumos = (ArrayList<Insumo>) listaXSede.get(0);
             listaCantidades = (ArrayList<Integer>) listaXSede.get(1);
-
             for (Sede s : Sede.getlistaSedes()) {
                 for (Insumo i : listaInsumos) {
                     Resultado productoEnBodega = Sede.verificarProductoBodega(i, s);
@@ -508,7 +509,6 @@ public class Main {
                                         "1. Deseo transferir el insumo desde la sede " + productoEnOtraSede.getSede());
                                 System.out.println("2. Deseo comprar el insumo");
 
-                                Scanner in = new Scanner(System.in);
                                 int opcion = in.nextInt();
                                 switch (opcion) {
                                     case 1:
@@ -542,6 +542,7 @@ public class Main {
 
     // Interacción 3 de Insumos
     static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> listaA) {
+        Scanner in = new Scanner(System.in);
         ArrayList<Object> sede = new ArrayList<>();
         ArrayList<Insumo> insumos = new ArrayList<>();
         ArrayList<Integer> cantidad = new ArrayList<>();
@@ -552,7 +553,6 @@ public class Main {
             sede = (ArrayList<Object>) s;
             insumos = (ArrayList<Insumo>) sede.get(0);
             cantidad = (ArrayList<Integer>) sede.get(1);
-
             for (Sede sedee : Sede.getlistaSedes()) {
 
                 for (int i = 0; i < insumos.size(); i++) {
@@ -576,7 +576,7 @@ public class Main {
                             insumos.get(i).setProveedor(x);
                         }
                     }
-
+                
                     System.out.println("Tenemos el insumo " + insumos.get(i).getNombre() + " con nuestro proveedor "
                             + proveedores.get(i).getNombre() + ".");
 
@@ -587,9 +587,8 @@ public class Main {
                         System.out.println("Cantidad: " + cantidad.get(i));
                         System.out.println("1. Si");
                         System.out.println("2. No");
-
-                        Scanner in = new Scanner(System.in);
                         int opcion = in.nextInt();
+
                         switch (opcion) {
                             case 1:
                                 if (opcion >= 0) {
@@ -630,8 +629,8 @@ public class Main {
                         }
 
                     }
+                
                 }
-
             }
         }
         return deudas;
