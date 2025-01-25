@@ -1047,6 +1047,10 @@ public class Main {
         tiposcb.add(i2);
         tiposcb.add(i4);
         tiposcb.add(i8);
+
+        Camisa.posiblesInsumosNecesarios.add(tiposca);
+        Camisa.posiblesInsumosNecesarios.add(tiposcb);
+
         ArrayList<Insumo> tipospa = new ArrayList<Insumo>();
         tiposca.add(i1);
         tiposca.add(i3);
@@ -1057,6 +1061,9 @@ public class Main {
         tiposcb.add(i4);
         tiposca.add(i6);
         tiposcb.add(i8);
+
+        Pantalon.posiblesInsumosNecesarios.add(tipospa);
+        Pantalon.posiblesInsumosNecesarios.add(tipospb);
 
         Prenda r1 = new Pantalon(new Fecha(1, 1, 23), Hugo, false, true, sedeP,tipospa);
         Prenda r2 = new Pantalon(new Fecha(1, 1, 23), Inez, false, true, sedeP,tipospb);

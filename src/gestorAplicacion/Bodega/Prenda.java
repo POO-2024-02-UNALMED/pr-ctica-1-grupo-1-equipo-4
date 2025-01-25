@@ -68,14 +68,14 @@ public abstract class Prenda implements GastoMensual, Serializable{
         ArrayList<Camisa> camisas = new ArrayList<Camisa>();
 
         for (int i=0;i<cantidadPantalones;i++){
-            Pantalon pantalon = new Pantalon(fechaProduccion, sede, "Pantalon", Main.pedirModista(cantidadCamisas+cantidadPantalones), false, false, new ArrayList<Insumo>());
+            Pantalon pantalon = new Pantalon(fechaProduccion, sede, "Pantalon", Main.pedirModista(cantidadCamisas+cantidadPantalones,sede), false, false, new ArrayList<Insumo>());
             pantalones.add(pantalon);
         }
         
 
     }
 
-    abstract ArrayList<Object> siguientePaso(Empleado modista);
+    abstract ArrayList<Object> siguientePaso();
     
 
 	public static long gastoMensualClase(Fecha fecha){

@@ -35,8 +35,9 @@ public class Pantalon extends Prenda {
         return precioVenta;
     }
 
+    // Usa el modista en el atributo de la clase Prenda
     @Override
-    ArrayList<Object> siguientePaso(Empleado modista) {
+    ArrayList<Object> siguientePaso() {
         ArrayList<Object> retorno = new ArrayList<Object>();
         float probabilidadDeExito = 0;
         switch (pasoActual) {
@@ -69,7 +70,7 @@ public class Pantalon extends Prenda {
     }
 
 
-
+    public static ArrayList<ArrayList<Insumo>> posiblesInsumosNecesarios = new ArrayList<ArrayList<Insumo>>();
     private static ArrayList<Float> cantidadInsumo=new ArrayList<Float>();
     private static ArrayList<String> tipoinsumo=new ArrayList<String>();
     int pasoActual=0;

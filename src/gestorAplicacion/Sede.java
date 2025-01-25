@@ -19,6 +19,8 @@ public class Sede implements Serializable{
 	private static final long serialVersionUID = 1L; // Para serializacion
 
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
+
+	// Ahora está aquí y en no en Evaluacionfinanciera por razones de serialización.
 	private static ArrayList<Evaluacionfinanciera> evaluacionesFinancieras = new ArrayList<Evaluacionfinanciera>();
 	private ArrayList<Empleado> listaEmpleado = new ArrayList<Empleado>();
 	private ArrayList <Maquinaria> listaMaquina= new ArrayList<Maquinaria>();
