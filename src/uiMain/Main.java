@@ -437,7 +437,7 @@ public class Main {
                 if (prenda instanceof Pantalon && contador1 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
+                    System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
 
                     float prediccion = proyeccion * (1 - Venta.getPesimismo());
 
@@ -451,7 +451,7 @@ public class Main {
                 } else if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
+                    System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
 
                     float prediccion = proyeccion * (1 - Venta.getPesimismo());
 
@@ -500,7 +500,7 @@ public class Main {
                         if (restante != 0) {
                             Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
                             if (productoEnOtraSede.getEncontrado() == true) {
-                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra sede "
+                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra "
                                         + productoEnOtraSede.getSede() + ".");
                                 System.out.println("El insumo tiene un costo de " + productoEnOtraSede.getPrecio());
                                 System.out.println("Seleccione una de las siguientes opciones:");
