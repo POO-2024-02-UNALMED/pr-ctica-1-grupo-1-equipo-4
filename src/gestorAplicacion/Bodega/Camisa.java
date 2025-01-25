@@ -103,15 +103,15 @@ public class Camisa extends Prenda {
 
     public static ArrayList<ArrayList<Insumo>> posiblesInsumosNecesarios = new ArrayList<ArrayList<Insumo>>();
 
-    private static ArrayList<Float> cantidadInsumo=new ArrayList<Float>();
+    private static ArrayList<Integer> cantidadInsumo=new ArrayList<Integer>();
     private static ArrayList<String> tipoinsumo=new ArrayList<String>();
     int pasoActual=0;
     public ArrayList<String> maquinariaNecesaria = new ArrayList<String>(Arrays.asList("Maquina de Corte", "Bordadora Industrial", "Maquina de Coser Industrial","Maquina de Termofijado", "Plancha Industrial"));
 
     public static ArrayList<String> getTipoInsumo(){return tipoinsumo;}
-    public static ArrayList<Float> getCantidadInsumo(){return cantidadInsumo;}
+    public static ArrayList<Integer> getCantidadInsumo(){return cantidadInsumo;}
     public static void setTipoInsumo(ArrayList<String> tipos){tipoinsumo=tipos;}
-    public static void setCantidadInsumo(ArrayList<Float> cantidades){cantidadInsumo=cantidades;}
+    public static void setCantidadInsumo(ArrayList<Integer> cantidades){cantidadInsumo=cantidades;}
     public static ArrayList<ArrayList<Insumo>> getPosiblesInsumosNecesarios() {
         return posiblesInsumosNecesarios;
     }

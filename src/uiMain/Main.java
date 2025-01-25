@@ -440,11 +440,11 @@ public class Main {
                     System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
 
                     float prediccion = proyeccion * (1 - Venta.getPesimismo());
-
+                    System.out.println(prediccion);
                     for (Insumo insumo : prenda.getInsumo()) {
                         insumoXSede.add(insumo);
                     }
-                    for (Float i : Pantalon.getCantidadInsumo()) {
+                    for (int i : Pantalon.getCantidadInsumo()) {
                         cantidadAPedir.add(i * prediccion);
                     }
                     contador1++;
@@ -458,14 +458,14 @@ public class Main {
                     for (Insumo insumo : prenda.getInsumo()) {
                         insumoXSede.add(insumo);
                     }
-                    for (Float i : Camisa.getCantidadInsumo()) {
+                    for (int i : Camisa.getCantidadInsumo()) {
                         cantidadAPedir.add(i * prediccion);
                     }
                     contador2++;
                 }
 
             }
-
+            
             listaXSede.add(0,insumoXSede);
             listaXSede.add(1,cantidadAPedir);
             retorno.add(listaXSede);
@@ -1017,15 +1017,15 @@ public class Main {
         Persona c13 = new Persona("Antonio Sanchéz", 8922998, Rol.VENDEDOR, 12, false, Membresia.NULA);
 
         ArrayList<String> tipos = new ArrayList<String>();
-        ArrayList<Float> cantidades = new ArrayList<Float>();
+        ArrayList<Integer> cantidades = new ArrayList<Integer>();
         tipos.add("Tela");
         tipos.add("Boton");
         tipos.add("Cremallera");
         tipos.add("Hilo");
-        cantidades.add(1F);
-        cantidades.add(1F);
-        cantidades.add(1F);
-        cantidades.add(100F);
+        cantidades.add(100);
+        cantidades.add(1);
+        cantidades.add(1);
+        cantidades.add(100);
         Pantalon.setCantidadInsumo(cantidades);
         Pantalon.setTipoInsumo(tipos);
         tipos.clear();
@@ -1033,9 +1033,9 @@ public class Main {
         tipos.add("Boton");
         tipos.add("Hilo");
         tipos.clear();
-        cantidades.add(1.5F);
-        cantidades.add(3F);
-        cantidades.add(100F);
+        cantidades.add(150);
+        cantidades.add(3);
+        cantidades.add(100);
         Camisa.setCantidadInsumo(cantidades);
         Pantalon.setTipoInsumo(tipos);
 

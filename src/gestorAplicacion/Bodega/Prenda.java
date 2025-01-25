@@ -20,7 +20,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
     protected boolean terminada;
     protected Sede sede;
     protected static ArrayList<Maquinaria> maquinaria = new ArrayList<Maquinaria>();
-    protected static ArrayList<Float> cantidadInsumo = new ArrayList<Float>();
+    protected static ArrayList<Integer> cantidadInsumo = new ArrayList<Integer>();
     protected ArrayList<Insumo> insumo = new ArrayList<Insumo>();
     protected ArrayList<Integer> enStock; //Representa el inventario por sede
     // Esta lista es, en cada sede, cuanto hay en stock
@@ -186,7 +186,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
     public String getNombre(){return nombre;}
     public ArrayList<Insumo> getInsumo(){return insumo;}
     //public static ArrayList<String> getTipoInsumo(){return tipoInsumo;}
-    public static ArrayList<Float> getCantidadInsumo(){return cantidadInsumo;}
+    public static ArrayList<Integer> getCantidadInsumo(){return cantidadInsumo;}
     public static ArrayList<Prenda> getPrendasInventadas(){return prendasInventadas;}
     public float getCostoInsumos(){return costoInsumos;}
     public long getPrecio() {return this.precio;}
