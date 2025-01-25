@@ -58,7 +58,7 @@ public class Empleado extends Persona implements GastoMensual{
 
     @Override
     public int calcularGastoMensual() {
-        int gasto=salario;
+        int gasto=valorEsperadoSalario();
         return gasto;
     }
 
@@ -276,5 +276,20 @@ public class Empleado extends Persona implements GastoMensual{
     public static ArrayList<Empleado> getEmpCreadoss(){
         return Empleado.listaEmpleados;
     }
+
+    public int calcularSalario(){
+		int valor=0;
+        valor+=super.calcularSalario();
+		valor=valor*(1+bonificacion);
+	return valor;
+	}
+
+	public static int valorEsperadoSalario(){
+		int valorEsperado=0;
+		for (Empleado empleado : listaEmpleados) {
+			empleado.calcularSalario();
+		}
+		return valorEsperado;
+	}
 
 }

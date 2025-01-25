@@ -137,5 +137,17 @@ public class Persona implements Serializable{
 				", Trabaja: " + trabajaString +
 				", Membresía: " + membresiaString;
 }
+	public int calcularSalario(){
+		int valor=0;
+		valor=Math.round((rol.getSalarioInicial()*0.05F)*experiencia)+rol.getSalarioInicial();
+	return valor;
+	}
 
+	public static int valorEsperadoSalario(){
+		int valorEsperado=0;
+		for (Persona persona : listaPersonas) {
+			persona.calcularSalario();
+		}
+		return valorEsperado;
+	}
 }
