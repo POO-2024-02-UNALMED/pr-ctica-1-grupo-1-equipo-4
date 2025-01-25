@@ -49,7 +49,7 @@ public class Deuda implements Serializable {
 
 	public long deudaMensual(int año){
 		long deudaActual=this.deudaActual(año);
-		long deudaMensual=Math.round(deudaActual/this.cuotas);
+		long deudaMensual=Math.round(deudaActual/(this.cuotas-(año-FECHACREACION.getAño())));
 		return deudaMensual;
 	}
 
@@ -63,7 +63,7 @@ public class Deuda implements Serializable {
 							Deuda deudaP= proveedor.getDeuda();
 							ArrayList<String> listaInsumos=Pantalon.getTipoInsumo();
 							listaInsumos.addAll(Camisa.getTipoInsumo());
-							if (!listaInsumos.contains(proveedor.getInsumo().getNombre())){
+							if (listaInsumos.contains(proveedor.getInsumo().getNombre())){
 							deudaCalculada+=deudaP.deudaMensual(fecha.getAño());}
 						
 					}

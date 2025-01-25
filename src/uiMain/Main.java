@@ -405,8 +405,8 @@ public class Main {
         ArrayList<Object> retorno = new ArrayList<>();
 
         for (Sede x : Sede.getlistaSedes()) {
-            System.out.println("Para la " + x.getNombre());
-            System.out.println(" Tenemos un porcentaje de pesimismo: " + (Venta.getPesimismo() * 100));
+            System.out.println("\n"+"Para la " + x.getNombre());
+            System.out.println("Tenemos un porcentaje de pesimismo: " + Math.round(Venta.getPesimismo() * 100)+"%");
             System.out.println("Seleccione una de las siguientes opciones:");
             System.out.println("1. Estoy de acuerdo con el porcentaje de pesimismo");
             System.out.println("2. Deseo cambiar el porcentaje de pesimismo");
@@ -437,28 +437,28 @@ public class Main {
                 if (prenda instanceof Pantalon && contador1 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
+                    System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
 
                     float prediccion = proyeccion * (1 - Venta.getPesimismo());
 
                     for (Insumo insumo : prenda.getInsumo()) {
                         insumoXSede.add(insumo);
                     }
-                    for (Float i : Prenda.getCantidadInsumo()) {
+                    for (Float i : Pantalon.getCantidadInsumo()) {
                         cantidadAPedir.add(i * prediccion);
                     }
                     contador1++;
                 } else if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
+                    System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
 
                     float prediccion = proyeccion * (1 - Venta.getPesimismo());
 
                     for (Insumo insumo : prenda.getInsumo()) {
                         insumoXSede.add(insumo);
                     }
-                    for (Float i : Prenda.getCantidadInsumo()) {
+                    for (Float i : Camisa.getCantidadInsumo()) {
                         cantidadAPedir.add(i * prediccion);
                     }
                     contador2++;
@@ -466,8 +466,8 @@ public class Main {
 
             }
 
-            listaXSede.add(insumoXSede);
-            listaXSede.add(cantidadAPedir);
+            listaXSede.add(0,insumoXSede);
+            listaXSede.add(1,cantidadAPedir);
             retorno.add(listaXSede);
         }
         // retorno.add(listaGuia);}
@@ -486,7 +486,7 @@ public class Main {
             ArrayList<Integer> cantidadAPedir = new ArrayList<>(); // Ambas calculadas en este bucle
             ArrayList<Object> listaSede = new ArrayList<>(); // Acumula la info de este bucle.
             // Convertir cada elemento en un ArrayList<Object> correspondiente a una sede
-            listaXSede = (ArrayList<Object>) sede;
+            System.out.print(listaXSede = (ArrayList<Object>) sede);
 
             // Extraer las listas internas: insumos y cantidades
             listaInsumos = (ArrayList<Insumo>) listaXSede.get(0);
@@ -500,7 +500,7 @@ public class Main {
                         if (restante != 0) {
                             Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
                             if (productoEnOtraSede.getEncontrado() == true) {
-                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra sede "
+                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra "
                                         + productoEnOtraSede.getSede() + ".");
                                 System.out.println("El insumo tiene un costo de " + productoEnOtraSede.getPrecio());
                                 System.out.println("Seleccione una de las siguientes opciones:");
