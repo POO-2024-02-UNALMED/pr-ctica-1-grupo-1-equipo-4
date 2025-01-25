@@ -496,7 +496,7 @@ public class Main {
                 for (Insumo i : listaInsumos) {
                     Resultado productoEnBodega = Sede.verificarProductoBodega(i, s);
                     if (productoEnBodega.getEncontrado() == true) {
-                        int restante = Sede.restarInsumo(i, s, listaCantidades.get((int) productoEnBodega.getIndex()));
+                        int restante = Sede.restarInsumo(i, s, ((int)listaCantidades.get((int)productoEnBodega.getIndex())));
                         if (restante != 0) {
                             Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
                             if (productoEnOtraSede.getEncontrado() == true) {
@@ -1092,7 +1092,7 @@ public class Main {
         Karina.setPericia(0.1F);
 
         ArrayList<Prenda> ps1 = new ArrayList<Prenda>();
-        ps1.add(r13);
+        ps1.add(r19);
         Venta v1 = new Venta(sede2, new Fecha(28, 11, 24), c8, Gabriela, Patricia, ps1, 200000, 250000);
         v1.setCostoEnvio(20000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 250000);
@@ -1125,7 +1125,7 @@ public class Main {
         Aura.setRendimientoBonificacion(com4);
 
         ArrayList<Prenda> ps5 = new ArrayList<Prenda>();
-        ps5.add(r7);
+        ps5.add(r8);
         Venta v5 = new Venta(sedeP, new Fecha(30, 1, 25), c6, Aura, Cata, ps5, 300000, 350000);
         v5.setCostoEnvio(100000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 350000);

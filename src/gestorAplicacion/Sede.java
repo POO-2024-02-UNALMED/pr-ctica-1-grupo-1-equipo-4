@@ -385,7 +385,7 @@ public class Sede implements Serializable{
 			}
 		} else if(senal == 15){
 			//aquí se produce todo entre las dos sedes, después de preguntarle previamente al usuario lo q queria
-			senalRec = sobreCargada(fecha);
+			int senalRec = sobreCargada(fecha);
 
 			if(senalRec == 5){
 				//sedeP sobrecargada, preguntar si quiere distribuir la produccion con la sede2(saldria al dia sig lo distribuido) o producirlo el mismo dia con un mayor costo
@@ -531,11 +531,11 @@ public class Sede implements Serializable{
 		int enLaP = 0;
 		int enLa2 = 0;
 
-		for(Empleado empCreados : Empleado.getEmpCreadoss){
-			if(empCreados.areaActual.getNombre.equalsIgnoreCase("Corte") && empCreados.sede.getNombre.equalsIgnoreCase("Sede Principal")){
+		for(Empleado empCreados : Empleado.listaEmpleados){
+			if(empCreados.getAreaActual().getNombre().equalsIgnoreCase("Corte") && empCreados.getSede().getNombre().equalsIgnoreCase("Sede Principal")){
 				++enLaP;
 			}
-			if(empCreados.areaActual.getNombre.equalsIgnoreCase("Corte") && empCreados.sede.getNombre.equalsIgnoreCase("Sede 2")){
+			if(empCreados.getAreaActual().getNombre().equalsIgnoreCase("Corte") && empCreados.getSede().getNombre().equalsIgnoreCase("Sede 2")){
 				++enLa2;
 			}
 		}
