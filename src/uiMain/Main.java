@@ -308,7 +308,7 @@ public class Main {
             for (int cantidadContratada = 0; cantidadContratada < cantidadNecesaria; cantidadContratada++) {
                 String nombre = in.nextLine().trim();
                 for (Persona persona : aptos) {
-                    if (persona.getNombre().equalsIgnoreCase(nombre)) {
+                    if (comparador.compare(persona.getNombre(), nombre)==0) {
                         aContratar.add(persona);
                         System.out.println("Seleccionaste a " + persona.getNombre()+" con "+(persona.calcularSalario()-persona.valorEsperadoSalario())+" de diferencia salarial sobre el promedio");
                     }
