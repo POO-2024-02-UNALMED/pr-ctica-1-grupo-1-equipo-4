@@ -467,7 +467,7 @@ public class Main {
                 if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
+                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion+"%");
 
                     prediccionc = proyeccion * (1 - Venta.getPesimismo());
 
