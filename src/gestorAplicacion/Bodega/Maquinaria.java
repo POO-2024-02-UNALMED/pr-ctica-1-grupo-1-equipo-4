@@ -168,12 +168,12 @@ public class Maquinaria implements Serializable{
 							}
 							if (!encontrado) {
 								System.out.println("Ninguna de las sedes cuenta con dinero suficiente, considere pedir un prestamo.");
+								cadaMaquina.estado = false;
 							}
 						}
 					}
 				} else{
 					cadaMaquina.mantenimiento = true;
-					// ver como hacer para realizar la revision y que la maquina pueda volver a ser utilizada
 					cadaMaquina.ultFechaRevision = fecha;
 				}
 				
@@ -181,6 +181,8 @@ public class Maquinaria implements Serializable{
 				if(cadaMaquina.mantenimiento == false && cadaMaquina.estado == true){
 					maqDisponibles.add(cadaMaquina);
 				}
+
+				cadaMaquina.mantenimiento = false; //pq cuando vuelva a ser usada ya se habra arreglado
 			}
 		}
 

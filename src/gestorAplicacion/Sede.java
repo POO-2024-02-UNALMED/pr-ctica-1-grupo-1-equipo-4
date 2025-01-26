@@ -19,6 +19,7 @@ public class Sede implements Serializable{
 
 	private static final long serialVersionUID = 1L; // Para serializacion
 
+	private static ArrayList<Empleado> listaEmpleadosTotal=new ArrayList<Empleado>(); // Por razones de serializacion.
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 
 	// Ahora está aquí y en no en Evaluacionfinanciera por razones de serialización.
@@ -43,6 +44,7 @@ public class Sede implements Serializable{
 																	// la posición 0 para pantalones y la 1 para el numero de camisas a producir
 	ArrayList<Maquinaria> maqProduccion = new ArrayList<>();
 	ArrayList<Maquinaria> maqOficina = new ArrayList<>();
+	
 
 	public Sede(int prueba){}
 	
@@ -169,6 +171,7 @@ public class Sede implements Serializable{
 	public void quitarEmpleado(Empleado emp){listaEmpleado.remove(emp);}
 	static public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){evaluacionesFinancieras=evaluaciones;}
 	static public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluacionesFinancieras;}
+	static public ArrayList<Empleado> getListaEmpleadosTotal(){return listaEmpleadosTotal;}
 	
 	public ArrayList<Integer> getProdAproximada(){
 		return prodAproximada;
@@ -329,16 +332,16 @@ public class Sede implements Serializable{
 			//dividir las maquinas de cada sede por funcion:
 		for(Maquinaria todMaqSedeP : maqSedeP){
 			if(todMaqSedeP.esDeProduccion()){
-				maqProduccion.add(todMaqSedeP);
+				getlistaSedes().get(0).maqProduccion.add(todMaqSedeP);
 			} else{
-				maqOficina.add(todMaqSedeP);
+				getlistaSedes().get(0).maqOficina.add(todMaqSedeP);
 			}
 		}
 		for(Maquinaria todMaqSede2 : maqSede2){
 			if(todMaqSede2.esDeProduccion()){
-				maqProduccion.add(todMaqSede2);
+				getlistaSedes().get(1).maqProduccion.add(todMaqSede2);
 			} else{
-				maqOficina.add(todMaqSede2);
+				getlistaSedes().get(1).maqOficina.add(todMaqSede2);
 			}
 		}
 
@@ -604,7 +607,7 @@ public class Sede implements Serializable{
 		int enLaP = 0;
 		int enLa2 = 0;
 
-		for(Empleado empCreados : Empleado.listaEmpleados){
+		for(Empleado empCreados : listaEmpleadosTotal){
 			if(empCreados.getAreaActual().getNombre().equalsIgnoreCase("Corte") && empCreados.getSede().getNombre().equalsIgnoreCase("Sede Principal")){
 				++enLaP;
 			}

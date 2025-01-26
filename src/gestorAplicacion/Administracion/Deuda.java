@@ -63,8 +63,9 @@ public class Deuda implements Serializable {
 							Deuda deudaP= proveedor.getDeuda();
 							ArrayList<String> listaInsumos=Pantalon.getTipoInsumo();
 							listaInsumos.addAll(Camisa.getTipoInsumo());
+							if (deudaP!=null){
 							if (listaInsumos.contains(proveedor.getInsumo().getNombre())){
-							deudaCalculada+=deudaP.deudaMensual(fecha.getAño());}
+							deudaCalculada+=deudaP.deudaMensual(fecha.getAño());}}
 						
 					}
 					break;
@@ -80,8 +81,9 @@ public class Deuda implements Serializable {
 							Deuda deudaP= proveedor.getDeuda();
 							ArrayList<String> listaInsumos=Pantalon.getTipoInsumo();
 							listaInsumos.addAll(Camisa.getTipoInsumo());
-							if (listaInsumos.contains(proveedor.getInsumo().getNombre())){
-							deudaCalculada+=deudaP.deudaMensual(fecha.getAño());}
+							if (deudaP!=null){
+								if (listaInsumos.contains(proveedor.getInsumo().getNombre())){
+								deudaCalculada+=deudaP.deudaMensual(fecha.getAño());}}
 						
 					}
 					for (Banco banco : Banco.getListaBancos()) {

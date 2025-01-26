@@ -148,7 +148,7 @@ public class Persona implements Serializable{
 		for (Persona persona : listaPersonas) {
 			valorEsperado+=persona.calcularSalario();
 		}
-		return valorEsperado;
+		return valorEsperado / listaPersonas.size();
 	}
 	public static int diferenciaSalarios(){
 		int diferencia= Persona.valorEsperadoSalario()-Empleado.valorEsperadoSalario();
