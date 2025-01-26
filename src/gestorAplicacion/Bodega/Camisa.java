@@ -119,5 +119,9 @@ public class Camisa extends Prenda {
     public static ArrayList<String> getMaquinariaNecesaria() {
         return maquinariaNecesaria;
     }
+
+    public static ArrayList<Insumo> getInsumosNecesariosAleatorios(){
+        return getPosiblesInsumosNecesarios().get((int) Math.random());
+    }
 }
 
