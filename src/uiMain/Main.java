@@ -153,6 +153,7 @@ public class Main {
 
 
         System.out.println("Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
+        System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" sobre el promedio de salarios");
         for (Empleado emp : aDespedir) {
             System.out.println(emp.getNombre() + " " + emp.getAreaActual() + " " + emp.getDocumento());
         }
