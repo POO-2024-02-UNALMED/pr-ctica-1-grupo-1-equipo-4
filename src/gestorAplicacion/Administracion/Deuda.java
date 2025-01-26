@@ -113,7 +113,9 @@ public class Deuda implements Serializable {
 	}
 
 	public String toString(){
-		return "La deuda con el "+tipoEntidad+" "+entidad+" inició con un valor de: "+valorinicialDeuda+" con un interés de: "+interes+" y se debiá pagar en: "+cuotas+" cuotas, por ahora se ha pagado"+capitalPagado;
+		return "La deuda con el "+tipoEntidad+" "+entidad+" inició con un valor de: "+valorinicialDeuda+ "\n"+
+				"Con un interés de: "+interes+" y se debía pagar en: "+cuotas+" cuotas" +"\n"+ 
+				"Por ahora se ha pagado "+capitalPagado;
 	}
 
 	public static ArrayList<Deuda> getListaDeudas(){

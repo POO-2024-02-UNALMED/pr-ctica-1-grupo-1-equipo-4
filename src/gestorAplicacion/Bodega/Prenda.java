@@ -192,7 +192,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
     public long getPrecio() {return this.precio;}
 
     public String toString(){
-        return "La prenda de tipo "+nombre+" a cargo del modista "+modista.getNombre()+" se encuentra actualmente en la sede"+sede.getNombre();
+        return "La prenda de tipo "+nombre;
     }
     
     public float calcularCostoInsumos() {

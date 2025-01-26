@@ -82,6 +82,6 @@ public class Insumo implements GastoMensual,Serializable{
 	public void setUltimoPrecio(int precio){this.ultimoPrecio=precio;} 
 	public int getUltimoPrecio(){return ultimoPrecio;}
 	public String toString(){
-		return "Insumo: "+nombre+", Proveedor:"+proveedor.getNombre();
+		return "Insumo: "+nombre;
 	}
 }

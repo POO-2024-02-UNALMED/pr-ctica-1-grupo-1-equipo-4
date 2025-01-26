@@ -119,12 +119,17 @@ public class Sede implements Serializable{
 		int precio = 0;
 		for(Sede sede : listaSedes){
 			for(int x = 0 ; x < sede.getListaInsumosBodega().size() ; x++){
-				if(i.equals(sede.getListaInsumosBodega().get(x))){
-					index = x;
-					retorno = true;
-					sedeATransferir = sede;
-					precio = i.getPrecioCompra();
-					break;
+				if(i.equals(sede.getListaInsumosBodega().get(x)) ){
+					for(int c : sede.cantidadInsumosBodega){
+						if(sede.getCantidadInsumosBodega().get(x)!= 0){
+							index = x;
+							retorno = true;
+							sedeATransferir = sede;
+							precio = i.getPrecioCompra();
+							break;
+						}
+					}
+					
 				}
 		
 			}
@@ -256,8 +261,6 @@ public class Sede implements Serializable{
 		}
 	}
 
-	// ---Metodos ayudantes---
-
 	// Devuelve la cantidad de empleados que hay en la sede con el rol dado
 	// metodo ayudante para reorganizarEmpleados
 	public int cantidadPorRol(Rol rol){
@@ -281,7 +284,7 @@ public class Sede implements Serializable{
 	}
 
 	public String toString(){
-		return nombre+" con "	+listaEmpleado.size()+" empleados";
+		return nombre;
 	}
 
 	// Usado para eliminar un Insumo limpiamente
