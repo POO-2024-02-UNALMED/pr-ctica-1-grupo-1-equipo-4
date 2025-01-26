@@ -93,7 +93,6 @@ public class Main {
                     Main.tarjetaRegalo(in, venta);
                     Sede sede = venta.getSede();
                     sede.getHistorialVentas().add(venta);
-                    // NOTA: No juzgar, tengo que arreglar esta vaina...
                     break;
 
                 case 5:
@@ -1476,6 +1475,7 @@ public class Main {
              if(capacidadTotal == totalPrendas)
              break;
             }
+        }
 
             // Si no hay suficiente stock, compra más bolsas al proveedor
             for (Sede revisarSedes : Sede.getlistaSedes()) {
@@ -1512,7 +1512,6 @@ public class Main {
                     }
                 }
             }
-        }
 
         venta.setBolsas(bolsasSeleccionadas);
 
