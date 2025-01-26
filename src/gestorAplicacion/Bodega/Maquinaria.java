@@ -58,6 +58,14 @@ public class Maquinaria implements Serializable{
 		return new Maquinaria(this.nombre, this.valor, this.horaRevision, Nuevosrepuestos, this.sede);
 	}
 
+	public Maquinaria copiar(int pruebaa){
+		ArrayList<Repuesto> Nuevosrepuestos=new ArrayList<>();
+		for (Repuesto rep:repuestos){
+			Nuevosrepuestos.add(rep.copiar());
+		}
+		return new Maquinaria(this.nombre, this.valor, this.horaRevision, Nuevosrepuestos, this.sede, 1);
+	}
+
 	public static long gastoMensualClase(Fecha fecha){
 		long gastoMaquinaria=0;
 		for (Sede sede:Sede.getlistaSedes()){
