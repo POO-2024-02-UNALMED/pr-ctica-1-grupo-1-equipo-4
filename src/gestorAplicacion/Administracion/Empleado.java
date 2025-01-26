@@ -53,7 +53,7 @@ public class Empleado extends Persona implements GastoMensual{
         this.sede=sede;
         Empleado.listaEmpleados.add(this);
         maquinaria=maquina;
-        sede.getlistaMaquinas().add(maquina);
+        //sede.getlistaMaquinas().add(maquina);
         sede.getlistaEmpleados().add(this);
     }
 
