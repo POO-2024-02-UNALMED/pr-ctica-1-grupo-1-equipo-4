@@ -28,7 +28,7 @@ public class Camisa extends Prenda {
         return gasto;
     }
 
-    public static long precioVenta(){
+    public static long PrecioVenta(){
         long precios=0;
         int cantidades=0;
         long precioVenta=0;
@@ -119,6 +119,10 @@ public class Camisa extends Prenda {
     }
     public static ArrayList<String> getMaquinariaNecesaria() {
         return maquinariaNecesaria;
+    }
+
+    public static ArrayList<Insumo> getInsumosNecesariosAleatorios(){
+        return getPosiblesInsumosNecesarios().get((int) Math.random());
     }
 }
 
