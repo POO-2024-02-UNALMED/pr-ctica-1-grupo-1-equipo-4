@@ -208,7 +208,7 @@ public class Main {
     // https://docs.google.com/document/d/1IomqwzQR1ZRXw9dFlHx5mA_2oOowyIbxauZeJ6Rqy6Q/edit?tab=t.0#heading=h.iadm7mr7n689
 
     static public ArrayList<Empleado> reorganizarEmpleados(Scanner in, ArrayList<Empleado> despedidos) {
-        System.out.println("Todavía nos quedan " + despedidos.size() + " empleados por reemplazar, hay que contratar.");
+        System.out.println("Todavía nos quedan " + despedidos.size() + " empleados por reemplazar, revisamos la posibilidad de transferir empleados.");
         ArrayList<Object> necesidades = Sede.obtenerNececidadTransferenciaEmpleados(despedidos);
         // Desempacamos los datos dados por GestorAplicacion
         ArrayList<Rol> rolesATransferir = (ArrayList<Rol>) necesidades.get(0);
@@ -1162,6 +1162,28 @@ public class Main {
         b3.setAhorroBanco(b3.getAhorroBanco() + 600000);
         int com6 = (int) (600000 * 0.05f);
         Wilson.setRendimientoBonificacion(com6);
+    }
+
+    static void crearVentaAleatoria(int deTantosProductos,int aTantosProductos, Fecha fecha, Empleado asesor, Empleado encargado, int cantidad,Sede sede){
+        for (int idxVenta=0;idxVenta<cantidad;idxVenta++){
+            int precio = 0;
+            int costoEnvio = 0;
+            int cantidadProductos = (int) (Math.random() * (aTantosProductos - deTantosProductos + 1) + deTantosProductos);
+            ArrayList<Prenda> articulos= new ArrayList<>();
+            for (int idxProducto=0;idxProducto<cantidadProductos; idxProducto++){
+                int tipoProducto = (int) (Math.random() * 2);
+                if (tipoProducto==0){
+                    Camisa producto = new Camisa(fecha, asesor, false, true, sede,Camisa.getInsumosNecesariosAleatorios());
+                    precio+=50_000;
+                    costoEnvio+=1_000;
+                    articulos.add(producto);
+                }
+            }
+            Persona cliente = Persona.getListaPersonas().get((int) (Math.random() * Persona.getListaPersonas().size()));
+            Venta venta = new Venta(sede,fecha,cliente,asesor, encargado, articulos, precio, precio+costoEnvio);
+            asesor.setRendimientoBonificacion((int)( precio*0.05f));
+            venta.setCostoEnvio(costoEnvio);
+        }
     }
 
     // para la interaccion 1 de produccion
