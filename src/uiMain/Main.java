@@ -177,13 +177,13 @@ public class Main {
                     System.out.println(i + ". " + Sede.getlistaSedes().get(i).getNombre());
                 }
                 int sede = scanner.nextInt();
-                System.out.println("¿Que empleado quieres despedir? Pon su documento.");
+                System.out.println("¿Que empleado quieres despedir? Pon su nombre completo, esto lo añañdirá a la lista de despedibles.");
                 for (Empleado emp : Sede.getlistaSedes().get(sede).getlistaEmpleados()) {
                     System.out.println(emp.getNombre() + " " + emp.getAreaActual() + " " + emp.getDocumento());
                 }
-                int doc = scanner.nextInt();
+                String nombre = scanner.nextLine();
                 for (Empleado emp : Sede.getlistaSedes().get(sede).getlistaEmpleados()) {
-                    if (emp.getDocumento() == doc) {
+                    if (emp.getNombre().equalsIgnoreCase(nombre)) {
                         aDespedir.add(emp);
                     }
                 }
@@ -193,15 +193,15 @@ public class Main {
         // Ya tenemos la lista definitiva de despedibles, incluidos los que el usuario
         // quiera.
         ArrayList<Empleado> seleccion = new ArrayList<Empleado>();
-        System.out.println("¿Que empleados quieres despedir? Pon sus documentos o 0 para terminar.");
-        int doc = Main.nextIntSeguro(scanner);
-        while (doc!=0) {
+        System.out.println("¿Que empleados quieres despedir? Pon su nombre completo o FIN para terminar.");
+        String nombre = scanner.nextLine();
+        while (!nombre.equalsIgnoreCase("fin")) {
             for (Empleado emp : aDespedir) {
-                if (emp.getDocumento() == doc) {
+                if (emp.getNombre().equalsIgnoreCase(nombre)) {
                     seleccion.add(emp);
                 }
             }
-            doc = Main.nextIntSeguro(scanner);
+            nombre = scanner.nextLine();
         }
 
         // Ya tenemos la lista de empleados a despedir.
@@ -230,7 +230,7 @@ public class Main {
             Rol rol = rolesATransferir.get(rolidx);
             Sede sede = transferirDe.get(rolidx);
             System.out.println("Se necesita transferir " + rol + " de " + sede.getNombre()
-                    + ", estos son los candidatos: Ingresa su numero de documento para hacerlo.");
+                    + ", estos son los candidatos: Ingresa su nombre completo para hacerlo.");
             for (Empleado emp : sede.getlistaEmpleados()) {
                 if (emp.getRol().equals(rol)) {
                     String descripcion = emp.getNombre() + " Documento:" + emp.getDocumento();
@@ -256,9 +256,9 @@ public class Main {
                 }
             }
             for (int i = 0; i < cantidad; i++) {
-                int doc = in.nextInt();
+                String nombre = in.nextLine();
                 for (Empleado emp : sede.getlistaEmpleados()) {
-                    if (emp.getDocumento() == doc) {
+                    if (emp.getNombre().equalsIgnoreCase(nombre)) {
                         aTransferir.add(emp);
                     }
                 }
@@ -291,12 +291,12 @@ public class Main {
                         + persona.getExperiencia() + " años de experiencia.");
             }
 
-            System.out.println("Ingresa el documento de los que quieres contratar.");
+            System.out.println("Ingresa el nombre de los que quieres contratar.");
 
             for (int cantidadContratada = 0; cantidadContratada < cantidadNecesaria; cantidadContratada++) {
-                int doc = in.nextInt();
+                String nombre = in.nextLine();
                 for (Persona persona : aptos) {
-                    if (persona.getDocumento() == doc) {
+                    if (persona.getNombre().equalsIgnoreCase(nombre)) {
                         aContratar.add(persona);
                         System.out.println("Seleccionaste a " + persona.getNombre()+" con "+(persona.calcularSalario()-persona.valorEsperadoSalario())+" de diferencia salarial sobre el promedio");
                     }
