@@ -264,7 +264,6 @@ public class Main {
     // Interaccion 3 gestion Humana
     // https://docs.google.com/document/d/1IomqwzQR1ZRXw9dFlHx5mA_2oOowyIbxauZeJ6Rqy6Q/edit?tab=t.0#heading=h.zgpssvyj8l65
     static public void contratarEmpleados(ArrayList<Empleado> aReemplazar, Scanner in, Fecha fecha) {
-
         ArrayList<Object> elecciones = Persona.entrevistar(aReemplazar);
         ArrayList<Persona> aptos = (ArrayList<Persona>) elecciones.get(0);
         ArrayList<Rol> rolesAReemplazar = (ArrayList<Rol>) elecciones.get(1);
@@ -405,8 +404,8 @@ public class Main {
         ArrayList<Object> retorno = new ArrayList<>();
 
         for (Sede x : Sede.getlistaSedes()) {
-            System.out.println("\n"+"Para la " + x.getNombre());
-            System.out.println("Tenemos un porcentaje de pesimismo: " + Math.round(Venta.getPesimismo() * 100)+"%");
+            System.out.println("Para la " + x.getNombre());
+            System.out.println(" Tenemos un porcentaje de pesimismo: " + (Venta.getPesimismo() * 100));
             System.out.println("Seleccione una de las siguientes opciones:");
             System.out.println("1. Estoy de acuerdo con el porcentaje de pesimismo");
             System.out.println("2. Deseo cambiar el porcentaje de pesimismo");
@@ -428,49 +427,49 @@ public class Main {
 
             ArrayList<Object> listaXSede = new ArrayList<>();
             ArrayList<Insumo> insumoXSede = new ArrayList<>();
-            ArrayList<Integer> cantidadAPedir = new ArrayList<>();
-            int contador1 = 0;
-            int contador2 = 0;
+            ArrayList<Float> cantidadAPedir = new ArrayList<>();
+
             for (Prenda prenda : x.getPrendasInventadas()) {
+
+                int contador1 = 0;
+                int contador2 = 0;
                 if (prenda instanceof Pantalon && contador1 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
+                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
 
                     float prediccion = proyeccion * (1 - Venta.getPesimismo());
+
                     for (Insumo insumo : prenda.getInsumo()) {
                         insumoXSede.add(insumo);
                     }
-                    for (int i : Pantalon.getCantidadInsumo()) {
-                        cantidadAPedir.add((int)(Math.ceil(i * prediccion)));
+                    for (Float i : Prenda.getCantidadInsumo()) {
+                        cantidadAPedir.add(i * prediccion);
                     }
-                    contador1++;}
-                    else if (prenda instanceof Camisa && contador2 == 0) {
+                    contador1++;
+                } else if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
+                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
 
                     float prediccion = proyeccion * (1 - Venta.getPesimismo());
 
-                    //for (Insumo insumo : prenda.getInsumo()) {
-                        //insumoXSede.add(insumo);
-                    //}
-                    for (int i : Camisa.getCantidadInsumo()) {
-                        cantidadAPedir.add((int)(Math.ceil(i * prediccion)));
+                    for (Insumo insumo : prenda.getInsumo()) {
+                        insumoXSede.add(insumo);
+                    }
+                    for (Float i : Prenda.getCantidadInsumo()) {
+                        cantidadAPedir.add(i * prediccion);
                     }
                     contador2++;
                 }
 
             }
-            
-            listaXSede.add(0,insumoXSede);
-            listaXSede.add(1,cantidadAPedir);
+
+            listaXSede.add(insumoXSede);
+            listaXSede.add(cantidadAPedir);
             retorno.add(listaXSede);
-            System.out.print("/n 1"+listaXSede);
-            System.out.print("/n 2"+insumoXSede);System.out.print("/n 3"+cantidadAPedir);
         }
         // retorno.add(listaGuia);}
-        System.out.print(retorno);
         return retorno;
     }
 
@@ -482,26 +481,25 @@ public class Main {
         ArrayList<Object> listaA = new ArrayList<Object>();
 
         for (Object sede : retorno) {
-            Scanner in = new Scanner(System.in);
-
             ArrayList<Insumo> insumosAPedir = new ArrayList<>();
             ArrayList<Integer> cantidadAPedir = new ArrayList<>(); // Ambas calculadas en este bucle
             ArrayList<Object> listaSede = new ArrayList<>(); // Acumula la info de este bucle.
             // Convertir cada elemento en un ArrayList<Object> correspondiente a una sede
             listaXSede = (ArrayList<Object>) sede;
-           
+
             // Extraer las listas internas: insumos y cantidades
             listaInsumos = (ArrayList<Insumo>) listaXSede.get(0);
             listaCantidades = (ArrayList<Integer>) listaXSede.get(1);
+
             for (Sede s : Sede.getlistaSedes()) {
                 for (Insumo i : listaInsumos) {
                     Resultado productoEnBodega = Sede.verificarProductoBodega(i, s);
                     if (productoEnBodega.getEncontrado() == true) {
-                        int restante = Sede.restarInsumo(i, s, ((int)listaCantidades.get((int)productoEnBodega.getIndex())));
+                        int restante = Sede.restarInsumo(i, s, listaCantidades.get((int) productoEnBodega.getIndex()));
                         if (restante != 0) {
                             Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
                             if (productoEnOtraSede.getEncontrado() == true) {
-                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra "
+                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra sede "
                                         + productoEnOtraSede.getSede() + ".");
                                 System.out.println("El insumo tiene un costo de " + productoEnOtraSede.getPrecio());
                                 System.out.println("Seleccione una de las siguientes opciones:");
@@ -509,6 +507,7 @@ public class Main {
                                         "1. Deseo transferir el insumo desde la sede " + productoEnOtraSede.getSede());
                                 System.out.println("2. Deseo comprar el insumo");
 
+                                Scanner in = new Scanner(System.in);
                                 int opcion = in.nextInt();
                                 switch (opcion) {
                                     case 1:
@@ -542,7 +541,6 @@ public class Main {
 
     // Interacción 3 de Insumos
     static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> listaA) {
-        Scanner in = new Scanner(System.in);
         ArrayList<Object> sede = new ArrayList<>();
         ArrayList<Insumo> insumos = new ArrayList<>();
         ArrayList<Integer> cantidad = new ArrayList<>();
@@ -553,6 +551,7 @@ public class Main {
             sede = (ArrayList<Object>) s;
             insumos = (ArrayList<Insumo>) sede.get(0);
             cantidad = (ArrayList<Integer>) sede.get(1);
+
             for (Sede sedee : Sede.getlistaSedes()) {
 
                 for (int i = 0; i < insumos.size(); i++) {
@@ -576,7 +575,7 @@ public class Main {
                             insumos.get(i).setProveedor(x);
                         }
                     }
-                
+
                     System.out.println("Tenemos el insumo " + insumos.get(i).getNombre() + " con nuestro proveedor "
                             + proveedores.get(i).getNombre() + ".");
 
@@ -587,8 +586,9 @@ public class Main {
                         System.out.println("Cantidad: " + cantidad.get(i));
                         System.out.println("1. Si");
                         System.out.println("2. No");
-                        int opcion = in.nextInt();
 
+                        Scanner in = new Scanner(System.in);
+                        int opcion = in.nextInt();
                         switch (opcion) {
                             case 1:
                                 if (opcion >= 0) {
@@ -629,8 +629,8 @@ public class Main {
                         }
 
                     }
-                
                 }
+
             }
         }
         return deudas;
@@ -1016,15 +1016,15 @@ public class Main {
         Persona c13 = new Persona("Antonio Sanchéz", 8922998, Rol.VENDEDOR, 12, false, Membresia.NULA);
 
         ArrayList<String> tipos = new ArrayList<String>();
-        ArrayList<Integer> cantidades = new ArrayList<Integer>();
+        ArrayList<Float> cantidades = new ArrayList<Float>();
         tipos.add("Tela");
         tipos.add("Boton");
         tipos.add("Cremallera");
         tipos.add("Hilo");
-        cantidades.add(100);
-        cantidades.add(1);
-        cantidades.add(1);
-        cantidades.add(100);
+        cantidades.add(1F);
+        cantidades.add(1F);
+        cantidades.add(1F);
+        cantidades.add(100F);
         Pantalon.setCantidadInsumo(cantidades);
         Pantalon.setTipoInsumo(tipos);
         tipos.clear();
@@ -1032,9 +1032,9 @@ public class Main {
         tipos.add("Boton");
         tipos.add("Hilo");
         tipos.clear();
-        cantidades.add(150);
-        cantidades.add(3);
-        cantidades.add(100);
+        cantidades.add(1.5F);
+        cantidades.add(3F);
+        cantidades.add(100F);
         Camisa.setCantidadInsumo(cantidades);
         Pantalon.setTipoInsumo(tipos);
 
@@ -1046,10 +1046,6 @@ public class Main {
         tiposcb.add(i2);
         tiposcb.add(i4);
         tiposcb.add(i8);
-
-        Camisa.posiblesInsumosNecesarios.add(tiposca);
-        Camisa.posiblesInsumosNecesarios.add(tiposcb);
-
         ArrayList<Insumo> tipospa = new ArrayList<Insumo>();
         tiposca.add(i1);
         tiposca.add(i3);
@@ -1060,9 +1056,6 @@ public class Main {
         tiposcb.add(i4);
         tiposca.add(i6);
         tiposcb.add(i8);
-
-        Pantalon.posiblesInsumosNecesarios.add(tipospa);
-        Pantalon.posiblesInsumosNecesarios.add(tipospb);
 
         Prenda r1 = new Pantalon(new Fecha(1, 1, 23), Hugo, false, true, sedeP,tipospa);
         Prenda r2 = new Pantalon(new Fecha(1, 1, 23), Inez, false, true, sedeP,tipospb);
@@ -1087,11 +1080,11 @@ public class Main {
         Prenda r21 = new Camisa(new Fecha(1, 1, 23), Adriana, false, true, sede2,tiposca);
         Prenda r22 = new Camisa(new Fecha(1, 1, 23), Cecilia, false, true, sede2,tiposcb);
         Prenda r23 = new Camisa(new Fecha(1, 1, 23), Alejandra, false, true, sede2,tiposca);
-        Prenda r24 = new Camisa(new Fecha(1, 1, 23), Kenneth, false, true, sede2,tiposcb);
+    Prenda r24 = new Camisa(new Fecha(1, 1, 23), Kenneth, false, true, sede2,tiposcb);
         Karina.setPericia(0.1F);
 
         ArrayList<Prenda> ps1 = new ArrayList<Prenda>();
-        ps1.add(r19);
+        ps1.add(r13);
         Venta v1 = new Venta(sede2, new Fecha(28, 11, 24), c8, Gabriela, Patricia, ps1, 200000, 250000);
         v1.setCostoEnvio(20000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 250000);
@@ -1121,15 +1114,15 @@ public class Main {
         v4.setCostoEnvio(100000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 350000);
         int com4 = (int) (350000 * 0.05f);
-        Aura.setRendimientoBonificacion(com4);
+        Aura.setRendimientoBonificacion(com3);
 
         ArrayList<Prenda> ps5 = new ArrayList<Prenda>();
-        ps5.add(r8);
+        ps5.add(r7);
         Venta v5 = new Venta(sedeP, new Fecha(30, 1, 25), c6, Aura, Cata, ps5, 300000, 350000);
         v5.setCostoEnvio(100000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 350000);
         int com5 = (int) (350000 * 0.05f);
-        Aura.setRendimientoBonificacion(com5);
+        Aura.setRendimientoBonificacion(com3);
 
         ArrayList<Prenda> ps6 = new ArrayList<Prenda>();
         ps6.add(r15);
@@ -1210,8 +1203,7 @@ public class Main {
           if (!(persona instanceof Empleado)) {
               noEmpleados.add(persona);
           }
-      }
-      
+      }      
       Persona cliente = noEmpleados.get(clienteSeleccionado); 
       
 
@@ -1324,27 +1316,10 @@ public class Main {
         int monto = sumaPreciosPrendas + IVA + costosEnvio;
         int MontoPagar = (int) (monto - (monto * cliente.getMembresia().getPorcentajeDescuento()));
         venta.setMontoPagado(MontoPagar);
-        venta.setSubtotal(MontoPagar);
-        System.out.println("\n"+"---- FACTURA ----");
-        System.out.println("Prendas compradas:");
-        for (int i = 0; i < productosSeleccionados.size(); i++) {
-            Prenda prenda = productosSeleccionados.get(i);
-            int cantidad = cantidadProductos.get(i);
-            if (prenda instanceof Camisa){
-            System.out.println(prenda.getNombre() + " - Cantidad: " + cantidad + " - Subtotal: $"
-                    + (Camisa.PrecioVenta() * cantidad));}
-            else if(prenda instanceof Pantalon){
-                System.out.println(prenda.getNombre() + " - Cantidad: " + cantidad + " - Subtotal: $"
-                + (Pantalon.PrecioVenta() * cantidad));}
-        }
-        System.out.println("Valor total: $" + MontoPagar);
-        System.out.println("Valor sin IVA: $" + sumaPreciosPrendas);
-        System.out.println("IVA: $" + IVA);
-        System.out.println("Venta registrada por: " + encargado.getNombre());
-        System.out.println("Asesor de la compra: " + vendedor.getNombre());
+        venta.setSubtotal(sumaPreciosPrendas);
+        System.out.println("Subtotal: " + sumaPreciosPrendas);
         int comisión = (int) (MontoPagar * 0.05f);
         vendedor.setRendimientoBonificacion(comisión);
-
         return venta;}
 
      //Interacción 2 Facturación
@@ -1604,6 +1579,35 @@ public class Main {
         if (bancoRecibir != null) {
             System.out.println("Estado final de la cuenta principal: $" + bancoRecibir.getAhorroBanco());
         }
+        ArrayList<Prenda> productosSeleccionados = venta.getArticulos();
+        int MontoPagar = venta.getMontoPagado();
+        int valorBase = (int)(MontoPagar/1+0.19f);
+        int IVA = MontoPagar - valorBase;
+        System.out.println("\n"+"---- FACTURA ----");
+        System.out.println("Prendas compradas:");
+        int cantidadCamisas = 0;
+        int cantidadPantalon = 0;
+        for(Prenda prenda : productosSeleccionados){
+            if(prenda instanceof Camisa){cantidadCamisas++;}
+        }
+        for(Prenda prenda : productosSeleccionados){
+            if(prenda instanceof Pantalon){cantidadPantalon++;}
+        }
+        for (int i = 0; i < productosSeleccionados.size(); i++) {
+            Prenda prenda = productosSeleccionados.get(i);
+            if (prenda instanceof Camisa){
+            System.out.println(prenda.getNombre() + " - Cantidad: " + cantidadCamisas + " - Subtotal: $"
+                    + (Camisa.PrecioVenta() * cantidadCamisas));}
+            else if(prenda instanceof Pantalon){
+                System.out.println(prenda.getNombre() + " - Cantidad: " + cantidadPantalon + " - Subtotal: $"
+                + (Pantalon.PrecioVenta() * cantidadPantalon));}
+        }
+        System.out.println("Valor total: $" + MontoPagar);
+        System.out.println("Valor sin IVA: $" + venta.getsubtotal());
+        System.out.println("IVA: $" + IVA);
+        System.out.println("Venta registrada por: " + venta.getEncargado());
+        System.out.println("Asesor de la compra: " + venta.getAsesor());
+
     }
     //Método auxiliar para transferencia de prendas
     private static void manejarFaltantes(Sede sede, int cantidadPrenda, int disponibles, String tipoPrenda, int costosEnvio) { 
@@ -1682,28 +1686,6 @@ public class Main {
             }
 
         }
-    }
-
-    // Metodo auxiliar de la interacción 3 de producción
-    public static Empleado pedirModista(int cantidadPrendas,Sede sede, int idxTanda){
-        System.out.println("Seleccione el modista que se encargará de la tanda #"+idxTanda+ "de producción de "+cantidadPrendas+" prendas:");
-
-        Empleado modista = null;
-        ArrayList<Empleado> modistas = new ArrayList<Empleado>();
-        for (Empleado empleado : sede.getlistaEmpleados()) {
-            if (empleado.getRol() == Rol.MODISTA) {
-                System.out.println(modistas.size()+". " + empleado.getNombre());
-                modistas.add(empleado);
-            }
-        }
-        Scanner scanner = new Scanner(System.in);
-        int seleccion = nextIntSeguro(scanner);
-        if (seleccion >= 0 && seleccion < modistas.size()) {
-            modista = modistas.get(seleccion);
-        } else {
-            System.out.println("Opción inválida. Intente nuevamente.");
-        }
-        return modista;
     }
 }
 
