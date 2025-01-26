@@ -29,9 +29,12 @@ import java.util.Collections;
 
 
 public class Main {
+    static{
+        Scanner in = new Scanner(System.in);
+        Main.fecha = ingresarFecha();}
     Sede sedeP, sede2;
     private static Proveedor proveedorBdelmain;
-
+    public static Fecha fecha;
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.println("Ecomoda a la orden, ¿Quieres volver a cargar tus datos?");
@@ -57,27 +60,23 @@ public class Main {
             System.out.println("7. Inspeccionar memoria");
 
             int opcion = nextIntSeguro(in);
-            Fecha fecha;
             switch (opcion) {
                 case 1:
-                    fecha = ingresarFecha();
-                    ArrayList<Empleado> despedidos = despedirEmpleados(in, fecha);
+                    ArrayList<Empleado> despedidos = despedirEmpleados(in, Main.fecha);
                     ArrayList<Empleado> aContratar = reorganizarEmpleados(in, despedidos);
                     contratarEmpleados(aContratar, in, fecha);
                     break;
 
                 case 2:
-                    fecha = ingresarFecha();
-                    ArrayList<Object> retorno = planificarProduccion(fecha);
+                    ArrayList<Object> retorno = planificarProduccion(Main.fecha);
                     ArrayList<Object> listaA = coordinarBodegas(retorno);
-                    ArrayList<Deuda> deuda = comprarInsumos(fecha, listaA);
+                    ArrayList<Deuda> deuda = comprarInsumos(Main.fecha, listaA);
                     break;
 
                 case 3:
-                    fecha = ingresarFecha();
-                    Evaluacionfinanciera balanceAnterior = calcularBalanceAnterior(fecha, in);
-                    long diferenciaEstimada = calcularEstimado(fecha, balanceAnterior, in);
-                    String analisisFuturo = planRecuperacion(diferenciaEstimada, fecha, in);
+                    Evaluacionfinanciera balanceAnterior = calcularBalanceAnterior(Main.fecha, in);
+                    long diferenciaEstimada = calcularEstimado(Main.fecha, balanceAnterior, in);
+                    String analisisFuturo = planRecuperacion(diferenciaEstimada, Main.fecha, in);
                     String retorna = "\nSegún la evaluación del estado Financiero actual: " + "\n"+balanceAnterior.Informe() +
                             "\n\nSe realizó un análisis sobre la posibilidad de aplicar descuentos. \n"+ analisisFuturo +
                             "\n\nEste resultado se usó para estimar la diferencia entre ventas y deudas futuras, \nque fue de: $"
@@ -97,12 +96,11 @@ public class Main {
                     break;
 
                 case 5:
-                    fecha = ingresarFecha();
                     Maquinaria maquina = new Maquinaria();
                     Sede sedePrueba = new Sede(1);
                     
                     ArrayList<ArrayList<ArrayList<Integer>>> plan = sedePrueba.planProduccion(maquina.agruparMaquinasDisponibles(fecha), fecha, in);
-                    Prenda.producirPrendas(plan,fecha);
+                    Prenda.producirPrendas(plan,Main.fecha);
                     break;
 
                 case 6:
@@ -387,13 +385,13 @@ public class Main {
                     + descuento * 100 + "%";
             System.out.println("\n"+"Según las Ventas anteriores, aplicar descuentos si funcionará");
         }
-        System.out.println("¿Desea Cambiar el siguiente descuento: " + (descuento) + "? marque 1 para Si, 2 para no ");
+        System.out.println("¿Desea Cambiar el siguiente descuento: " + (descuento)*100 + "? marque 1 para Si, 2 para no ");
         int num = in.nextInt();
-        float nuevoDescuento = 0.0F;
+        float nuevoDescuento = -0.1F;
         if (num == 1) {
             while (nuevoDescuento < 0.0 || descuento > 0.5) {
-                System.out.println("Ingrese descuento entre 0.0 y 0.5");
-                nuevoDescuento = in.nextFloat();
+                System.out.println("Ingrese descuento entre 0% y 5%");
+                nuevoDescuento = in.nextInt()/100F;
             }
         }
         Prenda.prevenciones(descuento, nuevoDescuento, fecha);
@@ -687,19 +685,19 @@ public class Main {
     public void crearSedesMaquinasRepuestos() {
 
         // Episodio 43
-        Proveedor p1 = new Proveedor(15000, "Rag Tela");
+        Proveedor p1 = new Proveedor(800, "Rag Tela");
         p1.setInsumo(new Insumo("Tela", p1));
-        Proveedor p2 = new Proveedor(20000, "Macro Telas");
+        Proveedor p2 = new Proveedor(1000, "Macro Telas");
         p2.setInsumo(new Insumo("Hilo", p2));
-        Proveedor p4 = new Proveedor(7000, "Insumos textileros");
+        Proveedor p4 = new Proveedor(15000, "Insumos textileros");
         p4.setInsumo(new Insumo("Cremallera", p4));
         Proveedor p3 = new Proveedor(5000, "San Remo");
         p3.setInsumo(new Insumo("Boton", p3));
-        Proveedor p5 = new Proveedor(18000, "Fatelares");
+        Proveedor p5 = new Proveedor(900, "Fatelares");
         p5.setInsumo(new Insumo("Tela", p5));
-        Proveedor p6 = new Proveedor(20000, "Macro Textil");
+        Proveedor p6 = new Proveedor(900, "Macro Textil");
         p6.setInsumo(new Insumo("Tela", p6));
-        Proveedor p9 = new Proveedor(25000, "Hilos Venus");
+        Proveedor p9 = new Proveedor(1200, "Hilos Venus");
         p9.setInsumo(new Insumo("Hilo", p9));
         Proveedor p7 = new Proveedor(10000, "Insumos para Confección");
         p7.setInsumo(new Insumo("Cremallera", p7));
@@ -1056,18 +1054,18 @@ public class Main {
         tiposp.add("Boton");
         tiposp.add("Cremallera");
         tiposp.add("Hilo");
-        cantidadesp.add(100);
+        cantidadesp.add(200);
         cantidadesp.add(1);
         cantidadesp.add(1);
-        cantidadesp.add(100);
+        cantidadesp.add(300);
         Pantalon.setCantidadInsumo(cantidadesp);
         Pantalon.setTipoInsumo(tiposp);
         tiposc.add("Tela");
         tiposc.add("Boton");
         tiposc.add("Hilo");
-        cantidadesc.add(150);
-        cantidadesc.add(3);
         cantidadesc.add(100);
+        cantidadesc.add(3);
+        cantidadesc.add(90);
         Camisa.setCantidadInsumo(cantidadesc);
         Camisa.setTipoInsumo(tiposc);
 
@@ -1227,7 +1225,7 @@ public class Main {
         ArrayList<Prenda> productosSeleccionados = new ArrayList<>();
         ArrayList<Integer> cantidadProductos = new ArrayList<>();
         System.out.println("\n"+"Ingrese la fecha de la venta:");
-        Fecha fechaVenta = ingresarFecha();
+        Fecha fechaVenta = Main.fecha;
 
       System.out.println("\n"+"Seleccione el cliente al que se le realizará la venta:");
       Persona.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
@@ -1277,7 +1275,7 @@ public class Main {
         bucleAgregarPrenda:
         while (true) {
             System.out.println("\n"+"Seleccione el número del producto que venderá:");
-            System.out.println(0 + ". Camisa" + " -Precio " + Camisa.PrecioVenta());
+            System.out.println(0 + ". Camisa" + " -Precio " + Camisa.precioVenta());
             System.out.println(1 + ". Pantalón" + " -Precio " + Pantalon.PrecioVenta());
             //for (int i = 0; i < Prenda.getPrendasInventadas().size(); i++) {
                 //Prenda producto = Prenda.getPrendasInventadas().get(i);
@@ -1326,7 +1324,7 @@ public class Main {
             Prenda index = productosSeleccionados.get(i);
             if (index instanceof Camisa) {
                 cantidadCamisas++;
-                int calculoCamisas = (int) (cantidadCamisas * Camisa.PrecioVenta());
+                int calculoCamisas = (int) (cantidadCamisas * Camisa.precioVenta());
                 if (cantidadCamisas >= 10) {
                     int descuento = (int) (calculoCamisas * 0.05f);
                     sumaPreciosPrendas += calculoCamisas - descuento;
@@ -1632,7 +1630,7 @@ public class Main {
             Prenda prenda = productosSeleccionados.get(i);
             if (prenda instanceof Camisa){
             System.out.println(prenda.getNombre() + " - Cantidad: " + cantidadCamisas + " - Subtotal: $"
-                    + (Camisa.PrecioVenta() * cantidadCamisas));}
+                    + (Camisa.precioVenta() * cantidadCamisas));}
             else if(prenda instanceof Pantalon){
                 System.out.println(prenda.getNombre() + " - Cantidad: " + cantidadPantalon + " - Subtotal: $"
                 + (Pantalon.PrecioVenta() * cantidadPantalon));}

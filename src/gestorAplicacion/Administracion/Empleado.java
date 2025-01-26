@@ -282,7 +282,7 @@ public class Empleado extends Persona implements GastoMensual{
 		int valor=0;
         valor+=super.calcularSalario();
 		valor=valor*(1+bonificacion);
-        Fecha fecha=Main.ingresarFecha();
+        Fecha fecha=Main.fecha;
         valor+=valor*(fechaContratacion.diasHasta(fecha))/360;
 	return valor;
 	}
