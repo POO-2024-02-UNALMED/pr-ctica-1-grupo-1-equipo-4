@@ -99,8 +99,8 @@ public class Main {
                 case 5:
                     fecha = ingresarFecha(in);
                     Maquinaria maquina = new Maquinaria();
-                    maquina.agruparMaquinasDisponibles(fecha);
-
+                    Sede sedePrueba = new Sede(1);
+                    sedePrueba.planProduccion(maquina.agruparMaquinasDisponibles(fecha), fecha, in);
                     break;
 
                 case 6:

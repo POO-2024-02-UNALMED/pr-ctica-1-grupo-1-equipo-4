@@ -44,6 +44,7 @@ public class Sede implements Serializable{
 	ArrayList<Maquinaria> maqProduccion = new ArrayList<>();
 	ArrayList<Maquinaria> maqOficina = new ArrayList<>();
 
+	public Sede(int prueba){}
 	
 	public Sede(){
 		listaSedes.add(this);
