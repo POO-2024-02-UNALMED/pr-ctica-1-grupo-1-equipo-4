@@ -8,6 +8,12 @@ import java.util.Arrays;
 
 public class Camisa extends Prenda {
     private static final long serialVersionUID = 1L;
+    public static ArrayList<ArrayList<Insumo>> posiblesInsumosNecesarios = new ArrayList<ArrayList<Insumo>>();
+    private static ArrayList<Integer> cantidadInsumo=new ArrayList<Integer>();
+    private static ArrayList<String> tipoinsumo=new ArrayList<String>();
+    int pasoActual=0;
+
+    static public ArrayList<String> maquinariaNecesaria = new ArrayList<String>(Arrays.asList("Maquina de Corte", "Bordadora Industrial", "Maquina de Coser Industrial","Maquina de Termofijado", "Plancha Industrial"));
     public Camisa(Fecha fecha, Empleado modista, boolean descartada, boolean terminada, Sede sede, ArrayList<Insumo> insumos){
         super(fecha, sede, "Camisa", modista, descartada, terminada,insumos);
     }
@@ -22,7 +28,7 @@ public class Camisa extends Prenda {
         return gasto;
     }
 
-    public static long PrecioVenta(){
+    public static long precioVenta(){
         long precios=0;
         int cantidades=0;
         for (Prenda camisa:Prenda.getPrendasInventadas()){
@@ -101,12 +107,7 @@ public class Camisa extends Prenda {
         return retorno;
     }
 
-    public static ArrayList<ArrayList<Insumo>> posiblesInsumosNecesarios = new ArrayList<ArrayList<Insumo>>();
-
-    private static ArrayList<Integer> cantidadInsumo=new ArrayList<Integer>();
-    private static ArrayList<String> tipoinsumo=new ArrayList<String>();
-    int pasoActual=0;
-    static public ArrayList<String> maquinariaNecesaria = new ArrayList<String>(Arrays.asList("Maquina de Corte", "Bordadora Industrial", "Maquina de Coser Industrial","Maquina de Termofijado", "Plancha Industrial"));
+    
 
     public static ArrayList<String> getTipoInsumo(){return tipoinsumo;}
     public static ArrayList<Integer> getCantidadInsumo(){return cantidadInsumo;}
