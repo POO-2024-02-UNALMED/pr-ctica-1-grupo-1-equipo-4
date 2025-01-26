@@ -234,8 +234,10 @@ public class Maquinaria implements Serializable{
 
 	// Auxiliar de Sede.planProduccion
 	public boolean esDeProduccion(){
-		if(Camisa.getMaquinariaNecesaria().contains(getNombre()) || Pantalon.getMaquinariaNecesaria().contains(getNombre())){ {
+		if(Camisa.getMaquinariaNecesaria().contains(getNombre()) || Pantalon.getMaquinariaNecesaria().contains(getNombre())){ 
 			return true;
 		}
+		return false;
 	}
+	
 }
