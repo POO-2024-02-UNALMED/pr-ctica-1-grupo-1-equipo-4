@@ -204,7 +204,7 @@ public class Desarrollo {
                     System.out.println("Cual quieres quitar?");
                     idxEmpleado = in.nextInt();
                     empleado= sede.getlistaEmpleados().get(idxEmpleado);
-                    Empleado.despedirEmpleados(new ArrayList<>(Arrays.asList(empleado)), false, Main.ingresarFecha(in));
+                    Empleado.despedirEmpleados(new ArrayList<>(Arrays.asList(empleado)), false, Main.ingresarFecha());
                     break;
                 case "agregar":
                     System.out.println("Cual es el nombre del empleado?");
@@ -217,7 +217,7 @@ public class Desarrollo {
                     Area area = Area.values()[in.nextInt()];
 
                     System.out.println("Ingrese la fecha de contratacion");
-                    Fecha fechaContratacion = Main.ingresarFecha(in);
+                    Fecha fechaContratacion = Main.ingresarFecha();
 
                     System.out.println("Numero de documento");
                     int doc = in.nextInt();
@@ -262,7 +262,7 @@ public class Desarrollo {
             String comando = in.next().toLowerCase();
             switch (comando) {
                 case "rendimiento":
-                    Fecha fecha = Main.ingresarFecha(in);
+                    Fecha fecha = Main.ingresarFecha();
                     System.out.println("Rendimiento: "+empleado.calcularRendimiento(fecha)+"%");
                     System.out.println("Rendimiento deseado: "+ empleado.getSede().getRendimientoDeseado(empleado.getAreaActual(), fecha)+"%");
                     break;
