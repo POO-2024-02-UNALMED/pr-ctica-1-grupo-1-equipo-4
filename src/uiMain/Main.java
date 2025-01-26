@@ -1401,7 +1401,6 @@ public class Main {
         while (capacidadTotal <= totalPrendas) {
             System.out.println("\n"+"Seleccione el tamaño de bolsa:");
             // Muestra opciones disponibles
-
             for (int i = 0; i < InsumosBodega.size(); i++) {
                 Insumo bolsaI = InsumosBodega.get(i);
                 if (bolsaI instanceof Bolsa) {
@@ -1474,7 +1473,6 @@ public class Main {
              if(capacidadTotal == totalPrendas)
              break;
             }
-        }
 
             // Si no hay suficiente stock, compra más bolsas al proveedor
             for (Sede revisarSedes : Sede.getlistaSedes()) {
@@ -1511,6 +1509,7 @@ public class Main {
                     }
                 }
             }
+        }
 
         venta.setBolsas(bolsasSeleccionadas);
 
@@ -1518,7 +1517,6 @@ public class Main {
         venta.setMontoPagado(totalVenta);
 
         System.out.println("\n"+"Venta realizada. Total de la venta con bolsas: " + totalVenta);
-        sede.getHistorialVentas().add(venta);
         return venta;
     }
 
@@ -1603,11 +1601,11 @@ public class Main {
         banco.setAhorroBanco(banco.getAhorroBanco() + ingreso);
 
         System.out.println("Monto total en la cuenta de la sede: $" + banco.getAhorroBanco());
-        Banco bancoRecibir = sede.getCuentaSede();
+        Banco bancoRecibir = Banco.getCuentaPrincipal();
         Banco bancoTransferir = sede.getCuentaSede();
-        if (!bancoTransferir.equals(Banco.getCuentaPrincipal())) {
+        if (!bancoTransferir.equals(bancoRecibir)) {
             System.out.println("\n"+"¿Desea transferir fondos a la cuenta principal? (si/no)");
-            String transferirFondos = scanner.nextLine().toLowerCase();
+            String transferirFondos = scanner.next().toLowerCase();
             if (transferirFondos.equals("si")) {
                 System.out.println("¿Qué porcentaje desea transferir? (20% o 60%)");
                 int porcentaje = nextIntSeguro(scanner);
@@ -1661,10 +1659,10 @@ public class Main {
         
         // Imprime las prendas y montos por estas de la venta
         if (cantidadCamisas > 0) {
-            System.out.println("Camisas - Cantidad: " + cantidadCamisas + " - Subtotal: $" + subtotalCamisas);
+            System.out.println("Camisas - Cantidad: " + cantidadCamisas + " - Subtotal: $" + subtotalCamisas*cantidadCamisas);
         }
         if (cantidadPantalon > 0) {
-            System.out.println("Pantalones - Cantidad: " + cantidadPantalon + " - Subtotal: $" + subtotalPantalon);
+            System.out.println("Pantalones - Cantidad: " + cantidadPantalon + " - Subtotal: $" + subtotalPantalon*cantidadPantalon);
         }
         System.out.println("Valor total a pagar: $" + MontoPagar);
         System.out.println("Subtotal prendas: $" + venta.getsubtotal());
