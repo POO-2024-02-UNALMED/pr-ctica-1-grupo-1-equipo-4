@@ -20,15 +20,22 @@ import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Bodega.Camisa;
+
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import java.util.Collections;
+import java.util.Locale;
 
 
 public class Main {
+    static Collator comparador = Collator.getInstance(new Locale("es"));
+    static {
+        comparador.setStrength(Collator.PRIMARY);
+    }
     static Scanner in = new Scanner(System.in);
     static{
         Main.fecha = ingresarFecha();
@@ -179,13 +186,13 @@ public class Main {
                     System.out.println(i + ". " + Sede.getlistaSedes().get(i).getNombre());
                 }
                 int sede = nextIntSeguro(scanner);
-                System.out.println("¿Que empleado quieres despedir? Pon su nombre completo, esto lo añañdirá a la lista de despedibles.");
+                System.out.println("¿Que empleado quieres despedir? Pon su nombre completo o documento, esto lo añañdirá a la lista de despedibles.");
                 for (Empleado emp : Sede.getlistaSedes().get(sede).getlistaEmpleados()) {
                     System.out.println(emp.getNombre() + " " + emp.getAreaActual() + " " + emp.getDocumento());
                 }
-                String nombre = scanner.nextLine();
+                String nombre = scanner.nextLine().trim();
                 for (Empleado emp : Sede.getlistaSedes().get(sede).getlistaEmpleados()) {
-                    if (emp.getNombre().equalsIgnoreCase(nombre)) {
+                    if (comparador.compare(emp.getNombre(), nombre)==0 || (nombre.matches("\\d+") && emp.getDocumento() == Integer.parseInt(nombre))) {
                         aDespedir.add(emp);
                     }
                 }
@@ -195,18 +202,18 @@ public class Main {
         // Ya tenemos la lista definitiva de despedibles, incluidos los que el usuario
         // quiera.
         ArrayList<Empleado> seleccion = new ArrayList<Empleado>();
-        System.out.println("¿Que empleados quieres despedir? Pon su nombre completo o FIN para terminar.");
+        System.out.println("¿Que empleados quieres despedir? Pon su nombre completo, documento o FIN para terminar.");
         for (Empleado emp : aDespedir) {
-            System.out.println(emp.getNombre() + " " + emp.getAreaActual());
+            System.out.println(emp.getNombre() + " " + emp.getAreaActual() + " " + emp.getDocumento());
         }
-        String nombre = scanner.nextLine();
+        String nombre = scanner.nextLine().trim();
         while (!nombre.equalsIgnoreCase("fin")) {
             for (Empleado emp : aDespedir) {
-                if (emp.getNombre().equalsIgnoreCase(nombre)) {
+                if (comparador.compare(emp.getNombre(), nombre)==0 || (nombre.matches("\\d+") && emp.getDocumento() == Integer.parseInt(nombre))) {
                     seleccion.add(emp);
                 }
             }
-            nombre = scanner.nextLine();
+            nombre = scanner.nextLine().trim();
         }
 
         // Ya tenemos la lista de empleados a despedir.
@@ -261,9 +268,9 @@ public class Main {
                 }
             }
             for (int i = 0; i < cantidad; i++) {
-                String nombre = in.nextLine();
+                String nombre = in.nextLine().trim();
                 for (Empleado emp : sede.getlistaEmpleados()) {
-                    if (emp.getNombre().equalsIgnoreCase(nombre)) {
+                    if (comparador.compare(emp.getNombre(), nombre) == 0) {
                         aTransferir.add(emp);
                     }
                 }
@@ -299,7 +306,7 @@ public class Main {
             System.out.println("Ingresa el nombre de los que quieres contratar.");
 
             for (int cantidadContratada = 0; cantidadContratada < cantidadNecesaria; cantidadContratada++) {
-                String nombre = in.nextLine();
+                String nombre = in.nextLine().trim();
                 for (Persona persona : aptos) {
                     if (persona.getNombre().equalsIgnoreCase(nombre)) {
                         aContratar.add(persona);
