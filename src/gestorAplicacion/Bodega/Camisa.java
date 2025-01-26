@@ -28,7 +28,7 @@ public class Camisa extends Prenda {
         return gasto;
     }
 
-    public static long precioVenta(){
+    public static long PrecioVenta(){
         long precios=0;
         int cantidades=0;
         for (Prenda camisa:Prenda.getPrendasInventadas()){
