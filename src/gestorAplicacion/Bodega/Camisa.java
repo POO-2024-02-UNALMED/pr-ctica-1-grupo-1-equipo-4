@@ -28,16 +28,17 @@ public class Camisa extends Prenda {
         return gasto;
     }
 
-    public static long PrecioVenta(){
+    public static long precioVenta(){
         long precios=0;
         int cantidades=0;
+        long precioVenta=0;
         for (Prenda camisa:Prenda.getPrendasInventadas()){
             if (camisa instanceof Camisa){
                 precios+=camisa.calcularPrecio();
-                cantidades+=1;
+                cantidades++;
             }
         }
-        long precioVenta=Math.round(precios/cantidades);
+        precioVenta=Math.round(precios/cantidades);
         //Se promedian todos los "precios por los que se deberían vender las prendas para que todas las camisas se vendan al mismo"
         return precioVenta;
     }
