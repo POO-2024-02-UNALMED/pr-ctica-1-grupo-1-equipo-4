@@ -173,7 +173,6 @@ public class Maquinaria implements Serializable{
 					}
 				} else{
 					cadaMaquina.mantenimiento = true;
-					// ver como hacer para realizar la revision y que la maquina pueda volver a ser utilizada
 					cadaMaquina.ultFechaRevision = fecha;
 				}
 				
@@ -181,7 +180,7 @@ public class Maquinaria implements Serializable{
 				if(cadaMaquina.mantenimiento == false && cadaMaquina.estado == true){
 					maqDisponibles.add(cadaMaquina);
 				}
-				
+
 				cadaMaquina.mantenimiento = false; //pq cuando vuelva a ser usada ya se habra arreglado
 			}
 		}
