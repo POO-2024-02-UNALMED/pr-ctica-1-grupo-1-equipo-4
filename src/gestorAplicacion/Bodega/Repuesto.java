@@ -9,7 +9,7 @@ public class Repuesto extends Insumo { // Implementa serializable por repuesto
     private static ArrayList<Repuesto> listadoRepuestos = new ArrayList<>();
     private ArrayList<Fecha> FechasCompra= new ArrayList<Fecha>();
     private ArrayList<Integer>  preciosCompra= new ArrayList<Integer>();
-    private int horasDeUso;
+    private int horasDeUso = 0;
     
     public ArrayList<Fecha> getFechasCompra(){return FechasCompra;}
     public void setFechasCompra(Fecha FechasCompra){this.FechasCompra.add(FechasCompra);}
@@ -51,6 +51,7 @@ public class Repuesto extends Insumo { // Implementa serializable por repuesto
 		return gastoMensual;
     }
 
+    // Auxiliar a Maquina.usar
     void usar(int horas)    {
         horasDeUso+=horas;
     }

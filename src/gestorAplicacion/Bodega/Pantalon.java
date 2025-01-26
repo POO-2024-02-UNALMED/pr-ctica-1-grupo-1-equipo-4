@@ -99,4 +99,8 @@ public class Pantalon extends Prenda {
         return posiblesInsumosNecesarios;
     }
 
+    public static ArrayList <String> getMaquinariaNecesaria(){
+        return maquinariaNecesaria;
+    }
+
 }

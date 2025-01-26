@@ -14,6 +14,7 @@ import gestorAplicacion.Bodega.Insumo;
 import gestorAplicacion.Bodega.Maquinaria;
 import gestorAplicacion.Bodega.Prenda;
 import gestorAplicacion.Administracion.Banco;
+import uiMain.Main;
 public class Sede implements Serializable{
 
 	private static final long serialVersionUID = 1L; // Para serializacion
@@ -43,6 +44,7 @@ public class Sede implements Serializable{
 	ArrayList<Maquinaria> maqProduccion = new ArrayList<>();
 	ArrayList<Maquinaria> maqOficina = new ArrayList<>();
 
+	public Sede(int prueba){}
 	
 	public Sede(){
 		listaSedes.add(this);
@@ -295,7 +297,7 @@ public class Sede implements Serializable{
 	}
 
 		//interacion 2 de Produccion
-	public ArrayList<ArrayList<ArrayList<Integer>>> planProduccion(ArrayList<Maquinaria> maqDisponiblee, Fecha fecha, Scanner scanner){
+	public ArrayList<ArrayList<ArrayList<Integer>>> planProduccion(ArrayList<Maquinaria> maqDisponible, Fecha fecha, Scanner scanner){
 		ArrayList<ArrayList<ArrayList<Integer>>> aProducirFinal = new ArrayList<>();
 		ArrayList<ArrayList<Integer>> aProducir = new ArrayList<>();
 		ArrayList<ArrayList<Integer>> listaEspera = new ArrayList<>();
@@ -313,7 +315,7 @@ public class Sede implements Serializable{
 		listaEsperaVacia.add(1, listaDeCeros);
 
 			//dividir las maquinas disponibles por sedes:
-		for(Maquinaria todMaquinas : maqDisponiblee){
+		for(Maquinaria todMaquinas : maqDisponible){
 			if(todMaquinas.getSede().getNombre().equalsIgnoreCase("Sede Principal")){
 				maqSedeP.add(todMaquinas);
 			} else {
@@ -323,14 +325,14 @@ public class Sede implements Serializable{
 
 			//dividir las maquinas de cada sede por funcion:
 		for(Maquinaria todMaqSedeP : maqSedeP){
-			if(todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de coser industrial") || todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de Corte") || todMaqSedeP.getNombre().equalsIgnoreCase("Plancha industrial") || todMaqSedeP.getNombre().equalsIgnoreCase("Bordadora Industrial") || todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de termofijado") || todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de tijereado")){
+			if(todMaqSedeP.esDeProduccion()){
 				maqProduccion.add(todMaqSedeP);
 			} else{
 				maqOficina.add(todMaqSedeP);
 			}
 		}
 		for(Maquinaria todMaqSede2 : maqSede2){
-			if(todMaqSede2.getNombre().equalsIgnoreCase("Maquina de coser industrial") || todMaqSede2.getNombre().equalsIgnoreCase("Maquina de Corte") || todMaqSede2.getNombre().equalsIgnoreCase("Plancha industrial") || todMaqSede2.getNombre().equalsIgnoreCase("Bordadora Industrial") || todMaqSede2.getNombre().equalsIgnoreCase("Maquina de termofijado") || todMaqSede2.getNombre().equalsIgnoreCase("Maquina de tijereado")){
+			if(todMaqSede2.esDeProduccion()){
 				maqProduccion.add(todMaqSede2);
 			} else{
 				maqOficina.add(todMaqSede2);
@@ -346,9 +348,7 @@ public class Sede implements Serializable{
 		}
 
 		if(senal == 5){
-			System.out.println("La Sede 2 no está trabajando por falta de maquinaria disponible...\n");
-			System.out.println("1. ¿Desea producir todo hoy desde la Sede Principal?");
-			System.out.println("2. ¿Desea producir mañana lo de la Sede 2 desde la sede Principal?");
+			Main.printsInt2(1);
 
 			int opcion = 0;
 			while(opcion != 1 && opcion != 2){
@@ -358,16 +358,25 @@ public class Sede implements Serializable{
 					aProducir.add(0, prodSedeP(fecha));
 					aProducir.add(1, listaDeCeros);
 					
+					aProducirFinal.add(0, aProducir);
+					aProducirFinal.add(1, listaEsperaVacia);
+
 				} else if(opcion == 2){
 					//llamar a otro metodo2 para pasar la produccion a una lista de espera
+					aProducir.add(0, calcProduccionSedes(fecha).get(0));
+					aProducir.add(1, listaDeCeros);
+
+					listaEspera.add(0, prodTransferida1(fecha));
+					listaEspera.add(1, listaDeCeros);
+
+					aProducirFinal.add(0, aProducir);
+					aProducirFinal.add(1, listaEspera);
 				} else{
-					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+					Main.printsInt2(2);
 				}
 			}
 		} else if (senal == 10) {
-			System.out.println("La Sede Principal no esta trabajando por falta de maquinaria disponible...");
-			System.out.println("1. ¿Desea producir todo hoy desde la Sede 2");
-			System.out.println("2. ¿Desea producir mañana lo de la Sede Principal desde la sede 2?");
+			Main.printsInt2(3);
 
 			int opcion = 0;
 			while(opcion != 1 && opcion != 2){
@@ -376,22 +385,32 @@ public class Sede implements Serializable{
 					//llamar a un metodo3: prodSede2() para empezar a producir todo en la sede 2
 					aProducir.add(0, listaDeCeros);
 					aProducir.add(1, prodSede2(fecha));
+
+					aProducirFinal.add(0, aProducir);
+					aProducirFinal.add(1, listaEsperaVacia);
 					
 				} else if(opcion == 2){
 					//llamar a otro metodo2 para pasar la produccion a una lista de espera
+					aProducir.add(0, listaDeCeros);
+					aProducir.add(1, calcProduccionSedes(fecha).get(1));
+
+					listaEspera.add(0, listaDeCeros);
+					listaEspera.add(1, prodTransferida2(fecha));
+
+					aProducirFinal.add(0, aProducir);
+					aProducirFinal.add(1, listaEspera);
+
 				} else{
-					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+					Main.printsInt2(4);
 				}
 			}
 		} else if(senal == 15){
-			//aquí se produce todo entre las dos sedes, después de preguntarle previamente al usuario lo q queria
+			//aquí se produce todo entre las dos sedes
 			int senalRec = sobreCargada(fecha);
 
 			if(senalRec == 5){
 				//sedeP sobrecargada, preguntar si quiere distribuir la produccion con la sede2(saldria al dia sig lo distribuido) o producirlo el mismo dia con un mayor costo
-				System.out.println("La Sede Principal esta sobrecargada, ¿Que desea hacer? \n");
-				System.out.println("1. Enviar parte de la produccion a la Sede 2, para producir por partes iguales.");
-				System.out.println("2. Ejecutar produccion, asumiendo todo el costo por sobrecarga en la Sede Principal.");
+				Main.printsInt2(5);
 
 				int opciom = 0;
 				while(opciom != 1 && opciom !=2){
@@ -423,15 +442,13 @@ public class Sede implements Serializable{
 						aProducirFinal.add(1, listaEsperaVacia);
 
 					} else{
-						System.out.println("Coloca una opcion indicada entre 1 o 2...");
+						Main.printsInt2(6);
 					}
 				}
 
 			} else if(senalRec == 10){
 				//sede2 sobrecargada, preguntar si quiere distribuir la produccion con la sedeP(saldria al dia sig lo distribuido) o producirlo el mismo dia con un mayor costo
-				System.out.println("La Sede 2 esta sobrecargada, ¿Que desea hacer? \n");
-				System.out.println("1. Enviar parte de la produccion a la Sede Principal, para producir por partes iguales.");
-				System.out.println("2. Ejecutar produccion, asumiendo todo el costo por sobrecarga en la Sede 2.");
+				Main.printsInt2(7);
 
 				int opciom = 0;
 				while(opciom != 1 && opciom !=2){
@@ -463,11 +480,64 @@ public class Sede implements Serializable{
 						aProducirFinal.add(1, listaEsperaVacia);
 						
 					} else{
-						System.out.println("Coloca una opcion indicada entre 1 o 2...");
+						Main.printsInt2(8);
 					}
 				}
 			} else if(senalRec == 15){
 				//las dos sedes estan sobrecargadas, preguntar si quiere producirlas el otro dia, o todo el mismo dia con un mayor costo
+				Main.printsInt2(9);
+
+				int opciom = 0;
+				while(opciom != 1 && opciom != 2){
+					opciom = scanner.nextInt();
+					if(opciom == 1){
+						ArrayList<Integer> elGuardaPdeHoy = new ArrayList<>();
+						ArrayList<Integer> elGuarda2deHoy = new ArrayList<>();
+						ArrayList<Integer> elGuardaPdeManana = new ArrayList<>();
+						ArrayList<Integer> elGuarda2deManana = new ArrayList<>();
+
+						int pSedePespera = Math.max( 0, calcProduccionSedes(fecha).get(0).get(0) - 10*modistasQueHay().get(0) ); 
+						int pSedeP = calcProduccionSedes(fecha).get(0).get(0) - pSedePespera;
+
+						int cSedePespera = Math.max( 0, calcProduccionSedes(fecha).get(0).get(1) - 10*modistasQueHay().get(0) ); 
+						int cSedeP = calcProduccionSedes(fecha).get(0).get(1) - cSedePespera;
+
+						int pSede2espera = Math.max( 0, calcProduccionSedes(fecha).get(1).get(0) - 10*modistasQueHay().get(1) ); 
+						int pSede2 = calcProduccionSedes(fecha).get(1).get(0) - pSede2espera;
+						
+						int cSede2espera = Math.max( 0, calcProduccionSedes(fecha).get(1).get(1) - 10*modistasQueHay().get(1) );
+						int cSede2 = calcProduccionSedes(fecha).get(1).get(1) - cSede2espera;
+
+						elGuardaPdeHoy.add(0, pSedeP);
+						elGuardaPdeHoy.add(1, cSedeP);
+
+						elGuarda2deHoy.add(0, pSede2);
+						elGuarda2deHoy.add(1, cSede2);
+
+						elGuardaPdeManana.add(0, pSedePespera);
+						elGuardaPdeManana.add(1, cSedePespera);
+
+						elGuarda2deManana.add(0, pSede2espera);
+						elGuarda2deManana.add(1, cSede2espera);
+
+						aProducir.add(0, elGuardaPdeHoy);
+						aProducir.add(1, elGuarda2deHoy);
+						listaEspera.add(0, elGuardaPdeManana);
+						listaEspera.add(1, elGuarda2deManana);
+
+						aProducirFinal.add(0, aProducir);
+						aProducirFinal.add(1, listaEspera);
+						
+					} else if(opciom == 2){
+						aProducir = calcProduccionSedes(fecha);
+
+						aProducirFinal.add(0, aProducir);
+						aProducirFinal.add(1, listaEsperaVacia);
+					} else{
+						Main.printsInt2(10);
+					}
+				}
+
 			} else if(senalRec == 0){
 				//NINGUNA SEDE SOBRECARGADA, RETORNAR PRODUCCION NORMAL, ES DECIR, CON LA LISTA DE ESPERA CON VALORES EN 0
 				aProducir = calcProduccionSedes(fecha);
@@ -477,7 +547,7 @@ public class Sede implements Serializable{
 			}
 
 		} else{
-			System.out.println("\n Lo sentimos, se debe arreglar la maquinaria en alguna de las dos sedes para comenzar a producir...\n");
+			Main.printsInt2(11);
 		}
 
 		return aProducirFinal;
@@ -557,6 +627,25 @@ public class Sede implements Serializable{
 		}
 
 		return senal;
+	}
+
+	public ArrayList<Integer> prodTransferida1(Fecha fecha){
+		ArrayList<Integer> prodaTransferir = new ArrayList<>();
+
+		prodaTransferir.add(0, calcProduccionSedes(fecha).get(1).get(0) );
+		prodaTransferir.add(1, calcProduccionSedes(fecha).get(1).get(1) );
+
+
+		return prodaTransferir;
+	}
+
+	public ArrayList<Integer> prodTransferida2(Fecha fecha){
+		ArrayList<Integer> prodaTransferir2 = new ArrayList<>();
+
+		prodaTransferir2.add(0, calcProduccionSedes(fecha).get(0).get(0));
+		prodaTransferir2.add(1, calcProduccionSedes(fecha).get(0).get(1));
+
+		return prodaTransferir2;
 	}
 	
 }

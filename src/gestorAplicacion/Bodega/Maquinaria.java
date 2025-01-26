@@ -14,7 +14,7 @@ public class Maquinaria implements Serializable{
 	String nombre;
 	Empleado user;
 	int horasUso;
-	boolean estado = false;
+	boolean estado = true;
 	// True if buena, False if dañada
 	boolean asignable;
 	boolean mantenimiento;
@@ -117,8 +117,7 @@ public class Maquinaria implements Serializable{
 							//llamando al metodo que encuentra los proveedores mas baratos de los repuestos existentes
 							todosProvBaratos = encontrarProveedoresBaratos();
 							for(Proveedor elMasEconomico : todosProvBaratos){
-								proveedorBarato = null;
-								if(elMasEconomico.getInsumo().getNombre().equalsIgnoreCase(cadaRepuesto.getNombre())){
+								if(elMasEconomico.getInsumo().getNombre().equalsIgnoreCase(cadaRepuesto.getNombre()) ){
 									proveedorBarato = elMasEconomico;
 									Main.recibeProveedorB(proveedorBarato);
 									break;
@@ -136,16 +135,8 @@ public class Maquinaria implements Serializable{
 									//AHORA FALTA QUITAR EL REPUESTO QUE NO SIRVE DEL ARRAYLIST DE REPUESTOS DE LA MAQUINA Y
 									
 									// Aquí quitamos el repuesto que no sirve del ArrayList de repuestos de la máquina
-									for (Iterator<Repuesto> iterator = cadaMaquina.getRepuestos().iterator(); iterator.hasNext(); ) {
-										Repuesto repuestoActual = iterator.next();
+									cadaMaquina.getRepuestos().remove(cadaRepuesto);
 
-										// Si el repuesto actual coincide con "cadaRepuesto", lo eliminamos
-										if (repuestoActual.equals(cadaRepuesto)) {
-											iterator.remove(); // Eliminamos el repuesto
-											System.out.println("Se eliminó el repuesto: " + repuestoActual.getNombre());
-											break; // Salimos del bucle una vez eliminado
-										}
-									}
 									//AGREGAR UNA COPIA DEL REPUESTO A DICHO ARRAYLIST DE REPUESTOS DE LA MAQUINA AFECTADA
 									cadaMaquina.getRepuestos().add(cadaRepuesto.copiar());
 									cadaRepuesto.setPrecioCompra(proveedorBarato.getPrecio());
@@ -191,8 +182,7 @@ public class Maquinaria implements Serializable{
 					//y se guarda en la variable proveedorBarato:
 					if(proveedorBarato == null){
 						proveedorBarato = proveedores;
-					}
-					else if(proveedores.getInsumo().getPrecioIndividual() <= proveedorBarato.getInsumo().getPrecioIndividual()){
+					} else if(proveedores.getInsumo().getPrecioIndividual() <= proveedorBarato.getInsumo().getPrecioIndividual()){
 						proveedorBarato = proveedores;
 					}
 
@@ -239,4 +229,13 @@ public class Maquinaria implements Serializable{
 			repuesto.usar(horas);
 		}
 	}
+
+	// Auxiliar de Sede.planProduccion
+	public boolean esDeProduccion(){
+		if(Camisa.getMaquinariaNecesaria().contains(getNombre()) || Pantalon.getMaquinariaNecesaria().contains(getNombre())){ 
+			return true;
+		}
+		return false;
+	}
+
 }

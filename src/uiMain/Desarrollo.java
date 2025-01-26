@@ -250,7 +250,7 @@ public class Desarrollo {
 
             case EJECUTIVO,PRESIDENTE:
             System.out.println("Tiene estas evaluaciones financieras");
-            for(Evaluacionfinanciera evaluacion : Evaluacionfinanciera.getHistorialEvaluaciones()){
+            for(Evaluacionfinanciera evaluacion : Sede.getEvaluacionesFinancieras()){
                 if (evaluacion.getPresidente()==empleado){
                     System.out.println(evaluacion.Informe());
                 }

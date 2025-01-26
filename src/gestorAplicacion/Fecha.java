@@ -42,12 +42,8 @@ public class Fecha implements Serializable{
 	public Fecha restarMeses(int meses) {
 		int mes = this.mes - meses;
 		int año = this.año;
-		if (mes == 0) {
-			mes=this.mes;
-			año=this.año;
-		}
-		else if (mes < 1) {
-			mes += 13;
+		if (mes<0){
+			mes+=12;
 			año--;
 		}
 		return new Fecha(this.dia, mes, año);
