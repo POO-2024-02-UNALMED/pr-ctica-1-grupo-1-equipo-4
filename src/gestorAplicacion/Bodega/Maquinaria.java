@@ -168,6 +168,7 @@ public class Maquinaria implements Serializable{
 							}
 							if (!encontrado) {
 								System.out.println("Ninguna de las sedes cuenta con dinero suficiente, considere pedir un prestamo.");
+								cadaMaquina.estado = false;
 							}
 						}
 					}
