@@ -100,7 +100,9 @@ public class Main {
                     fecha = ingresarFecha(in);
                     Maquinaria maquina = new Maquinaria();
                     Sede sedePrueba = new Sede(1);
-                    sedePrueba.planProduccion(maquina.agruparMaquinasDisponibles(fecha), fecha, in);
+                    
+                    ArrayList<ArrayList<ArrayList<Integer>>> plan = sedePrueba.planProduccion(maquina.agruparMaquinasDisponibles(fecha), fecha, in);
+                    Prenda.producirPrendas(plan,fecha);
                     break;
 
                 case 6:
@@ -1577,7 +1579,7 @@ public class Main {
             String transferirFondos = scanner.nextLine().toLowerCase();
             if (transferirFondos.equals("si")) {
                 System.out.println("¿Qué porcentaje desea transferir? (20% o 60%)");
-                int porcentaje = scanner.nextInt();
+                int porcentaje = nextIntSeguro(scanner);
                 if (porcentaje == 20 || porcentaje == 60) {
                     long montoTransferencia = (bancoTransferir.getAhorroBanco() * porcentaje / 100) - 50000;
                     if (montoTransferencia > 0) {

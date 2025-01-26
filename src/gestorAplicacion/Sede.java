@@ -297,7 +297,7 @@ public class Sede implements Serializable{
 	}
 
 		//interacion 2 de Produccion
-	public ArrayList<ArrayList<ArrayList<Integer>>> planProduccion(ArrayList<Maquinaria> maqDisponiblee, Fecha fecha, Scanner scanner){
+	public ArrayList<ArrayList<ArrayList<Integer>>> planProduccion(ArrayList<Maquinaria> maqDisponible, Fecha fecha, Scanner scanner){
 		ArrayList<ArrayList<ArrayList<Integer>>> aProducirFinal = new ArrayList<>();
 		ArrayList<ArrayList<Integer>> aProducir = new ArrayList<>();
 		ArrayList<ArrayList<Integer>> listaEspera = new ArrayList<>();
@@ -315,7 +315,7 @@ public class Sede implements Serializable{
 		listaEsperaVacia.add(1, listaDeCeros);
 
 			//dividir las maquinas disponibles por sedes:
-		for(Maquinaria todMaquinas : maqDisponiblee){
+		for(Maquinaria todMaquinas : maqDisponible){
 			if(todMaquinas.getSede().getNombre().equalsIgnoreCase("Sede Principal")){
 				maqSedeP.add(todMaquinas);
 			} else {
