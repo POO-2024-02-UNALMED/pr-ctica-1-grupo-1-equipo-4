@@ -1705,6 +1705,43 @@ public class Main {
         }
         return modista;
     }
+
+    public static void printsInt2(int senall){
+        if (senall == 1) {
+            System.out.println("La Sede 2 no está trabajando por falta de maquinaria disponible...\n");
+			System.out.println("1. ¿Desea producir todo hoy desde la Sede Principal?");
+			System.out.println("2. ¿Desea producir mañana lo de la Sede 2 desde la sede Principal?");
+        } else if(senall == 2){
+            System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+        } else if(senall == 3){
+            System.out.println("La Sede Principal no esta trabajando por falta de maquinaria disponible...");
+			System.out.println("1. ¿Desea producir todo hoy desde la Sede 2");
+			System.out.println("2. ¿Desea producir mañana lo de la Sede Principal desde la sede 2?");
+        } else if(senall == 4){
+            System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+        } else if(senall == 5){
+            System.out.println("La Sede Principal esta sobrecargada, ¿Que desea hacer? \n");
+			System.out.println("1. Enviar parte de la produccion a la Sede 2, para producir por partes iguales.");
+			System.out.println("2. Ejecutar produccion, asumiendo todo el costo por sobrecarga en la Sede Principal.");
+        } else if(senall == 6){
+            System.out.println("Coloca una opcion indicada entre 1 o 2...");
+        } else if(senall == 7){
+            System.out.println("La Sede 2 esta sobrecargada, ¿Que desea hacer? \n");
+			System.out.println("1. Enviar parte de la produccion a la Sede Principal, para producir por partes iguales.");
+			System.out.println("2. Ejecutar produccion, asumiendo todo el costo por sobrecarga en la Sede 2.");
+        } else if(senall == 8){
+            System.out.println("Coloca una opcion indicada entre 1 o 2...");
+        } else if(senall == 9){
+            System.out.println("Las dos sedes estan sobrecargadas, ¿Que quieres hacer?...");
+			System.out.println("1. Producir mañana las prendas que generan sobrecarga.");
+			System.out.println("2. Producir todo hoy, asumiendo el costo por sobrecarga.");
+        } else if(senall == 10){
+            System.out.println("Seleccione una opcion indicada entre 1 o 2...");
+        } else if(senall == 11){
+            System.out.println("\n Lo sentimos, se debe arreglar la maquinaria en alguna de las dos sedes para comenzar a producir...\n");
+        }
+
+    }
 }
 
 

@@ -14,6 +14,7 @@ import gestorAplicacion.Bodega.Insumo;
 import gestorAplicacion.Bodega.Maquinaria;
 import gestorAplicacion.Bodega.Prenda;
 import gestorAplicacion.Administracion.Banco;
+import uiMain.Main;
 public class Sede implements Serializable{
 
 	private static final long serialVersionUID = 1L; // Para serializacion
@@ -346,9 +347,7 @@ public class Sede implements Serializable{
 		}
 
 		if(senal == 5){
-			System.out.println("La Sede 2 no está trabajando por falta de maquinaria disponible...\n");
-			System.out.println("1. ¿Desea producir todo hoy desde la Sede Principal?");
-			System.out.println("2. ¿Desea producir mañana lo de la Sede 2 desde la sede Principal?");
+			Main.printsInt2(1);
 
 			int opcion = 0;
 			while(opcion != 1 && opcion != 2){
@@ -372,13 +371,11 @@ public class Sede implements Serializable{
 					aProducirFinal.add(0, aProducir);
 					aProducirFinal.add(1, listaEspera);
 				} else{
-					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+					Main.printsInt2(2);
 				}
 			}
 		} else if (senal == 10) {
-			System.out.println("La Sede Principal no esta trabajando por falta de maquinaria disponible...");
-			System.out.println("1. ¿Desea producir todo hoy desde la Sede 2");
-			System.out.println("2. ¿Desea producir mañana lo de la Sede Principal desde la sede 2?");
+			Main.printsInt2(3);
 
 			int opcion = 0;
 			while(opcion != 1 && opcion != 2){
@@ -401,9 +398,9 @@ public class Sede implements Serializable{
 
 					aProducirFinal.add(0, aProducir);
 					aProducirFinal.add(1, listaEspera);
-					
+
 				} else{
-					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
+					Main.printsInt2(4);
 				}
 			}
 		} else if(senal == 15){
@@ -412,9 +409,7 @@ public class Sede implements Serializable{
 
 			if(senalRec == 5){
 				//sedeP sobrecargada, preguntar si quiere distribuir la produccion con la sede2(saldria al dia sig lo distribuido) o producirlo el mismo dia con un mayor costo
-				System.out.println("La Sede Principal esta sobrecargada, ¿Que desea hacer? \n");
-				System.out.println("1. Enviar parte de la produccion a la Sede 2, para producir por partes iguales.");
-				System.out.println("2. Ejecutar produccion, asumiendo todo el costo por sobrecarga en la Sede Principal.");
+				Main.printsInt2(5);
 
 				int opciom = 0;
 				while(opciom != 1 && opciom !=2){
@@ -446,15 +441,13 @@ public class Sede implements Serializable{
 						aProducirFinal.add(1, listaEsperaVacia);
 
 					} else{
-						System.out.println("Coloca una opcion indicada entre 1 o 2...");
+						Main.printsInt2(6);
 					}
 				}
 
 			} else if(senalRec == 10){
 				//sede2 sobrecargada, preguntar si quiere distribuir la produccion con la sedeP(saldria al dia sig lo distribuido) o producirlo el mismo dia con un mayor costo
-				System.out.println("La Sede 2 esta sobrecargada, ¿Que desea hacer? \n");
-				System.out.println("1. Enviar parte de la produccion a la Sede Principal, para producir por partes iguales.");
-				System.out.println("2. Ejecutar produccion, asumiendo todo el costo por sobrecarga en la Sede 2.");
+				Main.printsInt2(7);
 
 				int opciom = 0;
 				while(opciom != 1 && opciom !=2){
@@ -486,14 +479,12 @@ public class Sede implements Serializable{
 						aProducirFinal.add(1, listaEsperaVacia);
 						
 					} else{
-						System.out.println("Coloca una opcion indicada entre 1 o 2...");
+						Main.printsInt2(8);
 					}
 				}
 			} else if(senalRec == 15){
 				//las dos sedes estan sobrecargadas, preguntar si quiere producirlas el otro dia, o todo el mismo dia con un mayor costo
-				System.out.println("Las dos sedes estan sobrecargadas, ¿Que quieres hacer?...");
-				System.out.println("1. Producir mañana las prendas que generan sobrecarga.");
-				System.out.println("2. Producir todo hoy, asumiendo el costo por sobrecarga.");
+				Main.printsInt2(9);
 
 				int opciom = 0;
 				while(opciom != 1 && opciom != 2){
@@ -542,7 +533,7 @@ public class Sede implements Serializable{
 						aProducirFinal.add(0, aProducir);
 						aProducirFinal.add(1, listaEsperaVacia);
 					} else{
-						System.out.println("Seleccione una opcion indicada entre 1 o 2...");
+						Main.printsInt2(10);
 					}
 				}
 
@@ -555,7 +546,7 @@ public class Sede implements Serializable{
 			}
 
 		} else{
-			System.out.println("\n Lo sentimos, se debe arreglar la maquinaria en alguna de las dos sedes para comenzar a producir...\n");
+			Main.printsInt2(11);
 		}
 
 		return aProducirFinal;
