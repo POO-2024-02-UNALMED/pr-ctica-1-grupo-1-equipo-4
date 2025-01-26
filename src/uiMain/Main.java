@@ -433,46 +433,84 @@ public class Main {
             ArrayList<Integer> cantidadAPedir = new ArrayList<>();
             int contador1 = 0;
             int contador2 = 0;
+            float prediccionp=0;
+            float prediccionc=0;
             for (Prenda prenda : x.getPrendasInventadas()) {
+                System.out.println(prenda);
+                System.out.println(contador1);
                 if (prenda instanceof Pantalon && contador1 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
                     System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
 
-                    float prediccion = proyeccion * (1 - Venta.getPesimismo());
+                    prediccionp = proyeccion * (1 - Venta.getPesimismo());
                     for (Insumo insumo : prenda.getInsumo()) {
                         insumoXSede.add(insumo);
                     }
                     for (int i : Pantalon.getCantidadInsumo()) {
-                        cantidadAPedir.add((int)(Math.ceil(i * prediccion)));
+                        cantidadAPedir.add((int)(Math.ceil(i * prediccionp)));
                     }
-                    contador1++;}
-                    else if (prenda instanceof Camisa && contador2 == 0) {
+                    contador1++;
+                }
+                if (prenda instanceof Pantalon && contador1>0){
+                        for (Insumo insumo : prenda.getInsumo()) {
+                            for (int i=0;i<insumoXSede.size();i++) {
+                                for (int j : Pantalon.getCantidadInsumo()) {
+                                if (insumo.getNombre().equals(insumoXSede.get(i).getNombre())){
+                                    cantidadAPedir.add(i,cantidadAPedir.get(i)+(int)(Math.ceil(j * prediccionp)));
+                                }else {
+                                    insumoXSede.add(insumo);
+                                    cantidadAPedir.add((int)(Math.ceil(j * prediccionp)));
+                                }}
+                           
+                        }}
+                    }
+                if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
                     System.out.println("Sede: " + x + " Prenda: " + prenda + " Proyección: " + proyeccion);
 
-                    float prediccion = proyeccion * (1 - Venta.getPesimismo());
+                    prediccionc = proyeccion * (1 - Venta.getPesimismo());
 
                     //for (Insumo insumo : prenda.getInsumo()) {
                         //insumoXSede.add(insumo);
                     //}
-                    for (int i : Camisa.getCantidadInsumo()) {
-                        cantidadAPedir.add((int)(Math.ceil(i * prediccion)));
-                    }
+                    for (Insumo insumo : prenda.getInsumo()) {
+                        for (int i=0;i<insumoXSede.size();i++) {
+                            for (int j : Camisa.getCantidadInsumo()) {
+                            if (insumo.getNombre().equals(insumoXSede.get(i).getNombre())){
+                                cantidadAPedir.add(i,cantidadAPedir.get(i)+(int)(Math.ceil(j * prediccionc)));
+                            }else {
+                                insumoXSede.add(insumo);
+                                cantidadAPedir.add((int)(Math.ceil(j * prediccionc)));
+                            }}
+                       
+                    }}
                     contador2++;
                 }
-
+            if (prenda instanceof Camisa && contador2>0){
+                for (Insumo insumo : prenda.getInsumo()) {
+                    for (int i=0;i<insumoXSede.size();i++) {
+                        for (int j : Camisa.getCantidadInsumo()) {
+                        if (insumo.getNombre().equals(insumoXSede.get(i).getNombre())){
+                            cantidadAPedir.add(i,(cantidadAPedir.get(i)+(int)(Math.ceil(j * prediccionc))));
+                        }else {
+                            insumoXSede.add(insumo);
+                            cantidadAPedir.add((int)(Math.ceil(j * prediccionc)));
+                        }}
+                   
+                }}
             }
+        }
             
             listaXSede.add(0,insumoXSede);
             listaXSede.add(1,cantidadAPedir);
             retorno.add(listaXSede);
-            System.out.print("/n 1"+listaXSede);
-            System.out.print("/n 2"+insumoXSede);System.out.print("/n 3"+cantidadAPedir);
+            System.out.print("\nMain 471"+listaXSede);
+            System.out.print("\nMain 472 "+insumoXSede);System.out.print("\nMain 472"+cantidadAPedir);
         }
         // retorno.add(listaGuia);}
-        System.out.print(retorno);
+        System.out.print("\nMain 475"+retorno);
         return retorno;
     }
 
@@ -1053,42 +1091,42 @@ public class Main {
         Camisa.posiblesInsumosNecesarios.add(tiposcb);
 
         ArrayList<Insumo> tipospa = new ArrayList<Insumo>();
-        tiposca.add(i1);
-        tiposca.add(i3);
-        tiposca.add(i5);
-        tiposca.add(i7);
+        tipospa.add(i1);
+        tipospa.add(i3);
+        tipospa.add(i5);
+        tipospa.add(i7);
         ArrayList<Insumo> tipospb = new ArrayList<Insumo>();
-        tiposcb.add(i2);
-        tiposcb.add(i4);
-        tiposca.add(i6);
-        tiposcb.add(i8);
+        tipospb.add(i2);
+        tipospb.add(i4);
+        tipospb.add(i6);
+        tipospb.add(i8);
 
         Pantalon.posiblesInsumosNecesarios.add(tipospa);
         Pantalon.posiblesInsumosNecesarios.add(tipospb);
 
         Prenda r1 = new Pantalon(new Fecha(1, 1, 23), Hugo, false, true, sedeP,tipospa);
-        Prenda r2 = new Pantalon(new Fecha(1, 1, 23), Inez, false, true, sedeP,tipospb);
+        Prenda r2 = new Pantalon(new Fecha(1, 1, 23), Inez, false, true, sedeP,tipospa);
         Prenda r3 = new Pantalon(new Fecha(1, 1, 23), Sandra, false, true, sedeP,tipospa);
-        Prenda r4 = new Pantalon(new Fecha(1, 1, 23), Sofia, false, true, sedeP,tipospb);
+        Prenda r4 = new Pantalon(new Fecha(1, 1, 23), Sofia, false, true, sedeP,tipospa);
         Prenda r5 = new Pantalon(new Fecha(1, 1, 23), Mariana, false, true, sedeP,tipospa);
-        Prenda r6 = new Pantalon(new Fecha(1, 1, 23), Bertha, false, true, sedeP,tipospb);
+        Prenda r6 = new Pantalon(new Fecha(1, 1, 23), Bertha, false, true, sedeP,tipospa);
         Prenda r7 = new Camisa(new Fecha(1, 1, 23), Hugo, false, true, sedeP,tiposca);
-        Prenda r8 = new Camisa(new Fecha(1, 1, 23), Inez, false, true, sedeP,tiposcb);
+        Prenda r8 = new Camisa(new Fecha(1, 1, 23), Inez, false, true, sedeP,tiposca);
         Prenda r9 = new Camisa(new Fecha(1, 1, 23), Sandra, false, true, sedeP,tiposca);
-        Prenda r10 = new Camisa(new Fecha(1, 1, 23), Sofia, false, true, sedeP,tiposcb);
+        Prenda r10 = new Camisa(new Fecha(1, 1, 23), Sofia, false, true, sedeP,tiposca);
         Prenda r11 = new Camisa(new Fecha(1, 1, 23), Mariana, false, true, sedeP,tiposca);
-        Prenda r12 = new Camisa(new Fecha(1, 1, 23), Bertha, false, true, sedeP,tiposcb);
-        Prenda r13 = new Pantalon(new Fecha(1, 1, 23), Jenny, false, true, sede2,tipospa);
-        Prenda r14 = new Pantalon(new Fecha(1, 1, 23), Karina, true, true, sede2,tipospa);
+        Prenda r12 = new Camisa(new Fecha(1, 1, 23), Bertha, false, true, sedeP,tiposca);
+        Prenda r13 = new Pantalon(new Fecha(1, 1, 23), Jenny, false, true, sede2,tipospb);
+        Prenda r14 = new Pantalon(new Fecha(1, 1, 23), Karina, true, true, sede2,tipospb);
         Prenda r15 = new Pantalon(new Fecha(1, 1, 23), Adriana, false, true, sede2,tipospb);
-        Prenda r16 = new Pantalon(new Fecha(1, 1, 23), Cecilia, false, true, sede2,tiposca);
+        Prenda r16 = new Pantalon(new Fecha(1, 1, 23), Cecilia, false, true, sede2,tipospb);
         Prenda r17 = new Pantalon(new Fecha(1, 1, 23), Alejandra, false, true, sede2,tipospb);
-        Prenda r18 = new Pantalon(new Fecha(1, 1, 23), Kenneth, false, true, sede2,tiposca);
-        Prenda r19 = new Camisa(new Fecha(1, 1, 23), Jenny, false, true, sede2,tiposca);
+        Prenda r18 = new Pantalon(new Fecha(1, 1, 23), Kenneth, false, true, sede2,tipospb);
+        Prenda r19 = new Camisa(new Fecha(1, 1, 23), Jenny, false, true, sede2,tiposcb);
         Prenda r20 = new Camisa(new Fecha(1, 1, 23), Karina, true, true, sede2,tiposcb);
-        Prenda r21 = new Camisa(new Fecha(1, 1, 23), Adriana, false, true, sede2,tiposca);
+        Prenda r21 = new Camisa(new Fecha(1, 1, 23), Adriana, false, true, sede2,tiposcb);
         Prenda r22 = new Camisa(new Fecha(1, 1, 23), Cecilia, false, true, sede2,tiposcb);
-        Prenda r23 = new Camisa(new Fecha(1, 1, 23), Alejandra, false, true, sede2,tiposca);
+        Prenda r23 = new Camisa(new Fecha(1, 1, 23), Alejandra, false, true, sede2,tiposcb);
         Prenda r24 = new Camisa(new Fecha(1, 1, 23), Kenneth, false, true, sede2,tiposcb);
         Karina.setPericia(0.1F);
 

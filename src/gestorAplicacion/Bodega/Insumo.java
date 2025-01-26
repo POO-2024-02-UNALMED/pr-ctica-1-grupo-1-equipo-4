@@ -19,7 +19,7 @@ public class Insumo implements GastoMensual,Serializable{
 	//Precio por toda la compra
 	protected int horasDeVidaUtil;
 
-	public Insumo(String nombre,float cantidad,Proveedor proveedor,Sede sede){
+	public Insumo(String nombre,int cantidad,Proveedor proveedor,Sede sede){
 		this.nombre=nombre;
 		this.proveedor=proveedor;
 		this.sede=sede;

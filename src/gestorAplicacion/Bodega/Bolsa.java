@@ -5,7 +5,7 @@ import gestorAplicacion.Sede;
 public class Bolsa extends Insumo {
 	private int capacidadMaxima;
 
-    public Bolsa(String nombre, float cantidad, Proveedor proveedor, Sede sede, int capacidadMaxima) {
+    public Bolsa(String nombre, int cantidad, Proveedor proveedor, Sede sede, int capacidadMaxima) {
         super(nombre, cantidad, proveedor, sede);
 		this.capacidadMaxima=capacidadMaxima;
     }

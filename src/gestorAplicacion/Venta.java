@@ -94,7 +94,7 @@ public class Venta implements Serializable {
 				float descuento=venta.cliente.getMembresia().getPorcentajeDescuento();
 				valorCalculado+= Math.round(monto + (monto*descuento)+venta.costoEnvio);
 				for (int i=0;i<venta.articulos.size();i++){
-					costos+=venta.articulos.get(i).getCostoInsumos();
+					costos+=venta.articulos.get(i).calcularCostoInsumos();
 				}}
 			}
 		}
@@ -172,9 +172,7 @@ public class Venta implements Serializable {
 		float pendienteMes1a2=(ventasMes2-ventasMes1);
 		int  ventasMes3= Venta.cantidadProducto(Venta.filtrar(sede.getHistorialVentas(),fechaActual.restarMeses(1)),prenda);
 		float pendienteMes2a3=(ventasMes3-ventasMes2);
-
 		float pendientePromedio=(pendienteMes1a2+pendienteMes2a3)/2;
-
 		return (int) Math.ceil(ventasMes3+pendientePromedio);
 	}
 

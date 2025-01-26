@@ -42,8 +42,8 @@ public abstract class Prenda implements GastoMensual, Serializable{
         this.modista=modista;
         this.descartada=descartada;
         this.terminada=terminada;
-        this.insumo=insumos;
         for (int i=0;i<insumos.size();i++){
+            this.insumo.add(insumos.get(i));
             this.costoInsumos+=insumos.get(i).getPrecioIndividual();
         }
         Prenda.prendasInventadas.add(this);
