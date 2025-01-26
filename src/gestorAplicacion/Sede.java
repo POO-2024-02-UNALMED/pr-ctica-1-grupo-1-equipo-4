@@ -384,7 +384,7 @@ public class Sede implements Serializable{
 				}
 			}
 		} else if(senal == 15){
-			//aquí se produce todo entre las dos sedes, después de preguntarle previamente al usuario lo q queria
+			//aquí se produce todo entre las dos sedes
 			int senalRec = sobreCargada(fecha);
 
 			if(senalRec == 5){
@@ -468,6 +468,61 @@ public class Sede implements Serializable{
 				}
 			} else if(senalRec == 15){
 				//las dos sedes estan sobrecargadas, preguntar si quiere producirlas el otro dia, o todo el mismo dia con un mayor costo
+				System.out.println("Las dos sedes estan sobrecargadas, ¿Que quieres hacer?...");
+				System.out.println("1. Producir mañana las prendas que generan sobrecarga.");
+				System.out.println("2. Producir todo hoy, asumiendo el costo por sobrecarga.");
+
+				int opciom = 0;
+				while(opciom != 1 && opciom != 2){
+					opciom = scanner.nextInt();
+					if(opciom == 1){
+						ArrayList<Integer> elGuardaPdeHoy = new ArrayList<>();
+						ArrayList<Integer> elGuarda2deHoy = new ArrayList<>();
+						ArrayList<Integer> elGuardaPdeManana = new ArrayList<>();
+						ArrayList<Integer> elGuarda2deManana = new ArrayList<>();
+
+						int pSedePespera = Math.max( 0, calcProduccionSedes(fecha).get(0).get(0) - 10*modistasQueHay().get(0) ) 
+						int pSedeP = calcProduccionSedes(fecha).get(0).get(0) - pSedePespera;
+
+						int cSedePespera = Math.max( 0, calcProduccionSedes(fecha).get(0).get(1) - 10*modistasQueHay().get(0) ) 
+						int cSedeP = calcProduccionSedes(fecha).get(0).get(1) - cSedePespera;
+
+						int pSede2espera = Math.max( 0, calcProduccionSedes(fecha).get(1).get(0) - 10*modistasQueHay().get(1) ) 
+						int pSede2 = calcProduccionSedes(fecha).get(1).get(0) - pSede2espera;
+						
+						int cSede2espera = Math.max( 0, calcProduccionSedes(fecha).get(1).get(1) - 10*modistasQueHay().get(1) ) 
+						int cSede2 = calcProduccionSedes(fecha).get(1).get(1) - cSede2espera;
+
+						elGuardaPdeHoy.add(0, pSedeP);
+						elGuardaPdeHoy.add(1, cSedeP);
+
+						elGuarda2deHoy.add(0, pSede2);
+						elGuarda2deHoy.add(1, cSede2);
+
+						elGuardaPdeManana.add(0, pSedePespera);
+						elGuardaPdeManana.add(1, cSedePespera);
+
+						elGuarda2deManana.add(0, pSede2espera);
+						elGuarda2deManana.add(1, cSede2espera);
+
+						aProducir.add(0, elGuardaPdeHoy);
+						aProducir.add(1, elGuarda2deHoy);
+						listaEspera.add(0, elGuardaPdeManana);
+						listaEspera.add(1, elGuarda2deManana);
+
+						aProducirFinal.add(0, aProducir);
+						aProducirFinal.add(1, listaEspera);
+						
+					} else if(opciom == 2){
+						aProducir = calcProduccionSedes(fecha);
+
+						aProducirFinal.add(0, aProducir);
+						aProducirFinal.add(1, listaEsperaVacia);
+					} else{
+						System.out.println("Seleccione una opcion indicada entre 1 o 2...");
+					}
+				}
+
 			} else if(senalRec == 0){
 				//NINGUNA SEDE SOBRECARGADA, RETORNAR PRODUCCION NORMAL, ES DECIR, CON LA LISTA DE ESPERA CON VALORES EN 0
 				aProducir = calcProduccionSedes(fecha);
