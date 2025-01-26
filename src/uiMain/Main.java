@@ -153,7 +153,14 @@ public class Main {
 
 
         System.out.println("Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
-        System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" sobre el promedio de salarios");
+        int diferenciaSalarios = -Persona.diferenciaSalarios();
+        if (diferenciaSalarios>0){
+            System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" sobre el promedio de salarios");
+        } else if (diferenciaSalarios<0){
+            System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" bajo el promedio de salarios");
+        } else {
+            System.out.println("Tus empleados estan en el promedio de salarios");
+        }
         for (Empleado emp : aDespedir) {
             System.out.println(emp.getNombre() + " " + emp.getAreaActual() + " " + emp.getDocumento());
         }
@@ -290,6 +297,7 @@ public class Main {
                 for (Persona persona : aptos) {
                     if (persona.getDocumento() == doc) {
                         aContratar.add(persona);
+                        System.out.println("Seleccionaste a " + persona.getNombre()+" con "+(persona.calcularSalario()-persona.valorEsperadoSalario())+" de diferencia salarial sobre el promedio");
                     }
                 }
             }
@@ -313,7 +321,7 @@ public class Main {
         double balanceTotal = balanceCostosProduccion - deudaCalculada;
         Empleado empleado = null;
         ArrayList<Empleado> elegible = new ArrayList<Empleado>();
-        for (Empleado emp : Empleado.listaEmpleados) {
+        for (Empleado emp : Sede.getListaEmpleadosTotal()) {
             if (emp.getAreaActual().equals(Area.DIRECCION)) {
                 elegible.add(emp);
             }

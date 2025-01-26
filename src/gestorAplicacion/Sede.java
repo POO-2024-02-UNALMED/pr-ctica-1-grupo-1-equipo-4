@@ -19,6 +19,7 @@ public class Sede implements Serializable{
 
 	private static final long serialVersionUID = 1L; // Para serializacion
 
+	private static ArrayList<Empleado> listaEmpleadosTotal=new ArrayList<Empleado>(); // Por razones de serializacion.
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 
 	// Ahora está aquí y en no en Evaluacionfinanciera por razones de serialización.
@@ -165,6 +166,7 @@ public class Sede implements Serializable{
 	public void quitarEmpleado(Empleado emp){listaEmpleado.remove(emp);}
 	static public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){evaluacionesFinancieras=evaluaciones;}
 	static public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluacionesFinancieras;}
+	static public ArrayList<Empleado> getListaEmpleadosTotal(){return listaEmpleadosTotal;}
 	
 	public ArrayList<Integer> getProdAproximada(){
 		return prodAproximada;
