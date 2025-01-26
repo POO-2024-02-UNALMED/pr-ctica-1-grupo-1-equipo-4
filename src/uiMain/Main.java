@@ -1688,7 +1688,7 @@ public class Main {
         
         return "El monto total a pagar por parte del cliente es " + MontoPagar + 
        " y el estado final de la cuenta de la sede es $" + bancoTransferir.getAhorroBanco();
-        }
+        }}
 
     //Método auxiliar para transferencia de prendas
     private static void manejarFaltantes(Sede sede, int cantidadPrenda, int disponibles, String tipoPrenda, int costosEnvio) { 

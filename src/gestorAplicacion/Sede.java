@@ -604,7 +604,7 @@ public class Sede implements Serializable{
 		int enLaP = 0;
 		int enLa2 = 0;
 
-		for(Empleado empCreados : Empleado.listaEmpleados){
+		for(Empleado empCreados : listaEmpleadosTotal){
 			if(empCreados.getAreaActual().getNombre().equalsIgnoreCase("Corte") && empCreados.getSede().getNombre().equalsIgnoreCase("Sede Principal")){
 				++enLaP;
 			}
