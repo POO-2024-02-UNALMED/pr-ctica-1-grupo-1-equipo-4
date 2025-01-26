@@ -60,21 +60,21 @@ public class Main {
             Fecha fecha;
             switch (opcion) {
                 case 1:
-                    fecha = ingresarFecha();
+                    fecha = ingresarFecha(in);
                     ArrayList<Empleado> despedidos = despedirEmpleados(in, fecha);
                     ArrayList<Empleado> aContratar = reorganizarEmpleados(in, despedidos);
                     contratarEmpleados(aContratar, in, fecha);
                     break;
 
                 case 2:
-                    fecha = ingresarFecha();
+                    fecha = ingresarFecha(in);
                     ArrayList<Object> retorno = planificarProduccion(fecha);
                     ArrayList<Object> listaA = coordinarBodegas(retorno);
                     ArrayList<Deuda> deuda = comprarInsumos(fecha, listaA);
                     break;
 
                 case 3:
-                    fecha = ingresarFecha();
+                    fecha = ingresarFecha(in);
                     Evaluacionfinanciera balanceAnterior = calcularBalanceAnterior(fecha, in);
                     long diferenciaEstimada = calcularEstimado(fecha, balanceAnterior, in);
                     String analisisFuturo = planRecuperacion(diferenciaEstimada, fecha, in);
@@ -97,7 +97,7 @@ public class Main {
                     break;
 
                 case 5:
-                    fecha = ingresarFecha();
+                    fecha = ingresarFecha(in);
                     Maquinaria maquina = new Maquinaria();
                     Sede sedePrueba = new Sede(1);
                     
@@ -122,8 +122,7 @@ public class Main {
     }
 
     // Metodo ingresarFecha
-    static public Fecha ingresarFecha() {
-        Scanner scanner = new Scanner(System.in);
+    static public Fecha ingresarFecha(Scanner scanner) {
         int dia = -1;
         int mes = -1;
         while (dia <= 0 || dia > 31) {
@@ -298,9 +297,6 @@ public class Main {
         }
 
         Persona.contratar(aContratar, aReemplazar, fecha);
-        // Lig dinámica y estática
-
-
     }
 
     // Interacción 1 Sistema Financiero
@@ -439,6 +435,9 @@ public class Main {
             float prediccionp=0;
             float prediccionc=0;
             for (Prenda prenda : x.getPrendasInventadas()) {
+                System.out.println(prenda);
+                System.out.println(contador1);
+                System.out.println(contador2);
                 if (prenda instanceof Pantalon && contador1 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
@@ -454,16 +453,15 @@ public class Main {
                     contador1++;
                 }
                 if (prenda instanceof Pantalon && contador1>0){
-                    for (int i = 0; i < prenda.getInsumo().size(); i++) {
-                        Insumo insumo = prenda.getInsumo().get(i);
-                        int cantidad = (int) Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp);
-                        int index = insumoXSede.indexOf(insumo);
-                        if (index == -1) {
-                            insumoXSede.add(insumo);
-                            cantidadAPedir.add(cantidad);
-                        } else {
-                            cantidadAPedir.set(index, cantidadAPedir.get(index) + cantidad);
-                        }
+                    for (int i=0;i<prenda.getInsumo().size();i++) {
+                        for (int j=0;j<insumoXSede.size();j++) {
+                            if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
+                            insumoXSede.add(prenda.getInsumo().get(i));
+                            cantidadAPedir.add((int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp)));}
+                            else {
+                                cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp))));
+                            }
+                        } 
                     }
                     contador1++;
                     }
@@ -477,39 +475,38 @@ public class Main {
                     //for (Insumo insumo : prenda.getInsumo()) {
                         //insumoXSede.add(insumo);
                     //}
-                    for (int i = 0; i < prenda.getInsumo().size(); i++) {
-                        Insumo insumo = prenda.getInsumo().get(i);
-                        int cantidad = (int) Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc);
-                
-                        int index = insumoXSede.indexOf(insumo);
-                        if (index == -1) {
-                            insumoXSede.add(insumo);
-                            cantidadAPedir.add(cantidad);
-                        } else {
-                            cantidadAPedir.set(index, cantidadAPedir.get(index) + cantidad);
-                        }
+                    for (int i=0;i<prenda.getInsumo().size();i++) {
+                        for (int j=0;j<insumoXSede.size();j++) {
+                            if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
+                            insumoXSede.add(prenda.getInsumo().get(i));
+                            cantidadAPedir.add((int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc)));}
+                            else {
+                                cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc))));
+                            }
+                        } 
                     }
                     contador2++;
                 }
             if (prenda instanceof Camisa && contador2>0){
-                for (int i = 0; i < prenda.getInsumo().size(); i++) {
-                    Insumo insumo = prenda.getInsumo().get(i);
-                    int cantidad = (int) Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc);
-            
-                    int index = insumoXSede.indexOf(insumo);
-                    if (index == -1) {
-                        insumoXSede.add(insumo);
-                        cantidadAPedir.add(cantidad);
-                    } else {
-                        cantidadAPedir.set(index, cantidadAPedir.get(index) + cantidad);
-                    }
+                for (int i=0;i<prenda.getInsumo().size();i++) {
+                    for (int j=0;j<insumoXSede.size();j++) {
+                        if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
+                        insumoXSede.add(prenda.getInsumo().get(i));
+                        cantidadAPedir.add((int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc)));}
+                        else {
+                        cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc))));
+                        }
+                    } 
                 }
                 contador2++;
             }
         }
+            
             listaXSede.add(0,insumoXSede);
             listaXSede.add(1,cantidadAPedir);
             retorno.add(listaXSede);
+            System.out.print("\nMain 471"+listaXSede);
+            System.out.print("\nMain 472 "+insumoXSede);System.out.print("\nMain 472"+cantidadAPedir);
         }
         // retorno.add(listaGuia);}
         System.out.print("\nMain 475"+retorno);
@@ -530,7 +527,7 @@ public class Main {
             ArrayList<Object> listaSede = new ArrayList<>(); // Acumula la info de este bucle.
             // Convertir cada elemento en un ArrayList<Object> correspondiente a una sede
             listaXSede = (ArrayList<Object>) sede;
-            Scanner in = new Scanner(System.in);
+
             // Extraer las listas internas: insumos y cantidades
             listaInsumos = (ArrayList<Insumo>) listaXSede.get(0);
             listaCantidades = (ArrayList<Integer>) listaXSede.get(1);
@@ -547,13 +544,14 @@ public class Main {
                                         + productoEnOtraSede.getSede() + ".");
                                 System.out.println("El insumo tiene un costo de " + productoEnOtraSede.getPrecio());
                                 System.out.println("Seleccione una de las siguientes opciones:");
-                                System.out.println("1. Deseo transferir el insumo desde la sede " + productoEnOtraSede.getSede());
+                                System.out.println(
+                                        "1. Deseo transferir el insumo desde la sede " + productoEnOtraSede.getSede());
                                 System.out.println("2. Deseo comprar el insumo");
 
+                                Scanner in = new Scanner(System.in);
                                 int opcion = in.nextInt();
                                 switch (opcion) {
                                     case 1:
-                                    System.out.println("1");
                                         int restante2 = Sede.restarInsumo(i, s, restante);
                                         if (restante2 != 0) {
                                             insumosAPedir.add(i);
@@ -561,7 +559,6 @@ public class Main {
                                         }
                                         break;
                                     case 2:
-                                    System.out.println("2");
                                         insumosAPedir.add(i);
                                         cantidadAPedir.add(restante);
                                         break;
@@ -621,7 +618,7 @@ public class Main {
                     }
 
                     System.out.println("Tenemos el insumo " + insumos.get(i).getNombre() + " con nuestro proveedor "
-                            + insumos.get(i).getProveedor().getNombre() + ".");
+                            + proveedores.get(i).getNombre() + ".");
 
                     if (insumos.get(i).getPrecioIndividual() < insumos.get(i).getUltimoPrecio()) {
                         System.out.println(
@@ -662,14 +659,13 @@ public class Main {
                         }
                         Deuda deuda = null;
                         if (montoDeuda > 0) {
-                            if(proveedor.getDeuda()==null){
-                                deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor",
-                                Deuda.calcularCuotas((long)montoDeuda));
-                            }
-                            else if (!(proveedor.getDeuda().getEstadodePago())) {
+                            if (!(proveedor.getDeuda().getEstadodePago())) {
                                 proveedor.unificarDeudasXProveedor(fecha, montoDeuda, proveedor.getNombre());
                                 deuda = proveedor.getDeuda();
-                            } 
+                            } else {
+                                deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor",
+                                        Deuda.calcularCuotas(montoDeuda));
+                            }
                             deudas.add(deuda);
                         }
 
@@ -725,11 +721,11 @@ public class Main {
         p2.setDeuda(new Deuda(new Fecha(15, 1, 24), 1_000_000, p2.getNombre(), "Proveedor", 10));
         // PROVEEDORES QUE VENDEN ACEITE:
         Proveedor p16 = new Proveedor(24000, "Aceites y mas");
-        p16.setInsumo(new Insumo("Aceite", p16));
+        p16.setInsumo(new Insumo("Aceite 946 ml", p16));
         Proveedor p17 = new Proveedor(30000, "Aceitunas");
-        p17.setInsumo(new Insumo("Aceite", p17));
+        p17.setInsumo(new Insumo("Aceite 946 ml", p17));
         Proveedor p18 = new Proveedor(20000, "El barato del Aceite");
-        p18.setInsumo(new Insumo("Aceite", p18));
+        p18.setInsumo(new Insumo("Aceite 946 ml", p18));
 
         // PROVEEDORES QUE VENDEN CUCHILLAS
         Proveedor p19 = new Proveedor(32000, "El de las Cuchillas");
@@ -773,9 +769,9 @@ public class Main {
 
         // PROVEEDORES QUE VENDEN TINTA NEGRA PARA IMPRESORA:
         Proveedor p33 = new Proveedor(44000, "Tinta por aqui");
-        p33.setInsumo(new Insumo("Tinta Negra Impresora", p33));
+        p33.setInsumo(new Insumo("Tinta Negra 90 ml", p33));
         Proveedor p34 = new Proveedor(50000, "El tintoso");
-        p34.setInsumo(new Insumo("Tinta Negra Impresora", p34));
+        p34.setInsumo(new Insumo("Tinta Negra 90 ml", p34));
 
         // PROVEEDORES QUE VENDEN LECTORES DE BARRAS:
         Proveedor p35 = new Proveedor(120000, "Mega tecnologies");
@@ -819,7 +815,7 @@ public class Main {
         Repuesto TintaN = new Repuesto("Tinta Negra Impresora", 3000, p33);
 
         Repuesto Lector = new Repuesto("Lector de barras", 3000, p35);
-        Repuesto PapelQuimico = new Repuesto("Papel quimico", 72, p37);
+        Repuesto PapelQuimico = new Repuesto("Papel químico", 72, p37);
 
         Repuesto Cargador = new Repuesto("Cargador Computador", 6000, p39);
         Repuesto Mouse = new Repuesto("Mouse Computador", 9000, p41);
@@ -919,17 +915,17 @@ public class Main {
         Maquinaria Computador = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp, sedeP);
 
         // sede2
-        Maquinaria MaquinaDeCoser2 = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC2, sede2, 1);
-        Maquinaria MaquinaDeCorte2 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2, 1);
-        Maquinaria PlanchaIndustrial2 = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI2, sede2, 1);
-        Maquinaria BordadoraIndustrial2 = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI2, sede2, 1);
+        Maquinaria MaquinaDeCoser2 = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC2, sede2);
+        Maquinaria MaquinaDeCorte2 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2);
+        Maquinaria PlanchaIndustrial2 = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI2, sede2);
+        Maquinaria BordadoraIndustrial2 = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI2, sede2);
         Maquinaria MaquinaDeTermofijado2 = new Maquinaria("Maquina de Termofijado", 20000000, 1000,
-                repuestosMTermofijado2, sede2, 1);
+                repuestosMTermofijado2, sede2);
         Maquinaria MaquinaDeTijereado2 = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado2,
-                sede2, 1);
-        Maquinaria Impresora2 = new Maquinaria("Impresora", 800000, 2000, repuestosImp2, sede2, 1);
-        Maquinaria Registradora2 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2, 1);
-        Maquinaria Computador2 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2, 1);
+                sede2);
+        Maquinaria Impresora2 = new Maquinaria("Impresora", 800000, 2000, repuestosImp2, sede2);
+        Maquinaria Registradora2 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2);
+        Maquinaria Computador2 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2);
 
         Banco bp = new Banco("principal", "Banco Montreal", 400_000_000, 0.05F);
         Banco b1 = new Banco("secundaria", "Banco Montreal", 5_000_000, 0.05F);
@@ -993,31 +989,31 @@ public class Main {
                 5, Membresia.NULA, Registradora.copiar()));
 
         Empleado Gutierrez = (new Empleado(Area.DIRECCION, new Fecha(5, 8, 19), sede2, "Saul Gutierrez", 9557933,
-                Rol.EJECUTIVO, 11, Membresia.NULA, Computador2.copiar(1)));
+                Rol.EJECUTIVO, 11, Membresia.NULA, Computador2.copiar()));
         Empleado Marcela = (new Empleado(Area.DIRECCION, new Fecha(30, 11, 20), sede2, "Marcela Valencia", 8519803,
-                Rol.EJECUTIVO, 10, Membresia.ORO, Computador2.copiar(1)));
+                Rol.EJECUTIVO, 10, Membresia.ORO, Computador2.copiar()));
         Empleado Gabriela = new Empleado(Area.VENTAS, new Fecha(1, 1, 24), sede2, "Gabriela Garza", 5287925,
-                Rol.VENDEDOR, 9, Membresia.PLATA, Registradora2.copiar(1));
+                Rol.VENDEDOR, 9, Membresia.PLATA, Registradora2.copiar());
         Empleado Patricia = (new Empleado(Area.OFICINA, new Fecha(5, 2, 23), sede2, "Patricia Fernandez", 4595311,
-                Rol.SECRETARIA, 6, Membresia.BRONCE, Impresora2.copiar(1)));
+                Rol.SECRETARIA, 6, Membresia.BRONCE, Impresora2.copiar()));
         Empleado Kenneth = (new Empleado(Area.CORTE, new Fecha(1, 1, 24), sede2, "Kenneth Johnson", 7494184,
-                Rol.MODISTA, 8, Membresia.ORO, PlanchaIndustrial2));
+                Rol.MODISTA, 8, Membresia.ORO, PlanchaIndustrial2.copiar()));
         Empleado Robles = (new Empleado(Area.OFICINA, new Fecha(12, 10, 24), sede2, "Miguel Robles", 7518004,
-                Rol.VENDEDOR, 7, Membresia.BRONCE, Impresora2.copiar(1)));
+                Rol.VENDEDOR, 7, Membresia.BRONCE, Impresora2.copiar()));
         Empleado Alejandra = (new Empleado(Area.CORTE, new Fecha(1, 2, 24), sede2, "Alejandra Zingg", 6840296,
-                Rol.MODISTA, 2, Membresia.BRONCE, BordadoraIndustrial2));
+                Rol.MODISTA, 2, Membresia.BRONCE, BordadoraIndustrial2.copiar()));
         Empleado Cecilia = (new Empleado(Area.CORTE, new Fecha(1, 2, 23), sede2, "Cecilia Bolocco", 7443886,
-                Rol.MODISTA, 10, Membresia.PLATA, MaquinaDeCoser2));
+                Rol.MODISTA, 10, Membresia.PLATA, MaquinaDeCoser2.copiar()));
         Empleado Freddy = (new Empleado(Area.VENTAS, new Fecha(31, 1, 22), sede2, "Freddy Contreras", 6740561,
-                Rol.PLANTA, 5, Membresia.NULA, Registradora2.copiar(1)));
+                Rol.PLANTA, 5, Membresia.NULA, Registradora2.copiar()));
         Empleado Adriana = (new Empleado(Area.CORTE, new Fecha(18, 6, 25), sede2, "Adriana arboleda", 5927947,
-                Rol.MODISTA, 20, Membresia.ORO, MaquinaDeCorte2));
+                Rol.MODISTA, 20, Membresia.ORO, MaquinaDeCorte2.copiar()));
         Empleado Karina = (new Empleado(Area.CORTE, new Fecha(9, 3, 25), sede2, "Karina Larson", 5229381, Rol.MODISTA,
-                2, Membresia.PLATA, MaquinaDeTermofijado2));
+                2, Membresia.PLATA, MaquinaDeTermofijado2.copiar()));
         Empleado Jenny = (new Empleado(Area.CORTE, new Fecha(1, 8, 24), sede2, "Jenny Garcia", 4264643, Rol.MODISTA, 1,
-                Membresia.ORO, MaquinaDeTijereado2));
-        Empleado ol = (new Empleado(Area.DIRECCION, new Fecha(1, 2, 20), sede2, "Gustavo Olarte", 7470922, Rol.EJECUTIVO,
-                3, Membresia.NULA, Computador2.copiar(1)));
+                Membresia.ORO, MaquinaDeTijereado2.copiar()));
+        Empleado ol = new Empleado(Area.DIRECCION, new Fecha(1, 2, 20), sede2, "Gustavo Olarte", 7470922, Rol.EJECUTIVO,
+                3, Membresia.NULA, Computador2.copiar());
         ol.setTraslados(3);
         ArrayList<Area> a = new ArrayList<Area>();
         a.add(Area.VENTAS);
@@ -1048,28 +1044,28 @@ public class Main {
         Persona c12 = new Persona("Maria Beatriz Valencia", 6472799, Rol.ASISTENTE, 2, false, Membresia.BRONCE);
         Persona c13 = new Persona("Antonio Sanchéz", 8922998, Rol.VENDEDOR, 12, false, Membresia.NULA);
 
-        ArrayList<String> tiposp = new ArrayList<String>();
-        ArrayList<Integer> cantidadesp = new ArrayList<Integer>();
-        ArrayList<String> tiposc = new ArrayList<String>();
-        ArrayList<Integer> cantidadesc = new ArrayList<Integer>();
-        tiposp.add("Tela");
-        tiposp.add("Boton");
-        tiposp.add("Cremallera");
-        tiposp.add("Hilo");
-        cantidadesp.add(100);
-        cantidadesp.add(1);
-        cantidadesp.add(1);
-        cantidadesp.add(100);
-        Pantalon.setCantidadInsumo(cantidadesp);
-        Pantalon.setTipoInsumo(tiposp);
-        tiposc.add("Tela");
-        tiposc.add("Boton");
-        tiposc.add("Hilo");
-        cantidadesc.add(150);
-        cantidadesc.add(3);
-        cantidadesc.add(100);
-        Camisa.setCantidadInsumo(cantidadesc);
-        Camisa.setTipoInsumo(tiposc);
+        ArrayList<String> tipos = new ArrayList<String>();
+        ArrayList<Integer> cantidades = new ArrayList<Integer>();
+        tipos.add("Tela");
+        tipos.add("Boton");
+        tipos.add("Cremallera");
+        tipos.add("Hilo");
+        cantidades.add(100);
+        cantidades.add(1);
+        cantidades.add(1);
+        cantidades.add(100);
+        Pantalon.setCantidadInsumo(cantidades);
+        Pantalon.setTipoInsumo(tipos);
+        tipos.clear();
+        tipos.add("Tela");
+        tipos.add("Boton");
+        tipos.add("Hilo");
+        tipos.clear();
+        cantidades.add(150);
+        cantidades.add(3);
+        cantidades.add(100);
+        Camisa.setCantidadInsumo(cantidades);
+        Pantalon.setTipoInsumo(tipos);
 
         ArrayList<Insumo> tiposca = new ArrayList<Insumo>();
         tiposca.add(i1);
@@ -1249,7 +1245,7 @@ public class Main {
         ArrayList<Prenda> productosSeleccionados = new ArrayList<>();
         ArrayList<Integer> cantidadProductos = new ArrayList<>();
         System.out.println("\n"+"Ingrese la fecha de la venta:");
-        Fecha fechaVenta = ingresarFecha();
+        Fecha fechaVenta = ingresarFecha(scanner);
 
       System.out.println("\n"+"Seleccione el cliente al que se le realizará la venta:");
       Persona.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
@@ -1522,7 +1518,7 @@ public class Main {
     }
 
     // Interacción 3 Facturación
-    public static void tarjetaRegalo(Scanner scanner, Venta venta) {
+    public static String tarjetaRegalo(Scanner scanner, Venta venta) {
         Sede sede = venta.getSede();
         Banco banco = sede.getCuentaSede();
 
@@ -1644,28 +1640,37 @@ public class Main {
         System.out.println("Prendas compradas:");
         int cantidadCamisas = 0;
         int cantidadPantalon = 0;
-        for(Prenda prenda : productosSeleccionados){
-            if(prenda instanceof Camisa){cantidadCamisas++;}
+        int subtotalCamisas = 0;
+        int subtotalPantalon = 0;
+        
+        // Recorre la lista para calcular cantidades y subtotales por tipo de prenda
+        for (Prenda prenda : productosSeleccionados) {
+            if (prenda instanceof Camisa) {
+                cantidadCamisas++;
+                subtotalCamisas += Camisa.precioVenta();
+            } else if (prenda instanceof Pantalon) {
+                cantidadPantalon++;
+                subtotalPantalon += Pantalon.PrecioVenta();
+            }
         }
-        for(Prenda prenda : productosSeleccionados){
-            if(prenda instanceof Pantalon){cantidadPantalon++;}
+        
+        // Imprime las prendas y montos por estas de la venta
+        if (cantidadCamisas > 0) {
+            System.out.println("Camisas - Cantidad: " + cantidadCamisas + " - Subtotal: $" + subtotalCamisas);
         }
-        for (int i = 0; i < productosSeleccionados.size(); i++) {
-            Prenda prenda = productosSeleccionados.get(i);
-            if (prenda instanceof Camisa){
-            System.out.println(prenda.getNombre() + " - Cantidad: " + cantidadCamisas + " - Subtotal: $"
-                    + (Camisa.PrecioVenta() * cantidadCamisas));}
-            else if(prenda instanceof Pantalon){
-                System.out.println(prenda.getNombre() + " - Cantidad: " + cantidadPantalon + " - Subtotal: $"
-                + (Pantalon.PrecioVenta() * cantidadPantalon));}
+        if (cantidadPantalon > 0) {
+            System.out.println("Pantalones - Cantidad: " + cantidadPantalon + " - Subtotal: $" + subtotalPantalon);
         }
         System.out.println("Valor total: $" + MontoPagar);
         System.out.println("Valor sin IVA: $" + venta.getsubtotal());
         System.out.println("IVA: $" + IVA);
         System.out.println("Venta registrada por: " + venta.getEncargado());
         System.out.println("Asesor de la compra: " + venta.getAsesor());
+        
+        return "El monto total a pagar por parte del cliente es " + MontoPagar + 
+       " y el estado final de la cuenta de la sede es $" + bancoTransferir.getAhorroBanco();
+        }
 
-    }
     //Método auxiliar para transferencia de prendas
     private static void manejarFaltantes(Sede sede, int cantidadPrenda, int disponibles, String tipoPrenda, int costosEnvio) { 
     int faltantes = cantidadPrenda - disponibles;
