@@ -38,6 +38,15 @@ public class Maquinaria implements Serializable{
 		this.horaRevision = horaRevision;
 		this.repuestos = repuestos;
 		this.sede = sede;
+		Sede.getlistaSedes().get(0).getlistaMaquinas().add(this);
+	}
+	public Maquinaria(String nombre, long valor, int horaRevision, ArrayList<Repuesto> repuestos, Sede sede, int prueba){
+		this.nombre = nombre;
+		this.valor = valor;
+		this.horaRevision = horaRevision;
+		this.repuestos = repuestos;
+		this.sede = sede;
+		Sede.getlistaSedes().get(1).getlistaMaquinas().add(this);
 	}
 
 		//metodo para hacer una copia de un objeto de tipo Maquinaria, con la misma inicializacion de atributos del que queremos copiar
