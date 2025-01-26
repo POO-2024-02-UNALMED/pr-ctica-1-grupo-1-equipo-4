@@ -181,6 +181,8 @@ public class Maquinaria implements Serializable{
 				if(cadaMaquina.mantenimiento == false && cadaMaquina.estado == true){
 					maqDisponibles.add(cadaMaquina);
 				}
+				
+				cadaMaquina.mantenimiento = false; //pq cuando vuelva a ser usada ya se habra arreglado
 			}
 		}
 
