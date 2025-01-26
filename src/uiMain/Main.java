@@ -1178,6 +1178,12 @@ public class Main {
                     costoEnvio+=1_000;
                     articulos.add(producto);
                 }
+                if (tipoProducto==1){
+                    Pantalon producto = new Pantalon(fecha, asesor, false, true, sede,Pantalon.getInsumosNecesariosAleatorios());
+                    precio+=60_000;
+                    costoEnvio+=1_000;
+                    articulos.add(producto);
+                }
             }
             Persona cliente = Persona.getListaPersonas().get((int) (Math.random() * Persona.getListaPersonas().size()));
             Venta venta = new Venta(sede,fecha,cliente,asesor, encargado, articulos, precio, precio+costoEnvio);
