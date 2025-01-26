@@ -358,8 +358,19 @@ public class Sede implements Serializable{
 					aProducir.add(0, prodSedeP(fecha));
 					aProducir.add(1, listaDeCeros);
 					
+					aProducirFinal.add(0, aProducir);
+					aProducirFinal.add(1, listaEsperaVacia);
+
 				} else if(opcion == 2){
 					//llamar a otro metodo2 para pasar la produccion a una lista de espera
+					aProducir.add(0, calcProduccionSedes(fecha).get(0));
+					aProducir.add(1, listaDeCeros);
+
+					listaEspera.add(0, prodTransferida1(fecha));
+					listaEspera.add(1, listaDeCeros);
+
+					aProducirFinal.add(0, aProducir);
+					aProducirFinal.add(1, listaEspera);
 				} else{
 					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
 				}
@@ -376,9 +387,21 @@ public class Sede implements Serializable{
 					//llamar a un metodo3: prodSede2() para empezar a producir todo en la sede 2
 					aProducir.add(0, listaDeCeros);
 					aProducir.add(1, prodSede2(fecha));
+
+					aProducirFinal.add(0, aProducir);
+					aProducirFinal.add(1, listaEsperaVacia);
 					
 				} else if(opcion == 2){
 					//llamar a otro metodo2 para pasar la produccion a una lista de espera
+					aProducir.add(0, listaDeCeros);
+					aProducir.add(1, calcProduccionSedes(fecha).get(1));
+
+					listaEspera.add(0, listaDeCeros);
+					listaEspera.add(1, prodTransferida2(fecha));
+
+					aProducirFinal.add(0, aProducir);
+					aProducirFinal.add(1, listaEspera);
+					
 				} else{
 					System.out.println("\n Marque una opcion correcta entre 1 o 2...\n");
 				}
@@ -612,6 +635,25 @@ public class Sede implements Serializable{
 		}
 
 		return senal;
+	}
+
+	public ArrayList<Integer> prodTransferida1(Fecha fecha){
+		ArrayList<Integer> prodaTransferir = new ArrayList<>();
+
+		prodaTransferir.add(0, calcProduccionSedes(fecha).get(1).get(0) );
+		prodaTransferir.add(1, calcProduccionSedes(fecha).get(1).get(1) );
+
+
+		return prodaTransferir;
+	}
+
+	public ArrayList<Integer> prodTransferida2(Fecha fecha){
+		ArrayList<Integer> prodaTransferir2 = new ArrayList<>();
+
+		prodaTransferir2.add(0, calcProduccionSedes(fecha).get(0).get(0));
+		prodaTransferir2.add(1, calcProduccionSedes(fecha).get(0).get(1));
+
+		return prodaTransferir2;
 	}
 	
 }
