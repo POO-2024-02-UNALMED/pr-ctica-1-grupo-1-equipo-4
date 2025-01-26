@@ -481,16 +481,16 @@ public class Sede implements Serializable{
 						ArrayList<Integer> elGuardaPdeManana = new ArrayList<>();
 						ArrayList<Integer> elGuarda2deManana = new ArrayList<>();
 
-						int pSedePespera = Math.max( 0, calcProduccionSedes(fecha).get(0).get(0) - 10*modistasQueHay().get(0) ) 
+						int pSedePespera = Math.max( 0, calcProduccionSedes(fecha).get(0).get(0) - 10*modistasQueHay().get(0) ); 
 						int pSedeP = calcProduccionSedes(fecha).get(0).get(0) - pSedePespera;
 
-						int cSedePespera = Math.max( 0, calcProduccionSedes(fecha).get(0).get(1) - 10*modistasQueHay().get(0) ) 
+						int cSedePespera = Math.max( 0, calcProduccionSedes(fecha).get(0).get(1) - 10*modistasQueHay().get(0) ); 
 						int cSedeP = calcProduccionSedes(fecha).get(0).get(1) - cSedePespera;
 
-						int pSede2espera = Math.max( 0, calcProduccionSedes(fecha).get(1).get(0) - 10*modistasQueHay().get(1) ) 
+						int pSede2espera = Math.max( 0, calcProduccionSedes(fecha).get(1).get(0) - 10*modistasQueHay().get(1) ); 
 						int pSede2 = calcProduccionSedes(fecha).get(1).get(0) - pSede2espera;
 						
-						int cSede2espera = Math.max( 0, calcProduccionSedes(fecha).get(1).get(1) - 10*modistasQueHay().get(1) ) 
+						int cSede2espera = Math.max( 0, calcProduccionSedes(fecha).get(1).get(1) - 10*modistasQueHay().get(1) );
 						int cSede2 = calcProduccionSedes(fecha).get(1).get(1) - cSede2espera;
 
 						elGuardaPdeHoy.add(0, pSedeP);
