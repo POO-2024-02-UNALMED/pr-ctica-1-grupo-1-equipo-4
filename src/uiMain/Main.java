@@ -71,7 +71,8 @@ public class Main {
 
                     ArrayList<Object> retorno = planificarProduccion(Main.fecha);
                     ArrayList<Object> listaA = coordinarBodegas(retorno);
-                    ArrayList<Deuda> deuda = comprarInsumos(Main.fecha, listaA);
+                    System.out.println(comprarInsumos(Main.fecha, listaA));
+
                     break;
 
                 case 3:
@@ -415,9 +416,9 @@ public class Main {
         ArrayList<Object> retorno = new ArrayList<>();
 
         for (Sede x : Sede.getlistaSedes()) {
-            System.out.println("Para la " + x.getNombre());
-            System.out.println(" Tenemos un porcentaje de pesimismo: " + (Venta.getPesimismo() * 100));
-            System.out.println("Seleccione una de las siguientes opciones:");
+            System.out.println("\n"+"Para la " + x.getNombre());
+            System.out.println("Tenemos un porcentaje de pesimismo: " + Math.round(Venta.getPesimismo() * 100) +"%");
+            System.out.println("\n"+"Seleccione una de las siguientes opciones:");
             System.out.println("1. Estoy de acuerdo con el porcentaje de pesimismo");
             System.out.println("2. Deseo cambiar el porcentaje de pesimismo");
 
@@ -443,16 +444,17 @@ public class Main {
             int contador2 = 0;
             float prediccionp=0;
             float prediccionc=0;
+
             for (Prenda prenda : x.getPrendasInventadas()) {
                 System.out.println(prenda);
                 System.out.println(contador1);
                 System.out.println(contador2);
                 if (prenda instanceof Pantalon && contador1 == 0) {
-                    int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + Math.round(proyeccion)+"%");
-                    
+                    int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
                     prediccionp = proyeccion * (1 - Venta.getPesimismo());
+                    System.out.println("\n"+ "La predicción de ventas para "+prenda + " es de "+ Math.ceil(prediccionp));
+                    
                     for (Insumo insumo : prenda.getInsumo()) {
                         insumoXSede.add(insumo);
                     }
@@ -476,23 +478,22 @@ public class Main {
                     }
                 if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
-
-                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + Math.round(proyeccion)+"%");
-
                     prediccionc = proyeccion * (1 - Venta.getPesimismo());
 
-                    //for (Insumo insumo : prenda.getInsumo()) {
-                        //insumoXSede.add(insumo);
-                    //}
-                    for (int i=0;i<prenda.getInsumo().size();i++) {
-                        for (int j=0;j<insumoXSede.size();j++) {
-                            if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
-                            insumoXSede.add(prenda.getInsumo().get(i));
-                            cantidadAPedir.add((int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc)));}
-                            else {
-                                cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc))));
-                            }
-                        } 
+                    System.out.println("\n"+ "La predicción de ventas para "+prenda + " es de "+ Math.ceil(prediccionc));
+
+                    
+                    for (int i = 0; i < prenda.getInsumo().size(); i++) {
+                        Insumo insumo = prenda.getInsumo().get(i);
+                        int cantidad = (int) Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc);
+                
+                        int index = insumoXSede.indexOf(insumo);
+                        if (index == -1) {
+                            insumoXSede.add(insumo);
+                            cantidadAPedir.add(cantidad);
+                        } else {
+                            cantidadAPedir.set(index, cantidadAPedir.get(index) + cantidad);
+                        }
                     }
                     contador2++;
                 }
@@ -514,11 +515,7 @@ public class Main {
             listaXSede.add(0,insumoXSede);
             listaXSede.add(1,cantidadAPedir);
             retorno.add(listaXSede);
-            System.out.print("\nMain 471"+listaXSede);
-            System.out.print("\nMain 472 "+insumoXSede);System.out.print("\nMain 472"+cantidadAPedir);
-        }
-        // retorno.add(listaGuia);}
-        System.out.print("\nMain 475"+retorno);
+        }        
 
         return retorno;
     }
@@ -549,12 +546,11 @@ public class Main {
                         if (restante != 0) {
                             Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
                             if (productoEnOtraSede.getEncontrado() == true) {
-                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra sede "
-                                        + productoEnOtraSede.getSede() + ".");
+                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra "
+                                                    + productoEnOtraSede.getSede() + ".");
                                 System.out.println("El insumo tiene un costo de " + productoEnOtraSede.getPrecio());
-                                System.out.println("Seleccione una de las siguientes opciones:");
-                                System.out.println(
-                                        "1. Deseo transferir el insumo desde la sede " + productoEnOtraSede.getSede());
+                                System.out.println("\n"+"Seleccione una de las siguientes opciones:");
+                                System.out.println("1. Deseo transferir el insumo desde la " + productoEnOtraSede.getSede());
                                 System.out.println("2. Deseo comprar el insumo");
 
                                 Scanner in = new Scanner(System.in);
@@ -562,9 +558,21 @@ public class Main {
                                 switch (opcion) {
                                     case 1:
                                         int restante2 = Sede.restarInsumo(i, s, restante);
+                                        System.out.println("\n"+i+" transferido desde "+s+" con éxito");
                                         if (restante2 != 0) {
                                             insumosAPedir.add(i);
                                             cantidadAPedir.add(restante2);
+                                            if(i.getNombre().equals("Tela")){
+                                            System.out.println("Tenemos una cantidad de "+restante2+"cm de tela restantes a pedir ");}
+                                            else if (i.getNombre().equals("Boton")){
+                                                System.out.println("Tenemos una cantidad de "+restante2+" botones restantes a pedir ");}
+                                            else if (i.getNombre().equals("Cremallera")){
+                                                 System.out.println("Tenemos una cantidad de "+restante2+" cremalleras restantes a pedir ");}
+                                                else {
+                                                System.out.println("Tenemos una cantidad de "+restante2+" cm de hilo restantes a pedir ");}
+                                        }
+                                        else{
+                                            System.out.println("Insumo transferido en su totalidad");
                                         }
                                         break;
                                     case 2:
@@ -590,7 +598,7 @@ public class Main {
     }
 
     // Interacción 3 de Insumos
-    static public ArrayList<Deuda> comprarInsumos(Fecha fecha, ArrayList<Object> listaA) {
+    static public String comprarInsumos(Fecha fecha, ArrayList<Object> listaA) {
         ArrayList<Object> sede = new ArrayList<>();
         ArrayList<Insumo> insumos = new ArrayList<>();
         ArrayList<Integer> cantidad = new ArrayList<>();
@@ -626,13 +634,13 @@ public class Main {
                         }
                     }
 
-                    System.out.println("Tenemos el insumo " + insumos.get(i).getNombre() + " con nuestro proveedor "
-                            + proveedores.get(i).getNombre() + ".");
+                    System.out.println("\n"+"Tenemos el insumo " + insumos.get(i).getNombre() + " con nuestro proveedor "
+                            + insumos.get(i).getProveedor().getNombre() + ".");
 
                     if (insumos.get(i).getPrecioIndividual() < insumos.get(i).getUltimoPrecio()) {
-                        System.out.println(
-                                "Dado que el costo de la venta por unidad es menor al ultimo precio por el que compramos el insumo");
-                        System.out.println("Desea pedir mas de la cantidad necesaria para la producción? ");
+                        System.out.println("\n"+
+                        "Dado que el costo de la venta por unidad es menor al ultimo precio por el que compramos el insumo");
+                        System.out.println("\n"+"Desea pedir mas de la cantidad necesaria para la producción? ");
                         System.out.println("Cantidad: " + cantidad.get(i));
                         System.out.println("1. Si");
                         System.out.println("2. No");
@@ -642,7 +650,7 @@ public class Main {
                         switch (opcion) {
                             case 1:
                                 if (opcion >= 0) {
-                                    System.out.println(
+                                    System.out.println("\n"+
                                             "Cuanta cantidad más desea pedir del insumo " + insumos.get(i).getNombre());
                                     Scanner cant = new Scanner(System.in);
                                     cantidadAñadir = cant.nextInt();
@@ -660,6 +668,7 @@ public class Main {
                     cantidad.set(i, ((cantidad.get(i)) + cantidadAñadir));
 
                     Sede.añadirInsumo(insumos.get(i), sedee, cantidad.get(i));
+                    System.out.println("\n"+"Insumo "+insumos.get(i)+" comprado con éxito");
 
                     for (Proveedor proveedor : Proveedor.getListaProveedores()) {
                         int montoDeuda = 0;
@@ -683,7 +692,8 @@ public class Main {
 
             }
         }
-        return deudas;
+        
+        return "Ahora nuestras deudas con los proveedores lucen asi:"+"\n"+deudas;
     }
 
     // METODO PARA CREAR LAS SEDES, LAS MAQUINAS Y LOS REPUESTOS,
