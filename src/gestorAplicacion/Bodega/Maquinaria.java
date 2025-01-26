@@ -17,7 +17,7 @@ public class Maquinaria implements Serializable{
 	boolean estado = true;
 	// True if buena, False if dañada
 	boolean asignable;
-	boolean mantenimiento;
+	boolean mantenimiento = false;
 	public Sede sede;
 	long valor;
 	int horasVisitaTecnico;
@@ -38,6 +38,15 @@ public class Maquinaria implements Serializable{
 		this.horaRevision = horaRevision;
 		this.repuestos = repuestos;
 		this.sede = sede;
+		Sede.getlistaSedes().get(0).getlistaMaquinas().add(this);
+	}
+	public Maquinaria(String nombre, long valor, int horaRevision, ArrayList<Repuesto> repuestos, Sede sede, int prueba){
+		this.nombre = nombre;
+		this.valor = valor;
+		this.horaRevision = horaRevision;
+		this.repuestos = repuestos;
+		this.sede = sede;
+		Sede.getlistaSedes().get(1).getlistaMaquinas().add(this);
 	}
 
 		//metodo para hacer una copia de un objeto de tipo Maquinaria, con la misma inicializacion de atributos del que queremos copiar
@@ -47,6 +56,14 @@ public class Maquinaria implements Serializable{
 			Nuevosrepuestos.add(rep.copiar());
 		}
 		return new Maquinaria(this.nombre, this.valor, this.horaRevision, Nuevosrepuestos, this.sede);
+	}
+
+	public Maquinaria copiar(int pruebaa){
+		ArrayList<Repuesto> Nuevosrepuestos=new ArrayList<>();
+		for (Repuesto rep:repuestos){
+			Nuevosrepuestos.add(rep.copiar());
+		}
+		return new Maquinaria(this.nombre, this.valor, this.horaRevision, Nuevosrepuestos, this.sede, 1);
 	}
 
 	public static long gastoMensualClase(Fecha fecha){
