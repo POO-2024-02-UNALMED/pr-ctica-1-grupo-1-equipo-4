@@ -231,4 +231,11 @@ public class Maquinaria implements Serializable{
 			repuesto.usar(horas);
 		}
 	}
+
+	// Auxiliar de Sede.planProduccion
+	public boolean esDeProduccion(){
+		if(Camisa.getMaquinariaNecesaria().contains(getNombre()) || Pantalon.getMaquinariaNecesaria().contains(getNombre())){ {
+			return true;
+		}
+	}
 }

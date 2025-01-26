@@ -325,14 +325,14 @@ public class Sede implements Serializable{
 
 			//dividir las maquinas de cada sede por funcion:
 		for(Maquinaria todMaqSedeP : maqSedeP){
-			if(todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de coser industrial") || todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de Corte") || todMaqSedeP.getNombre().equalsIgnoreCase("Plancha industrial") || todMaqSedeP.getNombre().equalsIgnoreCase("Bordadora Industrial") || todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de termofijado") || todMaqSedeP.getNombre().equalsIgnoreCase("Maquina de tijereado")){
+			if(todMaqSedeP.esDeProduccion()){
 				maqProduccion.add(todMaqSedeP);
 			} else{
 				maqOficina.add(todMaqSedeP);
 			}
 		}
 		for(Maquinaria todMaqSede2 : maqSede2){
-			if(todMaqSede2.getNombre().equalsIgnoreCase("Maquina de coser industrial") || todMaqSede2.getNombre().equalsIgnoreCase("Maquina de Corte") || todMaqSede2.getNombre().equalsIgnoreCase("Plancha industrial") || todMaqSede2.getNombre().equalsIgnoreCase("Bordadora Industrial") || todMaqSede2.getNombre().equalsIgnoreCase("Maquina de termofijado") || todMaqSede2.getNombre().equalsIgnoreCase("Maquina de tijereado")){
+			if(todMaqSede2.esDeProduccion()){
 				maqProduccion.add(todMaqSede2);
 			} else{
 				maqOficina.add(todMaqSede2);

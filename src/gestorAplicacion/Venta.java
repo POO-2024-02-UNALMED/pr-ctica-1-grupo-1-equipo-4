@@ -147,38 +147,36 @@ public class Venta implements Serializable {
 	   }
 	   return asesoradas;
    }
+   
+   // Da la cantidad de veces que se vendió una prenda con ese nombre en la lista
+   // Auxiliar de Venta.predecirVentas
+   static public int cantidadProducto(ArrayList<Venta> ventas, String prenda){
+	   int cantidad=0;
+	   for (Venta venta : ventas){
+		   for (Prenda articulo : venta.getArticulos()){
+			   if (articulo.getNombre().equals(prenda)){
+				   cantidad++;
+			   }
+		   }
+	   }
+	   return cantidad;
+   }
 
 
    // Regresión lineal    
-	// Utiliza minimos cuadrados para predecir las ventas de una prenda en una sede
+	// Calcula la pendiente promedio usando 3 meses anteriores al de la fecha dada
 	// preda debe ser el nombre de la prenda
 	static public int predecirVentas(Fecha fechaActual,Sede sede, String prenda){
-		int n=5; // Cantidad de meses previos a usar
-		int sumatoriax=0+1+2+3+4+5;
-		int sumatoriaxCuadrado=1+2^3+3^2+4^2+5^2;
-		int sumatoriaY=0;
-		// No se nececita la sumatoria de y cuadrado pues no usamos el coeficiente de correlacion
-		int sumatoriaXY=0;  
-		// Iteramos por los 5 meses anteriores
-		for(int meses=0;meses<5;meses++){
-			//Iteramos por las ventas de la sede de ese mes
-			int sumatoriaYMes=0;
-			for(Venta venta: Venta.filtrar(sede.getHistorialVentas(), fechaActual.restarMeses(5-meses))){
-				for(int j=0; j<venta.getArticulos().size();j++){
-					if(venta.getArticulos().get(j).getNombre().equalsIgnoreCase(prenda)){
-						sumatoriaYMes+=1;
-					}
-				}
-			}
-			sumatoriaY+=sumatoriaYMes;
-			sumatoriaXY+=sumatoriaYMes*meses;
-			
-		}
-		//Calculamos los datos de la funcion lineal
-		double pendiente=(n*sumatoriaXY-sumatoriax*sumatoriaY)/(n*sumatoriaxCuadrado-sumatoriax^2);
-		double intercepcion = (sumatoriaY-pendiente*sumatoriax)/n;
-		// y=pendiente*x+intercepcion
-    	return (int) Math.ceil(pendiente*6+intercepcion); }
+		int  ventasMes1= Venta.cantidadProducto(Venta.filtrar(sede.getHistorialVentas(),fechaActual.restarMeses(3)),prenda);
+		int  ventasMes2= Venta.cantidadProducto(Venta.filtrar(sede.getHistorialVentas(),fechaActual.restarMeses(2)),prenda);
+		float pendienteMes1a2=(ventasMes2-ventasMes1);
+		int  ventasMes3= Venta.cantidadProducto(Venta.filtrar(sede.getHistorialVentas(),fechaActual.restarMeses(1)),prenda);
+		float pendienteMes2a3=(ventasMes3-ventasMes2);
+
+		float pendientePromedio=(pendienteMes1a2+pendienteMes2a3)/2;
+
+		return (int) Math.ceil(ventasMes3+pendientePromedio);
+	}
 
 
 	public ArrayList<Prenda> getArticulos(){return articulos;}
