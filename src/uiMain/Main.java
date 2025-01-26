@@ -452,17 +452,16 @@ public class Main {
                     contador1++;
                 }
                 if (prenda instanceof Pantalon && contador1>0){
-                        for (Insumo insumo : prenda.getInsumo()) {
-                            for (int i=0;i<insumoXSede.size();i++) {
-                                for (int j : Pantalon.getCantidadInsumo()) {
-                                if (insumo.getNombre().equals(insumoXSede.get(i).getNombre())){
-                                    cantidadAPedir.add(i,cantidadAPedir.get(i)+(int)(Math.ceil(j * prediccionp)));
-                                }else {
-                                    insumoXSede.add(insumo);
-                                    cantidadAPedir.add((int)(Math.ceil(j * prediccionp)));
-                                }}
-                           
-                        }}
+                    for (int i=0;i<prenda.getInsumo().size();i++) {
+                        for (int j=0;j<insumoXSede.size();j++) {
+                            if (!prenda.getInsumo().get(i).getNombre().equals(prenda.getInsumo().get(j).getNombre())){
+                            insumoXSede.add(prenda.getInsumo().get(i));
+                            cantidadAPedir.add((int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp)));}
+                            else {
+                                cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp))));
+                            }
+                        } 
+                    }
                     }
                 if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
@@ -474,31 +473,29 @@ public class Main {
                     //for (Insumo insumo : prenda.getInsumo()) {
                         //insumoXSede.add(insumo);
                     //}
-                    for (Insumo insumo : prenda.getInsumo()) {
-                        for (int i=0;i<insumoXSede.size();i++) {
-                            for (int j : Camisa.getCantidadInsumo()) {
-                            if (insumo.getNombre().equals(insumoXSede.get(i).getNombre())){
-                                cantidadAPedir.add(i,cantidadAPedir.get(i)+(int)(Math.ceil(j * prediccionc)));
-                            }else {
-                                insumoXSede.add(insumo);
-                                cantidadAPedir.add((int)(Math.ceil(j * prediccionc)));
-                            }}
-                       
-                    }}
+                    for (int i=0;i<prenda.getInsumo().size();i++) {
+                        for (int j=0;j<insumoXSede.size();j++) {
+                            if (!prenda.getInsumo().get(i).getNombre().equals(prenda.getInsumo().get(j).getNombre())){
+                            insumoXSede.add(prenda.getInsumo().get(i));
+                            cantidadAPedir.add((int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc)));}
+                            else {
+                                cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionc))));
+                            }
+                        } 
+                    }
                     contador2++;
                 }
             if (prenda instanceof Camisa && contador2>0){
-                for (Insumo insumo : prenda.getInsumo()) {
-                    for (int i=0;i<insumoXSede.size();i++) {
-                        for (int j : Camisa.getCantidadInsumo()) {
-                        if (insumo.getNombre().equals(insumoXSede.get(i).getNombre())){
-                            cantidadAPedir.add(i,(cantidadAPedir.get(i)+(int)(Math.ceil(j * prediccionc))));
-                        }else {
-                            insumoXSede.add(insumo);
-                            cantidadAPedir.add((int)(Math.ceil(j * prediccionc)));
-                        }}
-                   
-                }}
+                for (int i=0;i<prenda.getInsumo().size();i++) {
+                    for (int j=0;j<insumoXSede.size();j++) {
+                        if (!prenda.getInsumo().get(i).getNombre().equals(prenda.getInsumo().get(j).getNombre())){
+                        insumoXSede.add(prenda.getInsumo().get(i));
+                        cantidadAPedir.add((int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc)));}
+                        else {
+                        cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionc))));
+                        }
+                    } 
+                }
             }
         }
             
@@ -927,18 +924,6 @@ public class Main {
         Maquinaria Registradora2 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2);
         Maquinaria Computador2 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2);
 
-        Maquinaria MaquinaDeCoser3 = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC2, sede2);
-        Maquinaria MaquinaDeCorte3 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2);
-        Maquinaria PlanchaIndustrial3 = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI2, sede2);
-        Maquinaria BordadoraIndustrial3 = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI2, sede2);
-        Maquinaria MaquinaDeTermofijado3 = new Maquinaria("Maquina de Termofijado", 20000000, 1000,
-                repuestosMTermofijado2, sede2);
-        Maquinaria MaquinaDeTijereado3 = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado2,
-                sede2);
-        Maquinaria Impresora3 = new Maquinaria("Impresora", 800000, 2000, repuestosImp2, sede2);
-        Maquinaria Registradora3 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2);
-        Maquinaria Computador3 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2);
-
         Banco bp = new Banco("principal", "Banco Montreal", 400_000_000, 0.05F);
         Banco b1 = new Banco("secundaria", "Banco Montreal", 5_000_000, 0.05F);
         Banco b3 = new Banco("principal", "Bancolombia", 140_000_000, 0.09F);
@@ -1001,31 +986,31 @@ public class Main {
                 5, Membresia.NULA, Registradora.copiar()));
 
         Empleado Gutierrez = (new Empleado(Area.DIRECCION, new Fecha(5, 8, 19), sede2, "Saul Gutierrez", 9557933,
-                Rol.EJECUTIVO, 11, Membresia.NULA, Computador.copiar()));
+                Rol.EJECUTIVO, 11, Membresia.NULA, Computador2.copiar()));
         Empleado Marcela = (new Empleado(Area.DIRECCION, new Fecha(30, 11, 20), sede2, "Marcela Valencia", 8519803,
-                Rol.EJECUTIVO, 10, Membresia.ORO, Computador.copiar()));
+                Rol.EJECUTIVO, 10, Membresia.ORO, Computador2.copiar()));
         Empleado Gabriela = new Empleado(Area.VENTAS, new Fecha(1, 1, 24), sede2, "Gabriela Garza", 5287925,
-                Rol.VENDEDOR, 9, Membresia.PLATA, Registradora.copiar());
+                Rol.VENDEDOR, 9, Membresia.PLATA, Registradora2.copiar());
         Empleado Patricia = (new Empleado(Area.OFICINA, new Fecha(5, 2, 23), sede2, "Patricia Fernandez", 4595311,
-                Rol.SECRETARIA, 6, Membresia.BRONCE, Impresora.copiar()));
+                Rol.SECRETARIA, 6, Membresia.BRONCE, Impresora2.copiar()));
         Empleado Kenneth = (new Empleado(Area.CORTE, new Fecha(1, 1, 24), sede2, "Kenneth Johnson", 7494184,
-                Rol.MODISTA, 8, Membresia.ORO, PlanchaIndustrial.copiar()));
+                Rol.MODISTA, 8, Membresia.ORO, PlanchaIndustrial2.copiar()));
         Empleado Robles = (new Empleado(Area.OFICINA, new Fecha(12, 10, 24), sede2, "Miguel Robles", 7518004,
-                Rol.VENDEDOR, 7, Membresia.BRONCE, Impresora.copiar()));
+                Rol.VENDEDOR, 7, Membresia.BRONCE, Impresora2.copiar()));
         Empleado Alejandra = (new Empleado(Area.CORTE, new Fecha(1, 2, 24), sede2, "Alejandra Zingg", 6840296,
-                Rol.MODISTA, 2, Membresia.BRONCE, BordadoraIndustrial.copiar()));
+                Rol.MODISTA, 2, Membresia.BRONCE, BordadoraIndustrial2.copiar()));
         Empleado Cecilia = (new Empleado(Area.CORTE, new Fecha(1, 2, 23), sede2, "Cecilia Bolocco", 7443886,
-                Rol.MODISTA, 10, Membresia.PLATA, MaquinaDeCoser.copiar()));
+                Rol.MODISTA, 10, Membresia.PLATA, MaquinaDeCoser2.copiar()));
         Empleado Freddy = (new Empleado(Area.VENTAS, new Fecha(31, 1, 22), sede2, "Freddy Contreras", 6740561,
-                Rol.PLANTA, 5, Membresia.NULA, Registradora.copiar()));
+                Rol.PLANTA, 5, Membresia.NULA, Registradora2.copiar()));
         Empleado Adriana = (new Empleado(Area.CORTE, new Fecha(18, 6, 25), sede2, "Adriana arboleda", 5927947,
-                Rol.MODISTA, 20, Membresia.ORO, MaquinaDeCorte.copiar()));
+                Rol.MODISTA, 20, Membresia.ORO, MaquinaDeCorte2.copiar()));
         Empleado Karina = (new Empleado(Area.CORTE, new Fecha(9, 3, 25), sede2, "Karina Larson", 5229381, Rol.MODISTA,
-                2, Membresia.PLATA, MaquinaDeTermofijado.copiar()));
+                2, Membresia.PLATA, MaquinaDeTermofijado2.copiar()));
         Empleado Jenny = (new Empleado(Area.CORTE, new Fecha(1, 8, 24), sede2, "Jenny Garcia", 4264643, Rol.MODISTA, 1,
-                Membresia.ORO, MaquinaDeTijereado.copiar()));
+                Membresia.ORO, MaquinaDeTijereado2.copiar()));
         Empleado ol = new Empleado(Area.DIRECCION, new Fecha(1, 2, 20), sede2, "Gustavo Olarte", 7470922, Rol.EJECUTIVO,
-                3, Membresia.NULA, Computador.copiar());
+                3, Membresia.NULA, Computador2.copiar());
         ol.setTraslados(3);
         ArrayList<Area> a = new ArrayList<Area>();
         a.add(Area.VENTAS);
