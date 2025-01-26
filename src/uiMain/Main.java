@@ -437,6 +437,7 @@ public class Main {
             for (Prenda prenda : x.getPrendasInventadas()) {
                 System.out.println(prenda);
                 System.out.println(contador1);
+                System.out.println(contador2);
                 if (prenda instanceof Pantalon && contador1 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
@@ -454,7 +455,7 @@ public class Main {
                 if (prenda instanceof Pantalon && contador1>0){
                     for (int i=0;i<prenda.getInsumo().size();i++) {
                         for (int j=0;j<insumoXSede.size();j++) {
-                            if (!prenda.getInsumo().get(i).getNombre().equals(prenda.getInsumo().get(j).getNombre())){
+                            if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
                             insumoXSede.add(prenda.getInsumo().get(i));
                             cantidadAPedir.add((int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp)));}
                             else {
@@ -462,6 +463,7 @@ public class Main {
                             }
                         } 
                     }
+                    contador1++;
                     }
                 if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
@@ -475,11 +477,11 @@ public class Main {
                     //}
                     for (int i=0;i<prenda.getInsumo().size();i++) {
                         for (int j=0;j<insumoXSede.size();j++) {
-                            if (!prenda.getInsumo().get(i).getNombre().equals(prenda.getInsumo().get(j).getNombre())){
+                            if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
                             insumoXSede.add(prenda.getInsumo().get(i));
                             cantidadAPedir.add((int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc)));}
                             else {
-                                cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionc))));
+                                cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc))));
                             }
                         } 
                     }
@@ -488,14 +490,15 @@ public class Main {
             if (prenda instanceof Camisa && contador2>0){
                 for (int i=0;i<prenda.getInsumo().size();i++) {
                     for (int j=0;j<insumoXSede.size();j++) {
-                        if (!prenda.getInsumo().get(i).getNombre().equals(prenda.getInsumo().get(j).getNombre())){
+                        if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
                         insumoXSede.add(prenda.getInsumo().get(i));
                         cantidadAPedir.add((int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc)));}
                         else {
-                        cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionc))));
+                        cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc))));
                         }
                     } 
                 }
+                contador2++;
             }
         }
             
