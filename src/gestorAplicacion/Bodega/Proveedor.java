@@ -31,6 +31,9 @@ public class Proveedor implements Serializable{
 		tipoInsumo=insumo;
 	}
 
+	public Proveedor(int prueba){
+		setPrecio(prueba);
+	}
 	//falta crear constructor que reciba tambien los repuestos y los precios de estos, pero hay que hablarlo primero
 
 	

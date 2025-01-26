@@ -116,9 +116,8 @@ public class Maquinaria implements Serializable{
 							//se debe reemplazar
 							//llamando al metodo que encuentra los proveedores mas baratos de los repuestos existentes
 							todosProvBaratos = encontrarProveedoresBaratos();
-							proveedorBarato = null;
 							for(Proveedor elMasEconomico : todosProvBaratos){
-								if(elMasEconomico.getInsumo().getNombre().equalsIgnoreCase(cadaRepuesto.getNombre()) && elMasEconomico.getPrecio() <= proveedorBarato.getPrecio()){
+								if(elMasEconomico.getInsumo().getNombre().equalsIgnoreCase(cadaRepuesto.getNombre()) ){
 									proveedorBarato = elMasEconomico;
 									Main.recibeProveedorB(proveedorBarato);
 									break;
@@ -183,8 +182,7 @@ public class Maquinaria implements Serializable{
 					//y se guarda en la variable proveedorBarato:
 					if(proveedorBarato == null){
 						proveedorBarato = proveedores;
-					}
-					else if(proveedores.getInsumo().getPrecioIndividual() <= proveedorBarato.getInsumo().getPrecioIndividual()){
+					} else if(proveedores.getInsumo().getPrecioIndividual() <= proveedorBarato.getInsumo().getPrecioIndividual()){
 						proveedorBarato = proveedores;
 					}
 
@@ -239,5 +237,5 @@ public class Maquinaria implements Serializable{
 		}
 		return false;
 	}
-	
+
 }

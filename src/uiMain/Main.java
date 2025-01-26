@@ -1152,31 +1152,32 @@ public class Main {
         System.out.println("1. " + sedeP.getNombre() + " tiene disponible: " + sedeP.getCuentaSede().getAhorroBanco());
         System.out.println("2. " + sede2.getNombre() + " tiene disponible: " + sede2.getCuentaSede().getAhorroBanco());
 
-        int opcion = scanner.nextInt();
+        int opcion = 0;
+        while(opcion != 1 && opcion != 2){
+            opcion = scanner.nextInt();
+            if (opcion == 1) {
+                long nuevoDineroSede = (sedeP.getCuentaSede().getAhorroBanco()
+                        - proveedorBdelmain.getInsumo().getPrecioIndividual());
+                sedeP.getCuentaSede().setAhorroBanco(nuevoDineroSede);
 
-        if (opcion == 1) {
-            long nuevoDineroSede = (sedeP.getCuentaSede().getAhorroBanco()
-                    - proveedorBdelmain.getInsumo().getPrecioIndividual());
-            sedeP.getCuentaSede().setAhorroBanco(nuevoDineroSede);
+                System.out.println(
+                        "El repuesto se compro exitosamente desde la sede " + sedeP.getNombre() + ", saldo disponible:");
+                System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
+                System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
 
-            System.out.println(
-                    "El repuesto se compro exitosamente desde la sede " + sedeP.getNombre() + ", saldo disponible:");
-            System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
-            System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
+            } else if (opcion == 2) {
+                long nuevoDineroSede = (sede2.getCuentaSede().getAhorroBanco()
+                        - proveedorBdelmain.getInsumo().getPrecioIndividual());
+                sede2.getCuentaSede().setAhorroBanco(nuevoDineroSede);
 
-        } else if (opcion == 2) {
-            long nuevoDineroSede = (sede2.getCuentaSede().getAhorroBanco()
-                    - proveedorBdelmain.getInsumo().getPrecioIndividual());
-            sede2.getCuentaSede().setAhorroBanco(nuevoDineroSede);
-
-            System.out.println(
-                    "El repuesto se compro exitosamente desde la sede " + sede2.getNombre() + ", saldo disponible:");
-            System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
-            System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
-        } else {
-            System.out.println("Opcion incorrecta, marque 1 o 2 segun desee");
+                System.out.println(
+                        "El repuesto se compro exitosamente desde la sede " + sede2.getNombre() + ", saldo disponible:");
+                System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
+                System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
+            } else {
+                System.out.println("Opcion incorrecta, marque 1 o 2 segun desee");
+            }
         }
-
     }
 
     public static void recibeProveedorB(Proveedor proveedorB) {
