@@ -441,8 +441,8 @@ public class Main {
                 if (prenda instanceof Pantalon && contador1 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion);
-
+                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + Math.round(proyeccion)+"%");
+                    
                     prediccionp = proyeccion * (1 - Venta.getPesimismo());
                     for (Insumo insumo : prenda.getInsumo()) {
                         insumoXSede.add(insumo);
@@ -468,7 +468,7 @@ public class Main {
                 if (prenda instanceof Camisa && contador2 == 0) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
 
-                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + proyeccion+"%");
+                    System.out.println("Sede: " + x + "Prenda: " + prenda + "Proyección: " + Math.round(proyeccion)+"%");
 
                     prediccionc = proyeccion * (1 - Venta.getPesimismo());
 
