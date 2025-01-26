@@ -1,7 +1,6 @@
 package baseDatos;
 
 import gestorAplicacion.Administracion.Banco;
-import gestorAplicacion.Administracion.Evaluacionfinanciera;
 import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
