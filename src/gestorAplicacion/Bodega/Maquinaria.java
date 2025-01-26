@@ -17,7 +17,7 @@ public class Maquinaria implements Serializable{
 	boolean estado = true;
 	// True if buena, False if dañada
 	boolean asignable;
-	boolean mantenimiento;
+	boolean mantenimiento = false;
 	public Sede sede;
 	long valor;
 	int horasVisitaTecnico;
