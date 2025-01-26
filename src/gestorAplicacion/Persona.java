@@ -150,4 +150,8 @@ public class Persona implements Serializable{
 		}
 		return valorEsperado;
 	}
+	public static int diferenciaSalarios(){
+		int diferencia= Persona.valorEsperadoSalario()-Empleado.valorEsperadoSalario();
+		return diferencia;
+	}
 }

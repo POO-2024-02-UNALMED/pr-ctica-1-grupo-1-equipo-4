@@ -8,6 +8,7 @@ import gestorAplicacion.Sede;
 import gestorAplicacion.Membresia;
 import gestorAplicacion.Venta;
 import gestorAplicacion.Bodega.Maquinaria;
+import uiMain.Main;
 
 public class Empleado extends Persona implements GastoMensual{
 	
@@ -281,6 +282,8 @@ public class Empleado extends Persona implements GastoMensual{
 		int valor=0;
         valor+=super.calcularSalario();
 		valor=valor*(1+bonificacion);
+        Fecha fecha=Main.ingresarFecha();
+        valor+=valor*(fechaContratacion.diasHasta(fecha))/360;
 	return valor;
 	}
 
