@@ -8,6 +8,7 @@ import gestorAplicacion.Sede;
 import gestorAplicacion.Membresia;
 import gestorAplicacion.Venta;
 import gestorAplicacion.Bodega.Maquinaria;
+import java.util.Scanner;
 import uiMain.Main;
 
 public class Empleado extends Persona implements GastoMensual{
@@ -278,11 +279,11 @@ public class Empleado extends Persona implements GastoMensual{
         return Empleado.listaEmpleados;
     }
 
-    public int calcularSalario(){
+    public int calcularSalario(Scanner in){ // El scanner se recibe para pasar a ingresarFecha, no se usa aquí.
 		int valor=0;
         valor+=super.calcularSalario();
 		valor=valor*(1+bonificacion);
-        Fecha fecha=Main.ingresarFecha();
+        Fecha fecha=Main.ingresarFecha(in);
         valor+=valor*(fechaContratacion.diasHasta(fecha))/360;
 	return valor;
 	}
