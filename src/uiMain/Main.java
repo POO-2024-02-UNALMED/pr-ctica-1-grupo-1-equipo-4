@@ -1653,7 +1653,7 @@ public class Main {
         for (Prenda prenda : productosSeleccionados) {
             if (prenda instanceof Camisa) {
                 cantidadCamisas++;
-                subtotalCamisas += Camisa.precioVenta();
+                subtotalCamisas += Camisa.PrecioVenta();
             } else if (prenda instanceof Pantalon) {
                 cantidadPantalon++;
                 subtotalPantalon += Pantalon.PrecioVenta();
@@ -1667,8 +1667,8 @@ public class Main {
         if (cantidadPantalon > 0) {
             System.out.println("Pantalones - Cantidad: " + cantidadPantalon + " - Subtotal: $" + subtotalPantalon);
         }
-        System.out.println("Valor total: $" + MontoPagar);
-        System.out.println("Valor sin IVA: $" + venta.getsubtotal());
+        System.out.println("Valor total a pagar: $" + MontoPagar);
+        System.out.println("Subtotal prendas: $" + venta.getsubtotal());
         System.out.println("IVA: $" + IVA);
         System.out.println("Venta registrada por: " + venta.getEncargado());
         System.out.println("Asesor de la compra: " + venta.getAsesor());
