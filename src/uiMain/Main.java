@@ -51,7 +51,7 @@ public class Main {
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
             System.out.println("\n"+"¿Que operación desea realizar?");
-            System.out.println("1.Reemplazar empleados");
+            System.out.println("1.Despedir/Contratar empleados");
             System.out.println("2.Adquirir insumos para produccion");
             System.out.println("3.Ver el desglose economico de la empresa");
             System.out.println("4.Vender un producto");
@@ -153,9 +153,8 @@ public class Main {
         for (String mensaje : mensajes) {
             System.out.println(mensaje);
         }
-
-
-        System.out.println("Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
+        
+       
         int diferenciaSalarios = -Persona.diferenciaSalarios();
         if (diferenciaSalarios>0){
             System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" sobre el promedio de salarios");
@@ -164,13 +163,16 @@ public class Main {
         } else {
             System.out.println("Tus empleados estan en el promedio de salarios");
         }
+
+        System.out.println("\n"+"Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
+
         for (Empleado emp : aDespedir) {
-            System.out.println(emp.getNombre() + " " + emp.getAreaActual() + " " + emp.getDocumento());
+            System.out.println("Nombre:" +emp.getNombre() + ", Área: " + emp.getAreaActual() + ", Documento: " + emp.getDocumento());
         }
         int opcion = 2;
         while (opcion == 2) {
             System.out.println("1. Elegir a los despedidos");
-            System.out.println("2. Añadir a alguien mas");
+            System.out.println("2. Añadir a alguien más");
             opcion = nextIntSeguro(scanner);
             if (opcion == 2) {
                 System.out.println("¿De que sede quieres añadir al empleado?"); // Para no imprimir una lista demasiado
@@ -238,16 +240,16 @@ public class Main {
                     + ", estos son los candidatos: Ingresa su nombre completo para hacerlo.");
             for (Empleado emp : sede.getlistaEmpleados()) {
                 if (emp.getRol().equals(rol)) {
-                    String descripcion = emp.getNombre() + " Documento:" + emp.getDocumento();
+                    String descripcion = "Nombre: " + emp.getNombre() + ", Documento:" + emp.getDocumento();
                     switch (emp.getRol()) {
                         case VENDEDOR:
-                            descripcion += " Ventas asesoradas: " + Venta.acumuladoVentasAsesoradas(emp);
+                            descripcion += ", Ventas asesoradas: " + Venta.acumuladoVentasAsesoradas(emp);
                             break;
                         case MODISTA:
-                            descripcion += " Pericia: " + emp.getPericia();
+                            descripcion += ", Pericia: " + emp.getPericia();
                             break;
                         default:
-                            descripcion += " contratado en " + emp.getFechaContratacion();
+                            descripcion += ", contratado en " + emp.getFechaContratacion();
                     }
                     System.out.println(descripcion);
                 }
@@ -292,7 +294,7 @@ public class Main {
             System.out.println("Se nececitan " + cantidadNecesaria + " " + rol + "s, estos son los candidatos:");
 
             for (Persona persona : aptos) {
-                System.out.println("Nombre: " + persona.getNombre() + " Documento: " + persona.getDocumento() + " con "
+                System.out.println("Nombre: " + persona.getNombre() + ", Documento: " + persona.getDocumento() + ", con "
                         + persona.getExperiencia() + " años de experiencia.");
             }
 

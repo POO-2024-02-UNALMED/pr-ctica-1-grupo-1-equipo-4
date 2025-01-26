@@ -95,7 +95,7 @@ public class Empleado extends Persona implements GastoMensual{
                 if (rendimiento < rendimientoDeseado){
                     seVaADespedir = true;
                     listaADespedir.add(emp);
-                    mensajes.add("El empleado "+emp.getNombre()+" ha sido tiene rendimiento insuficiente, con un rendimiento de "+String.format("%,d",(int) rendimiento)+" y un rendimiento deseado de "+String.format("%,d",(int) rendimientoDeseado));
+                    mensajes.add("El empleado "+emp.getNombre()+" tiene un rendimiento insuficiente, con un rendimiento de "+String.format("%,d",(int) rendimiento)+" y un rendimiento deseado de "+String.format("%,d",(int) rendimientoDeseado));
                 }
                 // Verificamos posibilidades de transferencia.
                 if(seVaADespedir){
