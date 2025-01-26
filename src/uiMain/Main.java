@@ -721,11 +721,11 @@ public class Main {
         p2.setDeuda(new Deuda(new Fecha(15, 1, 24), 1_000_000, p2.getNombre(), "Proveedor", 10));
         // PROVEEDORES QUE VENDEN ACEITE:
         Proveedor p16 = new Proveedor(24000, "Aceites y mas");
-        p16.setInsumo(new Insumo("Aceite 946 ml", p16));
+        p16.setInsumo(new Insumo("Aceite", p16));
         Proveedor p17 = new Proveedor(30000, "Aceitunas");
-        p17.setInsumo(new Insumo("Aceite 946 ml", p17));
+        p17.setInsumo(new Insumo("Aceite", p17));
         Proveedor p18 = new Proveedor(20000, "El barato del Aceite");
-        p18.setInsumo(new Insumo("Aceite 946 ml", p18));
+        p18.setInsumo(new Insumo("Aceite", p18));
 
         // PROVEEDORES QUE VENDEN CUCHILLAS
         Proveedor p19 = new Proveedor(32000, "El de las Cuchillas");
@@ -769,9 +769,9 @@ public class Main {
 
         // PROVEEDORES QUE VENDEN TINTA NEGRA PARA IMPRESORA:
         Proveedor p33 = new Proveedor(44000, "Tinta por aqui");
-        p33.setInsumo(new Insumo("Tinta Negra 90 ml", p33));
+        p33.setInsumo(new Insumo("Tinta Negra Impresora", p33));
         Proveedor p34 = new Proveedor(50000, "El tintoso");
-        p34.setInsumo(new Insumo("Tinta Negra 90 ml", p34));
+        p34.setInsumo(new Insumo("Tinta Negra Impresora", p34));
 
         // PROVEEDORES QUE VENDEN LECTORES DE BARRAS:
         Proveedor p35 = new Proveedor(120000, "Mega tecnologies");
@@ -815,7 +815,7 @@ public class Main {
         Repuesto TintaN = new Repuesto("Tinta Negra Impresora", 3000, p33);
 
         Repuesto Lector = new Repuesto("Lector de barras", 3000, p35);
-        Repuesto PapelQuimico = new Repuesto("Papel químico", 72, p37);
+        Repuesto PapelQuimico = new Repuesto("Papel quimico", 72, p37);
 
         Repuesto Cargador = new Repuesto("Cargador Computador", 6000, p39);
         Repuesto Mouse = new Repuesto("Mouse Computador", 9000, p41);
