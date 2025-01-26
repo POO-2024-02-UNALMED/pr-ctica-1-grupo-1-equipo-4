@@ -29,14 +29,14 @@ import java.util.Collections;
 
 
 public class Main {
+    static Scanner in = new Scanner(System.in);
     static{
-        Scanner in = new Scanner(System.in);
-        Main.fecha = ingresarFecha();}
+        Main.fecha = ingresarFecha();
+    }
     Sede sedeP, sede2;
     private static Proveedor proveedorBdelmain;
     public static Fecha fecha;
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
         System.out.println("Ecomoda a la orden, ¿Quieres volver a cargar tus datos?");
         String respuesta = in.next();
         if (!respuesta.equals("no")) {
@@ -108,6 +108,7 @@ public class Main {
                 case 6:
                     Serializador.serializar();
                     System.exit(0);
+                    in.close();
                     break buclePrincipal;
 
                 case 7:
@@ -177,7 +178,7 @@ public class Main {
                 for (int i = 0; i < Sede.getlistaSedes().size(); i++) {
                     System.out.println(i + ". " + Sede.getlistaSedes().get(i).getNombre());
                 }
-                int sede = scanner.nextInt();
+                int sede = nextIntSeguro(scanner);
                 System.out.println("¿Que empleado quieres despedir? Pon su nombre completo, esto lo añañdirá a la lista de despedibles.");
                 for (Empleado emp : Sede.getlistaSedes().get(sede).getlistaEmpleados()) {
                     System.out.println(emp.getNombre() + " " + emp.getAreaActual() + " " + emp.getDocumento());
@@ -195,6 +196,9 @@ public class Main {
         // quiera.
         ArrayList<Empleado> seleccion = new ArrayList<Empleado>();
         System.out.println("¿Que empleados quieres despedir? Pon su nombre completo o FIN para terminar.");
+        for (Empleado emp : aDespedir) {
+            System.out.println(emp.getNombre() + " " + emp.getAreaActual());
+        }
         String nombre = scanner.nextLine();
         while (!nombre.equalsIgnoreCase("fin")) {
             for (Empleado emp : aDespedir) {
@@ -1258,9 +1262,11 @@ public class Main {
     static int nextIntSeguro(Scanner in) {
         while (!in.hasNextInt()) {
             System.out.println("Por favor, ingrese un número entero.");
-            in.next();
+            in.nextLine();
         }
-        return in.nextInt();
+        int retorno = in.nextInt();
+        in.nextLine();
+        return retorno;
     }
 
     // Interacción 1 de Facturación
