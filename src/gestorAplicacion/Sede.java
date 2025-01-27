@@ -19,6 +19,7 @@ public class Sede implements Serializable{
 
 	private static final long serialVersionUID = 1L; // Para serializacion
 
+	private static ArrayList<Prenda> prendasInventadasTotal = new ArrayList<Prenda>(); // Por razones de serializacion.
 	private static ArrayList<Empleado> listaEmpleadosTotal=new ArrayList<Empleado>(); // Por razones de serializacion.
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 
@@ -171,6 +172,7 @@ public class Sede implements Serializable{
 	static public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){evaluacionesFinancieras=evaluaciones;}
 	static public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluacionesFinancieras;}
 	static public ArrayList<Empleado> getListaEmpleadosTotal(){return listaEmpleadosTotal;}
+	static public ArrayList<Prenda> getPrendasInventadasTotal(){return prendasInventadasTotal;}
 	
 	public ArrayList<Integer> getProdAproximada(){
 		return prodAproximada;

@@ -1340,7 +1340,7 @@ public class Main {
             //}
             int productoSeleccionado = scanner.nextInt();
             scanner.nextLine();
-            Prenda prendaSeleccionada = Prenda.getPrendasInventadas().get(productoSeleccionado);
+            Prenda prendaSeleccionada = Sede.getPrendasInventadasTotal().get(productoSeleccionado);
             String nombrePrendaSeleccionada = prendaSeleccionada.getNombre();
             System.out.println("Ingrese la cantidad de unidades que se desea del producto elegido:");
             int cantidadPrenda = scanner.nextInt();
@@ -1351,12 +1351,12 @@ public class Main {
             }
             manejarFaltantes(sede, cantidadPrenda, cantidadDisponible, nombrePrendaSeleccionada, costosEnvio);//Método que aumenta el stock faltante
             //De la prenda seleccionada en la sede.
-            if (cantidadPrenda > 0 && cantidadPrenda < Prenda.getPrendasInventadas().size()) {
+            if (cantidadPrenda > 0 && cantidadPrenda < Sede.getPrendasInventadasTotal().size()) {
                 int eliminadas = 0;
-                for (int i = 0;  i < Prenda.getPrendasInventadas().size() && eliminadas < cantidadPrenda; i++) {
-                    if (Prenda.getPrendasInventadas().get(i) == prendaSeleccionada) {
-                    Prenda eliminada = Prenda.getPrendasInventadas().get(i);
-                    Prenda.getPrendasInventadas().remove(i);// Remueve de la lista de prendasInventadas de la empresa
+                for (int i = 0;  i < Sede.getPrendasInventadasTotal().size() && eliminadas < cantidadPrenda; i++) {
+                    if (Sede.getPrendasInventadasTotal().get(i) == prendaSeleccionada) {
+                    Prenda eliminada = Sede.getPrendasInventadasTotal().get(i);
+                    Sede.getPrendasInventadasTotal().remove(i);// Remueve de la lista de prendasInventadas de la empresa
                     sede.getPrendasInventadas().remove(eliminada); // Remueve de la lista de prendasInventadas de la sede
                     productosSeleccionados.add(eliminada); // Agregarla a productosSeleccionados
                     eliminadas++;
