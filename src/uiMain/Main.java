@@ -136,14 +136,14 @@ public class Main {
         int mes = -1;
         while (dia <= 0 || dia > 31) {
             System.out.println("Ingrese día");
-            dia = scanner.nextInt();
+            dia = nextIntSeguro(scanner)();
         }
         while (mes <= 0 || mes > 12) {
             System.out.println("Ingrese mes");
-            mes = scanner.nextInt();
+            mes = nextIntSeguro(scanner)();
         }
         System.out.println("Ingrese año");
-        int año = scanner.nextInt();
+        int año = nextIntSeguro(scanner)();
         Fecha fecha = new Fecha(dia, mes, año);
         return fecha;
     }
@@ -329,7 +329,7 @@ public class Main {
         while (eleccion <= 0 || eleccion > 3) {
             System.out.println("\n"+"Ingrese las deudas que quiere calcular");
             System.out.println("Ingrese 1 para proveedor, 2 para Banco o 3 para ambos");
-            eleccion = in.nextInt();
+            eleccion = nextIntSeguro(in)();
         }
         double deudaCalculada = Deuda.calcularDeudaMensual(fecha, eleccion);
         double balanceTotal = balanceCostosProduccion - deudaCalculada;
@@ -384,7 +384,7 @@ public class Main {
             while (i < 0 || i >= Banco.getListaBancos().size()) {
                 for (Banco banco:Banco.getListaBancos()){System.out.println(banco);}
                 System.out.println("\n"+"Ingrese número de 0 a " + (Banco.getListaBancos().size() - 1 + " para solicitar el prestamo al Banco de su elección"));
-                i = in.nextInt();
+                i = nextIntSeguro(in)();
                 Nombrebanco = Banco.getListaBancos().get(i).getNombreEntidad();
             }
             int cuotas = 0;
@@ -437,7 +437,7 @@ public class Main {
             System.out.println("2. Deseo cambiar el porcentaje de pesimismo");
 
             Scanner in = new Scanner(System.in);
-            int opcion = in.nextInt();
+            int opcion = nextIntSeguro(in)();
             switch (opcion) {
                 case 1:
                     break;
@@ -548,7 +548,7 @@ public class Main {
                                 System.out.println("2. Deseo comprar el insumo");
 
                                 Scanner in = new Scanner(System.in);
-                                int opcion = in.nextInt();
+                                int opcion = nextIntSeguro(in)();
                                 switch (opcion) {
                                     case 1:
                                         int restante2 = Sede.transferirInsumo(i, s, productoEnOtraSede.getSede(), restante);
@@ -641,7 +641,7 @@ public class Main {
                         System.out.println("2. No");
 
                         Scanner in = new Scanner(System.in);
-                        int opcion = in.nextInt();
+                        int opcion = nextIntSeguro(in)();
                         switch (opcion) {
                             case 1:
                                 if (opcion >= 0) {
@@ -1237,7 +1237,7 @@ public class Main {
 
         int opcion = 0;
         while(opcion != 1 && opcion != 2){
-            opcion = scanner.nextInt();
+            opcion = nextIntSeguro(scanner)();
             if (opcion == 1) {
                 long nuevoDineroSede = (sedeP.getCuentaSede().getAhorroBanco()
                         - proveedorBdelmain.getInsumo().getPrecioIndividual());
@@ -1274,7 +1274,7 @@ public class Main {
             System.out.println("Por favor, ingrese un número entero.");
             in.nextLine();
         }
-        int retorno = in.nextInt();
+        int retorno = nextIntSeguro(in)();
         in.nextLine();
         return retorno;
     }
@@ -1288,7 +1288,7 @@ public class Main {
         Fecha fechaVenta = Main.fecha;
       System.out.println("\n"+"Seleccione el cliente al que se le realizará la venta:");
       Persona.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
-      int clienteSeleccionado = scanner.nextInt();
+      int clienteSeleccionado = nextIntSeguro(scanner)();
       scanner.nextLine(); 
       ArrayList<Persona> noEmpleados = new ArrayList<>();
       for (Persona persona : Persona.getListaPersonas()) { // Recorre listaPersonas para filtrar a los que no son empleados
@@ -1303,7 +1303,7 @@ public class Main {
 	    for (int i = 0; i < Sede.getlistaSedes().size(); i++) {
 	        System.out.println(i + ". " + Sede.getlistaSedes().get(i).getNombre());
 	    }
-	    int sedeSeleccionada = scanner.nextInt();
+	    int sedeSeleccionada = nextIntSeguro(scanner)();
       scanner.nextLine();
       Sede sede = Sede.getlistaSedes().get(sedeSeleccionada);
       
@@ -1315,7 +1315,7 @@ public class Main {
     
           }
      }
-    int encargadoSeleccionado = scanner.nextInt();
+    int encargadoSeleccionado = nextIntSeguro(scanner)();
     scanner.nextLine();
     Empleado encargado = sede.getlistaEmpleados().get(encargadoSeleccionado);      
       System.out.println("\n"+"Seleccione el número del empleado que se hará cargo de asesorar la venta:");
@@ -1325,7 +1325,7 @@ public class Main {
             System.out.println(i + ". " + empleado.getNombre());
       }
     }
-    int vendedorSeleccionado = scanner.nextInt();
+    int vendedorSeleccionado = nextIntSeguro(scanner)();
     scanner.nextLine();
     Empleado vendedor = sede.getlistaEmpleados().get(vendedorSeleccionado);
          
@@ -1352,7 +1352,7 @@ public class Main {
 
             String nombrePrendaSeleccionada = prendaSeleccionada.getNombre();
             System.out.println("Ingrese la cantidad de unidades que se desea del producto elegido:");
-            int cantidadPrenda = scanner.nextInt();
+            int cantidadPrenda = nextIntSeguro(scanner)();
             cantidadProductos.add(cantidadPrenda);
             int cantidadDisponible = 0;
             for (int i = 0; i < cantidadPrenda; i++) {
@@ -1460,7 +1460,7 @@ public class Main {
             if (bm) {System.out.println("2. Bolsa mediana (3 productos)");} 
             if (bg) {System.out.println("3. Bolsa grande (8 productos)");}
 
-            int opcionBolsa = scanner.nextInt();
+            int opcionBolsa = nextIntSeguro(scanner)();
             scanner.nextLine();
 
             int capacidadBolsa = 0;
@@ -1524,7 +1524,7 @@ public class Main {
                                 insumo = sede.getListaInsumosBodega().get(e);
                                 if (insumo instanceof Bolsa && insumo.getNombre().equals(nombreBolsa)) {
                                     System.out.println("¿Cuántas bolsa de " + insumo.getNombre() + " desea comprar?");
-                                    int cantidadComprar = scanner.nextInt();
+                                    int cantidadComprar = nextIntSeguro(scanner)();
                                     scanner.nextLine();
                                     int costoCompra = Proveedor.costoDeLaCantidad(insumo, cantidadComprar);
                                     banco.setAhorroBanco(banco.getAhorroBanco() - costoCompra); // Reducir los ahorros
@@ -1603,7 +1603,7 @@ public class Main {
                             "El código ingresado no es válido. Por favor, intentar de nuevo o pagar el monto total");
                     System.out.println("Ingresa 1 para intentar de nuevo.");
                     System.out.println("Ingresa 2 para salir del intento");
-                    nuevoIntento = scanner.nextInt();
+                    nuevoIntento = nextIntSeguro(scanner)();
                 }
             }
             else if(respuesta.equals("no")){
@@ -1616,7 +1616,7 @@ public class Main {
 
         if (compraTarjeta.equals("si")) {
             System.out.println("¿Por cuánto será la tarjeta de regalo? (monto en pesos)");
-            int montoTarjeta = scanner.nextInt();
+            int montoTarjeta = nextIntSeguro(scanner)();
             String codigoGenerado = generarCodigoAleatorio();
             Venta.getCodigosRegalo().add(codigoGenerado);
             Venta.getMontosRegalo().add(montoTarjeta);
