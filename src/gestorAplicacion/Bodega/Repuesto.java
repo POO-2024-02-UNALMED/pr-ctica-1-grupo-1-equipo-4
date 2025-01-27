@@ -38,7 +38,7 @@ public class Repuesto extends Insumo { // Implementa serializable por repuesto
     public static ArrayList<Repuesto> getListadoRepuestoss(){
         return listadoRepuestos;
     }
-    public static void setListadoRepuestos(Respuesto repaRetirar){
+    public static void setListadoRepuestos(Repuesto repaRetirar){
         Repuesto.listadoRepuestos.remove(repaRetirar);
     }
 
