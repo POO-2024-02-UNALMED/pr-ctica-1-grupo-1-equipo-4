@@ -82,6 +82,11 @@ public class Sede implements Serializable{
 	static public int transferirInsumo(Insumo i, Sede donadora, Sede beneficiaria, int cantidadSolicitada){
 		int restante = 0;
 		int idxInsumo = donadora.getListaInsumosBodega().indexOf(i);
+
+		if (idxInsumo == -1){
+			return cantidadSolicitada; // Se salta el resto del metodo, porque no hay nada que transferir.
+		}
+
 		int cantidadDisponible = Math.min(donadora.getCantidadInsumosBodega().get(idxInsumo),cantidadSolicitada);
 		long ajusteStock = (Insumo.getPrecioStockTotal())-(i.getPrecioIndividual()*cantidadSolicitada);
 		Insumo.setPrecioStockTotal(ajusteStock);

@@ -1,6 +1,8 @@
 package baseDatos;
 
 import gestorAplicacion.Administracion.Banco;
+import gestorAplicacion.Bodega.Camisa;
+import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
@@ -89,6 +91,15 @@ public class Serializador {
                         oos.writeObject(Proveedor.getListaProveedores());
                         oos.close();
                         System.out.println("Proveedores serializados");
+                } else if (file.getAbsolutePath().contains("Prendas")) {
+                        fos = new FileOutputStream(file);
+                        oos = new ObjectOutputStream(fos);
+                        oos.writeObject(Camisa.getCantidadInsumo());
+                        oos.writeObject(Camisa.getTipoInsumo());
+                        oos.writeObject(Pantalon.getCantidadInsumo());
+                        oos.writeObject(Pantalon.getTipoInsumo());
+                        oos.close();
+                        System.out.println("Prendas serializadas");
                 }
             } catch (FileNotFoundException e) {
                 System.out.println("Archivo "+file.getName()+ "no existe, y de alguna manera esta en la carpeta, llamen a Dios.");

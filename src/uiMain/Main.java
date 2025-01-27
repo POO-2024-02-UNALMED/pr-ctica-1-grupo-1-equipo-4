@@ -483,7 +483,8 @@ public class Main {
                     
                     for (int i = 0; i < prenda.getInsumo().size(); i++) {
                         Insumo insumo = prenda.getInsumo().get(i);
-                        int cantidad = (int) Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc);
+                        ArrayList<Integer> cantidadesPorPrenda = Camisa.getCantidadInsumo();
+                        int cantidad = (int) Math.ceil(cantidadesPorPrenda.get(i) * prediccionc);
                 
                         int index = insumoXSede.indexOf(insumo);
                         if (index == -1) {
@@ -670,12 +671,12 @@ public class Main {
                         }
                         Deuda deuda = null;
                         if (montoDeuda > 0) {
-                            if (!(proveedor.getDeuda().getEstadodePago())) {
+                            if (proveedor.getDeuda()==null){
+                                deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor",
+                                Deuda.calcularCuotas(montoDeuda));
+                            } else if (!proveedor.getDeuda().getEstadodePago()) {
                                 proveedor.unificarDeudasXProveedor(fecha, montoDeuda, proveedor.getNombre());
                                 deuda = proveedor.getDeuda();
-                            } else {
-                                deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor",
-                                        Deuda.calcularCuotas(montoDeuda));
                             }
                             deudas.add(deuda);
                         }

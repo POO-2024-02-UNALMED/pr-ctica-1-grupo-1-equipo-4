@@ -4,6 +4,8 @@ import gestorAplicacion.Administracion.Banco;
 import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
+import gestorAplicacion.Bodega.Camisa;
+import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Prenda;
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,6 +61,13 @@ public class Deserializador {
                         fis = new FileInputStream(file);
                         ois = new ObjectInputStream(fis);
                         Proveedor.setListaProveedores((ArrayList<Proveedor>) ois.readObject());
+            } else if (file.getAbsolutePath().contains("Prendas")) {
+                        fis = new FileInputStream(file);
+                        ois = new ObjectInputStream(fis);
+                        Camisa.setCantidadInsumo((ArrayList<Integer>) ois.readObject());
+                        Camisa.setTipoInsumo((ArrayList<String>) ois.readObject());
+                        Pantalon.setCantidadInsumo((ArrayList<Integer>) ois.readObject());
+                        Pantalon.setTipoInsumo( (ArrayList<String>) ois.readObject());;
             }
         } catch (FileNotFoundException e) {
             System.out.println("Archivo "+file.getName()+ "vacío.");
