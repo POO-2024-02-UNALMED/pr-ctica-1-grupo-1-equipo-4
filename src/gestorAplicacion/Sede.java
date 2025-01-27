@@ -37,14 +37,13 @@ public class Sede implements Serializable{
 	private ArrayList<Prenda> prendasProduccion = new ArrayList<Prenda>();
 	private String nombre;
 	private Banco cuentaSede;
-	private int distancia;
 	//Con respecto a la principal
 
-	private ArrayList<Integer> prodAproximada = new ArrayList<>();  // este atributo sera equivalente al de arriba,
+	private ArrayList<Integer> prodAproximada = new ArrayList<Integer>();  // este atributo sera equivalente al de arriba,
 																	// no uso el de arriba porque este lo usaré solo como una lista de dos enteros
 																	// la posición 0 para pantalones y la 1 para el numero de camisas a producir
-	ArrayList<Maquinaria> maqProduccion = new ArrayList<>();
-	ArrayList<Maquinaria> maqOficina = new ArrayList<>();
+	private ArrayList<Maquinaria> maqProduccion = new ArrayList<>();
+	private ArrayList<Maquinaria> maqOficina = new ArrayList<>();
 	
 
 	public Sede(int prueba){}
@@ -211,9 +210,6 @@ public class Sede implements Serializable{
 	}
 	public void setNombre(String nombre){
 		this.nombre=nombre;
-	}	
-	public int getDistancia(){
-		return distancia;
 	}
 	public void setCuentaSede(Banco cuenta){
 		cuentaSede=cuenta;
@@ -221,9 +217,6 @@ public class Sede implements Serializable{
 	public Banco getCuentaSede(){
 		return cuentaSede;
 	}
-	public void setDistancia(int distancia){
-		this.distancia=distancia;
-	}	
 	public void anadirEmpleado(Empleado emp){
 		listaEmpleado.add(emp);
 	}

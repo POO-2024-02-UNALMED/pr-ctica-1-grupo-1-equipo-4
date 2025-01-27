@@ -388,7 +388,7 @@ public class Main {
                 Nombrebanco = Banco.getListaBancos().get(i).getNombreEntidad();
             }
             int cuotas = 0;
-            while (i <= 0 || i >= 18) {
+            while (cuotas <= 0 || cuotas >= 18) {
                 System.out.println("Ingrese número de 1 a 18 para las cuotas en que se dividirá la deuda");
                 cuotas = in.nextInt();
             }

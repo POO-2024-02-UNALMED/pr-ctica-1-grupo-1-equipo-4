@@ -117,13 +117,19 @@ public class Venta implements Serializable {
 	long montoventasDC=0;
 	for(Sede sede: Sede.getlistaSedes()){
 	for(Venta venta : sede.getHistorialVentas()){
-		if (diasBlackFriday.contains(venta.getFechaVenta())){montoventasBF+=venta.getMontoPagado();}
-		else if (FechasNormales.contains(venta.getFechaVenta())){montoventasDC+=venta.getMontoPagado();}}}
+		for (int i=0;i<3;i++){
+		if (diasBlackFriday.get(i).getAño()==venta.getFechaVenta().getAño() && diasBlackFriday.get(i).getMes()==venta.getFechaVenta().getMes()&& diasBlackFriday.get(i).getDia()==venta.getFechaVenta().getDia()){
+			montoventasBF+=venta.getMontoPagado();}
+		else if (FechasNormales.get(i).getAño()==venta.getFechaVenta().getAño() && FechasNormales.get(i).getMes()==venta.getFechaVenta().getMes()&& FechasNormales.get(i).getDia()==venta.getFechaVenta().getDia()){
+			montoventasDC+=venta.getMontoPagado();}}}}
 	long diferencia=montoventasBF-montoventasDC;
+	System.out.println(montoventasBF);
+	System.out.println(montoventasDC);
+	System.out.println(diferencia);
 	if(diferencia<=0){return 0.0F;}
 	else if(0>diferencia && diferencia<=(montoventasBF*0.1)){return 0.1F;}
 	else if(0>diferencia && diferencia<=(montoventasBF*0.2)){return 0.2F;}
-	else if(0>diferencia && diferencia<=(montoventasBF*0.3)){return 0.3F;}
+	else if(0>diferencia &&	diferencia<=(montoventasBF*0.3)){return 0.3F;}
 	else if(0>diferencia && diferencia<=(montoventasBF*0.4)){return 0.4F;}
 	else {return 0.5F;}
    }

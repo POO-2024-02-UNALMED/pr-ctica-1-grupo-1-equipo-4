@@ -59,7 +59,7 @@ public class Empleado extends Persona implements GastoMensual{
 
     @Override
     public int calcularGastoMensual() {
-        int gasto=valorEsperadoSalario();
+        int gasto=super.calcularSalario();
         return gasto;
     }
 
@@ -324,7 +324,7 @@ public class Empleado extends Persona implements GastoMensual{
         return Sede.getListaEmpleadosTotal();
     }
 
-    public int calcularSalario(Scanner in){ // El scanner se recibe para pasar a ingresarFecha, no se usa aquí.
+    public int calcularSalario(){ // El scanner se recibe para pasar a ingresarFecha, no se usa aquí.
 		int valor=0;
         valor+=super.calcularSalario();
 		valor=valor*(1+bonificacion);
