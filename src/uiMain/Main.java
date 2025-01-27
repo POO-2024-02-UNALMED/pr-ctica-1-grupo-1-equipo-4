@@ -1241,8 +1241,7 @@ public class Main {
                         - proveedorBdelmain.getInsumo().getPrecioIndividual());
                 sedeP.getCuentaSede().setAhorroBanco(nuevoDineroSede);
 
-                System.out.println(
-                        "El repuesto se compro exitosamente desde la sede " + sedeP.getNombre() + ", saldo disponible:");
+                System.out.println("El repuesto se compro exitosamente desde la sede " + sedeP.getNombre() + ", saldo disponible:");
                 System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
                 System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
 
@@ -1251,8 +1250,7 @@ public class Main {
                         - proveedorBdelmain.getInsumo().getPrecioIndividual());
                 sede2.getCuentaSede().setAhorroBanco(nuevoDineroSede);
 
-                System.out.println(
-                        "El repuesto se compro exitosamente desde la sede " + sede2.getNombre() + ", saldo disponible:");
+                System.out.println("El repuesto se compro exitosamente desde la sede " + sede2.getNombre() + ", saldo disponible:");
                 System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
                 System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
             } else {
