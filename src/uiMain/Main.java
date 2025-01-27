@@ -526,10 +526,17 @@ public class Main {
             for (Sede s : Sede.getlistaSedes()) {
                 for (Insumo i : listaInsumos) {
                     Resultado productoEnBodega = Sede.verificarProductoBodega(i, s);
+                    int idxInsumo = listaInsumos.indexOf(i);
                     if (productoEnBodega.getEncontrado() == true) {
-                        int restante = Sede.restarInsumo(i, s, listaCantidades.get((int) productoEnBodega.getIndex()));
+                        listaCantidades.set(idxInsumo, listaCantidades.get(idxInsumo) - s.getCantidadInsumosBodega().get(productoEnBodega.getIndex())); // Quitamos la cantidad de insumos que ya tenemos
+                    }
+
+
+                    int cantidadNecesaria = listaCantidades.get(listaInsumos.indexOf(i));
+                    Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
+                    if (productoEnOtraSede.getEncontrado() == true) {
+                        int restante = Sede.transferirInsumo(i, productoEnOtraSede.getSede(),s,cantidadNecesaria);
                         if (restante != 0) {
-                            Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
                             if (productoEnOtraSede.getEncontrado() == true) {
                                 System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra "
                                                     + productoEnOtraSede.getSede() + ".");
@@ -542,7 +549,7 @@ public class Main {
                                 int opcion = in.nextInt();
                                 switch (opcion) {
                                     case 1:
-                                        int restante2 = Sede.restarInsumo(i, s, restante);
+                                        int restante2 = Sede.transferirInsumo(i, s, productoEnOtraSede.getSede(), restante);
                                         System.out.println("\n"+i+" transferido desde "+s+" con éxito");
                                         if (restante2 != 0) {
                                             insumosAPedir.add(i);
@@ -582,6 +589,7 @@ public class Main {
         return listaA;
     }
 
+    // La lista A contiene 1 lista por sede, cada 1 con 2 listas, 1 con insumos la otra con cantidades.
     // Interacción 3 de Insumos
     static public String comprarInsumos(Fecha fecha, ArrayList<Object> listaA) {
         ArrayList<Object> sede = new ArrayList<>();
