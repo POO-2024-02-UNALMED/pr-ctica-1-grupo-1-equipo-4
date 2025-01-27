@@ -1274,7 +1274,7 @@ public class Main {
             System.out.println("Por favor, ingrese un número entero.");
             in.nextLine();
         }
-        int retorno = nextIntSeguro(in);
+        int retorno = in.nextInt();
         in.nextLine();
         return retorno;
     }
