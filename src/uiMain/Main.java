@@ -919,7 +919,7 @@ public class Main {
         Maquinaria MaquinaDeCoser = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC, sedeP);
         Maquinaria MaquinaDeCorte = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte, sedeP);
         Maquinaria PlanchaIndustrial = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI, sedeP);
-        Maquinaria BordadoraIndustrial = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI, sedeP);
+        Maquinaria BordadoraIndustrial = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI, sedeP, "s");
         Maquinaria MaquinaDeTermofijado = new Maquinaria("Maquina de Termofijado", 20000000, 1000,
                 repuestosMTermofijado, sedeP);
         Maquinaria MaquinaDeTijereado = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado,
@@ -930,7 +930,7 @@ public class Main {
 
         // sede2
         Maquinaria MaquinaDeCoser2 = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC2, sede2, 1);
-        Maquinaria MaquinaDeCorte2 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2, 1);
+        Maquinaria MaquinaDeCorte2 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2, false);
         Maquinaria PlanchaIndustrial2 = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI2, sede2, 1);
         Maquinaria BordadoraIndustrial2 = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI2, sede2, 1);
         Maquinaria MaquinaDeTermofijado2 = new Maquinaria("Maquina de Termofijado", 20000000, 1000,

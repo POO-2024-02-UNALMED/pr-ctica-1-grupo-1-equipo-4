@@ -48,6 +48,25 @@ public class Maquinaria implements Serializable{
 		this.sede = sede;
 		Sede.getlistaSedes().get(1).getlistaMaquinas().add(this);
 	}
+		//sobrecarga de constructores para ejemplidicar la interaccion1 de produccion
+	public Maquinaria(String nombre, long valor, int horaRevision, ArrayList<Repuesto> repuestos, Sede sede, String s){
+		this.nombre = nombre;
+		this.valor = valor;
+		this.horaRevision = horaRevision;
+		this.repuestos = repuestos;
+		this.sede = sede;
+		Sede.getlistaSedes().get(0).getlistaMaquinas().add(this);
+		this.horasUso = 1000000;
+	}
+	public Maquinaria(String nombre, long valor, int horaRevision, ArrayList<Repuesto> repuestos, Sede sede, boolean bool){
+		this.nombre = nombre;
+		this.valor = valor;
+		this.horaRevision = horaRevision;
+		this.repuestos = repuestos;
+		this.sede = sede;
+		Sede.getlistaSedes().get(1).getlistaMaquinas().add(this);
+		this.horasUso = 1000000;
+	}
 
 		//metodo para hacer una copia de un objeto de tipo Maquinaria, con la misma inicializacion de atributos del que queremos copiar
 	public Maquinaria copiar(){
