@@ -243,19 +243,45 @@ public class Empleado extends Persona implements GastoMensual{
         this.bonificacion += bonificacion;
     }
 
-    public int getTraslados(){return traslados;}
-    public void setTraslados(int traslados){this.traslados=traslados;}
-    public int getPrendasDescartadas(){return prendasDescartadas;}
-    public void setPrendasDescartadas(int prendas){this.prendasDescartadas=prendas;}  
-    public int getPrendasProducidas(){return prendasProducidas;}
-    public void setPrendasProducidas(int prendasProducidas){this.prendasProducidas=prendasProducidas;}
-    public float getPericia(){return pericia;}
-    public void setPericia(float pericia){this.pericia=pericia;}  
-    public Area getAreaActual(){return areaActual;}
-    public void setAreaActual(Area a){areaActual=a;}
-    public Fecha getFechaContratacion(){return fechaContratacion;}
-    public void setFechaContratacion(Fecha fecha){fechaContratacion=fecha;}
-    public Sede getSede(){return sede;}
+    public int getTraslados(){
+        return traslados;
+    }
+    public void setTraslados(int traslados){
+        this.traslados=traslados;
+    }
+    public int getPrendasDescartadas(){
+        return prendasDescartadas;
+    }
+    public void setPrendasDescartadas(int prendas){
+        this.prendasDescartadas=prendas;
+    }  
+    public int getPrendasProducidas(){
+        return prendasProducidas;
+    }
+    public void setPrendasProducidas(int prendasProducidas){
+        this.prendasProducidas=prendasProducidas;
+    }
+    public float getPericia(){
+        return pericia;
+    }
+    public void setPericia(float pericia){
+        this.pericia=pericia;
+    }  
+    public Area getAreaActual(){
+        return areaActual;
+    }
+    public void setAreaActual(Area a){
+        areaActual=a;
+    }
+    public Fecha getFechaContratacion(){
+        return fechaContratacion;
+    }
+    public void setFechaContratacion(Fecha fecha){
+        fechaContratacion=fecha;
+    }
+    public Sede getSede(){
+        return sede;
+    }
     public void setSede(Sede sede){
         if (this.sede!=null){
             this.getSede().quitarEmpleado(this);
@@ -263,16 +289,36 @@ public class Empleado extends Persona implements GastoMensual{
         this.sede=sede;
         this.sede.anadirEmpleado(this);
     }
-    public Maquinaria getMaquinaria(){return maquinaria;}
-    public void getMaquinaria(Maquinaria maquina){maquinaria=maquina;}
-    public ArrayList<Area> getAreas(){return areas;}
-    public void setAreas(ArrayList<Area> areas){this.areas=areas;}
-    public int getBonificacion(){return bonificacion;}
-    public void setRendimientoBonificacion(int boni){bonificacion=boni;}
-    public void setSalario(int salario){this.salario=salario;}
-    public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){this.evaluaciones=evaluaciones;}
-    public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluaciones;}
-    public ArrayList<Venta> getVentasEncargadas(){return ventasEncargadas;}
+    public Maquinaria getMaquinaria(){
+        return maquinaria;
+    }
+    public void getMaquinaria(Maquinaria maquina){
+        maquinaria=maquina;
+    }
+    public ArrayList<Area> getAreas(){
+        return areas;
+    }
+    public void setAreas(ArrayList<Area> areas){
+        this.areas=areas;
+    }
+    public int getBonificacion(){
+        return bonificacion;
+    }
+    public void setRendimientoBonificacion(int boni){
+        bonificacion=boni;
+    }
+    public void setSalario(int salario){
+        this.salario=salario;
+    }
+    public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){
+        this.evaluaciones=evaluaciones;
+    }
+    public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){
+        return evaluaciones;
+    }
+    public ArrayList<Venta> getVentasEncargadas(){
+        return ventasEncargadas;
+    }
 
     public static ArrayList<Empleado> getEmpCreadoss(){
         return Sede.getListaEmpleadosTotal();

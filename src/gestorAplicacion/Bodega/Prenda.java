@@ -188,13 +188,25 @@ public abstract class Prenda implements GastoMensual, Serializable{
         }
     
     //-------------------Getters y Setters-------------------
-    public boolean getPrendasDescartadas(){return descartada;}
-    public String getNombre(){return nombre;}
-    public ArrayList<Insumo> getInsumo(){return insumo;}
+    public boolean getPrendasDescartadas(){
+        return descartada;
+    }
+    public String getNombre(){
+        return nombre;
+    }
+    public ArrayList<Insumo> getInsumo(){
+        return insumo;
+    }
     //public static ArrayList<String> getTipoInsumo(){return tipoInsumo;}
-    public static ArrayList<Integer> getCantidadInsumo(){return cantidadInsumo;}
-    public float getCostoInsumos(){return costoInsumos;}
-    public long getPrecio() {return this.precio;}
+    public static ArrayList<Integer> getCantidadInsumo(){
+        return cantidadInsumo;
+    }
+    public float getCostoInsumos(){
+        return costoInsumos;
+    }
+    public long getPrecio() {
+        return this.precio;
+    }
 
     public String toString(){
         return "La prenda de tipo "+nombre;

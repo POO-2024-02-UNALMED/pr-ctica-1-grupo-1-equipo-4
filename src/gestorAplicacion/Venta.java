@@ -177,19 +177,45 @@ public class Venta implements Serializable {
 	}
 
 
-	public ArrayList<Prenda> getArticulos(){return articulos;}
-	public void setArticulos(ArrayList<Prenda> articulos){this.articulos=articulos;}
-	public ArrayList<Bolsa> getBolsas(){return bolsas;}
-	public void setBolsas(ArrayList<Bolsa> bolsas){this.bolsas=bolsas;}
-	public Empleado getEncargado(){return encargado;}
-	public void setEncargado(Empleado emp){encargado=emp;}
-	public Empleado getAsesor(){return asesor;}
-	public void setAsesor(Empleado emp){asesor=emp;}
-	public Sede getSede(){return sede;}
-	public void setSede(Sede sede){this.sede=sede;}
-	public Fecha getFechaVenta(){return fechaVenta;}
-	public void setFechaVenta(Fecha fecha){fechaVenta=fecha;}
-	public int getMontoPagado(){return montoPagado;}
+	public ArrayList<Prenda> getArticulos(){
+		return articulos;
+	}
+	public void setArticulos(ArrayList<Prenda> articulos){
+		this.articulos=articulos;
+	}
+	public ArrayList<Bolsa> getBolsas(){
+		return bolsas;
+	}
+	public void setBolsas(ArrayList<Bolsa> bolsas){
+		this.bolsas=bolsas;
+	}
+	public Empleado getEncargado(){
+		return encargado;
+	}
+	public void setEncargado(Empleado emp){
+		encargado=emp;
+	}
+	public Empleado getAsesor(){
+		return asesor;
+	}
+	public void setAsesor(Empleado emp){
+		asesor=emp;
+	}
+	public Sede getSede(){
+		return sede;
+	}
+	public void setSede(Sede sede){
+		this.sede=sede;
+	}
+	public Fecha getFechaVenta(){
+		return fechaVenta;
+	}
+	public void setFechaVenta(Fecha fecha){
+		fechaVenta=fecha;
+	}
+	public int getMontoPagado(){
+		return montoPagado;
+	}
 	public void setMontoPagado(int monto){
 		if (montoPagado==0){
 			sede.getCuentaSede().setAhorroBanco(sede.getCuentaSede().getAhorroBanco()+monto);
@@ -200,19 +226,47 @@ public class Venta implements Serializable {
 			montoPagado=monto;
 			sede.getCuentaSede().setAhorroBanco(sede.getCuentaSede().getAhorroBanco()-monto);}
 		}
-	public Persona getCliente(){return cliente;}
-	public void setCliente(Persona persona){cliente=persona;}
-	public int getNumero(){return numero;}
-	public void setNumero(int numero){this.numero=numero;}
-	public int getCostoEnvio(){return costoEnvio;}
-	public void setCostoEnvio(int monto){costoEnvio=monto;}
-	public int getsubtotal(){return subtotal;}
-	public void setSubtotal(int monto){subtotal=monto;}
-	static public void setPesimismo(float newPesimism){Venta.pesimismo = newPesimism;}
-	static public float getPesimismo(){return Venta.pesimismo;}
-	public static ArrayList<String> getCodigosRegalo(){return Venta.codigosRegalo;}
-	public static void setCodigosRegalos(ArrayList<String> codigo){Venta.codigosRegalo=codigo;}
-	public static ArrayList<Integer> getMontosRegalo(){return Venta.montosRegalo;}
-	public static void setMontosRegalo(ArrayList<Integer> montos){Venta.montosRegalo=montos;}
+	public Persona getCliente(){
+		return cliente;
+	}
+	public void setCliente(Persona persona){
+		cliente=persona;
+	}
+	public int getNumero(){
+		return numero;
+	}
+	public void setNumero(int numero){
+		this.numero=numero;
+	}
+	public int getCostoEnvio(){
+		return costoEnvio;
+	}
+	public void setCostoEnvio(int monto){
+		costoEnvio=monto;
+	}
+	public int getsubtotal(){
+		return subtotal;
+	}
+	public void setSubtotal(int monto){
+		subtotal=monto;
+	}
+	static public void setPesimismo(float newPesimism){
+		Venta.pesimismo = newPesimism;
+	}
+	static public float getPesimismo(){
+		return Venta.pesimismo;
+	}
+	public static ArrayList<String> getCodigosRegalo(){
+		return Venta.codigosRegalo;
+	}
+	public static void setCodigosRegalos(ArrayList<String> codigo){
+		Venta.codigosRegalo=codigo;
+	}
+	public static ArrayList<Integer> getMontosRegalo(){
+		return Venta.montosRegalo;
+	}
+	public static void setMontosRegalo(ArrayList<Integer> montos){
+		Venta.montosRegalo=montos;
+	}
 	
 }

@@ -69,19 +69,44 @@ public class Insumo implements GastoMensual,Serializable{
 	}
 	
 
-	public static long getPrecioStockTotal(){return precioStockTotal;}
-	public static void setPrecioStockTotal(long pSt){Insumo.precioStockTotal = pSt;}
-	public String getNombre(){return nombre;}
-	public String setNombre(){return nombre;}
-	public Proveedor getProveedor(){return proveedor;}
-	public void setProveedor(Proveedor p){proveedor=p;}
-	public Sede getSede (){return sede;}
-	public void setSede(Sede s){sede=s;}
-	public int getPrecioCompra(){return precioCompra;} 
-	public void setPrecioCompra(int precio){this.precioCompra=precio;} 
-	public int getPrecioIndividual(){return precioXUnidad;} 
-	public void setUltimoPrecio(int precio){this.ultimoPrecio=precio;} 
-	public int getUltimoPrecio(){return ultimoPrecio;}
+		return precioStockTotal;
+	}
+	public static void setPrecioStockTotal(long pSt){
+		Insumo.precioStockTotal = pSt;
+	}
+	public String getNombre()
+	{return nombre;
+	}
+	public String setNombre(){
+		return nombre;
+	}
+	public Proveedor getProveedor(){
+		return proveedor;
+	}
+	public void setProveedor(Proveedor p){
+		proveedor=p;
+	}
+	public Sede getSede ()
+	{return sede;
+	}
+	public void setSede(Sede s){
+		sede=s;
+	}
+	public int getPrecioCompra(){
+		return precioCompra;
+	} 
+	public void setPrecioCompra(int precio){
+		this.precioCompra=precio;
+	} 
+	public int getPrecioIndividual(){
+		return precioXUnidad;
+	} 
+	public void setUltimoPrecio(int precio){
+		this.ultimoPrecio=precio;
+	} 
+	public int getUltimoPrecio(){
+		return ultimoPrecio;
+	}
 	public String toString(){
 		return "Insumo: "+nombre;
 	}

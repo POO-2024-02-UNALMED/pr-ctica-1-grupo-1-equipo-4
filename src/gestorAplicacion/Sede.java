@@ -146,39 +146,105 @@ public class Sede implements Serializable{
 	}
 
 
-	public void actualizarHistorialVentas(Venta venta){historialVentas.add(venta);}
-	public float getRendimientoDeseado(Area area, Fecha fecha){return Area.rendimientoDeseadoActual(this,fecha).get(area.ordinal());}
-	public static ArrayList<Sede> getlistaSedes(){return listaSedes;}
-	public static void setlistaSedes(ArrayList<Sede> Sede){listaSedes=Sede;}
-	public ArrayList<Empleado> getlistaEmpleados(){return listaEmpleado;}
-	public void setlistaEmpleados(ArrayList<Empleado> Emp){listaEmpleado=Emp;}
-	public ArrayList<Maquinaria> getlistaMaquinas(){return listaMaquina;}
-	public void setlistaMaquinas(ArrayList<Maquinaria> Maquinaria){listaMaquina=Maquinaria;}
-	public ArrayList<Venta> getHistorialVentas(){return historialVentas;}
-	public void setHistorialVentas(ArrayList<Venta> venta){historialVentas=venta;}	
-	public ArrayList<Prenda> getPrendasInventadas(){return prendasInventadas;}
-	public void setPrendasInventadas(ArrayList<Prenda> prenda){prendasInventadas=prenda;}
-	public ArrayList<Insumo> getListaInsumosBodega(){return listaInsumosBodega;}
-	public void setlistaInsumosBodega(ArrayList<Insumo> Insumos){listaInsumosBodega=Insumos;}
-	public ArrayList<Integer> getCantidadInsumosBodega(){return cantidadInsumosBodega;}
-	public void setCantidadInsumosBodega(ArrayList<Integer> CantidadIns){cantidadInsumosBodega=CantidadIns;}
-	public ArrayList<Integer> getProduccionAproximada(){return produccionAproximada;}
-	public void setProduccionAproximada(ArrayList<Integer> produccion){produccionAproximada=produccion;}
-	public ArrayList<Prenda> getPrendasProduccion(){return prendasProduccion;}
-	public void setPrendasProduccion(ArrayList<Prenda> Prendasp){prendasProduccion=Prendasp;}
-	public String getNombre(){return nombre;}
-	public void setNombre(String nombre){this.nombre=nombre;}	
-	public int getDistancia(){return distancia;}
-	public void setCuentaSede(Banco cuenta){cuentaSede=cuenta;}
-	public Banco getCuentaSede(){return cuentaSede;}
-	public void setDistancia(int distancia){this.distancia=distancia;}	
-	public void anadirEmpleado(Empleado emp){listaEmpleado.add(emp);}
-	public void quitarEmpleado(Empleado emp){listaEmpleado.remove(emp);}
-	static public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){evaluacionesFinancieras=evaluaciones;}
-	static public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluacionesFinancieras;}
-	static public ArrayList<Empleado> getListaEmpleadosTotal(){return listaEmpleadosTotal;}
-	static public ArrayList<Prenda> getPrendasInventadasTotal(){return prendasInventadasTotal;}
-	static public void setPrendasInventadasTotal(ArrayList<Prenda> prendas){prendasInventadasTotal=prendas;} // Para serializacion
+	public void actualizarHistorialVentas(Venta venta){
+		historialVentas.add(venta);
+	}
+	public float getRendimientoDeseado(Area area, Fecha fecha){
+		return Area.rendimientoDeseadoActual(this,fecha).get(area.ordinal());
+	}
+	public static ArrayList<Sede> getlistaSedes(){
+		return listaSedes;
+	}
+	public static void setlistaSedes(ArrayList<Sede> Sede){
+		listaSedes=Sede;
+	}
+	public ArrayList<Empleado> getlistaEmpleados(){
+		return listaEmpleado;
+	}
+	public void setlistaEmpleados(ArrayList<Empleado> Emp){
+		listaEmpleado=Emp;
+	}
+	public ArrayList<Maquinaria> getlistaMaquinas(){
+		return listaMaquina;
+	}
+	public void setlistaMaquinas(ArrayList<Maquinaria> Maquinaria){
+		listaMaquina=Maquinaria;
+	}
+	public ArrayList<Venta> getHistorialVentas(){
+		return historialVentas;
+	}
+	public void setHistorialVentas(ArrayList<Venta> venta){
+		historialVentas=venta;
+	}	
+	public ArrayList<Prenda> getPrendasInventadas(){
+		return prendasInventadas;
+	}
+	public void setPrendasInventadas(ArrayList<Prenda> prenda){
+		prendasInventadas=prenda;
+	}
+	public ArrayList<Insumo> getListaInsumosBodega(){
+		return listaInsumosBodega;
+	}
+	public void setlistaInsumosBodega(ArrayList<Insumo> Insumos){
+		listaInsumosBodega=Insumos;
+	}
+	public ArrayList<Integer> getCantidadInsumosBodega(){
+		return cantidadInsumosBodega;
+	}
+	public void setCantidadInsumosBodega(ArrayList<Integer> CantidadIns){
+		cantidadInsumosBodega=CantidadIns;
+	}
+	public ArrayList<Integer> getProduccionAproximada(){
+		return produccionAproximada;
+	}
+	public void setProduccionAproximada(ArrayList<Integer> produccion){
+		produccionAproximada=produccion;
+	}
+	public ArrayList<Prenda> getPrendasProduccion(){
+		return prendasProduccion;
+	}
+	public void setPrendasProduccion(ArrayList<Prenda> Prendasp){
+		prendasProduccion=Prendasp;
+	}
+	public String getNombre(){
+		return nombre;
+	}
+	public void setNombre(String nombre){
+		this.nombre=nombre;
+	}	
+	public int getDistancia(){
+		return distancia;
+	}
+	public void setCuentaSede(Banco cuenta){
+		cuentaSede=cuenta;
+	}
+	public Banco getCuentaSede(){
+		return cuentaSede;
+	}
+	public void setDistancia(int distancia){
+		this.distancia=distancia;
+	}	
+	public void anadirEmpleado(Empleado emp){
+		listaEmpleado.add(emp);
+	}
+	public void quitarEmpleado(Empleado emp){
+		listaEmpleado.remove(emp);
+	}
+	static public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){
+		evaluacionesFinancieras=evaluaciones;
+	}
+	static public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){
+		return evaluacionesFinancieras;
+	}
+	static public ArrayList<Empleado> getListaEmpleadosTotal(){
+		return listaEmpleadosTotal;
+	}
+	static public ArrayList<Prenda> getPrendasInventadasTotal(){
+		return prendasInventadasTotal;
+	}
+	static public void setPrendasInventadasTotal(ArrayList<Prenda> prendas){
+		prendasInventadasTotal=prendas;
+	} // Para serializacion
 	
 	public ArrayList<Integer> getProdAproximada(){
 		return prodAproximada;
