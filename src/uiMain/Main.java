@@ -58,7 +58,7 @@ public class Main {
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
             System.out.println("\n"+"¿Que operación desea realizar?");
-            System.out.println("1.Despedir/Contratar empleados");
+            System.out.println("1.Despedir/Transferir/Contratar empleados");
             System.out.println("2.Adquirir insumos para produccion");
             System.out.println("3.Ver el desglose economico de la empresa");
             System.out.println("4.Vender un producto");
@@ -555,13 +555,13 @@ public class Main {
                                             insumosAPedir.add(i);
                                             cantidadAPedir.add(restante2);
                                             if(i.getNombre().equals("Tela")){
-                                            System.out.println("Tenemos una cantidad de "+restante2+"cm de tela restantes a pedir ");}
+                                            System.out.println("\n"+"Tenemos una cantidad de "+restante2+"cm de tela restantes a pedir ");}
                                             else if (i.getNombre().equals("Boton")){
-                                                System.out.println("Tenemos una cantidad de "+restante2+" botones restantes a pedir ");}
+                                                System.out.println("\n"+"Tenemos una cantidad de "+restante2+" botones restantes a pedir ");}
                                             else if (i.getNombre().equals("Cremallera")){
-                                                 System.out.println("Tenemos una cantidad de "+restante2+" cremalleras restantes a pedir ");}
+                                                 System.out.println("\n"+"Tenemos una cantidad de "+restante2+" cremalleras restantes a pedir ");}
                                                 else {
-                                                System.out.println("Tenemos una cantidad de "+restante2+" cm de hilo restantes a pedir ");}
+                                                System.out.println("\n"+"Tenemos una cantidad de "+restante2+" cm de hilo restantes a pedir ");}
                                         }
                                         else{
                                             System.out.println("Insumo transferido en su totalidad");
