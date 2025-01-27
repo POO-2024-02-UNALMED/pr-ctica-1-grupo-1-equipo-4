@@ -173,6 +173,7 @@ public class Sede implements Serializable{
 	static public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluacionesFinancieras;}
 	static public ArrayList<Empleado> getListaEmpleadosTotal(){return listaEmpleadosTotal;}
 	static public ArrayList<Prenda> getPrendasInventadasTotal(){return prendasInventadasTotal;}
+	static public void setPrendasInventadasTotal(ArrayList<Prenda> prendas){prendasInventadasTotal=prendas;} // Para serializacion
 	
 	public ArrayList<Integer> getProdAproximada(){
 		return prodAproximada;

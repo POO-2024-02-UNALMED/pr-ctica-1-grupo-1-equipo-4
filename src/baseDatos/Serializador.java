@@ -56,9 +56,10 @@ public class Serializador {
                     oos = new ObjectOutputStream(fos);
                     // Escribimos el objeto en el flujo de bytes.
                     oos.writeObject(Sede.getlistaSedes());
+                    oos.writeObject(Sede.getPrendasInventadasTotal());
                     // Cerramos el flujo de bytes.
                     oos.close();
-                    System.out.println("Sedes serializadas");
+                    System.out.println("Sedes serializadas, con "+ Sede.getPrendasInventadasTotal().size()+ " prendas inventadas");
                 }
                 else if (file.getAbsolutePath().contains("Bancos")) {
                         // FileOutputStream recibe un archivo y lo abre para escritura.
