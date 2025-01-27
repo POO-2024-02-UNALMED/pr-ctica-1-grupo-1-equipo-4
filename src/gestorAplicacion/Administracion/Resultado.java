@@ -21,13 +21,29 @@ public class Resultado {
         this.precio = precio;
     }
 
-    public int getPrecio(){return precio;} 
-	public void setPrecio(int precio){this.precio=precio;} 
-    public boolean getEncontrado(){return encontrado;} 
-	public void setEncontrado(boolean enc){this.encontrado=enc;} 
-    public int getIndex(){return index;} 
-	public void setIndex(int index){this.index=index;} 
-    public Sede getSede(){return sede;} 
-	public void setSede(Sede sede){this.sede=sede;} 
+    public int getPrecio(){
+        return precio;
+    } 
+	public void setPrecio(int precio){
+        this.precio=precio;
+    } 
+    public boolean getEncontrado(){
+        return encontrado;
+    } 
+	public void setEncontrado(boolean enc){
+        this.encontrado=enc;
+    } 
+    public int getIndex(){
+        return index;
+    } 
+	public void setIndex(int index){
+        this.index=index;
+    } 
+    public Sede getSede(){
+        return sede;
+    } 
+	public void setSede(Sede sede){
+        this.sede=sede;
+    } 
 
 }

@@ -109,10 +109,18 @@ public class Camisa extends Prenda {
 
     
 
-    public static ArrayList<String> getTipoInsumo(){return tipoinsumo;}
-    public static ArrayList<Integer> getCantidadInsumo(){return cantidadInsumo;}
-    public static void setTipoInsumo(ArrayList<String> tipos){tipoinsumo=tipos;}
-    public static void setCantidadInsumo(ArrayList<Integer> cantidades){cantidadInsumo=cantidades;}
+    public static ArrayList<String> getTipoInsumo(){
+        return tipoinsumo;
+    }
+    public static ArrayList<Integer> getCantidadInsumo(){
+        return cantidadInsumo;
+    }
+    public static void setTipoInsumo(ArrayList<String> tipos){
+        tipoinsumo=tipos;
+    }
+    public static void setCantidadInsumo(ArrayList<Integer> cantidades){
+        cantidadInsumo=cantidades;
+    }
     public static ArrayList<String> getMaquinariaNecesaria() {
         return maquinariaNecesaria;
     }

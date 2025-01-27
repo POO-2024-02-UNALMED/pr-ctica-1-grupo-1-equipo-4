@@ -1,10 +1,8 @@
 package gestorAplicacion.Administracion;
-import java.io.Serializable;
-import java.util.ArrayList;
-
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
+import java.io.Serializable;
 
 public class Evaluacionfinanciera implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -54,13 +52,27 @@ public class Evaluacionfinanciera implements Serializable {
 
 
 
-	public long getPagoPersonas(){return pagoPersonas;}
-	public void setPagoPersonas(long pago){pago=pagoPersonas;}
-	public double getBalance(){return balance;}
-	public void setBalance(double balance){this.balance=balance;}
-	public boolean  getProyeccion(){return proyeccion;}
-	public void setProyeccion(boolean proyeccion){this.proyeccion=proyeccion;}
-	public Empleado getPresidente(){return presidente;}
+	public long getPagoPersonas(){
+		return pagoPersonas;
+	}
+	public void setPagoPersonas(long pago){
+		pago=pagoPersonas;
+	}
+	public double getBalance(){
+		return balance;
+	}
+	public void setBalance(double balance){
+		this.balance=balance;
+	}
+	public boolean  getProyeccion(){
+		return proyeccion;
+	}
+	public void setProyeccion(boolean proyeccion){
+		this.proyeccion=proyeccion;
+	}
+	public Empleado getPresidente(){
+		return presidente;
+	}
 	public void setPresidente(Empleado presidente){
 		if (presidente.getAreaActual()==Area.DIRECCION && presidente.getRol()==Rol.PRESIDENTE){
 			this.presidente=presidente;}}	

@@ -90,10 +90,18 @@ public class Pantalon extends Prenda {
     int pasoActual=1;
     public static ArrayList<String> maquinariaNecesaria = new ArrayList<String>(Arrays.asList("Maquina de Corte", "Maquina de Coser Industrial", "Maquina de Tijereado"));
 
-    public static ArrayList<String> getTipoInsumo(){return tipoinsumo;}
-    public static ArrayList<Integer> getCantidadInsumo(){return cantidadInsumo;}
-    public static void setTipoInsumo(ArrayList<String> tipos){tipoinsumo=tipos;}
-    public static void setCantidadInsumo(ArrayList<Integer> cantidades){cantidadInsumo=cantidades;}
+    public static ArrayList<String> getTipoInsumo(){
+        return tipoinsumo;
+    }
+    public static ArrayList<Integer> getCantidadInsumo(){
+        return cantidadInsumo;
+    }
+    public static void setTipoInsumo(ArrayList<String> tipos){
+        tipoinsumo=tipos;
+    }
+    public static void setCantidadInsumo(ArrayList<Integer> cantidades){
+        cantidadInsumo=cantidades;
+    }
 
     public static ArrayList <String> getMaquinariaNecesaria(){
         return maquinariaNecesaria;
