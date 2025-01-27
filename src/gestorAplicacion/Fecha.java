@@ -48,7 +48,6 @@ public class Fecha implements Serializable{
 		}
 		else if (mes < 1) {
 			mes += 13;
-			mes+=12;
 			año--;
 		}
 		return new Fecha(this.dia, mes, año);

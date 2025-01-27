@@ -675,7 +675,7 @@ public class Main {
                                 deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor",
                                 Deuda.calcularCuotas(montoDeuda));
                             } else if (!proveedor.getDeuda().getEstadodePago()) {
-                                proveedor.unificarDeudasXProveedor(fecha, montoDeuda, proveedor.getNombre());
+                                proveedor.unificarDeudasXProveedor(fecha, montoDeuda);
                                 deuda = proveedor.getDeuda();
                             }
                             deudas.add(deuda);

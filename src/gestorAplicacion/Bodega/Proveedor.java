@@ -48,10 +48,10 @@ public class Proveedor implements Serializable{
 		return precio;
 	}
 	
-	public void unificarDeudasXProveedor(Fecha fecha, int montoDeuda, String Nombre){
+	public void unificarDeudasXProveedor(Fecha fecha, int montoDeuda){
 		int cuotas=Deuda.calcularCuotas(montoDeuda+deuda.getValorinicialDeuda()-deuda.getCapitalPagado());
-		if (deuda.getEntidad().equals(Nombre)&&!deuda.getEstadodePago()){
-					deuda.actualizarDeuda(fecha,montoDeuda,cuotas);
+		if (deuda.getEntidad().equals(this.getNombre())&&!deuda.getEstadodePago()){
+				deuda.actualizarDeuda(fecha,montoDeuda,cuotas);
 			}
 		}
 
