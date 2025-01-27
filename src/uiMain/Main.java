@@ -735,11 +735,11 @@ public class Main {
         p2.setDeuda(new Deuda(new Fecha(15, 1, 24), 1_000_000, p2.getNombre(), "Proveedor", 10));
         // PROVEEDORES QUE VENDEN ACEITE:
         Proveedor p16 = new Proveedor(24000, "Aceites y mas");
-        p16.setInsumo(new Insumo("Aceite 946 ml", p16));
+        p16.setInsumo(new Insumo("Aceite", p16));
         Proveedor p17 = new Proveedor(30000, "Aceitunas");
-        p17.setInsumo(new Insumo("Aceite 946 ml", p17));
+        p17.setInsumo(new Insumo("Aceite", p17));
         Proveedor p18 = new Proveedor(20000, "El barato del Aceite");
-        p18.setInsumo(new Insumo("Aceite 946 ml", p18));
+        p18.setInsumo(new Insumo("Aceite", p18));
 
         // PROVEEDORES QUE VENDEN CUCHILLAS
         Proveedor p19 = new Proveedor(32000, "El de las Cuchillas");
@@ -783,9 +783,9 @@ public class Main {
 
         // PROVEEDORES QUE VENDEN TINTA NEGRA PARA IMPRESORA:
         Proveedor p33 = new Proveedor(44000, "Tinta por aqui");
-        p33.setInsumo(new Insumo("Tinta Negra 90 ml", p33));
+        p33.setInsumo(new Insumo("Tinta Negra Impresora", p33));
         Proveedor p34 = new Proveedor(50000, "El tintoso");
-        p34.setInsumo(new Insumo("Tinta Negra 90 ml", p34));
+        p34.setInsumo(new Insumo("Tinta Negra Impresora", p34));
 
         // PROVEEDORES QUE VENDEN LECTORES DE BARRAS:
         Proveedor p35 = new Proveedor(120000, "Mega tecnologies");
@@ -829,7 +829,7 @@ public class Main {
         Repuesto TintaN = new Repuesto("Tinta Negra Impresora", 3000, p33);
 
         Repuesto Lector = new Repuesto("Lector de barras", 3000, p35);
-        Repuesto PapelQuimico = new Repuesto("Papel químico", 72, p37);
+        Repuesto PapelQuimico = new Repuesto("Papel quimico", 72, p37);
 
         Repuesto Cargador = new Repuesto("Cargador Computador", 6000, p39);
         Repuesto Mouse = new Repuesto("Mouse Computador", 9000, p41);
@@ -929,17 +929,17 @@ public class Main {
         Maquinaria Computador = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp, sedeP);
 
         // sede2
-        Maquinaria MaquinaDeCoser2 = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC2, sede2);
-        Maquinaria MaquinaDeCorte2 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2);
-        Maquinaria PlanchaIndustrial2 = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI2, sede2);
-        Maquinaria BordadoraIndustrial2 = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI2, sede2);
+        Maquinaria MaquinaDeCoser2 = new Maquinaria("Maquina de Coser Industrial", 4250000, 600, repuestosMC2, sede2, 1);
+        Maquinaria MaquinaDeCorte2 = new Maquinaria("Maquina de Corte", 6000000, 700, repuestosMCorte2, sede2, 1);
+        Maquinaria PlanchaIndustrial2 = new Maquinaria("Plancha Industrial", 2000000, 900, repuestosPI2, sede2, 1);
+        Maquinaria BordadoraIndustrial2 = new Maquinaria("Bordadora Industrial", 31000000, 500, repuestosBI2, sede2, 1);
         Maquinaria MaquinaDeTermofijado2 = new Maquinaria("Maquina de Termofijado", 20000000, 1000,
-                repuestosMTermofijado2, sede2);
+                repuestosMTermofijado2, sede2, 1);
         Maquinaria MaquinaDeTijereado2 = new Maquinaria("Maquina de Tijereado", 5000000, 600, repuestosMTijereado2,
-                sede2);
-        Maquinaria Impresora2 = new Maquinaria("Impresora", 800000, 2000, repuestosImp2, sede2);
-        Maquinaria Registradora2 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2);
-        Maquinaria Computador2 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2);
+                sede2, 1);
+        Maquinaria Impresora2 = new Maquinaria("Impresora", 800000, 2000, repuestosImp2, sede2, 1);
+        Maquinaria Registradora2 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2, 1);
+        Maquinaria Computador2 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2, 1);
 
         Banco bp = new Banco("principal", "Banco Montreal", 400_000_000, 0.05F);
         Banco b1 = new Banco("secundaria", "Banco Montreal", 5_000_000, 0.05F);
@@ -1005,7 +1005,7 @@ public class Main {
         Empleado Gutierrez = (new Empleado(Area.DIRECCION, new Fecha(5, 8, 19), sede2, "Saul Gutierrez", 9557933,
                 Rol.EJECUTIVO, 11, Membresia.NULA, Computador2));
         Empleado Marcela = (new Empleado(Area.DIRECCION, new Fecha(30, 11, 20), sede2, "Marcela Valencia", 8519803,
-                Rol.EJECUTIVO, 10, Membresia.ORO, Computador2.copiar()));
+                Rol.EJECUTIVO, 10, Membresia.ORO, Computador2.copiar(1)));
         Empleado Gabriela = (new Empleado(Area.VENTAS, new Fecha(1, 1, 24), sede2, "Gabriela Garza", 5287925,
                 Rol.VENDEDOR, 9, Membresia.PLATA, Registradora2));
         Empleado Patricia = (new Empleado(Area.OFICINA, new Fecha(5, 2, 23), sede2, "Patricia Fernandez", 4595311,
@@ -1013,13 +1013,13 @@ public class Main {
         Empleado Kenneth = (new Empleado(Area.CORTE, new Fecha(1, 1, 24), sede2, "Kenneth Johnson", 7494184,
                 Rol.MODISTA, 8, Membresia.ORO, PlanchaIndustrial2));
         Empleado Robles = (new Empleado(Area.OFICINA, new Fecha(12, 10, 24), sede2, "Miguel Robles", 7518004,
-                Rol.VENDEDOR, 7, Membresia.BRONCE, Impresora2.copiar()));
+                Rol.VENDEDOR, 7, Membresia.BRONCE, Impresora2.copiar(1)));
         Empleado Alejandra = (new Empleado(Area.CORTE, new Fecha(1, 2, 24), sede2, "Alejandra Zingg", 6840296,
                 Rol.MODISTA, 2, Membresia.BRONCE, BordadoraIndustrial2));
         Empleado Cecilia = (new Empleado(Area.CORTE, new Fecha(1, 2, 23), sede2, "Cecilia Bolocco", 7443886,
                 Rol.MODISTA, 10, Membresia.PLATA, MaquinaDeCoser2));
         Empleado Freddy = (new Empleado(Area.VENTAS, new Fecha(31, 1, 22), sede2, "Freddy Contreras", 6740561,
-                Rol.PLANTA, 5, Membresia.NULA, Registradora2.copiar()));
+                Rol.PLANTA, 5, Membresia.NULA, Registradora2.copiar(1)));
         Empleado Adriana = (new Empleado(Area.CORTE, new Fecha(18, 6, 25), sede2, "Adriana arboleda", 5927947,
                 Rol.MODISTA, 20, Membresia.ORO, MaquinaDeCorte2));
         Empleado Karina = (new Empleado(Area.CORTE, new Fecha(9, 3, 25), sede2, "Karina Larson", 5229381, Rol.MODISTA,
@@ -1027,7 +1027,7 @@ public class Main {
         Empleado Jenny = (new Empleado(Area.CORTE, new Fecha(1, 8, 24), sede2, "Jenny Garcia", 4264643, Rol.MODISTA, 1,
                 Membresia.ORO, MaquinaDeTijereado2));
         Empleado ol = new Empleado(Area.DIRECCION, new Fecha(1, 2, 20), sede2, "Gustavo Olarte", 7470922, Rol.EJECUTIVO,
-                3, Membresia.NULA, Computador2.copiar());
+                3, Membresia.NULA, Computador2.copiar(1));
         ol.setTraslados(3);
         ArrayList<Area> a = new ArrayList<Area>();
         a.add(Area.VENTAS);
@@ -1228,33 +1228,36 @@ public class Main {
 
     // para la interaccion 1 de produccion
     public void dondeRetirar() {
-
+        
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("¿Desde cual sede quieres comprar el repuesto requerido?");
-        System.out.println("1. " + sedeP.getNombre() + " tiene disponible: " + sedeP.getCuentaSede().getAhorroBanco());
-        System.out.println("2. " + sede2.getNombre() + " tiene disponible: " + sede2.getCuentaSede().getAhorroBanco());
-
+        System.out.println("\n*Seleccione la sede desde donde comprara el Respuesto:\n");
+        if(Sede.getlistaSedes().get(0).getCuentaSede().getAhorroBanco() >= Main.proveedorBdelmain.getPrecio()){
+            System.out.println("1. " + Sede.getlistaSedes().get(0).getNombre() + " tiene disponible: " + Sede.getlistaSedes().get(0).getCuentaSede().getAhorroBanco());
+        }
+        if(Sede.getlistaSedes().get(1).getCuentaSede().getAhorroBanco() >= Main.proveedorBdelmain.getPrecio()){
+            System.out.println("2. " + Sede.getlistaSedes().get(1).getNombre() + " tiene disponible: " + Sede.getlistaSedes().get(1).getCuentaSede().getAhorroBanco());
+        }
         int opcion = 0;
         while(opcion != 1 && opcion != 2){
-            opcion = nextIntSeguro(scanner);
+            opcion = scanner.nextInt();
             if (opcion == 1) {
-                long nuevoDineroSede = (sedeP.getCuentaSede().getAhorroBanco()
+                long nuevoDineroSede = (Sede.getlistaSedes().get(0).getCuentaSede().getAhorroBanco()
                         - proveedorBdelmain.getInsumo().getPrecioIndividual());
-                sedeP.getCuentaSede().setAhorroBanco(nuevoDineroSede);
+                Sede.getlistaSedes().get(0).getCuentaSede().setAhorroBanco(nuevoDineroSede);
 
-                System.out.println("El repuesto se compro exitosamente desde la sede " + sedeP.getNombre() + ", saldo disponible:");
-                System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
-                System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
+                System.out.println("El repuesto se compro exitosamente desde la " + Sede.getlistaSedes().get(0).getNombre() + ", saldo disponible:");
+                System.out.println(Sede.getlistaSedes().get(0).getNombre() + " = " + Sede.getlistaSedes().get(0).getCuentaSede().getAhorroBanco());
+                System.out.println(Sede.getlistaSedes().get(1).getNombre() + " = " + Sede.getlistaSedes().get(1).getCuentaSede().getAhorroBanco());
 
             } else if (opcion == 2) {
-                long nuevoDineroSede = (sede2.getCuentaSede().getAhorroBanco()
+                long nuevoDineroSede = (Sede.getlistaSedes().get(1).getCuentaSede().getAhorroBanco()
                         - proveedorBdelmain.getInsumo().getPrecioIndividual());
-                sede2.getCuentaSede().setAhorroBanco(nuevoDineroSede);
+                Sede.getlistaSedes().get(1).getCuentaSede().setAhorroBanco(nuevoDineroSede);
 
-                System.out.println("El repuesto se compro exitosamente desde la sede " + sede2.getNombre() + ", saldo disponible:");
-                System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
-                System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
+                System.out.println("El repuesto se compro exitosamente desde la sede " + Sede.getlistaSedes().get(1).getNombre() + ", saldo disponible:");
+                System.out.println(Sede.getlistaSedes().get(0).getNombre() + " = " + Sede.getlistaSedes().get(0).getCuentaSede().getAhorroBanco());
+                System.out.println(Sede.getlistaSedes().get(1).getNombre() + " = " + Sede.getlistaSedes().get(1).getCuentaSede().getAhorroBanco());
             } else {
                 System.out.println("Opcion incorrecta, marque 1 o 2 segun desee");
             }
