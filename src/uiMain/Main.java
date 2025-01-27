@@ -58,7 +58,7 @@ public class Main {
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
             System.out.println("\n"+"¿Que operación desea realizar?");
-            System.out.println("1.Reemplazar empleados");
+            System.out.println("1.Despedir/Contratar empleados");
             System.out.println("2.Adquirir insumos para produccion");
             System.out.println("3.Ver el desglose economico de la empresa");
             System.out.println("4.Vender un producto");
@@ -160,9 +160,8 @@ public class Main {
         for (String mensaje : mensajes) {
             System.out.println(mensaje);
         }
-
-
-        System.out.println("Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
+        
+       
         int diferenciaSalarios = -Persona.diferenciaSalarios();
         if (diferenciaSalarios>0){
             System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" sobre el promedio de salarios");
@@ -171,13 +170,16 @@ public class Main {
         } else {
             System.out.println("Tus empleados estan en el promedio de salarios");
         }
+
+        System.out.println("\n"+"Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
+
         for (Empleado emp : aDespedir) {
-            System.out.println(emp.getNombre() + " " + emp.getAreaActual() + " " + emp.getDocumento());
+            System.out.println("Nombre:" +emp.getNombre() + ", Área: " + emp.getAreaActual() + ", Documento: " + emp.getDocumento());
         }
         int opcion = 2;
         while (opcion == 2) {
             System.out.println("1. Elegir a los despedidos");
-            System.out.println("2. Añadir a alguien mas");
+            System.out.println("2. Añadir a alguien más");
             opcion = nextIntSeguro(scanner);
             if (opcion == 2) {
                 System.out.println("¿De que sede quieres añadir al empleado?"); // Para no imprimir una lista demasiado
@@ -245,16 +247,16 @@ public class Main {
                     + ", estos son los candidatos: Ingresa su nombre completo para hacerlo.");
             for (Empleado emp : sede.getlistaEmpleados()) {
                 if (emp.getRol().equals(rol)) {
-                    String descripcion = emp.getNombre() + " Documento:" + emp.getDocumento();
+                    String descripcion = "Nombre: " + emp.getNombre() + ", Documento:" + emp.getDocumento();
                     switch (emp.getRol()) {
                         case VENDEDOR:
-                            descripcion += " Ventas asesoradas: " + Venta.acumuladoVentasAsesoradas(emp);
+                            descripcion += ", Ventas asesoradas: " + Venta.acumuladoVentasAsesoradas(emp);
                             break;
                         case MODISTA:
-                            descripcion += " Pericia: " + emp.getPericia();
+                            descripcion += ", Pericia: " + emp.getPericia();
                             break;
                         default:
-                            descripcion += " contratado en " + emp.getFechaContratacion();
+                            descripcion += ", contratado en " + emp.getFechaContratacion();
                     }
                     System.out.println(descripcion);
                 }
@@ -299,7 +301,7 @@ public class Main {
             System.out.println("Se nececitan " + cantidadNecesaria + " " + rol + "s, estos son los candidatos:");
 
             for (Persona persona : aptos) {
-                System.out.println("Nombre: " + persona.getNombre() + " Documento: " + persona.getDocumento() + " con "
+                System.out.println("Nombre: " + persona.getNombre() + ", Documento: " + persona.getDocumento() + ", con "
                         + persona.getExperiencia() + " años de experiencia.");
             }
 
@@ -308,7 +310,7 @@ public class Main {
             for (int cantidadContratada = 0; cantidadContratada < cantidadNecesaria; cantidadContratada++) {
                 String nombre = in.nextLine().trim();
                 for (Persona persona : aptos) {
-                    if (persona.getNombre().equalsIgnoreCase(nombre)) {
+                    if (comparador.compare(persona.getNombre(), nombre)==0) {
                         aContratar.add(persona);
                         System.out.println("Seleccionaste a " + persona.getNombre()+" con "+(persona.calcularSalario()-persona.valorEsperadoSalario())+" de diferencia salarial sobre el promedio");
                     }
@@ -451,16 +453,14 @@ public class Main {
             ArrayList<Object> listaXSede = new ArrayList<>();
             ArrayList<Insumo> insumoXSede = new ArrayList<>();
             ArrayList<Integer> cantidadAPedir = new ArrayList<>();
-            int contador1 = 0;
-            int contador2 = 0;
+            boolean pantalonesPredichos = false;
+            boolean camisasPredichas = false;
             float prediccionp=0;
             float prediccionc=0;
 
             for (Prenda prenda : x.getPrendasInventadas()) {
                 System.out.println(prenda);
-                System.out.println(contador1);
-                System.out.println(contador2);
-                if (prenda instanceof Pantalon && contador1 == 0) {
+                if (prenda instanceof Pantalon && !pantalonesPredichos) {
 
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
                     prediccionp = proyeccion * (1 - Venta.getPesimismo());
@@ -472,22 +472,9 @@ public class Main {
                     for (int i : Pantalon.getCantidadInsumo()) {
                         cantidadAPedir.add((int)(Math.ceil(i * prediccionp)));
                     }
-                    contador1++;
+                    pantalonesPredichos=true;
                 }
-                if (prenda instanceof Pantalon && contador1>0){
-                    for (int i=0;i<prenda.getInsumo().size();i++) {
-                        for (int j=0;j<insumoXSede.size();j++) {
-                            if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
-                            insumoXSede.add(prenda.getInsumo().get(i));
-                            cantidadAPedir.add((int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp)));}
-                            else {
-                                cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp))));
-                            }
-                        } 
-                    }
-                    contador1++;
-                    }
-                if (prenda instanceof Camisa && contador2 == 0) {
+                if (prenda instanceof Camisa && !camisasPredichas) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
                     prediccionc = proyeccion * (1 - Venta.getPesimismo());
 
@@ -506,22 +493,9 @@ public class Main {
                             cantidadAPedir.set(index, cantidadAPedir.get(index) + cantidad);
                         }
                     }
-                    contador2++;
+                    camisasPredichas=true;
                 }
-            if (prenda instanceof Camisa && contador2>0){
-                for (int i=0;i<prenda.getInsumo().size();i++) {
-                    for (int j=0;j<insumoXSede.size();j++) {
-                        if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
-                        insumoXSede.add(prenda.getInsumo().get(i));
-                        cantidadAPedir.add((int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc)));}
-                        else {
-                        cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc))));
-                        }
-                    } 
-                }
-                contador2++;
             }
-        }
             
             listaXSede.add(0,insumoXSede);
             listaXSede.add(1,cantidadAPedir);
@@ -1191,6 +1165,9 @@ public class Main {
         b3.setAhorroBanco(b3.getAhorroBanco() + 600000);
         int com6 = (int) (600000 * 0.05f);
         Wilson.setRendimientoBonificacion(com6);
+
+        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Aura, Cata, 10, sedeP);
+        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Gabriela, Freddy, 10, sede2);
     }
 
     static void crearVentaAleatoria(int deTantosProductos,int aTantosProductos, Fecha fecha, Empleado asesor, Empleado encargado, int cantidad,Sede sede){
@@ -1202,13 +1179,31 @@ public class Main {
             for (int idxProducto=0;idxProducto<cantidadProductos; idxProducto++){
                 int tipoProducto = (int) (Math.random() * 2);
                 if (tipoProducto==0){
-                    Camisa producto = new Camisa(fecha, asesor, false, true, sede,Camisa.getInsumosNecesariosAleatorios());
+                    ArrayList <Insumo> insumos = new ArrayList<>();
+                    for (String tipoInsumo: Camisa.getTipoInsumo()){
+                        for (Proveedor proveedor : Proveedor.getListaProveedores()){
+                            if (proveedor.getInsumo().getNombre().equals(tipoInsumo)){
+                                insumos.add(new Insumo(tipoInsumo, 1, proveedor, sede));
+                                break;
+                            }
+                        }
+                    }
+                    Camisa producto = new Camisa(fecha, asesor, false, true, sede,insumos);
                     precio+=50_000;
                     costoEnvio+=1_000;
                     articulos.add(producto);
                 }
                 if (tipoProducto==1){
-                    Pantalon producto = new Pantalon(fecha, asesor, false, true, sede,Pantalon.getInsumosNecesariosAleatorios());
+                    ArrayList <Insumo> insumos = new ArrayList<>();
+                    for (String tipoInsumo: Pantalon.getTipoInsumo()){
+                        for (Proveedor proveedor : Proveedor.getListaProveedores()){
+                            if (proveedor.getInsumo().getNombre().equals(tipoInsumo)){
+                                insumos.add(new Insumo(tipoInsumo, 1, proveedor, sede));
+                                break;
+                            }
+                        }
+                    }
+                    Pantalon producto = new Pantalon(fecha, asesor, false, true, sede,insumos);
                     precio+=60_000;
                     costoEnvio+=1_000;
                     articulos.add(producto);
