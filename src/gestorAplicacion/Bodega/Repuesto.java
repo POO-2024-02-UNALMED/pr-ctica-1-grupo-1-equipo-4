@@ -10,6 +10,7 @@ public class Repuesto extends Insumo { // Implementa serializable por repuesto
     private ArrayList<Fecha> FechasCompra= new ArrayList<Fecha>();
     private ArrayList<Integer>  preciosCompra= new ArrayList<Integer>();
     private int horasDeUso = 0;
+    private boolean estado = true;
     
     public ArrayList<Fecha> getFechasCompra(){return FechasCompra;}
     public void setFechasCompra(Fecha FechasCompra){this.FechasCompra.add(FechasCompra);}
@@ -37,11 +38,25 @@ public class Repuesto extends Insumo { // Implementa serializable por repuesto
     public static ArrayList<Repuesto> getListadoRepuestoss(){
         return listadoRepuestos;
     }
+    public static void setListadoRepuestos(Respuesto repaRetirar){
+        Repuesto.listadoRepuestos.remove(repaRetirar);
+    }
+
+    public void setEstado(){
+        this.estado = false;
+    }
+    public boolean isEstado(){
+        return estado;
+    }
 
         //metodo para hacer una copia de un objeto de tipo Repuesto, con la misma inicializacion de atributos del que queremos copiar
     public Repuesto copiar(){
         return new Repuesto(this.nombre, this.horasDeVidaUtil, this.proveedor);
     }
+    public Repuesto copiar(Proveedor provBarato){
+        return new Repuesto(this.nombre, this.horasDeVidaUtil, provBarato);
+    }
+
 	public int calcularGastoMensual(Fecha fecha) {
         int gastoMensual=0;
         for (int i=0;i<FechasCompra.size();i++){
