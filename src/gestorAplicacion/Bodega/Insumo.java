@@ -69,6 +69,7 @@ public class Insumo implements GastoMensual,Serializable{
 	}
 	
 
+	public static long getPrecioStockTotal(){
 		return precioStockTotal;
 	}
 	public static void setPrecioStockTotal(long pSt){
