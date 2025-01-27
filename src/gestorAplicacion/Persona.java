@@ -146,7 +146,9 @@ public class Persona implements Serializable{
 	public static int valorEsperadoSalario(){
 		int valorEsperado=0;
 		for (Persona persona : listaPersonas) {
-			valorEsperado+=persona.calcularSalario();
+			if (!(persona instanceof Empleado)) {
+				valorEsperado+=persona.calcularSalario();
+			}
 		}
 		return valorEsperado / listaPersonas.size();
 	}
