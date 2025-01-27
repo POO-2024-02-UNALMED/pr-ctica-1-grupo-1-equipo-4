@@ -609,6 +609,18 @@ public class Sede implements Serializable{
 		return prodAproximada;
 	}
 
+	public ArrayList<Insumo> insumnosPorNombre(ArrayList<String> nombres){
+		ArrayList<Insumo> insumos = new ArrayList<>();
+		for (String nombre : nombres){
+			for (Insumo insumo : listaInsumosBodega){
+				if (insumo.getNombre().equalsIgnoreCase(nombre)){
+					insumos.add(insumo);
+				}
+			}
+		}
+		return insumos;
+	}
+
 	public ArrayList<Integer> modistasQueHay(){
 		ArrayList<Integer> modistasEnCadaSede = new ArrayList<>();
 		int enLaP = 0;

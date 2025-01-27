@@ -36,6 +36,14 @@ public class Proveedor implements Serializable{
 	}
 	//falta crear constructor que reciba tambien los repuestos y los precios de estos, pero hay que hablarlo primero
 
+	static public Proveedor buscarPorNombreInsumo(String nombre){
+		for(Proveedor p: listaProveedores){
+			if(p.tipoInsumo.getNombre().equals(nombre)){
+				return p;
+			}
+		}
+		return null;
+	}
 	
 	static public int costoDeLaCantidad(Insumo i, int c){
 		int precio = 0;
