@@ -555,13 +555,13 @@ public class Main {
                                             insumosAPedir.add(i);
                                             cantidadAPedir.add(restante2);
                                             if(i.getNombre().equals("Tela")){
-                                            System.out.println("Tenemos una cantidad de "+restante2+"cm de tela restantes a pedir ");}
+                                            System.out.println("\n"+"Tenemos una cantidad de "+restante2+"cm de tela restantes a pedir ");}
                                             else if (i.getNombre().equals("Boton")){
-                                                System.out.println("Tenemos una cantidad de "+restante2+" botones restantes a pedir ");}
+                                                System.out.println("\n"+"Tenemos una cantidad de "+restante2+" botones restantes a pedir ");}
                                             else if (i.getNombre().equals("Cremallera")){
-                                                 System.out.println("Tenemos una cantidad de "+restante2+" cremalleras restantes a pedir ");}
+                                                 System.out.println("\n"+"Tenemos una cantidad de "+restante2+" cremalleras restantes a pedir ");}
                                                 else {
-                                                System.out.println("Tenemos una cantidad de "+restante2+" cm de hilo restantes a pedir ");}
+                                                System.out.println("\n"+"Tenemos una cantidad de "+restante2+" cm de hilo restantes a pedir ");}
                                         }
                                         else{
                                             System.out.println("Insumo transferido en su totalidad");
