@@ -58,7 +58,7 @@ public class Main {
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
             System.out.println("\n"+"¿Que operación desea realizar?");
-            System.out.println("1.Despedir/Contratar empleados");
+            System.out.println("1.Despedir/Transferir/Contratar empleados");
             System.out.println("2.Adquirir insumos para produccion");
             System.out.println("3.Ver el desglose economico de la empresa");
             System.out.println("4.Vender un producto");
