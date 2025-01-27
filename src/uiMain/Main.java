@@ -539,7 +539,7 @@ public class Main {
                         int restante = Sede.transferirInsumo(i, productoEnOtraSede.getSede(),s,cantidadNecesaria);
                         if (restante != 0) {
                             if (productoEnOtraSede.getEncontrado() == true) {
-                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra "
+                                System.out.println("\n"+"Tenemos el insumo " + i.getNombre() + " en nuestra "
                                                     + productoEnOtraSede.getSede() + ".");
                                 System.out.println("El insumo tiene un costo de " + productoEnOtraSede.getPrecio());
                                 System.out.println("\n"+"Seleccione una de las siguientes opciones:");
