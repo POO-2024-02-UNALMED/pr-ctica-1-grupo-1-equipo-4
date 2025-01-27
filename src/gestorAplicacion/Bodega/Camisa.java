@@ -31,7 +31,7 @@ public class Camisa extends Prenda {
         long precios=0;
         int cantidades=0;
         long precioVenta=0;
-        for (Prenda camisa:Prenda.getPrendasInventadas()){
+        for (Prenda camisa:Sede.getPrendasInventadasTotal()){
             if (camisa instanceof Camisa){
                 precios+=camisa.calcularPrecio();
                 cantidades++;

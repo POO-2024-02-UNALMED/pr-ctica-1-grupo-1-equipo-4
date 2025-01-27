@@ -483,7 +483,8 @@ public class Main {
                     
                     for (int i = 0; i < prenda.getInsumo().size(); i++) {
                         Insumo insumo = prenda.getInsumo().get(i);
-                        int cantidad = (int) Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc);
+                        ArrayList<Integer> cantidadesPorPrenda = Camisa.getCantidadInsumo();
+                        int cantidad = (int) Math.ceil(cantidadesPorPrenda.get(i) * prediccionc);
                 
                         int index = insumoXSede.indexOf(insumo);
                         if (index == -1) {
@@ -670,12 +671,12 @@ public class Main {
                         }
                         Deuda deuda = null;
                         if (montoDeuda > 0) {
-                            if (!(proveedor.getDeuda().getEstadodePago())) {
+                            if (proveedor.getDeuda()==null){
+                                deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor",
+                                Deuda.calcularCuotas(montoDeuda));
+                            } else if (!proveedor.getDeuda().getEstadodePago()) {
                                 proveedor.unificarDeudasXProveedor(fecha, montoDeuda, proveedor.getNombre());
                                 deuda = proveedor.getDeuda();
-                            } else {
-                                deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor",
-                                        Deuda.calcularCuotas(montoDeuda));
                             }
                             deudas.add(deuda);
                         }
@@ -1001,29 +1002,29 @@ public class Main {
                 5, Membresia.NULA, Registradora.copiar()));
 
         Empleado Gutierrez = (new Empleado(Area.DIRECCION, new Fecha(5, 8, 19), sede2, "Saul Gutierrez", 9557933,
-                Rol.EJECUTIVO, 11, Membresia.NULA, Computador2.copiar()));
+                Rol.EJECUTIVO, 11, Membresia.NULA, Computador2));
         Empleado Marcela = (new Empleado(Area.DIRECCION, new Fecha(30, 11, 20), sede2, "Marcela Valencia", 8519803,
                 Rol.EJECUTIVO, 10, Membresia.ORO, Computador2.copiar()));
-        Empleado Gabriela = new Empleado(Area.VENTAS, new Fecha(1, 1, 24), sede2, "Gabriela Garza", 5287925,
-                Rol.VENDEDOR, 9, Membresia.PLATA, Registradora2.copiar());
+        Empleado Gabriela = (new Empleado(Area.VENTAS, new Fecha(1, 1, 24), sede2, "Gabriela Garza", 5287925,
+                Rol.VENDEDOR, 9, Membresia.PLATA, Registradora2));
         Empleado Patricia = (new Empleado(Area.OFICINA, new Fecha(5, 2, 23), sede2, "Patricia Fernandez", 4595311,
-                Rol.SECRETARIA, 6, Membresia.BRONCE, Impresora2.copiar()));
+                Rol.SECRETARIA, 6, Membresia.BRONCE, Impresora2));
         Empleado Kenneth = (new Empleado(Area.CORTE, new Fecha(1, 1, 24), sede2, "Kenneth Johnson", 7494184,
-                Rol.MODISTA, 8, Membresia.ORO, PlanchaIndustrial2.copiar()));
+                Rol.MODISTA, 8, Membresia.ORO, PlanchaIndustrial2));
         Empleado Robles = (new Empleado(Area.OFICINA, new Fecha(12, 10, 24), sede2, "Miguel Robles", 7518004,
                 Rol.VENDEDOR, 7, Membresia.BRONCE, Impresora2.copiar()));
         Empleado Alejandra = (new Empleado(Area.CORTE, new Fecha(1, 2, 24), sede2, "Alejandra Zingg", 6840296,
-                Rol.MODISTA, 2, Membresia.BRONCE, BordadoraIndustrial2.copiar()));
+                Rol.MODISTA, 2, Membresia.BRONCE, BordadoraIndustrial2));
         Empleado Cecilia = (new Empleado(Area.CORTE, new Fecha(1, 2, 23), sede2, "Cecilia Bolocco", 7443886,
-                Rol.MODISTA, 10, Membresia.PLATA, MaquinaDeCoser2.copiar()));
+                Rol.MODISTA, 10, Membresia.PLATA, MaquinaDeCoser2));
         Empleado Freddy = (new Empleado(Area.VENTAS, new Fecha(31, 1, 22), sede2, "Freddy Contreras", 6740561,
                 Rol.PLANTA, 5, Membresia.NULA, Registradora2.copiar()));
         Empleado Adriana = (new Empleado(Area.CORTE, new Fecha(18, 6, 25), sede2, "Adriana arboleda", 5927947,
-                Rol.MODISTA, 20, Membresia.ORO, MaquinaDeCorte2.copiar()));
+                Rol.MODISTA, 20, Membresia.ORO, MaquinaDeCorte2));
         Empleado Karina = (new Empleado(Area.CORTE, new Fecha(9, 3, 25), sede2, "Karina Larson", 5229381, Rol.MODISTA,
-                2, Membresia.PLATA, MaquinaDeTermofijado2.copiar()));
+                2, Membresia.PLATA, MaquinaDeTermofijado2));
         Empleado Jenny = (new Empleado(Area.CORTE, new Fecha(1, 8, 24), sede2, "Jenny Garcia", 4264643, Rol.MODISTA, 1,
-                Membresia.ORO, MaquinaDeTijereado2.copiar()));
+                Membresia.ORO, MaquinaDeTijereado2));
         Empleado ol = new Empleado(Area.DIRECCION, new Fecha(1, 2, 20), sede2, "Gustavo Olarte", 7470922, Rol.EJECUTIVO,
                 3, Membresia.NULA, Computador2.copiar());
         ol.setTraslados(3);
@@ -1340,7 +1341,7 @@ public class Main {
             //}
             int productoSeleccionado = scanner.nextInt();
             scanner.nextLine();
-            Prenda prendaSeleccionada = Prenda.getPrendasInventadas().get(productoSeleccionado);
+            Prenda prendaSeleccionada = Sede.getPrendasInventadasTotal().get(productoSeleccionado);
             String nombrePrendaSeleccionada = prendaSeleccionada.getNombre();
             System.out.println("Ingrese la cantidad de unidades que se desea del producto elegido:");
             int cantidadPrenda = scanner.nextInt();
@@ -1351,12 +1352,12 @@ public class Main {
             }
             manejarFaltantes(sede, cantidadPrenda, cantidadDisponible, nombrePrendaSeleccionada, costosEnvio);//Método que aumenta el stock faltante
             //De la prenda seleccionada en la sede.
-            if (cantidadPrenda > 0 && cantidadPrenda < Prenda.getPrendasInventadas().size()) {
+            if (cantidadPrenda > 0 && cantidadPrenda < Sede.getPrendasInventadasTotal().size()) {
                 int eliminadas = 0;
-                for (int i = 0;  i < Prenda.getPrendasInventadas().size() && eliminadas < cantidadPrenda; i++) {
-                    if (Prenda.getPrendasInventadas().get(i) == prendaSeleccionada) {
-                    Prenda eliminada = Prenda.getPrendasInventadas().get(i);
-                    Prenda.getPrendasInventadas().remove(i);// Remueve de la lista de prendasInventadas de la empresa
+                for (int i = 0;  i < Sede.getPrendasInventadasTotal().size() && eliminadas < cantidadPrenda; i++) {
+                    if (Sede.getPrendasInventadasTotal().get(i) == prendaSeleccionada) {
+                    Prenda eliminada = Sede.getPrendasInventadasTotal().get(i);
+                    Sede.getPrendasInventadasTotal().remove(i);// Remueve de la lista de prendasInventadas de la empresa
                     sede.getPrendasInventadas().remove(eliminada); // Remueve de la lista de prendasInventadas de la sede
                     productosSeleccionados.add(eliminada); // Agregarla a productosSeleccionados
                     eliminadas++;
@@ -1709,10 +1710,10 @@ public class Main {
         System.out.println("IVA: $" + IVA);
         System.out.println("Venta registrada por: " + venta.getEncargado());
         System.out.println("Asesor de la compra: " + venta.getAsesor());
-        
-        return "El monto total a pagar por parte del cliente es " + MontoPagar + 
-       " y el estado final de la cuenta de la sede es $" + bancoTransferir.getAhorroBanco();
-        }}
+        }
+    return "El monto total a pagar por parte del cliente es " + MontoPagar + 
+    " y el estado final de la cuenta de la sede es $" + bancoTransferir.getAhorroBanco();
+    }
 
     //Método auxiliar para transferencia de prendas
     private static void manejarFaltantes(Sede sede, int cantidadPrenda, int disponibles, String tipoPrenda, int costosEnvio) { 
