@@ -1147,22 +1147,22 @@ public class Main {
         Venta v3 = new Venta(sede2, new Fecha(29, 1, 25), c13, Freddy, Patricia, ps3, 300000, 350000);
         v3.setCostoEnvio(100000);
         b3.setAhorroBanco(b2.getAhorroBanco() + 350000);
-        int com3 = (int) (350000 * 0.05f);
+        int com3 = (int) (350_000 * 0.05f);
         Freddy.setRendimientoBonificacion(com3);
 
         ArrayList<Prenda> ps4 = new ArrayList<Prenda>();
         ps4.add(r1);
         ps4.add(r2);
-        Venta v4 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps4, 300000, 350000);
-        v4.setCostoEnvio(100000);
+        Venta v4 = new Venta(sedeP, new Fecha(30, 11, 24), c6, Aura, Cata, ps4, 300000, 350_000);
+        v4.setCostoEnvio(100_000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 350000);
         int com4 = (int) (350000 * 0.05f);
         Aura.setRendimientoBonificacion(com3);
 
         ArrayList<Prenda> ps5 = new ArrayList<Prenda>();
         ps5.add(r7);
-        Venta v5 = new Venta(sedeP, new Fecha(30, 1, 25), c6, Aura, Cata, ps5, 300000, 350000);
-        v5.setCostoEnvio(100000);
+        Venta v5 = new Venta(sedeP, new Fecha(30, 1, 25), c6, Aura, Cata, ps5, 300000, 350_000);
+        v5.setCostoEnvio(100_000);
         b1.setAhorroBanco(b1.getAhorroBanco() + 350000);
         int com5 = (int) (350000 * 0.05f);
         Aura.setRendimientoBonificacion(com3);
@@ -1170,10 +1170,10 @@ public class Main {
         ArrayList<Prenda> ps6 = new ArrayList<Prenda>();
         ps6.add(r15);
         ps6.add(r16);
-        Venta v6 = new Venta(sedeP, new Fecha(25, 11, 24), c4, Wilson, Mario, ps6, 400000, 60000);
+        Venta v6 = new Venta(sedeP, new Fecha(25, 11, 24), c4, Wilson, Mario, ps6, 400000, 600_000);
         v6.setCostoEnvio(100000);
         b3.setAhorroBanco(b3.getAhorroBanco() + 600000);
-        int com6 = (int) (600000 * 0.05f);
+        int com6 = (int) (600_000 * 0.05f);
         Wilson.setRendimientoBonificacion(com6);
 
         crearVentaAleatoria(5, 10, new Fecha(20,1,25), Aura, Cata, 10, sedeP);
