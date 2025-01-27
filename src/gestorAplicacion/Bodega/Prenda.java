@@ -1,15 +1,15 @@
 package gestorAplicacion.Bodega;
+import gestorAplicacion.Administracion.Area;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.GastoMensual;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
-import uiMain.Main;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import uiMain.Main;
 
 public abstract class Prenda implements GastoMensual, Serializable{
     private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
     protected int costoProduccion=0;
     protected long precio;
     //costos necesarios para calcular el precio de cada prenda
-    protected static float porcentajeGanancia = 0.30f;  // Porcentaje que afecta la cantidad a producir
+    protected static float porcentajeGanancia = 0.40f;  // Porcentaje que afecta la cantidad a producir
     //costos necesarios para calcular el precio de cada prenda
     private static ArrayList<Prenda> prendasInventadas = new ArrayList<Prenda>();
     // Porcentaje que afecta la cantidad a producir
@@ -46,6 +46,15 @@ public abstract class Prenda implements GastoMensual, Serializable{
             this.insumo.add(insumos.get(i));
             this.costoInsumos+=insumos.get(i).getPrecioIndividual();
         }
+        int manoObra=0;
+        int modistas=0;
+        for (Empleado emp:Empleado.getEmpCreadoss()){
+            if(emp.getAreaActual().equals(Area.CORTE)){
+                manoObra+=emp.calcularSalario();
+                modistas++;
+            }
+        }
+        this.costoProduccion=Math.round((manoObra/modistas)*0.08f);
         Prenda.prendasInventadas.add(this);
         sede.getPrendasInventadas().add(this);
         if(descartada){modista.setPrendasDescartadas(modista.getPrendasDescartadas()+1);}
@@ -69,8 +78,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
         ArrayList<Prenda> prendas = new ArrayList<Prenda>();
 
         for (int i=0;i<cantidadPantalones;i++){
-            Collections.shuffle(Pantalon.posiblesInsumosNecesarios);
-            Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,Pantalon.getPosiblesInsumosNecesarios().get(0));
+            Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,Pantalon.getTipoInsumo());
             prendas.add(pantalon);
         }
         for (int i=0;i<cantidadCamisas;i++){
@@ -192,14 +200,18 @@ public abstract class Prenda implements GastoMensual, Serializable{
     public long getPrecio() {return this.precio;}
 
     public String toString(){
-        return "La prenda de tipo "+nombre+" a cargo del modista "+modista.getNombre()+" se encuentra actualmente en la sede"+sede.getNombre();
+        return "La prenda de tipo "+nombre;
     }
     
     public float calcularCostoInsumos() {
         this.costoInsumos = 0;
         for (int i = 0; i < insumo.size(); i++) {
                Insumo insumoI = insumo.get(i);
-               float cantidad = cantidadInsumo.get(i);
+               float cantidad =0;
+               if (this instanceof Pantalon)
+                cantidad=Pantalon.getCantidadInsumo().get(i);
+                else if (this instanceof Camisa)
+                cantidad=Camisa.getCantidadInsumo().get(i);
                this.costoInsumos += insumoI.precioXUnidad * cantidad;
            } 
         return this.costoInsumos;

@@ -16,14 +16,13 @@ public class Empleado extends Persona implements GastoMensual{
     
     private static final long serialVersionUID = 1L;
 
-	public static ArrayList<Empleado> listaEmpleados=new ArrayList<Empleado>();
-    // Usado para empleados de Dirección.
 
     private Area areaActual;
     private Fecha fechaContratacion;
     private Sede sede;
     private Maquinaria maquinaria;
     private ArrayList<Evaluacionfinanciera> evaluaciones = new ArrayList<Evaluacionfinanciera>();
+    // Usado para empleados de Dirección.
     private ArrayList<Venta> ventasEncargadas = new ArrayList<Venta>();
     private ArrayList<Area> areas = new ArrayList<Area>();
     private int traslados;
@@ -34,7 +33,7 @@ public class Empleado extends Persona implements GastoMensual{
 	protected int salario;
     public Empleado(Persona p){
         super(p.getNombre(),p.getDocumento(),p.getRol(),p.getExperiencia(),p.isTrabaja(),p.getMembresia());
-        Empleado.listaEmpleados.add(this);
+        Sede.getListaEmpleadosTotal().add(this);
     }
 
     public Empleado(Area area,Fecha fecha, Sede sede,Persona p){
@@ -52,7 +51,7 @@ public class Empleado extends Persona implements GastoMensual{
         this.areas.add(area);
         fechaContratacion=fecha;
         this.sede=sede;
-        Empleado.listaEmpleados.add(this);
+        Sede.getListaEmpleadosTotal().add(this);
         maquinaria=maquina;
         //sede.getlistaMaquinas().add(maquina);
         sede.getlistaEmpleados().add(this);
@@ -66,7 +65,7 @@ public class Empleado extends Persona implements GastoMensual{
 
     public static int gastoMensualClase() {
         int gasto=0;
-        for (Empleado empleado : listaEmpleados){
+        for (Empleado empleado : Sede.getListaEmpleadosTotal()){
             gasto+=empleado.calcularGastoMensual();
         }
         return gasto;
@@ -96,7 +95,7 @@ public class Empleado extends Persona implements GastoMensual{
                 if (rendimiento < rendimientoDeseado){
                     seVaADespedir = true;
                     listaADespedir.add(emp);
-                    mensajes.add("El empleado "+emp.getNombre()+" ha sido tiene rendimiento insuficiente, con un rendimiento de "+String.format("%,d",(int) rendimiento)+" y un rendimiento deseado de "+String.format("%,d",(int) rendimientoDeseado));
+                    mensajes.add("El empleado "+emp.getNombre()+" tiene un rendimiento insuficiente, con un rendimiento de "+String.format("%,d",(int) rendimiento)+" y un rendimiento deseado de "+String.format("%,d",(int) rendimientoDeseado));
                 }
                 // Verificamos posibilidades de transferencia.
                 if(seVaADespedir){
@@ -148,7 +147,7 @@ public class Empleado extends Persona implements GastoMensual{
     static public void despedirEmpleados(ArrayList<Empleado> empleados, boolean conTransacciones, Fecha fecha){
         for (Empleado emp : empleados){
             emp.sede.getlistaEmpleados().remove(emp);
-            listaEmpleados.remove(emp);
+            Sede.getListaEmpleadosTotal().remove(emp);
 
             if(conTransacciones){
                 int aPagar = Maquinaria.remuneracionDanos(emp);
@@ -276,24 +275,25 @@ public class Empleado extends Persona implements GastoMensual{
     public ArrayList<Venta> getVentasEncargadas(){return ventasEncargadas;}
 
     public static ArrayList<Empleado> getEmpCreadoss(){
-        return Empleado.listaEmpleados;
+        return Sede.getListaEmpleadosTotal();
     }
 
     public int calcularSalario(Scanner in){ // El scanner se recibe para pasar a ingresarFecha, no se usa aquí.
 		int valor=0;
         valor+=super.calcularSalario();
 		valor=valor*(1+bonificacion);
-        Fecha fecha=Main.ingresarFecha(in);
+
+        Fecha fecha=Main.fecha;
         valor+=valor*(fechaContratacion.diasHasta(fecha))/360;
 	return valor;
 	}
 
 	public static int valorEsperadoSalario(){
 		int valorEsperado=0;
-		for (Empleado empleado : listaEmpleados) {
+		for (Empleado empleado : Sede.getListaEmpleadosTotal()) {
 			empleado.calcularSalario();
 		}
-		return valorEsperado;
+		return valorEsperado / Sede.getListaEmpleadosTotal().size();
 	}
 
 }

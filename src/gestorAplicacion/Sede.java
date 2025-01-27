@@ -19,6 +19,7 @@ public class Sede implements Serializable{
 
 	private static final long serialVersionUID = 1L; // Para serializacion
 
+	private static ArrayList<Empleado> listaEmpleadosTotal=new ArrayList<Empleado>(); // Por razones de serializacion.
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 
 	// Ahora está aquí y en no en Evaluacionfinanciera por razones de serialización.
@@ -76,27 +77,26 @@ public class Sede implements Serializable{
 		return resultado;
 	}
 
-	static public int restarInsumo(Insumo i, Sede s, int c){
+	// Retorna lo que no se pudo sacar de la sede s
+	static public int transferirInsumo(Insumo i, Sede donadora, Sede beneficiaria, int cantidadSolicitada){
 		int restante = 0;
-		for(int x = 0 ; x < s.getListaInsumosBodega().size() ; x++){
-			if(i.equals(s.getListaInsumosBodega().get(x))){
-				int cantidad = s.getCantidadInsumosBodega().get(x);
-				long ajusteStock = (Insumo.getPrecioStockTotal())-(i.getPrecioIndividual()*c);
-				Insumo.setPrecioStockTotal(ajusteStock);
-				if((cantidad-c)==0){
-					s.cantidadInsumosBodega.set(x,0);
-					
-				}
-				else if((cantidad-c)<0){
-					restante = (cantidad - c)*-1;
-					s.cantidadInsumosBodega.set(x,0);
-				}
-				else{
-				s.cantidadInsumosBodega.set(x,(cantidad-c));
-				}
-			}
-		
+		int idxInsumo = donadora.getListaInsumosBodega().indexOf(i);
+		int cantidadDisponible = Math.min(donadora.getCantidadInsumosBodega().get(idxInsumo),cantidadSolicitada);
+		long ajusteStock = (Insumo.getPrecioStockTotal())-(i.getPrecioIndividual()*cantidadSolicitada);
+		Insumo.setPrecioStockTotal(ajusteStock);
+		if((cantidadDisponible-cantidadSolicitada)==0){
+			donadora.cantidadInsumosBodega.set(idxInsumo,0);
+			
 		}
+		else if((cantidadDisponible-cantidadSolicitada)<0){
+			restante = (cantidadDisponible - cantidadSolicitada)*-1;
+			donadora.cantidadInsumosBodega.set(idxInsumo,0);
+		}
+		else{
+			donadora.cantidadInsumosBodega.set(idxInsumo,(cantidadDisponible-cantidadSolicitada));
+		}
+
+		añadirInsumo(i, beneficiaria, cantidadSolicitada-cantidadDisponible);
 		return restante;
 	}
 
@@ -120,12 +120,17 @@ public class Sede implements Serializable{
 		int precio = 0;
 		for(Sede sede : listaSedes){
 			for(int x = 0 ; x < sede.getListaInsumosBodega().size() ; x++){
-				if(i.equals(sede.getListaInsumosBodega().get(x))){
-					index = x;
-					retorno = true;
-					sedeATransferir = sede;
-					precio = i.getPrecioCompra();
-					break;
+				if(i.equals(sede.getListaInsumosBodega().get(x)) ){
+					for(int c : sede.cantidadInsumosBodega){
+						if(sede.getCantidadInsumosBodega().get(x)!= 0){
+							index = x;
+							retorno = true;
+							sedeATransferir = sede;
+							precio = i.getPrecioCompra();
+							break;
+						}
+					}
+					
 				}
 		
 			}
@@ -165,6 +170,7 @@ public class Sede implements Serializable{
 	public void quitarEmpleado(Empleado emp){listaEmpleado.remove(emp);}
 	static public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){evaluacionesFinancieras=evaluaciones;}
 	static public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluacionesFinancieras;}
+	static public ArrayList<Empleado> getListaEmpleadosTotal(){return listaEmpleadosTotal;}
 	
 	public ArrayList<Integer> getProdAproximada(){
 		return prodAproximada;
@@ -257,8 +263,6 @@ public class Sede implements Serializable{
 		}
 	}
 
-	// ---Metodos ayudantes---
-
 	// Devuelve la cantidad de empleados que hay en la sede con el rol dado
 	// metodo ayudante para reorganizarEmpleados
 	public int cantidadPorRol(Rol rol){
@@ -282,7 +286,7 @@ public class Sede implements Serializable{
 	}
 
 	public String toString(){
-		return nombre+" con "	+listaEmpleado.size()+" empleados";
+		return nombre;
 	}
 
 	// Usado para eliminar un Insumo limpiamente
@@ -602,7 +606,7 @@ public class Sede implements Serializable{
 		int enLaP = 0;
 		int enLa2 = 0;
 
-		for(Empleado empCreados : Empleado.listaEmpleados){
+		for(Empleado empCreados : listaEmpleadosTotal){
 			if(empCreados.getAreaActual().getNombre().equalsIgnoreCase("Corte") && empCreados.getSede().getNombre().equalsIgnoreCase("Sede Principal")){
 				++enLaP;
 			}
