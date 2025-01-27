@@ -453,16 +453,14 @@ public class Main {
             ArrayList<Object> listaXSede = new ArrayList<>();
             ArrayList<Insumo> insumoXSede = new ArrayList<>();
             ArrayList<Integer> cantidadAPedir = new ArrayList<>();
-            int contador1 = 0;
-            int contador2 = 0;
+            boolean pantalonesPredichos = false;
+            boolean camisasPredichas = false;
             float prediccionp=0;
             float prediccionc=0;
 
             for (Prenda prenda : x.getPrendasInventadas()) {
                 System.out.println(prenda);
-                System.out.println(contador1);
-                System.out.println(contador2);
-                if (prenda instanceof Pantalon && contador1 == 0) {
+                if (prenda instanceof Pantalon && !pantalonesPredichos) {
 
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
                     prediccionp = proyeccion * (1 - Venta.getPesimismo());
@@ -474,22 +472,9 @@ public class Main {
                     for (int i : Pantalon.getCantidadInsumo()) {
                         cantidadAPedir.add((int)(Math.ceil(i * prediccionp)));
                     }
-                    contador1++;
+                    pantalonesPredichos=true;
                 }
-                if (prenda instanceof Pantalon && contador1>0){
-                    for (int i=0;i<prenda.getInsumo().size();i++) {
-                        for (int j=0;j<insumoXSede.size();j++) {
-                            if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
-                            insumoXSede.add(prenda.getInsumo().get(i));
-                            cantidadAPedir.add((int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp)));}
-                            else {
-                                cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Pantalon.getCantidadInsumo().get(i) * prediccionp))));
-                            }
-                        } 
-                    }
-                    contador1++;
-                    }
-                if (prenda instanceof Camisa && contador2 == 0) {
+                if (prenda instanceof Camisa && !camisasPredichas) {
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
                     prediccionc = proyeccion * (1 - Venta.getPesimismo());
 
@@ -508,22 +493,9 @@ public class Main {
                             cantidadAPedir.set(index, cantidadAPedir.get(index) + cantidad);
                         }
                     }
-                    contador2++;
+                    camisasPredichas=true;
                 }
-            if (prenda instanceof Camisa && contador2>0){
-                for (int i=0;i<prenda.getInsumo().size();i++) {
-                    for (int j=0;j<insumoXSede.size();j++) {
-                        if (!prenda.getInsumo().get(i).getNombre().equals(insumoXSede.get(j).getNombre())){
-                        insumoXSede.add(prenda.getInsumo().get(i));
-                        cantidadAPedir.add((int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc)));}
-                        else {
-                        cantidadAPedir.add(j,(cantidadAPedir.get(j)+(int)(Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc))));
-                        }
-                    } 
-                }
-                contador2++;
             }
-        }
             
             listaXSede.add(0,insumoXSede);
             listaXSede.add(1,cantidadAPedir);
@@ -554,10 +526,17 @@ public class Main {
             for (Sede s : Sede.getlistaSedes()) {
                 for (Insumo i : listaInsumos) {
                     Resultado productoEnBodega = Sede.verificarProductoBodega(i, s);
+                    int idxInsumo = listaInsumos.indexOf(i);
                     if (productoEnBodega.getEncontrado() == true) {
-                        int restante = Sede.restarInsumo(i, s, listaCantidades.get((int) productoEnBodega.getIndex()));
+                        listaCantidades.set(idxInsumo, listaCantidades.get(idxInsumo) - s.getCantidadInsumosBodega().get(productoEnBodega.getIndex())); // Quitamos la cantidad de insumos que ya tenemos
+                    }
+
+
+                    int cantidadNecesaria = listaCantidades.get(listaInsumos.indexOf(i));
+                    Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
+                    if (productoEnOtraSede.getEncontrado() == true) {
+                        int restante = Sede.transferirInsumo(i, productoEnOtraSede.getSede(),s,cantidadNecesaria);
                         if (restante != 0) {
-                            Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
                             if (productoEnOtraSede.getEncontrado() == true) {
                                 System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra "
                                                     + productoEnOtraSede.getSede() + ".");
@@ -570,7 +549,7 @@ public class Main {
                                 int opcion = in.nextInt();
                                 switch (opcion) {
                                     case 1:
-                                        int restante2 = Sede.restarInsumo(i, s, restante);
+                                        int restante2 = Sede.transferirInsumo(i, s, productoEnOtraSede.getSede(), restante);
                                         System.out.println("\n"+i+" transferido desde "+s+" con éxito");
                                         if (restante2 != 0) {
                                             insumosAPedir.add(i);
@@ -610,6 +589,7 @@ public class Main {
         return listaA;
     }
 
+    // La lista A contiene 1 lista por sede, cada 1 con 2 listas, 1 con insumos la otra con cantidades.
     // Interacción 3 de Insumos
     static public String comprarInsumos(Fecha fecha, ArrayList<Object> listaA) {
         ArrayList<Object> sede = new ArrayList<>();
@@ -1193,6 +1173,9 @@ public class Main {
         b3.setAhorroBanco(b3.getAhorroBanco() + 600000);
         int com6 = (int) (600000 * 0.05f);
         Wilson.setRendimientoBonificacion(com6);
+
+        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Aura, Cata, 10, sedeP);
+        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Gabriela, Freddy, 10, sede2);
     }
 
     static void crearVentaAleatoria(int deTantosProductos,int aTantosProductos, Fecha fecha, Empleado asesor, Empleado encargado, int cantidad,Sede sede){
@@ -1204,13 +1187,31 @@ public class Main {
             for (int idxProducto=0;idxProducto<cantidadProductos; idxProducto++){
                 int tipoProducto = (int) (Math.random() * 2);
                 if (tipoProducto==0){
-                    Camisa producto = new Camisa(fecha, asesor, false, true, sede,Camisa.getInsumosNecesariosAleatorios());
+                    ArrayList <Insumo> insumos = new ArrayList<>();
+                    for (String tipoInsumo: Camisa.getTipoInsumo()){
+                        for (Proveedor proveedor : Proveedor.getListaProveedores()){
+                            if (proveedor.getInsumo().getNombre().equals(tipoInsumo)){
+                                insumos.add(new Insumo(tipoInsumo, 1, proveedor, sede));
+                                break;
+                            }
+                        }
+                    }
+                    Camisa producto = new Camisa(fecha, asesor, false, true, sede,insumos);
                     precio+=50_000;
                     costoEnvio+=1_000;
                     articulos.add(producto);
                 }
                 if (tipoProducto==1){
-                    Pantalon producto = new Pantalon(fecha, asesor, false, true, sede,Pantalon.getInsumosNecesariosAleatorios());
+                    ArrayList <Insumo> insumos = new ArrayList<>();
+                    for (String tipoInsumo: Pantalon.getTipoInsumo()){
+                        for (Proveedor proveedor : Proveedor.getListaProveedores()){
+                            if (proveedor.getInsumo().getNombre().equals(tipoInsumo)){
+                                insumos.add(new Insumo(tipoInsumo, 1, proveedor, sede));
+                                break;
+                            }
+                        }
+                    }
+                    Pantalon producto = new Pantalon(fecha, asesor, false, true, sede,insumos);
                     precio+=60_000;
                     costoEnvio+=1_000;
                     articulos.add(producto);
@@ -1240,8 +1241,7 @@ public class Main {
                         - proveedorBdelmain.getInsumo().getPrecioIndividual());
                 sedeP.getCuentaSede().setAhorroBanco(nuevoDineroSede);
 
-                System.out.println(
-                        "El repuesto se compro exitosamente desde la sede " + sedeP.getNombre() + ", saldo disponible:");
+                System.out.println("El repuesto se compro exitosamente desde la sede " + sedeP.getNombre() + ", saldo disponible:");
                 System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
                 System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
 
@@ -1250,8 +1250,7 @@ public class Main {
                         - proveedorBdelmain.getInsumo().getPrecioIndividual());
                 sede2.getCuentaSede().setAhorroBanco(nuevoDineroSede);
 
-                System.out.println(
-                        "El repuesto se compro exitosamente desde la sede " + sede2.getNombre() + ", saldo disponible:");
+                System.out.println("El repuesto se compro exitosamente desde la sede " + sede2.getNombre() + ", saldo disponible:");
                 System.out.println(sedeP.getNombre() + " = " + sedeP.getCuentaSede().getAhorroBanco());
                 System.out.println(sede2.getNombre() + " = " + sede2.getCuentaSede().getAhorroBanco());
             } else {

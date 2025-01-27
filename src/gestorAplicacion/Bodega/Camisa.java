@@ -8,7 +8,6 @@ import java.util.Arrays;
 
 public class Camisa extends Prenda {
     private static final long serialVersionUID = 1L;
-    public static ArrayList<ArrayList<Insumo>> posiblesInsumosNecesarios = new ArrayList<ArrayList<Insumo>>();
     private static ArrayList<Integer> cantidadInsumo=new ArrayList<Integer>();
     private static ArrayList<String> tipoinsumo=new ArrayList<String>();
     int pasoActual=0;
@@ -114,15 +113,9 @@ public class Camisa extends Prenda {
     public static ArrayList<Integer> getCantidadInsumo(){return cantidadInsumo;}
     public static void setTipoInsumo(ArrayList<String> tipos){tipoinsumo=tipos;}
     public static void setCantidadInsumo(ArrayList<Integer> cantidades){cantidadInsumo=cantidades;}
-    public static ArrayList<ArrayList<Insumo>> getPosiblesInsumosNecesarios() {
-        return posiblesInsumosNecesarios;
-    }
     public static ArrayList<String> getMaquinariaNecesaria() {
         return maquinariaNecesaria;
     }
 
-    public static ArrayList<Insumo> getInsumosNecesariosAleatorios(){
-        return getPosiblesInsumosNecesarios().get((int) Math.random());
-    }
 }
 

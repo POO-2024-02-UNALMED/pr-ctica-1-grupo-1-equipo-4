@@ -104,6 +104,9 @@ public class Maquinaria implements Serializable{
 	public ArrayList<Repuesto> getRepuestos(){
 		return repuestos;
 	}
+	public void setRepuestos(Repuesto repaCambiar){
+		this.repuestos.remove(repaCambiar);
+	}
 
 	public int getHoraRevision(){
 		return horaRevision;
@@ -151,15 +154,15 @@ public class Maquinaria implements Serializable{
 									main.dondeRetirar();
 									//AHORA FALTA QUITAR EL REPUESTO QUE NO SIRVE DEL ARRAYLIST DE REPUESTOS DE LA MAQUINA Y
 									
-									// Aquí quitamos el repuesto que no sirve del ArrayList de repuestos de la máquina
-									cadaMaquina.getRepuestos().remove(cadaRepuesto);
+									// Aquí quitamos el repuesto que no sirve del ArrayList de repuestos de la máquina y del de los repuestos creados
+									cadaMaquina.setRepuestos(cadaRepuesto);
+									Repuesto.setListadoRepuestos(cadaRepuesto);
 
 									//AGREGAR UNA COPIA DEL REPUESTO A DICHO ARRAYLIST DE REPUESTOS DE LA MAQUINA AFECTADA
-									cadaMaquina.getRepuestos().add(cadaRepuesto.copiar());
+									cadaMaquina.getRepuestos().add(cadaRepuesto.copiar(proveedorBarato));
 									cadaRepuesto.setPrecioCompra(proveedorBarato.getPrecio());
 									cadaRepuesto.setFechasCompra(fecha);
-									cadaRepuesto.setProveedor(proveedorBarato);
-									cadaMaquina.estado = true;
+									
 									System.out.println("Repuesto " + cadaRepuesto.getNombre() + " añadido correctamente a la " + cadaMaquina.getNombre() + ", de la: " + cadaSede.getNombre());
 
 									encontrado = true;
@@ -168,13 +171,25 @@ public class Maquinaria implements Serializable{
 							}
 							if (!encontrado) {
 								System.out.println("Ninguna de las sedes cuenta con dinero suficiente, considere pedir un prestamo.");
-								cadaMaquina.estado = false;
+								cadaRepuesto.setEstado();
 							}
 						}
 					}
 				} else{
 					cadaMaquina.mantenimiento = true;
 					cadaMaquina.ultFechaRevision = fecha;
+				}
+
+				int pista = 0;
+				for(Repuesto rep : cadaMaquina.getRepuestos()){
+					if(rep.isEstado() == true){
+						++pista;
+					}
+				}
+				if(cadaMaquina.getRepuestos().size() == pista){
+					cadaMaquina.estado = true;
+				} else{
+					cadaMaquina.estado = false;
 				}
 				
 				//añadir esta maquina a la lista temporal de las maquinas que estan disponibles

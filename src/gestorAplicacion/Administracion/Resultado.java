@@ -1,8 +1,9 @@
 package gestorAplicacion.Administracion;
-
 import gestorAplicacion.Sede;
 
 public class Resultado {
+    // Resultado de una busqueda de un Insumo en una Sede.
+
     private boolean encontrado;
     private int index;
     private int precio;

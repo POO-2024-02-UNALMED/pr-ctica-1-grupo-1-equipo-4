@@ -77,27 +77,26 @@ public class Sede implements Serializable{
 		return resultado;
 	}
 
-	static public int restarInsumo(Insumo i, Sede s, int c){
+	// Retorna lo que no se pudo sacar de la sede s
+	static public int transferirInsumo(Insumo i, Sede donadora, Sede beneficiaria, int cantidadSolicitada){
 		int restante = 0;
-		for(int x = 0 ; x < s.getListaInsumosBodega().size() ; x++){
-			if(i.equals(s.getListaInsumosBodega().get(x))){
-				int cantidad = s.getCantidadInsumosBodega().get(x);
-				long ajusteStock = (Insumo.getPrecioStockTotal())-(i.getPrecioIndividual()*c);
-				Insumo.setPrecioStockTotal(ajusteStock);
-				if((cantidad-c)==0){
-					s.cantidadInsumosBodega.set(x,0);
-					
-				}
-				else if((cantidad-c)<0){
-					restante = (cantidad - c)*-1;
-					s.cantidadInsumosBodega.set(x,0);
-				}
-				else{
-				s.cantidadInsumosBodega.set(x,(cantidad-c));
-				}
-			}
-		
+		int idxInsumo = donadora.getListaInsumosBodega().indexOf(i);
+		int cantidadDisponible = Math.min(donadora.getCantidadInsumosBodega().get(idxInsumo),cantidadSolicitada);
+		long ajusteStock = (Insumo.getPrecioStockTotal())-(i.getPrecioIndividual()*cantidadSolicitada);
+		Insumo.setPrecioStockTotal(ajusteStock);
+		if((cantidadDisponible-cantidadSolicitada)==0){
+			donadora.cantidadInsumosBodega.set(idxInsumo,0);
+			
 		}
+		else if((cantidadDisponible-cantidadSolicitada)<0){
+			restante = (cantidadDisponible - cantidadSolicitada)*-1;
+			donadora.cantidadInsumosBodega.set(idxInsumo,0);
+		}
+		else{
+			donadora.cantidadInsumosBodega.set(idxInsumo,(cantidadDisponible-cantidadSolicitada));
+		}
+
+		añadirInsumo(i, beneficiaria, cantidadSolicitada-cantidadDisponible);
 		return restante;
 	}
 
