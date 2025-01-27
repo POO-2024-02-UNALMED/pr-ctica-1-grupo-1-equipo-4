@@ -103,36 +103,59 @@ public class Venta implements Serializable {
 	}
 
 	// Retorna de 0 a 0.5 el porcentaje que sube el monto de ventas el black friday
-	static public float blackFriday(Fecha fecha){
-	int año;
-	if (fecha.getMes()>11){año=fecha.getAño();}
-	else if (fecha.getMes()==11 && fecha.getDia()>=24){año=fecha.getAño();}
-	else{año=fecha.getAño()-1;} // Si no ha pasado black friday, usar el año anterior
-	ArrayList<Fecha> diasBlackFriday=new ArrayList<Fecha>();
-	diasBlackFriday.add(new Fecha(28,11,año));diasBlackFriday.add(new Fecha(29,11,año));diasBlackFriday.add(new Fecha(30,11,año));
-	ArrayList<Fecha> FechasNormales=new ArrayList<Fecha>();
-	//Tres Fechas contiguas en el mismo mes pero sin black Fiday
-	FechasNormales.add(new Fecha(23,11,año));FechasNormales.add(new Fecha(24,11,año));FechasNormales.add(new Fecha(25,11,año));
-	long montoventasBF=0;
-	long montoventasDC=0;
-	for(Sede sede: Sede.getlistaSedes()){
-	for(Venta venta : sede.getHistorialVentas()){
-		for (int i=0;i<3;i++){
-		if (diasBlackFriday.get(i).getAño()==venta.getFechaVenta().getAño() && diasBlackFriday.get(i).getMes()==venta.getFechaVenta().getMes()&& diasBlackFriday.get(i).getDia()==venta.getFechaVenta().getDia()){
-			montoventasBF+=venta.getMontoPagado();}
-		else if (FechasNormales.get(i).getAño()==venta.getFechaVenta().getAño() && FechasNormales.get(i).getMes()==venta.getFechaVenta().getMes()&& FechasNormales.get(i).getDia()==venta.getFechaVenta().getDia()){
-			montoventasDC+=venta.getMontoPagado();}}}}
-	long diferencia=montoventasBF-montoventasDC;
-	System.out.println(montoventasBF);
-	System.out.println(montoventasDC);
-	System.out.println(diferencia);
-	if(diferencia<=0){return 0.0F;}
-	else if(0>diferencia && diferencia<=(montoventasBF*0.1)){return 0.1F;}
-	else if(0>diferencia && diferencia<=(montoventasBF*0.2)){return 0.2F;}
-	else if(0>diferencia &&	diferencia<=(montoventasBF*0.3)){return 0.3F;}
-	else if(0>diferencia && diferencia<=(montoventasBF*0.4)){return 0.4F;}
-	else {return 0.5F;}
-   }
+	static public float blackFriday(Fecha fecha) {
+		int año;
+		if (fecha.getMes() > 11) {
+			año = fecha.getAño();
+		} else if (fecha.getMes() == 11 && fecha.getDia() >= 24) {
+			año = fecha.getAño();
+		} else {
+			año = fecha.getAño() - 1;
+		} // Si no ha pasado black friday, usar el año anterior
+		ArrayList<Fecha> diasBlackFriday = new ArrayList<Fecha>();
+		diasBlackFriday.add(new Fecha(28, 11, año));
+		diasBlackFriday.add(new Fecha(29, 11, año));
+		diasBlackFriday.add(new Fecha(30, 11, año));
+		ArrayList<Fecha> FechasNormales = new ArrayList<Fecha>();
+		// Tres Fechas contiguas en el mismo mes pero sin black Fiday
+		FechasNormales.add(new Fecha(23, 11, año));
+		FechasNormales.add(new Fecha(24, 11, año));
+		FechasNormales.add(new Fecha(25, 11, año));
+		long montoventasBF = 0;
+		long montoventasDC = 0;
+		for (Sede sede : Sede.getlistaSedes()) {
+			for (Venta venta : sede.getHistorialVentas()) {
+				for (int i = 0; i < 3; i++) {
+					if (diasBlackFriday.get(i).getAño() == venta.getFechaVenta().getAño()
+							&& diasBlackFriday.get(i).getMes() == venta.getFechaVenta().getMes()
+							&& diasBlackFriday.get(i).getDia() == venta.getFechaVenta().getDia()) {
+						montoventasBF += venta.getMontoPagado();
+					} else if (FechasNormales.get(i).getAño() == venta.getFechaVenta().getAño()
+							&& FechasNormales.get(i).getMes() == venta.getFechaVenta().getMes()
+							&& FechasNormales.get(i).getDia() == venta.getFechaVenta().getDia()) {
+						montoventasDC += venta.getMontoPagado();
+					}
+				}
+			}
+		}
+		long diferencia = montoventasBF - montoventasDC;
+		System.out.println(montoventasBF);
+		System.out.println(montoventasDC);
+		System.out.println(diferencia);
+		if (diferencia <= 0) {
+			return 0.0F;
+		} else if (0 > diferencia && diferencia <= (montoventasBF * 0.1)) {
+			return 0.1F;
+		} else if (0 > diferencia && diferencia <= (montoventasBF * 0.2)) {
+			return 0.2F;
+		} else if (0 > diferencia && diferencia <= (montoventasBF * 0.3)) {
+			return 0.3F;
+		} else if (0 > diferencia && diferencia <= (montoventasBF * 0.4)) {
+			return 0.4F;
+		} else {
+			return 0.5F;
+		}
+	}
 
    static public ArrayList<Venta> filtrar(ArrayList<Venta> ventas, Fecha fecha){
 	   ArrayList<Venta> ventasMes=new ArrayList<Venta>();

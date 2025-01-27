@@ -388,9 +388,9 @@ public class Main {
                 Nombrebanco = Banco.getListaBancos().get(i).getNombreEntidad();
             }
             int cuotas = 0;
-            while (cuotas <= 0 || cuotas >= 18) {
+            while (cuotas <= 0 || cuotas > 18) {
                 System.out.println("Ingrese número de 1 a 18 para las cuotas en que se dividirá la deuda");
-                cuotas = in.nextInt();
+                cuotas = nextIntSeguro(in);
             }
             Deuda deudaAdquirir = new Deuda(fecha, diferenciaEstimada, Nombrebanco, "Banco", cuotas);
         }
@@ -406,13 +406,15 @@ public class Main {
             System.out.println("\n"+"Según las Ventas anteriores, aplicar descuentos si funcionará");
         }
         System.out.println("¿Desea Cambiar el siguiente descuento: " + (descuento)*100 + "? marque 1 para Si, 2 para no ");
-        int num = in.nextInt();
+        int num = nextIntSeguro(in);
         float nuevoDescuento = -0.1F;
         if (num == 1) {
             while (nuevoDescuento < 0.0 || descuento > 0.5) {
                 System.out.println("Ingrese descuento entre 0% y 5%");
-                nuevoDescuento = in.nextInt()/100F;
+                nuevoDescuento = nextIntSeguro(in)/100F;
             }
+        } else {
+            nuevoDescuento = descuento;
         }
         Prenda.prevenciones(descuento, nuevoDescuento, fecha);
         String analisisFuturo = "\n"+BFString + ", sin embargo su desición fue aplicar un descuento de: "
