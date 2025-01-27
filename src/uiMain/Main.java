@@ -1368,8 +1368,7 @@ public class Main {
                     if (Sede.getPrendasInventadasTotal().get(i) == prendaSeleccionada) {
                     Prenda eliminada = Sede.getPrendasInventadasTotal().get(i);
                     Sede.getPrendasInventadasTotal().remove(i);// Remueve de la lista de prendasInventadas de la empresa
-                    sede.getPrendasInventadas().remove(eliminada); // Remueve de la lista de prendasInventadas de la sede
-                    productosSeleccionados.add(eliminada); // Agregarla a productosSeleccionados
+                    sede.getPrendasInventadas().remove(eliminada); // Remueve de la lista de prendasInventadas de la sede 
                     eliminadas++;
                     i--;
                 }}}
@@ -1385,8 +1384,8 @@ public class Main {
                 }
             }
         int sumaPreciosPrendas = 0;
-int cantidadCamisas = 0;
-int cantidadPantalon = 0;
+        int cantidadCamisas = 0;
+        int cantidadPantalon = 0;
          for (Prenda prenda : productosSeleccionados) {
             if (prenda instanceof Camisa) {
                 sumaPreciosPrendas += Camisa.precioVenta();
