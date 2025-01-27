@@ -1,7 +1,6 @@
 package gestorAplicacion.Administracion;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
