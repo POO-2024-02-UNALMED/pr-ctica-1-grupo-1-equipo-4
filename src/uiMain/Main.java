@@ -59,7 +59,7 @@ public class Main {
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
             System.out.println("\n"+"¿Que operación desea realizar?");
-            System.out.println("1.Despedir/Contratar empleados");
+            System.out.println("1.Despedir/Transferir/Contratar empleados");
             System.out.println("2.Adquirir insumos para produccion");
             System.out.println("3.Ver el desglose economico de la empresa");
             System.out.println("4.Vender un producto");
@@ -79,7 +79,7 @@ public class Main {
 
                     ArrayList<Object> retorno = planificarProduccion(Main.fecha);
                     ArrayList<Object> listaA = coordinarBodegas(retorno);
-                    ArrayList<Deuda> deuda = comprarInsumos(Main.fecha, listaA);
+                    System.out.println(comprarInsumos(Main.fecha, listaA));
                     break;
 
                 case 3:
@@ -161,20 +161,10 @@ public class Main {
             System.out.println(mensaje);
         }
         
-       
-        int diferenciaSalarios = -Persona.diferenciaSalarios();
-        if (diferenciaSalarios>0){
-            System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" sobre el promedio de salarios");
-        } else if (diferenciaSalarios<0){
-            System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" bajo el promedio de salarios");
-        } else {
-            System.out.println("Tus empleados estan en el promedio de salarios");
-        }
-
         System.out.println("\n"+"Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
 
         System.out.println("Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
-        int diferenciaSalarios = -Persona.diferenciaSalarios();
+        int diferenciaSalarios =- Persona.diferenciaSalarios();
         if (diferenciaSalarios>0){
             System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" sobre el promedio de salarios");
         } else if (diferenciaSalarios<0){
@@ -492,7 +482,8 @@ public class Main {
                     
                     for (int i = 0; i < prenda.getInsumo().size(); i++) {
                         Insumo insumo = prenda.getInsumo().get(i);
-                        int cantidad = (int) Math.ceil(Camisa.getCantidadInsumo().get(i) * prediccionc);
+                        ArrayList<Integer> cantidadesPorPrenda = Camisa.getCantidadInsumo();
+                        int cantidad = (int) Math.ceil(cantidadesPorPrenda.get(i) * prediccionc);
                 
                         int index = insumoXSede.indexOf(insumo);
                         if (index == -1) {
@@ -547,7 +538,7 @@ public class Main {
                         int restante = Sede.transferirInsumo(i, productoEnOtraSede.getSede(),s,cantidadNecesaria);
                         if (restante != 0) {
                             if (productoEnOtraSede.getEncontrado() == true) {
-                                System.out.println("Tenemos el insumo " + i.getNombre() + " en nuestra "
+                                System.out.println("\n"+"Tenemos el insumo " + i.getNombre() + " en nuestra "
                                                     + productoEnOtraSede.getSede() + ".");
                                 System.out.println("El insumo tiene un costo de " + productoEnOtraSede.getPrecio());
                                 System.out.println("\n"+"Seleccione una de las siguientes opciones:");
@@ -564,13 +555,13 @@ public class Main {
                                             insumosAPedir.add(i);
                                             cantidadAPedir.add(restante2);
                                             if(i.getNombre().equals("Tela")){
-                                            System.out.println("Tenemos una cantidad de "+restante2+"cm de tela restantes a pedir ");}
+                                            System.out.println("\n"+"Tenemos una cantidad de "+restante2+"cm de tela restantes a pedir ");}
                                             else if (i.getNombre().equals("Boton")){
-                                                System.out.println("Tenemos una cantidad de "+restante2+" botones restantes a pedir ");}
+                                                System.out.println("\n"+"Tenemos una cantidad de "+restante2+" botones restantes a pedir ");}
                                             else if (i.getNombre().equals("Cremallera")){
-                                                 System.out.println("Tenemos una cantidad de "+restante2+" cremalleras restantes a pedir ");}
+                                                 System.out.println("\n"+"Tenemos una cantidad de "+restante2+" cremalleras restantes a pedir ");}
                                                 else {
-                                                System.out.println("Tenemos una cantidad de "+restante2+" cm de hilo restantes a pedir ");}
+                                                System.out.println("\n"+"Tenemos una cantidad de "+restante2+" cm de hilo restantes a pedir ");}
                                         }
                                         else{
                                             System.out.println("Insumo transferido en su totalidad");
@@ -679,12 +670,12 @@ public class Main {
                         }
                         Deuda deuda = null;
                         if (montoDeuda > 0) {
-                            if (!(proveedor.getDeuda().getEstadodePago())) {
-                                proveedor.unificarDeudasXProveedor(fecha, montoDeuda, proveedor.getNombre());
-                                deuda = proveedor.getDeuda();
-                            } else {
+                            if (proveedor.getDeuda()==null){
                                 deuda = new Deuda(fecha, montoDeuda, proveedor.getNombre(), "Proveedor",
-                                        Deuda.calcularCuotas(montoDeuda));
+                                Deuda.calcularCuotas(montoDeuda));
+                            } else if (!proveedor.getDeuda().getEstadodePago()) {
+                                proveedor.unificarDeudasXProveedor(fecha, montoDeuda);
+                                deuda = proveedor.getDeuda();
                             }
                             deudas.add(deuda);
                         }
@@ -1010,29 +1001,29 @@ public class Main {
                 5, Membresia.NULA, Registradora.copiar()));
 
         Empleado Gutierrez = (new Empleado(Area.DIRECCION, new Fecha(5, 8, 19), sede2, "Saul Gutierrez", 9557933,
-                Rol.EJECUTIVO, 11, Membresia.NULA, Computador2.copiar()));
+                Rol.EJECUTIVO, 11, Membresia.NULA, Computador2));
         Empleado Marcela = (new Empleado(Area.DIRECCION, new Fecha(30, 11, 20), sede2, "Marcela Valencia", 8519803,
                 Rol.EJECUTIVO, 10, Membresia.ORO, Computador2.copiar()));
-        Empleado Gabriela = new Empleado(Area.VENTAS, new Fecha(1, 1, 24), sede2, "Gabriela Garza", 5287925,
-                Rol.VENDEDOR, 9, Membresia.PLATA, Registradora2.copiar());
+        Empleado Gabriela = (new Empleado(Area.VENTAS, new Fecha(1, 1, 24), sede2, "Gabriela Garza", 5287925,
+                Rol.VENDEDOR, 9, Membresia.PLATA, Registradora2));
         Empleado Patricia = (new Empleado(Area.OFICINA, new Fecha(5, 2, 23), sede2, "Patricia Fernandez", 4595311,
-                Rol.SECRETARIA, 6, Membresia.BRONCE, Impresora2.copiar()));
+                Rol.SECRETARIA, 6, Membresia.BRONCE, Impresora2));
         Empleado Kenneth = (new Empleado(Area.CORTE, new Fecha(1, 1, 24), sede2, "Kenneth Johnson", 7494184,
-                Rol.MODISTA, 8, Membresia.ORO, PlanchaIndustrial2.copiar()));
+                Rol.MODISTA, 8, Membresia.ORO, PlanchaIndustrial2));
         Empleado Robles = (new Empleado(Area.OFICINA, new Fecha(12, 10, 24), sede2, "Miguel Robles", 7518004,
                 Rol.VENDEDOR, 7, Membresia.BRONCE, Impresora2.copiar()));
         Empleado Alejandra = (new Empleado(Area.CORTE, new Fecha(1, 2, 24), sede2, "Alejandra Zingg", 6840296,
-                Rol.MODISTA, 2, Membresia.BRONCE, BordadoraIndustrial2.copiar()));
+                Rol.MODISTA, 2, Membresia.BRONCE, BordadoraIndustrial2));
         Empleado Cecilia = (new Empleado(Area.CORTE, new Fecha(1, 2, 23), sede2, "Cecilia Bolocco", 7443886,
-                Rol.MODISTA, 10, Membresia.PLATA, MaquinaDeCoser2.copiar()));
+                Rol.MODISTA, 10, Membresia.PLATA, MaquinaDeCoser2));
         Empleado Freddy = (new Empleado(Area.VENTAS, new Fecha(31, 1, 22), sede2, "Freddy Contreras", 6740561,
                 Rol.PLANTA, 5, Membresia.NULA, Registradora2.copiar()));
         Empleado Adriana = (new Empleado(Area.CORTE, new Fecha(18, 6, 25), sede2, "Adriana arboleda", 5927947,
-                Rol.MODISTA, 20, Membresia.ORO, MaquinaDeCorte2.copiar()));
+                Rol.MODISTA, 20, Membresia.ORO, MaquinaDeCorte2));
         Empleado Karina = (new Empleado(Area.CORTE, new Fecha(9, 3, 25), sede2, "Karina Larson", 5229381, Rol.MODISTA,
-                2, Membresia.PLATA, MaquinaDeTermofijado2.copiar()));
+                2, Membresia.PLATA, MaquinaDeTermofijado2));
         Empleado Jenny = (new Empleado(Area.CORTE, new Fecha(1, 8, 24), sede2, "Jenny Garcia", 4264643, Rol.MODISTA, 1,
-                Membresia.ORO, MaquinaDeTijereado2.copiar()));
+                Membresia.ORO, MaquinaDeTijereado2));
         Empleado ol = new Empleado(Area.DIRECCION, new Fecha(1, 2, 20), sede2, "Gustavo Olarte", 7470922, Rol.EJECUTIVO,
                 3, Membresia.NULA, Computador2.copiar());
         ol.setTraslados(3);
@@ -1341,12 +1332,12 @@ public class Main {
         bucleAgregarPrenda:
         while (true) {
             System.out.println("\n"+"Seleccione el nombre del producto que venderá:");
-            System.out.println(0 + ". Camisa" + " -Precio " + Camisa.PrecioVenta());
+            System.out.println(0 + ". Camisa" + " -Precio " + Camisa.precioVenta());
             System.out.println(1 + ". Pantalon" + " -Precio " + Pantalon.PrecioVenta());
             String productoSeleccionado = scanner.next();
             scanner.nextLine();
             Prenda prendaSeleccionada = null;
-            for (Prenda prenda : Prenda.getPrendasInventadas()) {
+            for (Prenda prenda : Sede.getPrendasInventadasTotal()) {
                 if (prenda.getNombre().equals(productoSeleccionado)) {
                     prendaSeleccionada = prenda;
                     break;
@@ -1366,18 +1357,19 @@ public class Main {
                 productosSeleccionados.add(prendaSeleccionada);
             }
             cantidadProductos.add(cantidadPrenda);
-            for(Prenda prenda: Prenda.getPrendasInventadas()){
+            for(Prenda prenda: Sede.getPrendasInventadasTotal()){
                 if(prenda.getNombre().equals(prendaSeleccionada.getNombre())){cantidadDisponible+=1;}
             }
             manejarFaltantes(sede, cantidadPrenda, cantidadDisponible, nombrePrendaSeleccionada, costosEnvio);//Método que aumenta el stock faltante
             //De la prenda seleccionada en la sede.
-            if (cantidadPrenda > 0 && cantidadPrenda < Prenda.getPrendasInventadas().size()) {
+            if (cantidadPrenda > 0 && cantidadPrenda < Sede.getPrendasInventadasTotal().size()) {
                 int eliminadas = 0;
-                for (int i = 0;  i < Prenda.getPrendasInventadas().size() && eliminadas < cantidadPrenda; i++) {
-                    if (Prenda.getPrendasInventadas().get(i) == prendaSeleccionada) {
-                    Prenda eliminada = Prenda.getPrendasInventadas().get(i);
-                    Prenda.getPrendasInventadas().remove(i);// Remueve de la lista de prendasInventadas de la empresa
-                    sede.getPrendasInventadas().remove(eliminada); // Remueve de la lista de prendasInventadas de la sede// Agregarla a productosSeleccionados
+                for (int i = 0;  i < Sede.getPrendasInventadasTotal().size() && eliminadas < cantidadPrenda; i++) {
+                    if (Sede.getPrendasInventadasTotal().get(i) == prendaSeleccionada) {
+                    Prenda eliminada = Sede.getPrendasInventadasTotal().get(i);
+                    Sede.getPrendasInventadasTotal().remove(i);// Remueve de la lista de prendasInventadas de la empresa
+                    sede.getPrendasInventadas().remove(eliminada); // Remueve de la lista de prendasInventadas de la sede
+                    productosSeleccionados.add(eliminada); // Agregarla a productosSeleccionados
                     eliminadas++;
                     i--;
                 }}}
@@ -1397,7 +1389,7 @@ int cantidadCamisas = 0;
 int cantidadPantalon = 0;
          for (Prenda prenda : productosSeleccionados) {
             if (prenda instanceof Camisa) {
-                sumaPreciosPrendas += Camisa.PrecioVenta();
+                sumaPreciosPrendas += Camisa.precioVenta();
                 cantidadCamisas++;
                 if (cantidadCamisas >= 10) {
                     int descuento = (int) (sumaPreciosPrendas * 0.05f);
@@ -1421,7 +1413,8 @@ int cantidadPantalon = 0;
         System.out.println("Subtotal: " + sumaPreciosPrendas);
         int comisión = (int) (MontoPagar * 0.05f);
         vendedor.setRendimientoBonificacion(comisión);
-        return venta;}
+       } return venta;
+    }
 
      //Interacción 2 Facturación
     public static Venta realizarVenta(Scanner scanner,  Venta venta) {
@@ -1691,7 +1684,7 @@ int cantidadPantalon = 0;
         for (Prenda prenda : productosSeleccionados) {
             if (prenda instanceof Camisa) {
                 cantidadCamisas++;
-                subtotalCamisas += Camisa.PrecioVenta();
+                subtotalCamisas += Camisa.precioVenta();
             } if (prenda instanceof Pantalon) {
                 cantidadPantalon++;
                 subtotalPantalon += Pantalon.PrecioVenta();
@@ -1859,5 +1852,6 @@ int cantidadPantalon = 0;
 
     }
 }
+
 
 

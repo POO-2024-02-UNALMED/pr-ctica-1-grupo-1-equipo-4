@@ -177,11 +177,12 @@ public class Deuda implements Serializable {
 		this.capitalPagado = capitalPagado;
 	}
 
+	// Utilizado por unificarDeudasXProveedor para aumentar la deuda.
     public void actualizarDeuda(Fecha fecha, int montoDeuda, int cuotas) {
 		long deudaActual=this.deudaActual(fecha.getAño());
 		valorinicialDeuda=montoDeuda+deudaActual;
 		capitalPagado=0;
-		this.cuotas=this.cuotas-fecha.getAño()-FECHACREACION.getAño()+cuotas;
+		this.cuotas=cuotas;
     }
 	
 	public static void compararDeudas(Fecha fecha){

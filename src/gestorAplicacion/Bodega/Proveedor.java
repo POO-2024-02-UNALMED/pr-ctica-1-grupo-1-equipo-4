@@ -36,6 +36,14 @@ public class Proveedor implements Serializable{
 	}
 	//falta crear constructor que reciba tambien los repuestos y los precios de estos, pero hay que hablarlo primero
 
+	static public Proveedor buscarPorNombreInsumo(String nombre){
+		for(Proveedor p: listaProveedores){
+			if(p.tipoInsumo.getNombre().equals(nombre)){
+				return p;
+			}
+		}
+		return null;
+	}
 	
 	static public int costoDeLaCantidad(Insumo i, int c){
 		int precio = 0;
@@ -48,10 +56,10 @@ public class Proveedor implements Serializable{
 		return precio;
 	}
 	
-	public void unificarDeudasXProveedor(Fecha fecha, int montoDeuda, String Nombre){
+	public void unificarDeudasXProveedor(Fecha fecha, int montoDeuda){
 		int cuotas=Deuda.calcularCuotas(montoDeuda+deuda.getValorinicialDeuda()-deuda.getCapitalPagado());
-		if (deuda.getEntidad().equals(Nombre)&&!deuda.getEstadodePago()){
-					deuda.actualizarDeuda(fecha,montoDeuda,cuotas);
+		if (deuda.getEntidad().equals(this.getNombre())&&!deuda.getEstadodePago()){
+				deuda.actualizarDeuda(fecha,montoDeuda,cuotas);
 			}
 		}
 

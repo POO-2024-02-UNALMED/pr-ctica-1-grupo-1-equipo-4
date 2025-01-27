@@ -19,6 +19,7 @@ public class Sede implements Serializable{
 
 	private static final long serialVersionUID = 1L; // Para serializacion
 
+	private static ArrayList<Prenda> prendasInventadasTotal = new ArrayList<Prenda>(); // Por razones de serializacion.
 	private static ArrayList<Empleado> listaEmpleadosTotal=new ArrayList<Empleado>(); // Por razones de serializacion.
 	private static ArrayList<Sede> listaSedes = new ArrayList<Sede>();
 
@@ -81,6 +82,11 @@ public class Sede implements Serializable{
 	static public int transferirInsumo(Insumo i, Sede donadora, Sede beneficiaria, int cantidadSolicitada){
 		int restante = 0;
 		int idxInsumo = donadora.getListaInsumosBodega().indexOf(i);
+
+		if (idxInsumo == -1){
+			return cantidadSolicitada; // Se salta el resto del metodo, porque no hay nada que transferir.
+		}
+
 		int cantidadDisponible = Math.min(donadora.getCantidadInsumosBodega().get(idxInsumo),cantidadSolicitada);
 		long ajusteStock = (Insumo.getPrecioStockTotal())-(i.getPrecioIndividual()*cantidadSolicitada);
 		Insumo.setPrecioStockTotal(ajusteStock);
@@ -171,6 +177,8 @@ public class Sede implements Serializable{
 	static public void setEvaluacionesFinancieras(ArrayList<Evaluacionfinanciera> evaluaciones){evaluacionesFinancieras=evaluaciones;}
 	static public ArrayList<Evaluacionfinanciera> getEvaluacionesFinancieras(){return evaluacionesFinancieras;}
 	static public ArrayList<Empleado> getListaEmpleadosTotal(){return listaEmpleadosTotal;}
+	static public ArrayList<Prenda> getPrendasInventadasTotal(){return prendasInventadasTotal;}
+	static public void setPrendasInventadasTotal(ArrayList<Prenda> prendas){prendasInventadasTotal=prendas;} // Para serializacion
 	
 	public ArrayList<Integer> getProdAproximada(){
 		return prodAproximada;
@@ -599,6 +607,18 @@ public class Sede implements Serializable{
 		prodAproximada.add(1, camisasSede2);
 
 		return prodAproximada;
+	}
+
+	public ArrayList<Insumo> insumnosPorNombre(ArrayList<String> nombres){
+		ArrayList<Insumo> insumos = new ArrayList<>();
+		for (String nombre : nombres){
+			for (Insumo insumo : listaInsumosBodega){
+				if (insumo.getNombre().equalsIgnoreCase(nombre)){
+					insumos.add(insumo);
+				}
+			}
+		}
+		return insumos;
 	}
 
 	public ArrayList<Integer> modistasQueHay(){

@@ -31,7 +31,6 @@ public abstract class Prenda implements GastoMensual, Serializable{
     //costos necesarios para calcular el precio de cada prenda
     protected static float porcentajeGanancia = 0.40f;  // Porcentaje que afecta la cantidad a producir
     //costos necesarios para calcular el precio de cada prenda
-    private static ArrayList<Prenda> prendasInventadas = new ArrayList<Prenda>();
     // Porcentaje que afecta la cantidad a producir
     ArrayList<Object> ultimoPaso = new ArrayList<Object>(); // Reescrito al usar siguientePaso()
     
@@ -55,7 +54,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
             }
         }
         this.costoProduccion=Math.round((manoObra/modistas)*0.08f);
-        Prenda.prendasInventadas.add(this);
+        Sede.getPrendasInventadasTotal().add(this);
         sede.getPrendasInventadas().add(this);
         if(descartada){modista.setPrendasDescartadas(modista.getPrendasDescartadas()+1);}
         else{modista.setPrendasProducidas(modista.getPrendasProducidas()+1);}
@@ -78,12 +77,11 @@ public abstract class Prenda implements GastoMensual, Serializable{
         ArrayList<Prenda> prendas = new ArrayList<Prenda>();
 
         for (int i=0;i<cantidadPantalones;i++){
-            Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,Pantalon.getTipoInsumo());
+            Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,sede.insumnosPorNombre(Pantalon.getTipoInsumo()));
             prendas.add(pantalon);
         }
         for (int i=0;i<cantidadCamisas;i++){
-            Collections.shuffle(Camisa.posiblesInsumosNecesarios);
-            Camisa camisa = new Camisa(fechaProduccion,null,false, false,sede, Camisa.getPosiblesInsumosNecesarios().get(0));
+            Camisa camisa = new Camisa(fechaProduccion,null,false, false,sede, sede.insumnosPorNombre(Camisa.getTipoInsumo()));
             prendas.add(camisa);
         }
 
@@ -165,7 +163,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
 		long gastoPrenda=0;
         long gastoActual=0;
         long gastoPasado=0;
-		for (Prenda prenda:prendasInventadas){
+		for (Prenda prenda:Sede.getPrendasInventadasTotal()){
 				long [] lista=prenda.gastoMensualTipo(fecha, prenda.fechaFabricacion, prenda);
 				gastoActual+=lista[0];
 				gastoPasado+=lista[1];
@@ -195,7 +193,6 @@ public abstract class Prenda implements GastoMensual, Serializable{
     public ArrayList<Insumo> getInsumo(){return insumo;}
     //public static ArrayList<String> getTipoInsumo(){return tipoInsumo;}
     public static ArrayList<Integer> getCantidadInsumo(){return cantidadInsumo;}
-    public static ArrayList<Prenda> getPrendasInventadas(){return prendasInventadas;}
     public float getCostoInsumos(){return costoInsumos;}
     public long getPrecio() {return this.precio;}
 
