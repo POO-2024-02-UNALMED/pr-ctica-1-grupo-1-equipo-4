@@ -1,8 +1,13 @@
-package gestorAplicacion.Administracion;
-import gestorAplicacion.Fecha;
-import gestorAplicacion.Sede;
-import gestorAplicacion.Venta;
-import gestorAplicacion.Administracion.Banco;
+/* Equipo 4 grupo 1
+ * Clase Evaluacionfinanciera
+ * Representa una evaluacion financiera generada durante la funcionalidad
+ * de desglose economico
+ */
+package src.gestorAplicacion.Administracion;
+import src.gestorAplicacion.Fecha;
+import src.gestorAplicacion.Sede;
+import src.gestorAplicacion.Venta;
+import src.gestorAplicacion.Administracion.Banco;
 import java.io.Serializable;
 
 public class Evaluacionfinanciera implements Serializable {

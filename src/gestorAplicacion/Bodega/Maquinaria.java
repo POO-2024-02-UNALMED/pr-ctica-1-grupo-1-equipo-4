@@ -1,8 +1,11 @@
-package gestorAplicacion.Bodega;
-import gestorAplicacion.Administracion.Empleado;
-import uiMain.Main;
-import gestorAplicacion.Sede;
-import gestorAplicacion.Fecha;
+/* Equipo 4 grupo 1
+ * Representa una maquinaria en la empresa, con la cual se producen las prendas.
+ */
+package src.gestorAplicacion.Bodega;
+import src.gestorAplicacion.Administracion.Empleado;
+import src.uiMain.Main;
+import src.gestorAplicacion.Sede;
+import src.gestorAplicacion.Fecha;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,9 +1,13 @@
-package gestorAplicacion.Administracion;
+/* Equipo 4 grupo 1
+ * Interfaz gastoMensual
+ * Implementada por objetos que representan un gasto periodico.
+ */
+package src.gestorAplicacion.Administracion;
 
-import gestorAplicacion.Bodega.Insumo;
-import gestorAplicacion.Bodega.Maquinaria;
-import gestorAplicacion.Bodega.Prenda;
-import gestorAplicacion.Fecha;
+import src.gestorAplicacion.Bodega.Insumo;
+import src.gestorAplicacion.Bodega.Maquinaria;
+import src.gestorAplicacion.Bodega.Prenda;
+import src.gestorAplicacion.Fecha;
 
 public interface GastoMensual {
     public abstract int calcularGastoMensual();

@@ -1,8 +1,12 @@
-package gestorAplicacion.Administracion;
+/* Equipo 4 grupo 1
+ * Clase Area
+ * Representa un area de la empresa, comformada por empleados.
+ */
+package src.gestorAplicacion.Administracion;
 
-import gestorAplicacion.Fecha;
-import gestorAplicacion.Sede;
-import gestorAplicacion.Venta;
+import src.gestorAplicacion.Fecha;
+import src.gestorAplicacion.Sede;
+import src.gestorAplicacion.Venta;
 import java.util.ArrayList;
 import java.util.Arrays;
 

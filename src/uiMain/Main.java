@@ -1,33 +1,36 @@
-package uiMain;
+/* Equipo 4 grupo 1
+ * Maestro de la orquesta, maneja interacciones con el usuario.
+ */
+package src.uiMain;
 
-import gestorAplicacion.Persona;
-import gestorAplicacion.Sede;
-import gestorAplicacion.Fecha;
-import gestorAplicacion.Membresia;
-import gestorAplicacion.Venta;
-import gestorAplicacion.Administracion.Area;
-import gestorAplicacion.Administracion.Banco;
-import gestorAplicacion.Administracion.Deuda;
-import gestorAplicacion.Administracion.Empleado;
-import gestorAplicacion.Administracion.Evaluacionfinanciera;
-import gestorAplicacion.Administracion.Rol;
-import gestorAplicacion.Administracion.Resultado;
-import gestorAplicacion.Bodega.Bolsa;
-import gestorAplicacion.Bodega.Prenda;
-import gestorAplicacion.Bodega.Insumo;
-import gestorAplicacion.Bodega.Maquinaria;
-import gestorAplicacion.Bodega.Pantalon;
-import gestorAplicacion.Bodega.Proveedor;
-import gestorAplicacion.Bodega.Repuesto;
-import gestorAplicacion.Bodega.Camisa;
+import src.gestorAplicacion.Persona;
+import src.gestorAplicacion.Sede;
+import src.gestorAplicacion.Fecha;
+import src.gestorAplicacion.Membresia;
+import src.gestorAplicacion.Venta;
+import src.gestorAplicacion.Administracion.Area;
+import src.gestorAplicacion.Administracion.Banco;
+import src.gestorAplicacion.Administracion.Deuda;
+import src.gestorAplicacion.Administracion.Empleado;
+import src.gestorAplicacion.Administracion.Evaluacionfinanciera;
+import src.gestorAplicacion.Administracion.Rol;
+import src.gestorAplicacion.Administracion.Resultado;
+import src.gestorAplicacion.Bodega.Bolsa;
+import src.gestorAplicacion.Bodega.Prenda;
+import src.gestorAplicacion.Bodega.Insumo;
+import src.gestorAplicacion.Bodega.Maquinaria;
+import src.gestorAplicacion.Bodega.Pantalon;
+import src.gestorAplicacion.Bodega.Proveedor;
+import src.gestorAplicacion.Bodega.Repuesto;
+import src.gestorAplicacion.Bodega.Camisa;
 
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import baseDatos.Deserializador;
-import baseDatos.Serializador;
-import gestorAplicacion.Bodega.Prenda;
+import src.baseDatos.Deserializador;
+import src.baseDatos.Serializador;
+import src.gestorAplicacion.Bodega.Prenda;
 import java.util.Collections;
 import java.util.Locale;
 

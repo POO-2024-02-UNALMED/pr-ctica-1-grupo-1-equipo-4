@@ -1,15 +1,18 @@
-package gestorAplicacion.Bodega;
-import gestorAplicacion.Administracion.Area;
-import gestorAplicacion.Administracion.Empleado;
-import gestorAplicacion.Administracion.GastoMensual;
-import gestorAplicacion.Administracion.Rol;
-import gestorAplicacion.Fecha;
-import gestorAplicacion.Sede;
-import gestorAplicacion.Venta;
+/* Equipo 4 grupo 1
+ *  Base para las prendas a vender y producir
+ */
+package src.gestorAplicacion.Bodega;
+import src.gestorAplicacion.Administracion.Area;
+import src.gestorAplicacion.Administracion.Empleado;
+import src.gestorAplicacion.Administracion.GastoMensual;
+import src.gestorAplicacion.Administracion.Rol;
+import src.gestorAplicacion.Fecha;
+import src.gestorAplicacion.Sede;
+import src.gestorAplicacion.Venta;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import uiMain.Main;
+import src.uiMain.Main;
 
 public abstract class Prenda implements GastoMensual, Serializable{
     private static final long serialVersionUID = 1L;

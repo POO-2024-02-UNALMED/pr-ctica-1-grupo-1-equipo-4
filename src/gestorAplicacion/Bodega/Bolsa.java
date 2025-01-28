@@ -1,6 +1,9 @@
-package gestorAplicacion.Bodega;
+/*Equipo 4 grupo 1
+ *  Un tipo de Insumo comprado al terminar una compra, viene de diferentes tamaños.
+ */
+package src.gestorAplicacion.Bodega;
 
-import gestorAplicacion.Sede;
+import src.gestorAplicacion.Sede;
 
 public class Bolsa extends Insumo {
 	private int capacidadMaxima;

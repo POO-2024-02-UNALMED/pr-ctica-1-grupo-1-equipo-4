@@ -1,9 +1,12 @@
-package gestorAplicacion.Bodega;
+/* Equipo 4 grupo 1
+ * Provee insumos y repuestos a la empresa
+ */
+package src.gestorAplicacion.Bodega;
 import java.io.Serializable;
 import java.util.ArrayList;
-import gestorAplicacion.Fecha;
+import src.gestorAplicacion.Fecha;
 
-import gestorAplicacion.Administracion.Deuda;
+import src.gestorAplicacion.Administracion.Deuda;
 
 public class Proveedor implements Serializable{
 	private static final long serialVersionUID = 1L;

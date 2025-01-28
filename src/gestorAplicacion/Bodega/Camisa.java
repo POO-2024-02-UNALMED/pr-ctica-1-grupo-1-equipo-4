@@ -1,8 +1,11 @@
-package gestorAplicacion.Bodega;
+/*Equipo 4 grupo 1
+ * Un tipo de prenda con instrucciones de fabricación específicas.
+ */
+package src.gestorAplicacion.Bodega;
 
-import gestorAplicacion.Administracion.Empleado;
-import gestorAplicacion.Fecha;
-import gestorAplicacion.Sede;
+import src.gestorAplicacion.Administracion.Empleado;
+import src.gestorAplicacion.Fecha;
+import src.gestorAplicacion.Sede;
 import java.util.ArrayList;
 import java.util.Arrays;
 

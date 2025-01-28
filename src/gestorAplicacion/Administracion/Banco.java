@@ -1,4 +1,8 @@
-package gestorAplicacion.Administracion;
+/* Equipo 4 grupo 1
+ * Clase Banco
+ * Representa un banco con una cuenta y un ahorro, posiblemente deudas.
+ */
+package src.gestorAplicacion.Administracion;
 import java.io.Serializable;
 import java.util.ArrayList;
 

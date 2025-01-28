@@ -1,12 +1,15 @@
-package gestorAplicacion;
+/* Equipo 4 grupo 1 
+ * Clase que define los tipos de personas que pueden trabajar o comprar en la empresa
+ */
+package src.gestorAplicacion;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import gestorAplicacion.Administracion.Empleado;
-import gestorAplicacion.Administracion.Rol;
-import gestorAplicacion.Administracion.Area;
-import gestorAplicacion.Bodega.Maquinaria;
-import uiMain.Main;
+import src.gestorAplicacion.Administracion.Empleado;
+import src.gestorAplicacion.Administracion.Rol;
+import src.gestorAplicacion.Administracion.Area;
+import src.gestorAplicacion.Bodega.Maquinaria;
+import src.uiMain.Main;
 
 public class Persona implements Serializable{
 

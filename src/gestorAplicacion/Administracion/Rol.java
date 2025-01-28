@@ -1,4 +1,7 @@
-package gestorAplicacion.Administracion;
+/*Equpo 4 grupo 1
+ * Representa un rol en la empresa e indica la función del empleado.
+ */
+package src.gestorAplicacion.Administracion;
 
 public enum Rol {
 	

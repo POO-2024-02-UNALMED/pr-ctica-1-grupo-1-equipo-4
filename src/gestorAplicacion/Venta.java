@@ -1,10 +1,13 @@
-package gestorAplicacion;
+/* Equipo 4
+ *  Clase que representa una venta de prendas en una sede
+ */
+package src.gestorAplicacion;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import gestorAplicacion.Administracion.Empleado;
-import gestorAplicacion.Bodega.Bolsa;
-import gestorAplicacion.Bodega.Prenda;
+import src.gestorAplicacion.Administracion.Empleado;
+import src.gestorAplicacion.Bodega.Bolsa;
+import src.gestorAplicacion.Bodega.Prenda;
 
 public class Venta implements Serializable {
 	private static final long serialVersionUID = 1L; // Para serializacion

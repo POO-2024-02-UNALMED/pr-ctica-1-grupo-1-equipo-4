@@ -1,16 +1,7 @@
-package baseDatos;
-
-import gestorAplicacion.Administracion.Banco;
-import gestorAplicacion.Administracion.Deuda;
-import gestorAplicacion.Administracion.Empleado;
-import gestorAplicacion.Bodega.Proveedor;
-import gestorAplicacion.Bodega.Repuesto;
-import gestorAplicacion.Persona;
-import gestorAplicacion.Sede;
-import gestorAplicacion.Venta;
-import gestorAplicacion.Bodega.Camisa;
-import gestorAplicacion.Bodega.Pantalon;
-import gestorAplicacion.Bodega.Prenda;
+/*Equipo 4 grupo 1
+ *  Deserializa al iniciar el programa
+ */
+package src.baseDatos;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +9,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+
+import src.gestorAplicacion.Persona;
+import src.gestorAplicacion.Sede;
+import src.gestorAplicacion.Venta;
+import src.gestorAplicacion.Administracion.Banco;
+import src.gestorAplicacion.Administracion.Deuda;
+import src.gestorAplicacion.Administracion.Empleado;
+import src.gestorAplicacion.Bodega.Camisa;
+import src.gestorAplicacion.Bodega.Pantalon;
+import src.gestorAplicacion.Bodega.Prenda;
+import src.gestorAplicacion.Bodega.Proveedor;
+import src.gestorAplicacion.Bodega.Repuesto;
 
 public class Deserializador {
     private static File rutaTemp = new File("src\\baseDatos\\temp");

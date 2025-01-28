@@ -1,4 +1,7 @@
-package gestorAplicacion;
+/* Equipo 4 grupo 1
+ * Clase de utilidad para todo el programa, manejando fechas.
+ */
+package src.gestorAplicacion;
 
 import java.io.Serializable;
 

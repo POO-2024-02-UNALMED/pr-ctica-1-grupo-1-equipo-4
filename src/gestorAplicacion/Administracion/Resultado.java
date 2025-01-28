@@ -1,5 +1,8 @@
-package gestorAplicacion.Administracion;
-import gestorAplicacion.Sede;
+/*Equipo 4 grupo 1
+ *  Representa el resultado de una busqueda de un insumo en una sede
+ */
+package src.gestorAplicacion.Administracion;
+import src.gestorAplicacion.Sede;
 
 public class Resultado {
     // Resultado de una busqueda de un Insumo en una Sede.

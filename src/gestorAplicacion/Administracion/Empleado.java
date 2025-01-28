@@ -1,15 +1,19 @@
-package gestorAplicacion.Administracion;
+/*Equipo 4 grupo 1
+ * Clase Empleado
+ * Representa un empleado de la empresa, con sus respectivo area y Rol.
+ */
+package src.gestorAplicacion.Administracion;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import gestorAplicacion.Fecha;
-import gestorAplicacion.Persona;
-import gestorAplicacion.Sede;
-import gestorAplicacion.Membresia;
-import gestorAplicacion.Venta;
-import gestorAplicacion.Bodega.Maquinaria;
+import src.gestorAplicacion.Fecha;
+import src.gestorAplicacion.Persona;
+import src.gestorAplicacion.Sede;
+import src.gestorAplicacion.Membresia;
+import src.gestorAplicacion.Venta;
+import src.gestorAplicacion.Bodega.Maquinaria;
 import java.util.Scanner;
-import uiMain.Main;
+import src.uiMain.Main;
 
 public class Empleado extends Persona implements GastoMensual{
 	

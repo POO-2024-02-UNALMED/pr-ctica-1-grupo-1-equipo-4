@@ -1,9 +1,12 @@
-package gestorAplicacion.Bodega;
+/*Equipo 4 grupo 1
+ * Representa un insumo que se compra a un proveedor y se usa para prendas o Maquinaria (Ver Repuesto)
+ */
+package src.gestorAplicacion.Bodega;
 
-import gestorAplicacion.Administracion.GastoMensual;
-import gestorAplicacion.Fecha;
-import gestorAplicacion.Sede;
-import gestorAplicacion.Venta;
+import src.gestorAplicacion.Administracion.GastoMensual;
+import src.gestorAplicacion.Fecha;
+import src.gestorAplicacion.Sede;
+import src.gestorAplicacion.Venta;
 import java.io.Serializable;
 
 public class Insumo implements GastoMensual,Serializable{

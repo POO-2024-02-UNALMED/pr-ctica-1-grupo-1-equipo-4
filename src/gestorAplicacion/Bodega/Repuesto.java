@@ -1,5 +1,8 @@
-package gestorAplicacion.Bodega;
-import gestorAplicacion.Fecha;
+/*Equipo 4 grupo 1
+ * Tipo de insumo usado por Maquinaria
+ */
+package src.gestorAplicacion.Bodega;
+import src.gestorAplicacion.Fecha;
 import java.util.ArrayList;
 
 public class Repuesto extends Insumo { // Implementa serializable por repuesto

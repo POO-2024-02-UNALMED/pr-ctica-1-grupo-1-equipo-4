@@ -1,11 +1,16 @@
-package gestorAplicacion.Administracion;
+/* Equipo 4 grupo 1
+ * Clase Deuda
+ * Representa una deuda con un proveedor o un banco.
+ */
+
+package src.gestorAplicacion.Administracion;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import gestorAplicacion.Fecha;
-import gestorAplicacion.Bodega.Camisa;
-import gestorAplicacion.Bodega.Pantalon;
-import gestorAplicacion.Bodega.Proveedor;
+import src.gestorAplicacion.Fecha;
+import src.gestorAplicacion.Bodega.Camisa;
+import src.gestorAplicacion.Bodega.Pantalon;
+import src.gestorAplicacion.Bodega.Proveedor;
 
 public class Deuda implements Serializable {
 	private static final long serialVersionUID = 1L; // Para serializacion

@@ -1,20 +1,24 @@
-package baseDatos;
+/* Equipo 4 grupo 1.
+ * Serializa al usar la opción 6 del main.
+ */
+package src.baseDatos;
 
-import gestorAplicacion.Administracion.Banco;
-import gestorAplicacion.Administracion.Deuda;
-import gestorAplicacion.Bodega.Camisa;
-import gestorAplicacion.Bodega.Pantalon;
-import gestorAplicacion.Bodega.Proveedor;
-import gestorAplicacion.Bodega.Repuesto;
-import gestorAplicacion.Persona;
-import gestorAplicacion.Sede;
-import gestorAplicacion.Venta;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+
+import src.gestorAplicacion.Persona;
+import src.gestorAplicacion.Sede;
+import src.gestorAplicacion.Venta;
+import src.gestorAplicacion.Administracion.Banco;
+import src.gestorAplicacion.Administracion.Deuda;
+import src.gestorAplicacion.Bodega.Camisa;
+import src.gestorAplicacion.Bodega.Pantalon;
+import src.gestorAplicacion.Bodega.Proveedor;
+import src.gestorAplicacion.Bodega.Repuesto;
 
 
 public class Serializador {

@@ -1,20 +1,24 @@
-package gestorAplicacion;
+/* Equipo 4 grupo 1
+ *  Representa una sede, y contiene referencias a la mayoría de los objetos de la empresa.
+ */
+package src.gestorAplicacion;
 // Esta en el paquete común pues administra Empleados e Insumos.
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
+import src.gestorAplicacion.Administracion.Empleado;
+import src.gestorAplicacion.Bodega.Prenda;
+import src.gestorAplicacion.Bodega.Maquinaria;
+import src.gestorAplicacion.Bodega.Insumo;
+import src.gestorAplicacion.Administracion.Evaluacionfinanciera;
+import src.gestorAplicacion.Administracion.Area;
+import src.gestorAplicacion.Administracion.Banco;
+import src.gestorAplicacion.Administracion.Resultado;
+import src.gestorAplicacion.Administracion.Rol;
+import src.uiMain.Main;
 
-import gestorAplicacion.Administracion.Area;
-import gestorAplicacion.Administracion.Empleado;
-import gestorAplicacion.Administracion.Evaluacionfinanciera;
-import gestorAplicacion.Administracion.Resultado;
-import gestorAplicacion.Administracion.Rol;
-import gestorAplicacion.Bodega.Insumo;
-import gestorAplicacion.Bodega.Maquinaria;
-import gestorAplicacion.Bodega.Prenda;
-import gestorAplicacion.Administracion.Banco;
-import uiMain.Main;
+
 public class Sede implements Serializable{
 
 	private static final long serialVersionUID = 1L; // Para serializacion
