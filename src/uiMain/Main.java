@@ -173,7 +173,6 @@ public class Main {
         
         System.out.println("\n"+"Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
 
-        System.out.println("Esta es una lista de empleados que no estan rindiendo correctamente, ¿que deseas hacer?");
         int diferenciaSalarios =- Persona.diferenciaSalarios();
         if (diferenciaSalarios>0){
             System.out.println("Tus empleados estan "+String.format("%,d", Persona.diferenciaSalarios())+" sobre el promedio de salarios");
@@ -310,8 +309,10 @@ public class Main {
             System.out.println("Se nececitan " + cantidadNecesaria + " " + rol + "s, estos son los candidatos:");
 
             for (Persona persona : aptos) {
-                System.out.println("Nombre: " + persona.getNombre() + ", Documento: " + persona.getDocumento() + ", con "
-                        + persona.getExperiencia() + " años de experiencia.");
+                if (persona.getRol().equals(rol)){
+                    System.out.println("Nombre: " + persona.getNombre() + ", Documento: " + persona.getDocumento() + ", con "
+                    + persona.getExperiencia() + " años de experiencia.");
+                }
             }
 
             System.out.println("Ingresa el nombre de los que quieres contratar.");
