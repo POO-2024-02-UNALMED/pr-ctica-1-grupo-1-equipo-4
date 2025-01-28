@@ -7,6 +7,7 @@ import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
+import gestorAplicacion.Venta;
 import gestorAplicacion.Bodega.Camisa;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Prenda;
@@ -50,7 +51,6 @@ public class Deserializador {
                     Deuda.setListaDeudas((ArrayList<Deuda>) ois.readObject());
                     Repuesto.reemplazarListadoRepuestos((ArrayList<Repuesto>) ois.readObject());
                     System.out.println("Se deserializaron las sedes con "+ Sede.getPrendasInventadasTotal().size()+ " prendas inventadas");
-
             }
             if (file.getAbsolutePath().contains("Bancos")) {
                     fis = new FileInputStream(file);
@@ -72,6 +72,11 @@ public class Deserializador {
                         Camisa.setTipoInsumo((ArrayList<String>) ois.readObject());
                         Pantalon.setCantidadInsumo((ArrayList<Integer>) ois.readObject());
                         Pantalon.setTipoInsumo( (ArrayList<String>) ois.readObject());;
+            } else if (file.getAbsolutePath().contains("TarjetasRegalo")){
+                    fis = new FileInputStream(file);
+                    ois = new ObjectInputStream(fis);
+                    Venta.setCodigosRegalos((ArrayList<String>) ois.readObject());
+                    Venta.setMontosRegalo((ArrayList<Integer>) ois.readObject());
             }
         } catch (FileNotFoundException e) {
             System.out.println("Archivo "+file.getName()+ "vacío.");

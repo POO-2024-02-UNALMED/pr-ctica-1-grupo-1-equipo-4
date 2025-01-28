@@ -123,9 +123,6 @@ public class Main {
                     in.close();
                     break buclePrincipal;
 
-                case 7:
-                    Desarrollo.menu(in);
-
                 default:
                     System.out.println("Esa opción no es valida.");
             }
@@ -1596,6 +1593,8 @@ public class Main {
                         Venta.getMontosRegalo().remove(indice);
                         System.out.println("La tarjeta de regalo se ha agotado y ha sido desactivada.");
                     }
+
+                    nuevoIntento=2;
                 } 
                 else {
                     System.out.println(
@@ -1765,7 +1764,6 @@ public class Main {
                     break;
                 }
             }
-            Venta.getCodigosRegalo().add(codigo.toString());
         }
         return codigo.toString();
     }

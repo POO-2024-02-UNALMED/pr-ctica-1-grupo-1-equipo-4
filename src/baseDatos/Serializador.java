@@ -8,6 +8,7 @@ import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
+import gestorAplicacion.Venta;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -100,6 +101,13 @@ public class Serializador {
                         oos.writeObject(Pantalon.getTipoInsumo());
                         oos.close();
                         System.out.println("Prendas serializadas");
+                } else if (file.getAbsolutePath().contains("TarjetasRegalo")){
+                        fos = new FileOutputStream(file);
+                        oos = new ObjectOutputStream(fos);
+                        oos.writeObject(Venta.getCodigosRegalo());
+                        oos.writeObject(Venta.getMontosRegalo());
+                        oos.close();
+                        System.out.println("Tarjetas de regalo serializadas");
                 }
             } catch (FileNotFoundException e) {
                 System.out.println("Archivo "+file.getName()+ "no existe, y de alguna manera esta en la carpeta, llamen a Dios.");
