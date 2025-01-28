@@ -820,13 +820,13 @@ public class Main {
         Repuesto Afiladores = new Repuesto("Afiladores", 750, p22);
 
         Repuesto ResistenciaElectrica = new Repuesto("Resistencia Electrica", 1500, p25);
-        Repuesto MangueraDeVapor = new Repuesto("Manguera de Vapor", 750, p27);
+        Repuesto MangueraDeVapor = new Repuesto("Manguera de Vapor", 750, p27, 1);
 
         Repuesto AgujasBI = new Repuesto("Agujas de la Bordadora Industrial", 25, p29);
 
         Repuesto BandasDeTransmision = new Repuesto("Bandas de Transmision", 2500, p31);
 
-        Repuesto TintaN = new Repuesto("Tinta Negra Impresora", 3000, p33);
+        Repuesto TintaN = new Repuesto("Tinta Negra Impresora", 3000, p33, 1);
 
         Repuesto Lector = new Repuesto("Lector de barras", 3000, p35);
         Repuesto PapelQuimico = new Repuesto("Papel quimico", 72, p37);

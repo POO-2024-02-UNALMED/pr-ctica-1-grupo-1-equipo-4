@@ -21,6 +21,11 @@ public class Repuesto extends Insumo { // Implementa serializable por repuesto
         super(nombre, horasDeVidaUtil, proveedor);
         listadoRepuestos.add(this);
     }
+    //constructor para dañar repuesto (ejemplificar)
+    public Repuesto(String nombre, int horasDeVidaUtil, Proveedor proveedor, int p){
+        super(nombre, horasDeVidaUtil, proveedor);
+        this.horasDeUso = 100000; 
+    }
 
     public String getNombre(){
         return nombre;
