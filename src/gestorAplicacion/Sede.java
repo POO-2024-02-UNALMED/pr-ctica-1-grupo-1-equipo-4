@@ -330,6 +330,29 @@ public class Sede implements Serializable{
 		}
 	}
 
+	// Acepta instancias de insumo perteneceintes a esta sede
+	public boolean quitarInsumos(ArrayList<Insumo> insumos, ArrayList<Integer> cantidad){
+		boolean hayInsumos = true;
+		for (Insumo insumo : insumos){
+			if (!listaInsumosBodega.contains(insumo)){
+				hayInsumos = false;
+				break;
+			}
+			int idxInsumoEnSede = listaInsumosBodega.indexOf(insumo);
+			if (cantidadInsumosBodega.get(idxInsumoEnSede) < cantidad.get(insumos.indexOf(insumo))){
+				hayInsumos = false;
+				break;
+			}
+		}
+		if (hayInsumos){
+			for (Insumo insumo : insumos){
+				int idxInsumoEnSede = listaInsumosBodega.indexOf(insumo);
+				cantidadInsumosBodega.set(idxInsumoEnSede,cantidadInsumosBodega.get(idxInsumoEnSede)-cantidad.get(insumos.indexOf(insumo)));
+			}
+		}
+		return hayInsumos;
+	}
+
 	// Devuelve la cantidad de empleados que hay en la sede con el rol dado
 	// metodo ayudante para reorganizarEmpleados
 	public int cantidadPorRol(Rol rol){
@@ -558,7 +581,6 @@ public class Sede implements Serializable{
 			} else if(senalRec == 15){
 				//las dos sedes estan sobrecargadas, preguntar si quiere producirlas el otro dia, o todo el mismo dia con un mayor costo
 				Main.printsInt2(9);
-
 				int opciom = 0;
 				while(opciom != 1 && opciom != 2){
 					opciom = scanner.nextInt();

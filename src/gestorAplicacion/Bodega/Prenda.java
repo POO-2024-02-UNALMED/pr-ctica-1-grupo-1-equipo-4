@@ -26,6 +26,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
     // Esta lista es, en cada sede, cuanto hay en stock
     //de esta prenda. El indice es el mismo de la sede en la lista de sedes.
     protected float costoInsumos=0;
+    private static int cantidadUltimaProduccion = 0;
     protected int costoProduccion=0;
     protected long precio;
     //costos necesarios para calcular el precio de cada prenda
@@ -60,29 +61,44 @@ public abstract class Prenda implements GastoMensual, Serializable{
         else if (terminada) {modista.setPrendasProducidas(modista.getPrendasProducidas()+1);}
     }
     
-    public static void producirPrendas(ArrayList<ArrayList<ArrayList<Integer>>>planProduccion, Fecha hoy){
+    public static boolean producirPrendas(ArrayList<ArrayList<ArrayList<Integer>>>planProduccion, Fecha hoy){
+        cantidadUltimaProduccion = 0;
         Fecha diaDeProduccion = hoy;
         for (ArrayList<ArrayList<Integer>> dia : planProduccion){
             for (int i=0;i<dia.size();i++){
                 Sede sede=Sede.getlistaSedes().get(i);
-                producirListaPrendas(dia.get(i), sede, diaDeProduccion);
+                if (!producirListaPrendas(dia.get(i), sede, diaDeProduccion)){
+                    return false;
+                }
             }
             diaDeProduccion=diaDeProduccion.diaSiguiente();
         }
+        return true;
     }
 
-    private static void producirListaPrendas(ArrayList<Integer> planProduccion, Sede sede, Fecha fechaProduccion){
+    // true si los insumos alcanzaron, false si no.
+    private static boolean producirListaPrendas(ArrayList<Integer> planProduccion, Sede sede, Fecha fechaProduccion){
         int cantidadPantalones = planProduccion.get(0);
         int cantidadCamisas = planProduccion.get(1);
         ArrayList<Prenda> prendas = new ArrayList<Prenda>();
 
+        ArrayList<Insumo> insumosPantalon = sede.insumosPorNombre(Pantalon.getTipoInsumo());
         for (int i=0;i<cantidadPantalones;i++){
-            Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,sede.insumosPorNombre(Pantalon.getTipoInsumo()));
-            prendas.add(pantalon);
+            if (sede.quitarInsumos(insumosPantalon, Pantalon.getCantidadInsumo())){
+                Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,insumosPantalon);
+                prendas.add(pantalon);
+            } else {
+                return false;
+            }
         }
+        ArrayList<Insumo> insumosCamisa = sede.insumosPorNombre(Camisa.getTipoInsumo());
         for (int i=0;i<cantidadCamisas;i++){
-            Camisa camisa = new Camisa(fechaProduccion,null,false, false,sede, sede.insumosPorNombre(Camisa.getTipoInsumo()));
-            prendas.add(camisa);
+            if (sede.quitarInsumos(insumosCamisa, Camisa.getCantidadInsumo())){
+                Camisa camisa = new Camisa(fechaProduccion,null,false, false,sede, insumosCamisa);
+                prendas.add(camisa);
+            } else {
+                return false;
+            }
         }
 
         int idxTanda = 0;
@@ -101,23 +117,23 @@ public abstract class Prenda implements GastoMensual, Serializable{
 
             for (Prenda paraTanda: prendas){
                 ArrayList<Object> siguientePaso = paraTanda.siguientePaso();
-                switch ((String) siguientePaso.get(0)){
-                    case "Maquina de Corte":
+                switch (((String) siguientePaso.get(0)).toLowerCase()){
+                    case "maquina de corte":
                         paraCorte.add(paraTanda);
                         break;
-                    case "Maquina de Tijereado":
+                    case "maquina de tijereado":
                         paraTijereado.add(paraTanda);
                         break;
-                    case "Maquina de Coser Industrial":
+                    case "maquina de coser industrial":
                         paraCoser.add(paraTanda);
                         break;
-                    case "Maquina de Bordadora":
+                    case "maquina de bordadora":
                         paraBordadora.add(paraTanda);
                         break;
-                    case "Maquina de Termofijado":
+                    case "maquina de termofijado":
                         paraTermofijado.add(paraTanda);
                         break;
-                    case "Plancha Industrial":
+                    case "plancha industrial":
                         paraPlancha.add(paraTanda);
                         break;
                 }
@@ -133,6 +149,9 @@ public abstract class Prenda implements GastoMensual, Serializable{
 
             Empleado modista = Main.pedirModista(prendas.size(), sede,idxTanda);
             for (ArrayList<Prenda> tanda: tandas){
+                if (tanda.size()==0){
+                    continue; // No hay prendas con esta maquinaria
+                }
                 Maquinaria maquina = Maquinaria.seleccionarDeTipo(sede,(String) tanda.get(0).ultimoPaso.get(0));
                 for (Prenda prenda: tanda){
                     maquina.usar((int) prenda.ultimoPaso.get(1));
@@ -145,6 +164,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
                         prenda.terminada=true;
                         modista.setPrendasProducidas(modista.getPrendasProducidas()+1);
                         prendas.remove(prenda);
+                        cantidadUltimaProduccion++;
                     }
                 }
             }
@@ -152,7 +172,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
         }
         
 
-
+        return true;
     }
 
     abstract ArrayList<Object> siguientePaso();
@@ -210,6 +230,10 @@ public abstract class Prenda implements GastoMensual, Serializable{
 
     public String toString(){
         return "La prenda de tipo "+nombre;
+    }
+
+    public static int getCantidadUltimaProduccion(){
+        return cantidadUltimaProduccion;
     }
     
     public float calcularCostoInsumos() {

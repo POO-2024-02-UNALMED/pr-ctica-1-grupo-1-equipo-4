@@ -10,7 +10,7 @@ public class Camisa extends Prenda {
     private static final long serialVersionUID = 1L;
     private static ArrayList<Integer> cantidadInsumo=new ArrayList<Integer>();
     private static ArrayList<String> tipoinsumo=new ArrayList<String>();
-    int pasoActual=0;
+    int pasoActual=1;
 
     static public ArrayList<String> maquinariaNecesaria = new ArrayList<String>(Arrays.asList("Maquina de Corte", "Bordadora Industrial", "Maquina de Coser Industrial","Maquina de Termofijado", "Plancha Industrial"));
     public Camisa(Fecha fecha, Empleado modista, boolean descartada, boolean terminada, Sede sede, ArrayList<Insumo> insumos){

@@ -187,8 +187,10 @@ public class Venta implements Serializable {
 		int  ventasMes1= Venta.cantidadProducto(Venta.filtrar(sede.getHistorialVentas(),fechaActual.restarMeses(3)),prenda);
 		int  ventasMes2= Venta.cantidadProducto(Venta.filtrar(sede.getHistorialVentas(),fechaActual.restarMeses(2)),prenda);
 		float pendienteMes1a2=(ventasMes2-ventasMes1);
+
 		int  ventasMes3= Venta.cantidadProducto(Venta.filtrar(sede.getHistorialVentas(),fechaActual.restarMeses(1)),prenda);
 		float pendienteMes2a3=(ventasMes3-ventasMes2);
+		
 		float pendientePromedio=(pendienteMes1a2+pendienteMes2a3)/2;
 		return (int) Math.ceil(ventasMes3+pendientePromedio);
 	}

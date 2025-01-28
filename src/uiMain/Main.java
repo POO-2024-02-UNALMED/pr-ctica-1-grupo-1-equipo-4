@@ -109,7 +109,12 @@ public class Main {
                     Sede sedePrueba = new Sede(1);
                     
                     ArrayList<ArrayList<ArrayList<Integer>>> plan = sedePrueba.planProduccion(maquina.agruparMaquinasDisponibles(fecha), fecha, in);
-                    Prenda.producirPrendas(plan,Main.fecha);
+                    boolean creadas = Prenda.producirPrendas(plan,Main.fecha);
+                    if (creadas){
+                        System.out.println(Prenda.getCantidadUltimaProduccion()+" Prendas creadas con éxito");
+                    } else {
+                        System.out.println("No se pudo producir todo, los insumos no alcanzaron, producimos "+Prenda.getCantidadUltimaProduccion()+" prendas");
+                    }
                     break;
 
                 case 6:
@@ -152,7 +157,7 @@ public class Main {
     // https://docs.google.com/document/d/1IomqwzQR1ZRXw9dFlHx5mA_2oOowyIbxauZeJ6Rqy6Q/edit?tab=t.0#heading=h.z9eys2stm4gz
     static public ArrayList<Empleado> despedirEmpleados(Scanner scanner, Fecha fecha) {
         System.out.println("Obteniendo lista sugerida de empleados");
-        ArrayList<Object> infoDespidos = Empleado.listaInicialDespedirEmpleado(fecha);
+        ArrayList<Object> infoDespidos = Empleado.listaInicialDespedirEmpleado(fecha); // También transfiere entre sedes y areas
         ArrayList<Empleado> aDespedir = (ArrayList<Empleado>) infoDespidos.get(0);
         ArrayList<String> mensajes = (ArrayList<String>) infoDespidos.get(1); // Canal para imprimir cosas mas que todo
                                                                               // para debuggear.
@@ -1176,9 +1181,18 @@ public class Main {
         int com6 = (int) (600_000 * 0.05f);
         Wilson.setRendimientoBonificacion(com6);
 
-        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Aura, Cata, 3500, sedeP);
-        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Aura, Mario, 3000, sedeP);
-        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Gabriela, Freddy, 15, sede2);
+        int maxProductos = 5;
+        int minProductos = 1;
+
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(10,11,24), Aura, Cata, 300, sedeP);
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(10,11,24), Aura, Mario, 300, sedeP);
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(29,11,24), Aura, Cata, 600, sedeP);
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(29,11,24), Aura, Mario, 600, sedeP);
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,12,24), Aura, Cata, 700, sedeP);
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,12,24), Aura, Mario, 700, sedeP);
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,1,25), Aura, Cata, 700, sedeP);
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,1,25), Aura, Mario, 700, sedeP);
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,1,25), Gabriela, Freddy, 300, sede2);
     }
 
     static void crearVentaAleatoria(int deTantosProductos,int aTantosProductos, Fecha fecha, Empleado asesor, Empleado encargado, int cantidad,Sede sede){
@@ -1190,31 +1204,14 @@ public class Main {
             for (int idxProducto=0;idxProducto<cantidadProductos; idxProducto++){
                 int tipoProducto = (int) (Math.random() * 2);
                 if (tipoProducto==0){
-                    ArrayList <Insumo> insumos = new ArrayList<>();
-                    for (String tipoInsumo: Camisa.getTipoInsumo()){
-                        for (Proveedor proveedor : Proveedor.getListaProveedores()){
-                            if (proveedor.getInsumo().getNombre().equals(tipoInsumo)){
-                                insumos.add(new Insumo(tipoInsumo, 1, proveedor, sede));
-                                break;
-                            }
-                        }
-                    }
-                    Camisa producto = new Camisa(fecha, asesor, false, true, sede,insumos);
+                    Camisa producto = new Camisa(fecha, asesor, false, true, sede,sede.insumosPorNombre(Camisa.getTipoInsumo()));
                     precio+=200_000;
                     costoEnvio+=1_000;
                     articulos.add(producto);
                 }
                 if (tipoProducto==1){
                     ArrayList <Insumo> insumos = new ArrayList<>();
-                    for (String tipoInsumo: Pantalon.getTipoInsumo()){
-                        for (Proveedor proveedor : Proveedor.getListaProveedores()){
-                            if (proveedor.getInsumo().getNombre().equals(tipoInsumo)){
-                                insumos.add(new Insumo(tipoInsumo, 1, proveedor, sede));
-                                break;
-                            }
-                        }
-                    }
-                    Pantalon producto = new Pantalon(fecha, asesor, false, true, sede,insumos);
+                    Pantalon producto = new Pantalon(fecha, asesor, false, true, sede,sede.insumosPorNombre(Pantalon.getTipoInsumo()));
                     precio+=200_000;
                     costoEnvio+=1_000;
                     articulos.add(producto);
