@@ -45,8 +45,13 @@ public class Main {
     private static Proveedor proveedorBdelmain;
     public static Fecha fecha;
     public static void main(String[] args) {
-        System.out.println("Ecomoda a la orden");
-        Deserializador.deserializar();
+        System.out.println("Ecomoda a la orden, presiona enter para continuar");
+        String respuesta = in.nextLine();
+        if (respuesta.equals("moscorrofio")){
+            new Main().crearSedesMaquinasRepuestos();
+        } else {
+            Deserializador.deserializar();
+        }
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
             System.out.println("\n"+"¿Que operación desea realizar?");
@@ -113,8 +118,6 @@ public class Main {
                     System.exit(0);
                     in.close();
                     break buclePrincipal;
-                case 7:
-                    new Main().crearSedesMaquinasRepuestos();
 
                 default:
                     System.out.println("Esa opción no es valida.");
@@ -320,6 +323,11 @@ public class Main {
         }
 
         Persona.contratar(aContratar, aReemplazar, fecha);
+    }
+
+    // Metodo de reporte para Persona.contratar
+    static public void errorDeReemplazo(Persona persona) {
+        System.out.println("No se pudo contratar a " + persona.getNombre() + ", no sabemos a quien reemplaza.");
     }
 
     // Interacción 1 Sistema Financiero
@@ -1283,7 +1291,7 @@ public class Main {
         System.out.println("\n"+"Ingrese la fecha de la venta:");
         Fecha fechaVenta = Main.fecha;
       System.out.println("\n"+"Seleccione el cliente al que se le realizará la venta:");
-      Persona.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
+      Main.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
       int clienteSeleccionado = nextIntSeguro(scanner);
       ArrayList<Persona> noEmpleados = new ArrayList<>();
       for (Persona persona : Persona.getListaPersonas()) { // Recorre listaPersonas para filtrar a los que no son empleados
@@ -1406,6 +1414,21 @@ public class Main {
         vendedor.setRendimientoBonificacion(comisión);
        } return venta;
     }
+	public static void imprimirNoEmpleados() {
+		ArrayList<Persona> noEmpleados = new ArrayList<>();
+		System.out.println("Lista de clientes:");
+		for (Persona persona : Persona.getListaPersonas()) {
+			if (!(persona instanceof Empleado)) {
+				noEmpleados.add(persona);
+			}
+		}
+		
+		int index = 0; 
+		for (Persona persona : noEmpleados) {
+			System.out.println(index + ". " + persona);
+			index++;
+     }
+	}
 
      //Interacción 2 Facturación
     public static Venta realizarVenta(Scanner scanner,  Venta venta) {
