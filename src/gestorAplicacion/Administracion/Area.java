@@ -37,9 +37,6 @@ public enum Area {
                     long montoTotal = 0;
                     for (Venta venta : Venta.filtrar(sede.getHistorialVentas(),fecha)) {
                         int montoPagado = venta.getMontoPagado();
-                        if (montoPagado < 0) {
-                            System.out.println("No nos esperabamos una venta con monto negativo");
-                        }
                         montoTotal += montoPagado;
                     }
                     int cantidadVentas = Venta.filtrar(sede.getHistorialVentas(), fecha).size();

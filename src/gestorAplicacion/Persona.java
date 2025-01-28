@@ -6,6 +6,7 @@ import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Administracion.Area;
 import gestorAplicacion.Bodega.Maquinaria;
+import uiMain.Main;
 
 public class Persona implements Serializable{
 
@@ -89,24 +90,9 @@ public class Persona implements Serializable{
 				Maquinaria.asignarMaquinaria(emp);
 				emp.setSalario((int) (persona.getRol().getSalarioInicial()+persona.getRol().getSalarioInicial()*0.5f*persona.getExperiencia()));
 			} else {
-				System.out.println("No se pudo contratar a "+persona.getNombre()+" ¡No sabemos a quien reemplaza!");
+				Main.errorDeReemplazo(persona);
 			}
 		}
-	}
-	public static void imprimirNoEmpleados() {
-		ArrayList<Persona> noEmpleados = new ArrayList<>();
-		System.out.println("Lista de clientes:");
-		for (Persona persona : listaPersonas) {
-			if (!(persona instanceof Empleado)) {
-				noEmpleados.add(persona);
-			}
-		}
-		
-		int index = 0; 
-		for (Persona persona : noEmpleados) {
-			System.out.println(index + ". " + persona);
-			index++;
-     }
 	}
 	public String rolString() {
 		String rolString;
