@@ -541,7 +541,8 @@ public class Main {
                     Resultado productoEnBodega = Sede.verificarProductoBodega(i, s);
                     int idxInsumo = listaInsumos.indexOf(i);
                     if (productoEnBodega.getEncontrado() == true) {
-                        listaCantidades.set(idxInsumo, listaCantidades.get(idxInsumo) - s.getCantidadInsumosBodega().get(productoEnBodega.getIndex())); // Quitamos la cantidad de insumos que ya tenemos
+                        listaCantidades.set(idxInsumo,Math.max(listaCantidades.get(idxInsumo) - s.getCantidadInsumosBodega().get(productoEnBodega.getIndex()),0)); // Quitamos la cantidad de insumos que ya tenemos
+                        // Evitamos restar insumos si ya hay suficiente.
                     }
 
 
