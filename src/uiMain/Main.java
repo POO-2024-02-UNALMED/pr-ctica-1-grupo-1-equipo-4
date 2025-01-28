@@ -1198,7 +1198,7 @@ public class Main {
         crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,12,24), Aura, Mario, 700, sedeP);
         crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,1,25), Aura, Cata, 700, sedeP);
         crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,1,25), Aura, Mario, 700, sedeP);
-        crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,1,25), Gabriela, Freddy, 300, sede2);
+        crearVentaAleatoria(minProductos,maxProductos, new Fecha(20,1,25), Freddy,Patricia , 300, sede2);
     }
 
     static void crearVentaAleatoria(int deTantosProductos,int aTantosProductos, Fecha fecha, Empleado asesor, Empleado encargado, int cantidad,Sede sede){
@@ -1216,7 +1216,6 @@ public class Main {
                     articulos.add(producto);
                 }
                 if (tipoProducto==1){
-                    ArrayList <Insumo> insumos = new ArrayList<>();
                     Pantalon producto = new Pantalon(fecha, asesor, false, true, sede,sede.insumosPorNombre(Pantalon.getTipoInsumo()));
                     precio+=200_000;
                     costoEnvio+=1_000;

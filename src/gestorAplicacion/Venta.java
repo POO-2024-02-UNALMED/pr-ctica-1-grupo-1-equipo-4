@@ -52,8 +52,8 @@ public class Venta implements Serializable {
 
 	// Metodo ayudante para Empleado.listaInicialDespedirEmpleado,
 	// que calcula el acumulado de ventas asesoradas o registradas por empleado en pesos.
-	static public int acumuladoVentasAsesoradas(Empleado empleado){
-		int acumulado=0;
+	static public long acumuladoVentasAsesoradas(Empleado empleado){
+		long acumulado=0;
 		for (Venta venta : empleado.getSede().getHistorialVentas()){
 			if (venta.asesor.equals(empleado)){
 				acumulado += venta.subtotal;
@@ -139,9 +139,6 @@ public class Venta implements Serializable {
 			}
 		}
 		float diferencia = (montoventasBF - montoventasComunes)/ (float) montoventasComunes;
-		System.out.println(montoventasBF);
-		System.out.println(montoventasComunes);
-		System.out.println(diferencia);
 		return Math.round(Math.min(diferencia/3,0.31f)*1000.0f)/1000.0f;
 	}
 
@@ -193,6 +190,14 @@ public class Venta implements Serializable {
 		
 		float pendientePromedio=(pendienteMes1a2+pendienteMes2a3)/2;
 		return (int) Math.ceil(ventasMes3+pendientePromedio);
+	}
+
+	public static int acumulado (ArrayList<Venta> ventas){
+		int acumulado=0;
+		for (Venta venta : ventas){
+			acumulado+=venta.montoPagado;
+		}
+		return acumulado;
 	}
 
 
@@ -287,5 +292,6 @@ public class Venta implements Serializable {
 	public static void setMontosRegalo(ArrayList<Integer> montos){
 		Venta.montosRegalo=montos;
 	}
+
 	
 }

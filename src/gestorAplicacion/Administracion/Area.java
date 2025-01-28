@@ -34,11 +34,16 @@ public enum Area {
                     a.rendimientoDeseado = (float) Venta.filtrar(sede.getHistorialVentas(), fecha).size() / cantidadEmpleadosOfi; // Cantidad de ventas por empleado de oficina
                     break;
                 case VENTAS:
-                    int montoTotal = 0;
-                    for (Venta venta : sede.getHistorialVentas()) {
-                        montoTotal += venta.getMontoPagado();
+                    long montoTotal = 0;
+                    for (Venta venta : Venta.filtrar(sede.getHistorialVentas(),fecha)) {
+                        int montoPagado = venta.getMontoPagado();
+                        if (montoPagado < 0) {
+                            System.out.println("No nos esperabamos una venta con monto negativo");
+                        }
+                        montoTotal += montoPagado;
                     }
-                    a.rendimientoDeseado = ((float) montoTotal / sede.getHistorialVentas().size())*0.8f;
+                    int cantidadVentas = Venta.filtrar(sede.getHistorialVentas(), fecha).size();
+                    a.rendimientoDeseado = (montoTotal / cantidadVentas)*0.8f;
                     break;
                 case CORTE:
                     int prendasDescartadas = 0;
