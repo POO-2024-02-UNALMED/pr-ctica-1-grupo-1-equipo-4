@@ -94,21 +94,6 @@ public class Persona implements Serializable{
 			}
 		}
 	}
-	public static void imprimirNoEmpleados() {
-		ArrayList<Persona> noEmpleados = new ArrayList<>();
-		System.out.println("Lista de clientes:");
-		for (Persona persona : listaPersonas) {
-			if (!(persona instanceof Empleado)) {
-				noEmpleados.add(persona);
-			}
-		}
-		
-		int index = 0; 
-		for (Persona persona : noEmpleados) {
-			System.out.println(index + ". " + persona);
-			index++;
-     }
-	}
 	public String rolString() {
 		String rolString;
 		if (rol != null) {

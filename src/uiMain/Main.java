@@ -1289,7 +1289,7 @@ public class Main {
         System.out.println("\n"+"Ingrese la fecha de la venta:");
         Fecha fechaVenta = Main.fecha;
       System.out.println("\n"+"Seleccione el cliente al que se le realizará la venta:");
-      Persona.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
+      Main.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
       int clienteSeleccionado = nextIntSeguro(scanner);
       ArrayList<Persona> noEmpleados = new ArrayList<>();
       for (Persona persona : Persona.getListaPersonas()) { // Recorre listaPersonas para filtrar a los que no son empleados
@@ -1412,6 +1412,21 @@ public class Main {
         vendedor.setRendimientoBonificacion(comisión);
        } return venta;
     }
+	public static void imprimirNoEmpleados() {
+		ArrayList<Persona> noEmpleados = new ArrayList<>();
+		System.out.println("Lista de clientes:");
+		for (Persona persona : Persona.getListaPersonas()) {
+			if (!(persona instanceof Empleado)) {
+				noEmpleados.add(persona);
+			}
+		}
+		
+		int index = 0; 
+		for (Persona persona : noEmpleados) {
+			System.out.println(index + ". " + persona);
+			index++;
+     }
+	}
 
      //Interacción 2 Facturación
     public static Venta realizarVenta(Scanner scanner,  Venta venta) {
