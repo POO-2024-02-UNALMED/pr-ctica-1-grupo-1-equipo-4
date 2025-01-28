@@ -1866,6 +1866,31 @@ public class Main {
         }
 
     }
+
+    public static void printsInt1(int signal, Repuesto rep){
+        if(signal == 1){
+            System.out.println("*" + rep.getNombre() + " se debe cambiar.\n");
+        } else if (signal == 2){
+            System.out.println("*El proveedor mas barato se llama '" + Main.proveedorBdelmain.getNombre() + "', y lo vende a: " + Main.proveedorBdelmain.getPrecio() + "\n");
+        }
+
+    }
+    public static void printsInt11(Repuesto rep, Maquinaria maq, Sede sede, int senal){
+        
+        if(senal == 1){
+            System.out.println("Repuesto: '" + rep.getNombre() + "' añadido correctamente a la " + maq.getNombre() + ", de la: " + sede.getNombre());
+        } else if (senal == 2) {
+            System.out.println("Ninguna de las sedes cuenta con dinero suficiente, considere pedir un prestamo.");
+        } else if(senal == 3){
+            System.out.println("\n--> Por ende, la " + maq.getNombre() + " de la " + maq.getSede().getNombre() + ", se encuentra inhabilitada.");
+        }
+
+    }
+    public static void printsInt111(Maquinaria maq, int senal){
+        if(senal == 4){
+            System.out.println("\n--> La " + maq.getNombre() + " de la " + maq.getSede().getNombre() + " requiere mantenimiento.\n");
+        }
+    }
 }
 
 

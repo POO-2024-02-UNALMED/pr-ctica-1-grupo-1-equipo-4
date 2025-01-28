@@ -150,7 +150,7 @@ public class Maquinaria implements Serializable{
 					cadaMaquina.mantenimiento = false; //eso quiere decir que no requiere manteminiento o revision
 					for(Repuesto cadaRepuesto : cadaMaquina.getRepuestos()){
 						if ((cadaRepuesto.getHorasDeVidaUtil() - cadaRepuesto.getHorasDeUso()) <= 0){
-							System.out.println("*" + cadaRepuesto.getNombre() + " se debe cambiar.\n");
+							Main.printsInt1(1, cadaRepuesto);
 							//se debe reemplazar
 							//llamando al metodo que encuentra los proveedores mas baratos de los repuestos existentes
 							todosProvBaratos = encontrarProveedoresBaratos();
@@ -159,7 +159,7 @@ public class Maquinaria implements Serializable{
 								if(elMasEconomico.getInsumo().getNombre().equalsIgnoreCase(cadaRepuesto.getNombre()) ){
 									proveedorBarato = elMasEconomico;
 									Main.recibeProveedorB(proveedorBarato);
-									System.out.println("*El proveedor mas barato se llama '" + proveedorBarato.getNombre() + "', y lo vende a: " + proveedorBarato.getPrecio() + "\n");
+									Main.printsInt1(2, cadaRepuesto);
 									break;
 								}
 							}
@@ -183,23 +183,23 @@ public class Maquinaria implements Serializable{
 									cadaRepuesto.setPrecioCompra(proveedorBarato.getPrecio());
 									cadaRepuesto.setFechasCompra(fecha);
 									
-									System.out.println("Repuesto " + cadaRepuesto.getNombre() + " añadido correctamente a la " + cadaMaquina.getNombre() + ", de la: " + cadaSede.getNombre());
+									Main.printsInt11(cadaRepuesto, cadaMaquina, cadaSede, 1);
 
 									encontrado = true;
 									break;
 								}	
 							}
 							if (!encontrado) {
-								System.out.println("Ninguna de las sedes cuenta con dinero suficiente, considere pedir un prestamo.");
+								Main.printsInt11(cadaRepuesto, cadaMaquina, cadaSede, 2);
 								cadaRepuesto.setEstado();
-								System.out.println("\n--> Por ende, la " + cadaMaquina.getNombre() + " de la " + cadaMaquina.getSede().getNombre() + ", se encuentra inhabilitada.");
+								Main.printsInt11(cadaRepuesto, cadaMaquina, cadaSede, 3);
 							}
 						}
 					}
 				} else{
 					cadaMaquina.mantenimiento = true;
 					cadaMaquina.ultFechaRevision = fecha;
-					System.out.println("\n--> La " + cadaMaquina.getNombre() + " de la " + cadaMaquina.getSede().getNombre() + " requiere mantenimiento.\n");
+					Main.printsInt111(cadaMaquina, 4);
 				}
 
 				int pista = 0;
