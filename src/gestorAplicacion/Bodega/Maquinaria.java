@@ -7,7 +7,6 @@ import gestorAplicacion.Fecha;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 public class Maquinaria implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -24,7 +23,6 @@ public class Maquinaria implements Serializable{
 	int horaRevision;
 	ArrayList<Repuesto> repuestos=new ArrayList<Repuesto>();
 
-	Proveedor proveedorBarato;
 	ArrayList<Proveedor> listProveedoresBaratos = new ArrayList<Proveedor>();
 	Fecha ultFechaRevision;
 
@@ -144,7 +142,7 @@ public class Maquinaria implements Serializable{
 		ArrayList<Proveedor> todosProvBaratos = new ArrayList<>();
 		Main main = new Main();
 		boolean encontrado = false;
-
+		Proveedor proveedorBarato=null;
 		for(Sede cadaSede : Sede.getlistaSedes()){
 			for(Maquinaria cadaMaquina : cadaSede.getlistaMaquinas()){
 				//ver si las horas predeterminadas de revision no han sobrepasado las horas de uso de cada maquina
@@ -228,8 +226,8 @@ public class Maquinaria implements Serializable{
 	}
 
 	public ArrayList<Proveedor> encontrarProveedoresBaratos(){
-
 		for(Repuesto cadaRepuesto : Repuesto.getListadoRepuestoss()){
+			Proveedor proveedorBarato;
 			proveedorBarato = null;
 			for(Proveedor proveedores : Proveedor.getListaProveedores()){
 				//ver si el nombre del repuesto o insumo es igual al nombre del insumo que tiene el proveedor en su atributo insumo
@@ -247,8 +245,7 @@ public class Maquinaria implements Serializable{
 			}
 
 			listProveedoresBaratos.add(proveedorBarato);
-		}	
-		proveedorBarato = null;
+		}
 
 		return listProveedoresBaratos;
 	}

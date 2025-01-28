@@ -1,6 +1,7 @@
 package baseDatos;
 
 import gestorAplicacion.Administracion.Banco;
+import gestorAplicacion.Administracion.Deuda;
 import gestorAplicacion.Bodega.Camisa;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
@@ -90,6 +91,7 @@ public class Serializador {
                         fos = new FileOutputStream(file);
                         oos = new ObjectOutputStream(fos);
                         oos.writeObject(Proveedor.getListaProveedores());
+                        oos.writeObject(Deuda.getListaDeudas());
                         oos.close();
                         System.out.println("Proveedores serializados");
                 } else if (file.getAbsolutePath().contains("Prendas")) {

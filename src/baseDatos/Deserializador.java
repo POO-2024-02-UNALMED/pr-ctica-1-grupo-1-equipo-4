@@ -1,6 +1,7 @@
 package baseDatos;
 
 import gestorAplicacion.Administracion.Banco;
+import gestorAplicacion.Administracion.Deuda;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Persona;
@@ -64,6 +65,7 @@ public class Deserializador {
                         fis = new FileInputStream(file);
                         ois = new ObjectInputStream(fis);
                         Proveedor.setListaProveedores((ArrayList<Proveedor>) ois.readObject());
+                        Deuda.setListaDeudas((ArrayList<Deuda>) ois.readObject());
             } else if (file.getAbsolutePath().contains("Prendas")) {
                         fis = new FileInputStream(file);
                         ois = new ObjectInputStream(fis);

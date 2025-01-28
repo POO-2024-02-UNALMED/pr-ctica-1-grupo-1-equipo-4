@@ -1296,7 +1296,6 @@ public class Main {
       System.out.println("\n"+"Seleccione el cliente al que se le realizará la venta:");
       Persona.imprimirNoEmpleados(); // Muestra la lista de clientes con índices
       int clienteSeleccionado = nextIntSeguro(scanner);
-      scanner.nextLine(); 
       ArrayList<Persona> noEmpleados = new ArrayList<>();
       for (Persona persona : Persona.getListaPersonas()) { // Recorre listaPersonas para filtrar a los que no son empleados
           if (!(persona instanceof Empleado)) {
@@ -1311,7 +1310,6 @@ public class Main {
 	        System.out.println(i + ". " + Sede.getlistaSedes().get(i).getNombre());
 	    }
 	    int sedeSeleccionada = nextIntSeguro(scanner);
-      scanner.nextLine();
       Sede sede = Sede.getlistaSedes().get(sedeSeleccionada);
       
       System.out.println("\n"+"Seleccione el número del empleado que se hará cargo del registro de la venta:");
@@ -1323,7 +1321,6 @@ public class Main {
           }
      }
     int encargadoSeleccionado = nextIntSeguro(scanner);
-    scanner.nextLine();
     Empleado encargado = sede.getlistaEmpleados().get(encargadoSeleccionado);      
       System.out.println("\n"+"Seleccione el número del empleado que se hará cargo de asesorar la venta:");
       for(int i = 0; i < sede.getlistaEmpleados().size(); i++) {
@@ -1333,7 +1330,6 @@ public class Main {
       }
     }
     int vendedorSeleccionado = nextIntSeguro(scanner);
-    scanner.nextLine();
     Empleado vendedor = sede.getlistaEmpleados().get(vendedorSeleccionado);
          
       int costosEnvio = 0;   
@@ -1344,7 +1340,6 @@ public class Main {
             System.out.println(0 + ". Camisa" + " -Precio " + Camisa.precioVenta());
             System.out.println(1 + ". Pantalon" + " -Precio " + Pantalon.PrecioVenta());
             String productoSeleccionado = scanner.next();
-            scanner.nextLine();
             Prenda prendaSeleccionada = null;
             for (Prenda prenda : Sede.getPrendasInventadasTotal()) {
                 if (prenda.getNombre().equals(productoSeleccionado)) {
@@ -1381,7 +1376,6 @@ public class Main {
                     eliminadas++;
                     i--;
                 }}}
-                scanner.nextLine();
                 System.out.println("\n"+"¿Deseas agregar otro producto a la venta?: (si/no)");
                 String desicion = scanner.next().toLowerCase();
                 if (desicion.equals("no")) {
@@ -1468,7 +1462,6 @@ public class Main {
             if (bg) {System.out.println("3. Bolsa grande (8 productos)");}
 
             int opcionBolsa = nextIntSeguro(scanner);
-            scanner.nextLine();
 
             int capacidadBolsa = 0;
             String nombreBolsa = null;
@@ -1532,7 +1525,6 @@ public class Main {
                                 if (insumo instanceof Bolsa && insumo.getNombre().equals(nombreBolsa)) {
                                     System.out.println("¿Cuántas bolsa de " + insumo.getNombre() + " desea comprar?");
                                     int cantidadComprar = nextIntSeguro(scanner);
-                                    scanner.nextLine();
                                     int costoCompra = Proveedor.costoDeLaCantidad(insumo, cantidadComprar);
                                     banco.setAhorroBanco(banco.getAhorroBanco() - costoCompra); // Reducir los ahorros
                                                                                                 // de la empresa
