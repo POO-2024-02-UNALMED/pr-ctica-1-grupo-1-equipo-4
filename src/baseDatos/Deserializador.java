@@ -1,12 +1,14 @@
 package baseDatos;
 
 import gestorAplicacion.Administracion.Banco;
+import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Bodega.Proveedor;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Bodega.Camisa;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Prenda;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,6 +43,7 @@ public class Deserializador {
                     ois = new ObjectInputStream(fis);
                     Sede.setlistaSedes((ArrayList<Sede>) ois.readObject());
                     Sede.setPrendasInventadasTotal((ArrayList<Prenda>) ois.readObject());
+                    Sede.setListaEmpleadosTotal((ArrayList<Empleado>) ois.readObject());
                     System.out.println("Se deserializaron las sedes con "+ Sede.getPrendasInventadasTotal().size()+ " prendas inventadas");
 
             }

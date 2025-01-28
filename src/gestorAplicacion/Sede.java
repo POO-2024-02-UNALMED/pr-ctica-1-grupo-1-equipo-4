@@ -232,6 +232,10 @@ public class Sede implements Serializable{
 	static public ArrayList<Empleado> getListaEmpleadosTotal(){
 		return listaEmpleadosTotal;
 	}
+	static public void setListaEmpleadosTotal(ArrayList<Empleado> empleados){
+		listaEmpleadosTotal=empleados;
+	} // Para serializacion
+
 	static public ArrayList<Prenda> getPrendasInventadasTotal(){
 		return prendasInventadasTotal;
 	}

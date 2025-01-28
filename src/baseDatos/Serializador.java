@@ -59,6 +59,7 @@ public class Serializador {
                     // Escribimos el objeto en el flujo de bytes.
                     oos.writeObject(Sede.getlistaSedes());
                     oos.writeObject(Sede.getPrendasInventadasTotal());
+                    oos.writeObject(Sede.getListaEmpleadosTotal());
                     // Cerramos el flujo de bytes.
                     oos.close();
                     System.out.println("Sedes serializadas, con "+ Sede.getPrendasInventadasTotal().size()+ " prendas inventadas");
