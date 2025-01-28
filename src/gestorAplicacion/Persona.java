@@ -6,6 +6,7 @@ import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Administracion.Rol;
 import gestorAplicacion.Administracion.Area;
 import gestorAplicacion.Bodega.Maquinaria;
+import uiMain.Main;
 
 public class Persona implements Serializable{
 
@@ -89,7 +90,7 @@ public class Persona implements Serializable{
 				Maquinaria.asignarMaquinaria(emp);
 				emp.setSalario((int) (persona.getRol().getSalarioInicial()+persona.getRol().getSalarioInicial()*0.5f*persona.getExperiencia()));
 			} else {
-				System.out.println("No se pudo contratar a "+persona.getNombre()+" ¡No sabemos a quien reemplaza!");
+				Main.errorDeReemplazo(persona);
 			}
 		}
 	}

@@ -322,6 +322,11 @@ public class Main {
         Persona.contratar(aContratar, aReemplazar, fecha);
     }
 
+    // Metodo de reporte para Persona.contratar
+    static public void errorDeReemplazo(Persona persona) {
+        System.out.println("No se pudo contratar a " + persona.getNombre() + ", no sabemos a quien reemplaza.");
+    }
+
     // Interacción 1 Sistema Financiero
     public static Evaluacionfinanciera calcularBalanceAnterior(Fecha fecha, Scanner in) {
         System.out.println("\n"+"Obteniendo balance entre Ventas y Deudas para saber si las ventas cubren los gastos de la producción de nuestras prendas...");
