@@ -23,6 +23,26 @@ public class Banco implements Serializable {
 
 	public void actualizarDeuda(Deuda ndeuda){deuda.add(ndeuda);}
 
+	// Monto positivo para ingresos, negativo para gastos.
+	public void transaccion(long monto) {
+		this.ahorroBanco += monto;
+	}
+	
+
+	public String toString(){
+		return " La Cuenta: "+nombreCuenta+" en: "+nombreEntidad+ "tiene un Ahorro de: "+String.format("%,d", ahorroBanco)+" y para pedir un préstamo el Banco tiene un interés de:"+interes*100+"%";
+	}
+
+	static public long totalAhorros(){
+		long total=0;
+		for (Banco b: listaBancos){
+			total+=b.getAhorroBanco();
+		}
+		return total;
+	}
+
+
+	// ------------------- Getters y Setters -------------------
 	public String getNombreEntidad() {
 		return nombreEntidad;
 	}
@@ -69,18 +89,12 @@ public class Banco implements Serializable {
 		this.interes = interes;
 	}
 
-	// Monto positivo para ingresos, negativo para gastos.
-	public void transaccion(long monto) {
-		this.ahorroBanco += monto;
-	}
-	
 	public static void setListaBancos(ArrayList<Banco> listaBancos) {
 		  if (listaBancos == null) {
 	            throw new IllegalArgumentException("La lista no puede ser nula");
 	        }
 	        Banco.listaBancos = listaBancos;
 	}
-
 	public static Banco getCuentaPrincipal() {
 		return cuentaPrincipal;
 	}
@@ -89,15 +103,4 @@ public class Banco implements Serializable {
 		Banco.cuentaPrincipal = cuentaPrincipal;
 	}
 
-	public String toString(){
-		return " La Cuenta: "+nombreCuenta+" en: "+nombreEntidad+ "tiene un Ahorro de: "+String.format("%,d", ahorroBanco)+" y para pedir un préstamo el Banco tiene un interés de:"+interes*100+"%";
-	}
-
-	static public long totalAhorros(){
-		long total=0;
-		for (Banco b: listaBancos){
-			total+=b.getAhorroBanco();
-		}
-		return total;
-	}
 }

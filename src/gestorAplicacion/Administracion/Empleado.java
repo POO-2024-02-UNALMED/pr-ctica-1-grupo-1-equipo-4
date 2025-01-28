@@ -101,7 +101,7 @@ public class Empleado extends Persona implements GastoMensual{
                     mensajes.add("El empleado "+emp.getNombre()+" tiene un rendimiento insuficiente, con un rendimiento de "+String.format("%,d",(int) rendimiento)+" y un rendimiento deseado de "+String.format("%,d",(int) rendimientoDeseado));
                 }
                 // Verificamos posibilidades de transferencia.
-                if(seVaADespedir){
+                if(seVaADespedir && sede.cantidadPorArea(emp.getAreaActual())==1){
                     for (int idxSede = 0; idxSede < Sede.getlistaSedes().size(); idxSede++){
                         if (Sede.getlistaSedes().get(idxSede).getRendimientoDeseado(emp.areaActual,fecha) <= rendimiento + 20 && seVaADespedir){
                             mensajes.add("El empleado "+emp.getNombre()+" ha sido transferido a la sede "+Sede.getlistaSedes().get(idxSede).getNombre());
@@ -112,21 +112,19 @@ public class Empleado extends Persona implements GastoMensual{
                     }
     
                 }
-                if (seVaADespedir){
-                    if (emp.areaActual.equals(Area.CORTE)==false && emp.traslados<2){
-                        boolean puedeCambiarArea = true;
-                        for (Area areaPasada : emp.areas){
-                            if (areaPasada.ordinal()>emp.areaActual.ordinal()){ // Al parecer areas mayores tienen ordinales mayores
-                                puedeCambiarArea = false; // Por haber trabajado en un área más baja.
-                                break;
-                            }
+                if (seVaADespedir && emp.areaActual.equals(Area.CORTE)==false && emp.traslados<2 && !(sede.cantidadPorArea(emp.getAreaActual())==1)){
+                    boolean puedeCambiarArea = true;
+                    for (Area areaPasada : emp.areas){
+                        if (areaPasada.ordinal()>emp.areaActual.ordinal()){ // Al parecer areas mayores tienen ordinales mayores
+                            puedeCambiarArea = false; // Por haber trabajado en un área más baja.
+                            break;
                         }
-                        if (puedeCambiarArea && emp.areaActual.ordinal()<Area.values().length-1){ // verificamos tambien si hay area mas baja
-                            mensajes.add("El empleado "+emp.getNombre()+" ha sido transferido al area "+Area.values()[emp.areaActual.ordinal()+1]+" de la sede "+emp.getSede().getNombre());
-                            emp.setAreaActual(Area.values()[emp.areaActual.ordinal()+1]);
-                            seVaADespedir=false;
-                            listaADespedir.remove(emp);
-                        }
+                    }
+                    if (puedeCambiarArea && emp.areaActual.ordinal()<Area.values().length-1){ // verificamos tambien si hay area mas baja
+                        mensajes.add("El empleado "+emp.getNombre()+" ha sido transferido al area "+Area.values()[emp.areaActual.ordinal()+1]+" de la sede "+emp.getSede().getNombre());
+                        emp.setAreaActual(Area.values()[emp.areaActual.ordinal()+1]);
+                        seVaADespedir=false;
+                        listaADespedir.remove(emp);
                     }
                 }
             }
