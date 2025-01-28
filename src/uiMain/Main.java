@@ -152,6 +152,11 @@ public class Main {
         Fecha fecha = new Fecha(dia, mes, año);
         return fecha;
     }
+    // Metodo auxiliar de produccion
+    static public void avisarFaltaDeInsumos(Sede sede, Fecha fecha, String tipoPrenda){
+        System.out.println("No se pudo producir "+tipoPrenda+" en la sede "+sede.getNombre()+" por falta de insumos en la fecha "+fecha);
+        System.out.println("Hasta el momento se ha usado "+Prenda.getCantidadTelaUltimaProduccion()+" en tela.");
+    }
 
     // Interaccion 1 de Gestion Humana
     // https://docs.google.com/document/d/1IomqwzQR1ZRXw9dFlHx5mA_2oOowyIbxauZeJ6Rqy6Q/edit?tab=t.0#heading=h.z9eys2stm4gz
@@ -1808,11 +1813,13 @@ public class Main {
             }
         }
         Scanner scanner = new Scanner(System.in);
-        int seleccion = nextIntSeguro(scanner);
-        if (seleccion >= 0 && seleccion < modistas.size()) {
-            modista = modistas.get(seleccion);
-        } else {
-            System.out.println("Opción inválida. Intente nuevamente.");
+        while (modista == null) {
+            int seleccion = nextIntSeguro(scanner);
+            if (seleccion >= 0 && seleccion < modistas.size()) {
+                modista = modistas.get(seleccion);
+            } else {
+                System.out.println("Opción inválida. Intente nuevamente.");
+            }
         }
         return modista;
     }

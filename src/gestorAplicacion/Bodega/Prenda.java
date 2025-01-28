@@ -27,6 +27,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
     //de esta prenda. El indice es el mismo de la sede en la lista de sedes.
     protected float costoInsumos=0;
     private static int cantidadUltimaProduccion = 0;
+    private static int cantidadTelaUltimaProduccion = 0;
     protected int costoProduccion=0;
     protected long precio;
     //costos necesarios para calcular el precio de cada prenda
@@ -62,6 +63,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
     }
     
     public static boolean producirPrendas(ArrayList<ArrayList<ArrayList<Integer>>>planProduccion, Fecha hoy){
+        cantidadTelaUltimaProduccion = 0;
         cantidadUltimaProduccion = 0;
         Fecha diaDeProduccion = hoy;
         boolean alcanzaInsumos = true;
@@ -87,20 +89,24 @@ public abstract class Prenda implements GastoMensual, Serializable{
         ArrayList<Insumo> insumosPantalon = sede.insumosPorNombre(Pantalon.getTipoInsumo());
         for (int i=0;i<cantidadPantalones;i++){
             if (sede.quitarInsumos(insumosPantalon, Pantalon.getCantidadInsumo())){
+                cantidadTelaUltimaProduccion+=Pantalon.getCantidadInsumo().get(Pantalon.getTipoInsumo().indexOf("Tela"));
                 Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,insumosPantalon);
                 prendas.add(pantalon);
             } else {
                 alcanzaInsumos = false;
+                Main.avisarFaltaDeInsumos(sede,fechaProduccion,"Pantalon");
                 break;
             }
         }
         ArrayList<Insumo> insumosCamisa = sede.insumosPorNombre(Camisa.getTipoInsumo());
         for (int i=0;i<cantidadCamisas;i++){
             if (sede.quitarInsumos(insumosCamisa, Camisa.getCantidadInsumo())){
+                cantidadTelaUltimaProduccion+=Camisa.getCantidadInsumo().get(Camisa.getTipoInsumo().indexOf("Tela"));
                 Camisa camisa = new Camisa(fechaProduccion,null,false, false,sede, insumosCamisa);
                 prendas.add(camisa);
             } else {
                 alcanzaInsumos = false;
+                Main.avisarFaltaDeInsumos(sede,fechaProduccion,"Camisa");
                 break;
             }
         }
@@ -243,6 +249,10 @@ public abstract class Prenda implements GastoMensual, Serializable{
 
     public static int getCantidadUltimaProduccion(){
         return cantidadUltimaProduccion;
+    }
+
+    public static int getCantidadTelaUltimaProduccion(){
+        return cantidadTelaUltimaProduccion;
     }
     
     public float calcularCostoInsumos() {
