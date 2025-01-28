@@ -61,7 +61,6 @@ public class Main {
             System.out.println("4.Vender un producto");
             System.out.println("5.Producir prendas");
             System.out.println("6.Salir");
-            System.out.println("7. Inspeccionar memoria");
 
             int opcion = nextIntSeguro(in);
             switch (opcion) {
