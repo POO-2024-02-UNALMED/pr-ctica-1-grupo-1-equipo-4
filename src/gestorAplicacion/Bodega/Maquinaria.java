@@ -200,7 +200,7 @@ public class Maquinaria implements Serializable{
 				} else{
 					cadaMaquina.mantenimiento = true;
 					cadaMaquina.ultFechaRevision = fecha;
-					System.out.println("\n--> La " + cadaMaquina.getNombre() + " de la " + cadaMaquina.getSede().getNombre() + " requiere mantenimiento.");
+					System.out.println("\n--> La " + cadaMaquina.getNombre() + " de la " + cadaMaquina.getSede().getNombre() + " requiere mantenimiento.\n");
 				}
 
 				int pista = 0;
