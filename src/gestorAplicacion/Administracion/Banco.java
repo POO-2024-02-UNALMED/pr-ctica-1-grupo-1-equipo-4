@@ -13,10 +13,11 @@ public class Banco implements Serializable {
 	private static Banco cuentaPrincipal;
 
 
-	public Banco(String cuenta, String nombre, int ahorro, float Interes){
+	public Banco(String cuenta, String nombre, long ahorro, float interes){
 		this.nombreEntidad=nombre;
 		this.nombreCuenta = cuenta;
 		this.ahorroBanco = ahorro;
+		this.interes = interes;
 		Banco.listaBancos.add(this);
 	}
 
@@ -90,5 +91,13 @@ public class Banco implements Serializable {
 
 	public String toString(){
 		return " La Cuenta: "+nombreCuenta+" en: "+nombreEntidad+ "tiene un Ahorro de: "+String.format("%,d", ahorroBanco)+" y para pedir un préstamo el Banco tiene un interés de:"+interes*100+"%";
+	}
+
+	static public long totalAhorros(){
+		long total=0;
+		for (Banco b: listaBancos){
+			total+=b.getAhorroBanco();
+		}
+		return total;
 	}
 }

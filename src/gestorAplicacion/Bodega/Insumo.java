@@ -43,21 +43,26 @@ public class Insumo implements GastoMensual,Serializable{
 		this.horasDeVidaUtil = horasDeVidaUtil;
 	}
 
-	public static long gastoMensualClase(Fecha fecha){
-		long gastoInsumo=0;
-        long gastoActual=0;
-        long gastoPasado=0;
-		for (Sede sede: Sede.getlistaSedes()){
-		for (Venta venta: sede.getHistorialVentas()){
-		for (Insumo i:venta.getBolsas()){
-			long [] lista=i.gastoMensualTipo(fecha, venta.getFechaVenta(), i);
-			gastoActual+=lista[0];
-			gastoPasado+=lista[1];
-		if (gastoActual!=0){gastoInsumo=gastoActual;}else{gastoInsumo=gastoPasado;}
-        }
-	}}
-	return gastoInsumo;
-    }
+	public static long gastoMensualClase(Fecha fecha) {
+		long gastoInsumo = 0;
+		long gastoActual = 0;
+		long gastoPasado = 0;
+		for (Sede sede : Sede.getlistaSedes()) {
+			for (Venta venta : sede.getHistorialVentas()) {
+				for (Insumo i : venta.getBolsas()) {
+					long[] lista = i.gastoMensualTipo(fecha, venta.getFechaVenta(), i);
+					gastoActual += lista[0];
+					gastoPasado += lista[1];
+					if (gastoActual != 0) {
+						gastoInsumo = gastoActual;
+					} else {
+						gastoInsumo = gastoPasado;
+					}
+				}
+			}
+		}
+		return gastoInsumo;
+	}
 
 	@Override
 	public int calcularGastoMensual() {

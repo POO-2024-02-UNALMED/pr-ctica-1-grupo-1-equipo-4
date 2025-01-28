@@ -2,6 +2,7 @@ package gestorAplicacion.Administracion;
 import gestorAplicacion.Fecha;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Venta;
+import gestorAplicacion.Administracion.Banco;
 import java.io.Serializable;
 
 public class Evaluacionfinanciera implements Serializable {
@@ -28,25 +29,29 @@ public class Evaluacionfinanciera implements Serializable {
 		this.balance=balance;
 	}
 
-	public static long estimadoVentasGastos(Fecha fechaActual,float porcentaje, Evaluacionfinanciera balanceAnterior){
+	public static long estimadoVentasGastos(Fecha fechaActual,float porcentajeUsuario, Evaluacionfinanciera balanceAnterior){
 		long montoVentasPasado=0;
-		for (Sede sede : Sede.getlistaSedes()){
-			for (Venta venta : sede.getHistorialVentas()){
-				if (fechaActual.compararAño(fechaActual.getAño(),venta.getFechaVenta().getAño()) && fechaActual.compararMes(fechaActual.getAño()-1,venta.getFechaVenta().getAño())){
-					montoVentasPasado+=venta.getsubtotal()+venta.getCostoEnvio();
+		for (Sede sede : Sede.getlistaSedes()) {
+			for (Venta venta : sede.getHistorialVentas()) {
+				if (fechaActual.compararAño(fechaActual.getAño(), venta.getFechaVenta().getAño())
+						&& fechaActual.compararMes(fechaActual.getAño() - 1, venta.getFechaVenta().getAño())) {
+					montoVentasPasado += venta.getsubtotal() + venta.getCostoEnvio();
 				}
-			}}
+			}
+		}
 		//Predecimos las ventas con un porcentaje de fidelidad 
 		//(porcentaje de las ventas que se pueden dar por sentado y se mantienen de un mes al otro)
-		float porcentajeFidelidadOro=porcentaje;
-		if (porcentaje==0.0F){porcentajeFidelidadOro=0.9F;}
+		float porcentajeFidelidadOro;
+		if (balanceAnterior.balance>=0){porcentajeFidelidadOro=0.8F;}
+		else {porcentajeFidelidadOro=0.5F;}
+		if (porcentajeUsuario==0.0F){porcentajeFidelidadOro=0.9F;}
 		//Preguntamos al usuario si desea cambiar el de Oro
 		float porcentajeFidelidadPlata=porcentajeFidelidadOro-0.2F;
 		float porcentajeFidelidadBronce=porcentajeFidelidadOro-0.4F;
-		float porcentajeFidelidadNull=porcentajeFidelidadOro-0.6F;
+		float porcentajeFidelidadNull=porcentajeUsuario;
 		float prediccionVentas=montoVentasPasado*(porcentajeFidelidadOro+porcentajeFidelidadPlata+porcentajeFidelidadBronce+porcentajeFidelidadNull);
 		long gastosMensuales=GastoMensual.gastosMensuales(fechaActual);
-		long diferenciaEstimada=Math.round(prediccionVentas-((gastosMensuales+balanceAnterior.balance)*0.8));
+		long diferenciaEstimada=Math.round((prediccionVentas-gastosMensuales*0.8)+ (Banco.totalAhorros()*0.05));
 		return diferenciaEstimada;
 	}
 

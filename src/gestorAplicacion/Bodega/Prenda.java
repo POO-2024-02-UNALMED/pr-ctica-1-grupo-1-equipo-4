@@ -57,7 +57,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
         Sede.getPrendasInventadasTotal().add(this);
         sede.getPrendasInventadas().add(this);
         if(descartada){modista.setPrendasDescartadas(modista.getPrendasDescartadas()+1);}
-        else{modista.setPrendasProducidas(modista.getPrendasProducidas()+1);}
+        else if (terminada) {modista.setPrendasProducidas(modista.getPrendasProducidas()+1);}
     }
     
     public static void producirPrendas(ArrayList<ArrayList<ArrayList<Integer>>>planProduccion, Fecha hoy){
@@ -77,11 +77,11 @@ public abstract class Prenda implements GastoMensual, Serializable{
         ArrayList<Prenda> prendas = new ArrayList<Prenda>();
 
         for (int i=0;i<cantidadPantalones;i++){
-            Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,sede.insumnosPorNombre(Pantalon.getTipoInsumo()));
+            Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,sede.insumosPorNombre(Pantalon.getTipoInsumo()));
             prendas.add(pantalon);
         }
         for (int i=0;i<cantidadCamisas;i++){
-            Camisa camisa = new Camisa(fechaProduccion,null,false, false,sede, sede.insumnosPorNombre(Camisa.getTipoInsumo()));
+            Camisa camisa = new Camisa(fechaProduccion,null,false, false,sede, sede.insumosPorNombre(Camisa.getTipoInsumo()));
             prendas.add(camisa);
         }
 
@@ -167,7 +167,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
 				long [] lista=prenda.gastoMensualTipo(fecha, prenda.fechaFabricacion, prenda);
 				gastoActual+=lista[0];
 				gastoPasado+=lista[1];
-				}
+		}
 		if (gastoActual!=0){gastoPrenda=gastoActual;}else{gastoPrenda=gastoPasado;}
         return gastoPrenda;
     }
@@ -224,7 +224,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
                this.costoInsumos += insumoI.precioXUnidad * cantidad;
            } 
         return this.costoInsumos;
-        }//En este método recorro cada índice de la lista de insumos, ya que la lista insumo y cantidadInsumo están relacionadas por índice
+    }//En este método recorro cada índice de la lista de insumos, ya que la lista insumo y cantidadInsumo están relacionadas por índice
        //Obtengo el valor de cada una según el índice en el que se encuentre el recorrido del tamano de la lista insumo
        //Según el precio unitario del insumo, lo multiplico por la cantidad del insumo que requiere la prenda, estos cálculos los voy 
        //Sumando en el atributo de instancia costoInsumos por cada insumo en la lista y su cantidad respectiva

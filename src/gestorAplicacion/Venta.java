@@ -142,7 +142,7 @@ public class Venta implements Serializable {
 		System.out.println(montoventasBF);
 		System.out.println(montoventasComunes);
 		System.out.println(diferencia);
-		return Math.round(Math.min(diferencia/3,0.3f));
+		return Math.round(Math.min(diferencia/3,0.31f)*1000.0f)/1000.0f;
 	}
 
    static public ArrayList<Venta> filtrar(ArrayList<Venta> ventas, Fecha fecha){

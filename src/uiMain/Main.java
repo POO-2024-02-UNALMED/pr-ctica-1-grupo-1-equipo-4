@@ -358,10 +358,10 @@ public class Main {
     public static long calcularEstimado(Fecha fecha, Evaluacionfinanciera balanceAnterior, Scanner in) {
         System.out.println("\n"+"Calculando estimado entre Ventas y Deudas para ver el estado de endeudamiento de la empresa...");
         float porcentaje = -1F;
-        while (porcentaje < 0.0F && porcentaje > 1) {
+        while (porcentaje < 0.0F || porcentaje > 1) {
             System.out.println(
-                    "\n"+"Ingrese porcentaje a modificar para fidelidd de oro entre 0.6 y 1, o 0.0 si no desea modificarlo");
-            porcentaje = in.nextFloat();
+                    "\n"+"Ingrese porcentaje a modificar para fidelidad de los clientes sin membresía, entre 0% y 100%");
+            porcentaje = nextIntSeguro(in)/100f;
         }
         long diferenciaEstimada = Evaluacionfinanciera.estimadoVentasGastos(fecha, porcentaje, balanceAnterior);
         // Un mes se puede dar por salvado si el 80% de los gastos se pueden ver
@@ -697,23 +697,23 @@ public class Main {
     public void crearSedesMaquinasRepuestos() {
 
         // Episodio 43
-        Proveedor p1 = new Proveedor(800, "Rag Tela");
+        Proveedor p1 = new Proveedor(600, "Rag Tela");
         p1.setInsumo(new Insumo("Tela", p1));
-        Proveedor p2 = new Proveedor(1000, "Macro Telas");
+        Proveedor p2 = new Proveedor(250, "Macro Telas");
         p2.setInsumo(new Insumo("Hilo", p2));
         Proveedor p4 = new Proveedor(15000, "Insumos textileros");
         p4.setInsumo(new Insumo("Cremallera", p4));
-        Proveedor p3 = new Proveedor(5000, "San Remo");
+        Proveedor p3 = new Proveedor(200, "San Remo");
         p3.setInsumo(new Insumo("Boton", p3));
-        Proveedor p5 = new Proveedor(900, "Fatelares");
+        Proveedor p5 = new Proveedor(500, "Fatelares");
         p5.setInsumo(new Insumo("Tela", p5));
-        Proveedor p6 = new Proveedor(900, "Macro Textil");
+        Proveedor p6 = new Proveedor(500, "Macro Textil");
         p6.setInsumo(new Insumo("Tela", p6));
-        Proveedor p9 = new Proveedor(1200, "Hilos Venus");
+        Proveedor p9 = new Proveedor(300, "Hilos Venus");
         p9.setInsumo(new Insumo("Hilo", p9));
         Proveedor p7 = new Proveedor(10000, "Insumos para Confección");
         p7.setInsumo(new Insumo("Cremallera", p7));
-        Proveedor p8 = new Proveedor(8000, "InduBoton");
+        Proveedor p8 = new Proveedor(170, "InduBoton");
         p8.setInsumo(new Insumo("Boton", p8));
         Proveedor p10 = new Proveedor(5000, "Primavera");
         p10.setDescuento(0.06F);
@@ -941,7 +941,7 @@ public class Main {
         Maquinaria Registradora2 = new Maquinaria("Caja Registradora", 700000, 17000, repuestosRe2, sede2, 1);
         Maquinaria Computador2 = new Maquinaria("Computador", 2_000_000, 10000, repuestosImp2, sede2, 1);
 
-        Banco bp = new Banco("principal", "Banco Montreal", 400_000_000, 0.05F);
+        Banco bp = new Banco("principal", "Banco Montreal",  4_000_000_000L, 0.05F);
         Banco b1 = new Banco("secundaria", "Banco Montreal", 5_000_000, 0.05F);
         Banco b3 = new Banco("principal", "Bancolombia", 140_000_000, 0.09F);
         Banco b4 = new Banco("principal", "Banco Davivienda", 80_000_000, 0.1F);
@@ -1144,7 +1144,7 @@ public class Main {
 
         ArrayList<Prenda> ps3 = new ArrayList<Prenda>();
         ps3.add(r15);
-        Venta v3 = new Venta(sede2, new Fecha(29, 1, 25), c13, Freddy, Patricia, ps3, 300000, 350000);
+        Venta v3 = new Venta(sede2, new Fecha(29, 1, 25), c13, Freddy, Patricia, ps3, 300000, 350_000);
         v3.setCostoEnvio(100000);
         b3.setAhorroBanco(b2.getAhorroBanco() + 350000);
         int com3 = (int) (350_000 * 0.05f);
@@ -1176,8 +1176,9 @@ public class Main {
         int com6 = (int) (600_000 * 0.05f);
         Wilson.setRendimientoBonificacion(com6);
 
-        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Aura, Cata, 10, sedeP);
-        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Gabriela, Freddy, 10, sede2);
+        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Aura, Cata, 3500, sedeP);
+        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Aura, Mario, 3000, sedeP);
+        crearVentaAleatoria(5, 10, new Fecha(20,1,25), Gabriela, Freddy, 15, sede2);
     }
 
     static void crearVentaAleatoria(int deTantosProductos,int aTantosProductos, Fecha fecha, Empleado asesor, Empleado encargado, int cantidad,Sede sede){
@@ -1199,7 +1200,7 @@ public class Main {
                         }
                     }
                     Camisa producto = new Camisa(fecha, asesor, false, true, sede,insumos);
-                    precio+=50_000;
+                    precio+=200_000;
                     costoEnvio+=1_000;
                     articulos.add(producto);
                 }
@@ -1214,7 +1215,7 @@ public class Main {
                         }
                     }
                     Pantalon producto = new Pantalon(fecha, asesor, false, true, sede,insumos);
-                    precio+=60_000;
+                    precio+=200_000;
                     costoEnvio+=1_000;
                     articulos.add(producto);
                 }

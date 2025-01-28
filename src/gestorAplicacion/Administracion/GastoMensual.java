@@ -24,9 +24,9 @@ public interface GastoMensual {
     }
     public static long gastosMensuales(Fecha fecha){
         long GastosMaquinaria=Maquinaria.gastoMensualClase(fecha);
-        long GastosPrenda=Prenda.gastoMensualClase(fecha);
         long GastosNomina=Empleado.gastoMensualClase();
         long GastoBolsa=Insumo.gastoMensualClase(fecha);
-        long suma=GastosMaquinaria+GastosPrenda+GastosNomina+GastoBolsa;
-        return suma;}
+        long suma=GastosMaquinaria+GastosNomina+GastoBolsa;
+        return suma;
+    }
 }

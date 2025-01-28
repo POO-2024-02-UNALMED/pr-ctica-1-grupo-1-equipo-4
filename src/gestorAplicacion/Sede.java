@@ -668,7 +668,7 @@ public class Sede implements Serializable{
 		return prodAproximada;
 	}
 
-	public ArrayList<Insumo> insumnosPorNombre(ArrayList<String> nombres){
+	public ArrayList<Insumo> insumosPorNombre(ArrayList<String> nombres){
 		ArrayList<Insumo> insumos = new ArrayList<>();
 		for (String nombre : nombres){
 			for (Insumo insumo : listaInsumosBodega){
