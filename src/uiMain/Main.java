@@ -461,7 +461,6 @@ public class Main {
             float prediccionc=0;
 
             for (Prenda prenda : x.getPrendasInventadas()) {
-                System.out.println(prenda);
                 if (prenda instanceof Pantalon && !pantalonesPredichos) {
 
                     int proyeccion = Venta.predecirVentas(fecha, x, prenda.getNombre());
