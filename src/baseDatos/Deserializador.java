@@ -4,6 +4,7 @@ import gestorAplicacion.Administracion.Banco;
 import gestorAplicacion.Administracion.Deuda;
 import gestorAplicacion.Administracion.Empleado;
 import gestorAplicacion.Bodega.Proveedor;
+import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
 import gestorAplicacion.Bodega.Camisa;
@@ -45,6 +46,9 @@ public class Deserializador {
                     Sede.setlistaSedes((ArrayList<Sede>) ois.readObject());
                     Sede.setPrendasInventadasTotal((ArrayList<Prenda>) ois.readObject());
                     Sede.setListaEmpleadosTotal((ArrayList<Empleado>) ois.readObject());
+                    Proveedor.setListaProveedores((ArrayList<Proveedor>) ois.readObject());
+                    Deuda.setListaDeudas((ArrayList<Deuda>) ois.readObject());
+                    Repuesto.reemplazarListadoRepuestos((ArrayList<Repuesto>) ois.readObject());
                     System.out.println("Se deserializaron las sedes con "+ Sede.getPrendasInventadasTotal().size()+ " prendas inventadas");
 
             }
@@ -61,11 +65,6 @@ public class Deserializador {
                     ois = new ObjectInputStream(fis);
                     Persona.setListaPersonas((ArrayList<Persona>) ois.readObject());
 
-            } else if (file.getAbsolutePath().contains("Proveedores")){
-                        fis = new FileInputStream(file);
-                        ois = new ObjectInputStream(fis);
-                        Proveedor.setListaProveedores((ArrayList<Proveedor>) ois.readObject());
-                        Deuda.setListaDeudas((ArrayList<Deuda>) ois.readObject());
             } else if (file.getAbsolutePath().contains("Prendas")) {
                         fis = new FileInputStream(file);
                         ois = new ObjectInputStream(fis);

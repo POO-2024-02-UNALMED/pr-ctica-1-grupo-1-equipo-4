@@ -5,6 +5,7 @@ import gestorAplicacion.Administracion.Deuda;
 import gestorAplicacion.Bodega.Camisa;
 import gestorAplicacion.Bodega.Pantalon;
 import gestorAplicacion.Bodega.Proveedor;
+import gestorAplicacion.Bodega.Repuesto;
 import gestorAplicacion.Persona;
 import gestorAplicacion.Sede;
 import java.io.File;
@@ -61,6 +62,9 @@ public class Serializador {
                     oos.writeObject(Sede.getlistaSedes());
                     oos.writeObject(Sede.getPrendasInventadasTotal());
                     oos.writeObject(Sede.getListaEmpleadosTotal());
+                    oos.writeObject(Proveedor.getListaProveedores());
+                    oos.writeObject(Deuda.getListaDeudas());
+                    oos.writeObject(Repuesto.getListadoRepuestoss());
                     // Cerramos el flujo de bytes.
                     oos.close();
                     System.out.println("Sedes serializadas, con "+ Sede.getPrendasInventadasTotal().size()+ " prendas inventadas");
@@ -87,13 +91,6 @@ public class Serializador {
                         // Cerramos el flujo de bytes.
                         oos.close();
                         System.out.println("Peronas serializadas");
-                } else if (file.getAbsolutePath().contains("Proveedores")) {
-                        fos = new FileOutputStream(file);
-                        oos = new ObjectOutputStream(fos);
-                        oos.writeObject(Proveedor.getListaProveedores());
-                        oos.writeObject(Deuda.getListaDeudas());
-                        oos.close();
-                        System.out.println("Proveedores serializados");
                 } else if (file.getAbsolutePath().contains("Prendas")) {
                         fos = new FileOutputStream(file);
                         oos = new ObjectOutputStream(fos);

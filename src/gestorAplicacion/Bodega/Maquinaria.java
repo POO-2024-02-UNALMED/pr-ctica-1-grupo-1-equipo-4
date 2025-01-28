@@ -154,6 +154,7 @@ public class Maquinaria implements Serializable{
 							//se debe reemplazar
 							//llamando al metodo que encuentra los proveedores mas baratos de los repuestos existentes
 							todosProvBaratos = encontrarProveedoresBaratos();
+							ArrayList<Proveedor> listaProveedores = Proveedor.getListaProveedores();
 							for(Proveedor elMasEconomico : todosProvBaratos){
 								if(elMasEconomico.getInsumo().getNombre().equalsIgnoreCase(cadaRepuesto.getNombre()) ){
 									proveedorBarato = elMasEconomico;
