@@ -64,20 +64,22 @@ public abstract class Prenda implements GastoMensual, Serializable{
     public static boolean producirPrendas(ArrayList<ArrayList<ArrayList<Integer>>>planProduccion, Fecha hoy){
         cantidadUltimaProduccion = 0;
         Fecha diaDeProduccion = hoy;
+        boolean alcanzaInsumos = true;
         for (ArrayList<ArrayList<Integer>> dia : planProduccion){
             for (int i=0;i<dia.size();i++){
                 Sede sede=Sede.getlistaSedes().get(i);
                 if (!producirListaPrendas(dia.get(i), sede, diaDeProduccion)){
-                    return false;
+                    alcanzaInsumos = false;
                 }
             }
             diaDeProduccion=diaDeProduccion.diaSiguiente();
         }
-        return true;
+        return alcanzaInsumos;
     }
 
     // true si los insumos alcanzaron, false si no.
     private static boolean producirListaPrendas(ArrayList<Integer> planProduccion, Sede sede, Fecha fechaProduccion){
+        boolean alcanzaInsumos = true;
         int cantidadPantalones = planProduccion.get(0);
         int cantidadCamisas = planProduccion.get(1);
         ArrayList<Prenda> prendas = new ArrayList<Prenda>();
@@ -88,7 +90,8 @@ public abstract class Prenda implements GastoMensual, Serializable{
                 Pantalon pantalon = new Pantalon(fechaProduccion,null,false, false,sede,insumosPantalon);
                 prendas.add(pantalon);
             } else {
-                return false;
+                alcanzaInsumos = false;
+                break;
             }
         }
         ArrayList<Insumo> insumosCamisa = sede.insumosPorNombre(Camisa.getTipoInsumo());
@@ -97,7 +100,8 @@ public abstract class Prenda implements GastoMensual, Serializable{
                 Camisa camisa = new Camisa(fechaProduccion,null,false, false,sede, insumosCamisa);
                 prendas.add(camisa);
             } else {
-                return false;
+                alcanzaInsumos = false;
+                break;
             }
         }
 
@@ -114,6 +118,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
             ArrayList<Prenda> paraBordadora = new ArrayList<Prenda>();
             ArrayList<Prenda> paraTermofijado = new ArrayList<Prenda>();
             ArrayList<Prenda> paraPlancha = new ArrayList<Prenda>();
+            ArrayList<Prenda> prendasBordadora = new ArrayList<Prenda>();
 
             for (Prenda paraTanda: prendas){
                 ArrayList<Object> siguientePaso = paraTanda.siguientePaso();
@@ -136,6 +141,9 @@ public abstract class Prenda implements GastoMensual, Serializable{
                     case "plancha industrial":
                         paraPlancha.add(paraTanda);
                         break;
+                    case "bordadora industrial":
+                        prendasBordadora.add(paraTanda);
+                        break;
                 }
             }
 
@@ -145,6 +153,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
             tandas.add(paraCorte);
             tandas.add(paraTijereado);
             tandas.add(paraCoser);
+            tandas.add(prendasBordadora);
 
 
             Empleado modista = Main.pedirModista(prendas.size(), sede,idxTanda);
@@ -172,7 +181,7 @@ public abstract class Prenda implements GastoMensual, Serializable{
         }
         
 
-        return true;
+        return alcanzaInsumos;
     }
 
     abstract ArrayList<Object> siguientePaso();

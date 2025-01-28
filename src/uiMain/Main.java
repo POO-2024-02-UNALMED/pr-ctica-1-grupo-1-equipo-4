@@ -542,50 +542,49 @@ public class Main {
                     int cantidadNecesaria = listaCantidades.get(listaInsumos.indexOf(i));
                     Resultado productoEnOtraSede = Sede.verificarProductoOtraSede(i);
                     if (productoEnOtraSede.getEncontrado() == true) {
-                        int restante = Sede.transferirInsumo(i, productoEnOtraSede.getSede(),s,cantidadNecesaria);
-                        if (restante != 0) {
-                            if (productoEnOtraSede.getEncontrado() == true) {
-                                System.out.println("\n"+"Tenemos el insumo " + i.getNombre() + " en nuestra "
-                                                    + productoEnOtraSede.getSede() + ".");
-                                System.out.println("El insumo tiene un costo de " + productoEnOtraSede.getPrecio());
-                                System.out.println("\n"+"Seleccione una de las siguientes opciones:");
-                                System.out.println("1. Deseo transferir el insumo desde la " + productoEnOtraSede.getSede());
-                                System.out.println("2. Deseo comprar el insumo");
+                        System.out.println("\n" + "Tenemos el insumo " + i.getNombre() + " en nuestra "
+                                + productoEnOtraSede.getSede() + ".");
+                        System.out.println("El insumo tiene un costo de " + productoEnOtraSede.getPrecio());
+                        System.out.println("\n" + "Seleccione una de las siguientes opciones:");
+                        System.out.println("1. Deseo transferir el insumo desde la " + productoEnOtraSede.getSede());
+                        System.out.println("2. Deseo comprar el insumo");
 
-                                Scanner in = new Scanner(System.in);
-                                int opcion = nextIntSeguro(in);
-                                switch (opcion) {
-                                    case 1:
-                                        int restante2 = Sede.transferirInsumo(i, s, productoEnOtraSede.getSede(), restante);
-                                        System.out.println("\n"+i+" transferido desde "+s+" con éxito");
-                                        if (restante2 != 0) {
-                                            insumosAPedir.add(i);
-                                            cantidadAPedir.add(restante2);
-                                            if(i.getNombre().equals("Tela")){
-                                            System.out.println("\n"+"Tenemos una cantidad de "+restante2+"cm de tela restantes a pedir ");}
-                                            else if (i.getNombre().equals("Boton")){
-                                                System.out.println("\n"+"Tenemos una cantidad de "+restante2+" botones restantes a pedir ");}
-                                            else if (i.getNombre().equals("Cremallera")){
-                                                 System.out.println("\n"+"Tenemos una cantidad de "+restante2+" cremalleras restantes a pedir ");}
-                                                else {
-                                                System.out.println("\n"+"Tenemos una cantidad de "+restante2+" cm de hilo restantes a pedir ");}
-                                        }
-                                        else{
-                                            System.out.println("Insumo transferido en su totalidad");
-                                        }
-                                        break;
-                                    case 2:
-                                        insumosAPedir.add(i);
-                                        cantidadAPedir.add(restante);
-                                        break;
-                                    default:
-                                        System.out.println("Esa opción no es valida.");
+                        Scanner in = new Scanner(System.in);
+                        int opcion = nextIntSeguro(in);
+                        switch (opcion) {
+                            case 1:
+                                int restante = Sede.transferirInsumo(i, s, productoEnOtraSede.getSede(), cantidadNecesaria);
+                                System.out.println("\n" + i + " transferido desde " + s + " con éxito");
+                                if (restante != 0) {
+                                    insumosAPedir.add(i);
+                                    cantidadAPedir.add(restante);
+                                    if (i.getNombre().equals("Tela")) {
+                                        System.out.println("\n" + "Tenemos una cantidad de " + restante
+                                                + "cm de tela restantes a pedir ");
+                                    } else if (i.getNombre().equals("Boton")) {
+                                        System.out.println("\n" + "Tenemos una cantidad de " + restante
+                                                + " botones restantes a pedir ");
+                                    } else if (i.getNombre().equals("Cremallera")) {
+                                        System.out.println("\n" + "Tenemos una cantidad de " + restante
+                                                + " cremalleras restantes a pedir ");
+                                    } else {
+                                        System.out.println("\n" + "Tenemos una cantidad de " + restante
+                                                + " cm de hilo restantes a pedir ");
+                                    }
+                                } else {
+                                    System.out.println("Insumo transferido en su totalidad");
                                 }
+                                break;
+                            case 2:
+                                insumosAPedir.add(i);
+                                cantidadAPedir.add(cantidadNecesaria);
+                                break;
+                            default:
+                                System.out.println("Esa opción no es valida.");
 
-                            }
                         }
-
                     }
+
                 }
             }
             listaSede.add(insumosAPedir);
@@ -605,6 +604,7 @@ public class Main {
         ArrayList<Proveedor> proveedores = new ArrayList<>();
         ArrayList<Integer> precios = new ArrayList<>();
         ArrayList<Deuda> deudas = new ArrayList<>();
+        // Itera por sedes.
         for (Object s : listaA) {
             sede = (ArrayList<Object>) s;
             insumos = (ArrayList<Insumo>) sede.get(0);
@@ -612,36 +612,36 @@ public class Main {
 
             for (Sede sedee : Sede.getlistaSedes()) {
 
-                for (int i = 0; i < insumos.size(); i++) {
+                for (int idxInsumo = 0; idxInsumo < insumos.size(); idxInsumo++) {
                     Proveedor mejorProveedor = null;
                     int mejorPrecio = 0;
                     int cantidadAñadir = 0;
 
                     for (Proveedor proveedor : Proveedor.getListaProveedores()) {
 
-                        if (proveedor.getInsumo().equals(insumos.get(i))) {
+                        if (proveedor.getInsumo().equals(insumos.get(idxInsumo))) {
                             proveedores.add(proveedor);
-                            precios.add(Proveedor.costoDeLaCantidad(insumos.get(i), cantidad.get(i)));
+                            precios.add(Proveedor.costoDeLaCantidad(insumos.get(idxInsumo), cantidad.get(idxInsumo)));
                         }
                     }
 
                     for (Proveedor x : proveedores) {
-                        int precio = x.costoDeLaCantidad(insumos.get(i), cantidad.get(i));
+                        int precio = x.costoDeLaCantidad(insumos.get(idxInsumo), cantidad.get(idxInsumo));
                         if ((precio != 0) && (precio < mejorPrecio)) {
                             mejorPrecio = precio;
                             mejorProveedor = x;
-                            insumos.get(i).setProveedor(x);
+                            insumos.get(idxInsumo).setProveedor(x);
                         }
                     }
 
-                    System.out.println("\n"+"Tenemos el insumo " + insumos.get(i).getNombre() + " con nuestro proveedor "
-                            + insumos.get(i).getProveedor().getNombre() + ".");
+                    System.out.println("\n"+"Tenemos el insumo " + insumos.get(idxInsumo).getNombre() + " con nuestro proveedor "
+                            + insumos.get(idxInsumo).getProveedor().getNombre() + ".");
 
-                    if (insumos.get(i).getPrecioIndividual() < insumos.get(i).getUltimoPrecio()) {
+                    if (insumos.get(idxInsumo).getPrecioIndividual() < insumos.get(idxInsumo).getUltimoPrecio()) {
                         System.out.println("\n"+
                         "Dado que el costo de la venta por unidad es menor al ultimo precio por el que compramos el insumo");
                         System.out.println("\n"+"Desea pedir mas de la cantidad necesaria para la producción? ");
-                        System.out.println("Cantidad: " + cantidad.get(i));
+                        System.out.println("Cantidad: " + cantidad.get(idxInsumo));
                         System.out.println("1. Si");
                         System.out.println("2. No");
 
@@ -651,7 +651,7 @@ public class Main {
                             case 1:
                                 if (opcion >= 0) {
                                     System.out.println("\n"+
-                                            "Cuanta cantidad más desea pedir del insumo " + insumos.get(i).getNombre());
+                                            "Cuanta cantidad más desea pedir del insumo " + insumos.get(idxInsumo).getNombre());
                                     Scanner cant = new Scanner(System.in);
                                     cantidadAñadir = cant.nextInt();
                                     cant.close();
@@ -665,15 +665,15 @@ public class Main {
                                 System.out.println("Esa opción no es valida.");
                         }
                     }
-                    cantidad.set(i, ((cantidad.get(i)) + cantidadAñadir));
+                    cantidad.set(idxInsumo, ((cantidad.get(idxInsumo)) + cantidadAñadir)); // Por si el usuario añade extra.
 
-                    Sede.añadirInsumo(insumos.get(i), sedee, cantidad.get(i));
-                    System.out.println("\n"+"Insumo "+insumos.get(i)+" comprado con éxito");
+                    Sede.añadirInsumo(insumos.get(idxInsumo), sedee, cantidad.get(idxInsumo));
+                    System.out.println("\n"+"Insumo "+insumos.get(idxInsumo)+" comprado con éxito");
 
                     for (Proveedor proveedor : Proveedor.getListaProveedores()) {
                         int montoDeuda = 0;
-                        if (insumos.get(i).getProveedor().getNombre().equals(proveedor.getNombre())) {
-                            montoDeuda += insumos.get(i).getPrecioIndividual() * cantidad.get(i);
+                        if (insumos.get(idxInsumo).getProveedor().getNombre().equals(proveedor.getNombre())) {
+                            montoDeuda += insumos.get(idxInsumo).getPrecioIndividual() * cantidad.get(idxInsumo);
                         }
                         Deuda deuda = null;
                         if (montoDeuda > 0) {
@@ -1797,7 +1797,7 @@ public class Main {
 
     // Metodo auxiliar de la interacción 3 de producción
     public static Empleado pedirModista(int cantidadPrendas,Sede sede, int idxTanda){
-        System.out.println("Seleccione el modista que se encargará de la tanda #"+idxTanda+ "de producción de "+cantidadPrendas+" prendas:");
+        System.out.println("Seleccione el modista que se encargará de la tanda #"+idxTanda+ "de producción de "+cantidadPrendas+" prendas en "+sede.getNombre()+":");
 
         Empleado modista = null;
         ArrayList<Empleado> modistas = new ArrayList<Empleado>();

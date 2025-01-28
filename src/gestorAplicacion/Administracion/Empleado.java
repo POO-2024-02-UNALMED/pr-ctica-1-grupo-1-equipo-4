@@ -51,6 +51,9 @@ public class Empleado extends Persona implements GastoMensual{
         this.areas.add(area);
         fechaContratacion=fecha;
         this.sede=sede;
+        if (rol == Rol.MODISTA){
+            this.pericia = 0.8f+0.2f*((float) Math.random());
+        }
         Sede.getListaEmpleadosTotal().add(this);
         maquinaria=maquina;
         //sede.getlistaMaquinas().add(maquina);

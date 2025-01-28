@@ -70,7 +70,7 @@ public class Pantalon extends Prenda {
             case 2:
                 break;
             case 3:
-                probabilidadDeExito*=0.8;
+                probabilidadDeExito*=0.9;
         }
         pasoActual++;
         String retorno= "CONTINUAR";

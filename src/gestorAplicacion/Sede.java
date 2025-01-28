@@ -106,10 +106,10 @@ public class Sede implements Serializable{
 	}
 
 	static public void añadirInsumo(Insumo i, Sede s, int c){
-		for(int x = 0 ; x < s.getListaInsumosBodega().size() ; x++){
-			if(i.equals(s.getListaInsumosBodega().get(x))){
-				int cantidad = s.getCantidadInsumosBodega().get(x);
-				s.cantidadInsumosBodega.set(x,(cantidad+c));
+		for(int idxInsumoEnBOdega = 0 ; idxInsumoEnBOdega < s.getListaInsumosBodega().size() ; idxInsumoEnBOdega++){
+			if(i.equals(s.getListaInsumosBodega().get(idxInsumoEnBOdega))){
+				int cantidad = s.getCantidadInsumosBodega().get(idxInsumoEnBOdega);
+				s.cantidadInsumosBodega.set(idxInsumoEnBOdega,(cantidad+c));
 				long ajusteStock = (Insumo.getPrecioStockTotal())+(i.getPrecioIndividual()*c);
 				Insumo.setPrecioStockTotal(ajusteStock);
 			}
