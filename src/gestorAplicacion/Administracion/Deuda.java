@@ -99,16 +99,16 @@ public class Deuda implements Serializable {
 
 	static public int calcularCuotas(long monto){
 		int cuotas = 0;
-		if(monto > 0 && monto < 1000000){
+		if(monto >= 0 && monto <= 1_000_000){
 			cuotas = 1;
 		}
-		else if(monto > 5000000 && monto < 10000000){
+		else if(monto > 1_000_000 && monto < 10_000_000){
 			cuotas = 7;
 		}
-		else if(monto > 10000000 && monto < 20000000){
+		else if(monto > 10_000_000 && monto < 20_000_000){
 			cuotas = 12;
 		}
-		else if(monto > 20000000){
+		else if(monto > 200_000_00){
 			cuotas = 25;
 		}
 		return cuotas;
