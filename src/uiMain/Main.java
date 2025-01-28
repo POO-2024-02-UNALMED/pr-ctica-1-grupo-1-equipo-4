@@ -45,8 +45,13 @@ public class Main {
     private static Proveedor proveedorBdelmain;
     public static Fecha fecha;
     public static void main(String[] args) {
-        System.out.println("Ecomoda a la orden");
-        Deserializador.deserializar();
+        System.out.println("Ecomoda a la orden, presiona enter para continuar");
+        String respuesta = in.nextLine();
+        if (respuesta.equals("moscorrofio")){
+            new Main().crearSedesMaquinasRepuestos();
+        } else {
+            Deserializador.deserializar();
+        }
         buclePrincipal: while (true) {
             Main.actualizarProveedores();
             System.out.println("\n"+"¿Que operación desea realizar?");
@@ -113,8 +118,6 @@ public class Main {
                     System.exit(0);
                     in.close();
                     break buclePrincipal;
-                case 7:
-                    new Main().crearSedesMaquinasRepuestos();
 
                 default:
                     System.out.println("Esa opción no es valida.");
